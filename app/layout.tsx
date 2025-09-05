@@ -20,21 +20,21 @@ const sourceSans = Source_Sans_3({
 })
 
 export const metadata: Metadata = {
-  title: "Ridul's Portfolio - Modern Developer & Designer",
+  title: "Mridul Agrawal",
   description:
-    "Professional portfolio showcasing modern web development and design expertise. Full-stack developer specializing in React, Next.js, and user experience design.",
+    "Professional portfolio showcasing modern web development and design expertise.",
   keywords: ["web developer", "full-stack", "React", "Next.js", "UI/UX", "portfolio"],
-  authors: [{ name: "Ridul" }],
-  creator: "Ridul",
+  authors: [{ name: "Mridul" }],
+  creator: "Mridul",
   openGraph: {
-    title: "Ridul's Portfolio - Modern Developer & Designer",
+    title: "Mridul Agrawal",
     description: "Professional portfolio showcasing modern web development and design expertise",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ridul's Portfolio - Modern Developer & Designer",
+    title: "Mridul Agrawal",
     description: "Professional portfolio showcasing modern web development and design expertise",
   },
   viewport: "width=device-width, initial-scale=1",
