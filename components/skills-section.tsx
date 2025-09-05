@@ -16,38 +16,40 @@ export function SkillsSection() {
   }, [])
 
   const skillCategories = [
-    {
-      title: "Languages",
-      icon: Code2,
-      color: "from-primary to-primary/70",
-      skills: ["JavaScript", "TypeScript", "Python", "HTML/CSS", "SQL", "GraphQL"],
-    },
-    {
-      title: "Frameworks",
-      icon: Layers,
-      color: "from-secondary to-secondary/70",
-      skills: ["React", "Next.js", "Node.js", "Vue.js", "Express", "Tailwind CSS"],
-    },
-    {
-      title: "Tools",
-      icon: Wrench,
-      color: "from-accent to-accent/70",
-      skills: ["Git", "Docker", "AWS", "Figma", "VS Code", "Postman"],
-    },
-    {
-      title: "Soft Skills",
-      icon: Users,
-      color: "from-primary/80 to-secondary/80",
-      skills: [
-        "Leadership",
-        "Communication",
-        "Problem Solving",
-        "Team Collaboration",
-        "Project Management",
-        "Mentoring",
-      ],
-    },
-  ]
+  {
+    title: "Languages",
+    icon: Code2,
+    color: "from-primary to-primary/70",
+    skills: ["Java", "C", "JavaScript", "HTML/CSS", "SQL","Node.js", "Express.js"],
+  },
+  {
+    title: "Consulting & Product Management",
+    icon: Layers,
+    color: "from-secondary to-secondary/70",
+    skills: ["Business analysis", "Problem structuring"," Process improvement", "Roadmapping" , "Client Relationship Management"],
+  },
+  {
+    title: "Tools",
+    icon: Wrench,
+    color: "from-accent to-accent/70",
+    skills: ["GitHub", "VS Code", "Render", "Vercel", "Google Sheets", "Excel", "Notion", "Power BI", "Workflow Automation"],
+  },
+  {
+    title: "Soft Skills",
+    icon: Users,
+    color: "from-primary/80 to-secondary/80",
+    skills: [
+      "Leadership",
+      "Team Management",
+      "Strategic Planning",
+      "executive presentations",
+      "Multitasking",
+      "Client Interaction & Relationship Management",
+      "Stakeholder Negotiation",
+    ],
+  },
+];
+
 
   return (
     <section className="py-20 px-4">
@@ -70,19 +72,10 @@ export function SkillsSection() {
 
         {/* Additional Skills Overview */}
         <div className="mt-16 text-center">
-          <h3 className="text-2xl font-serif font-bold mb-8 text-card-foreground">Additional Expertise</h3>
+          <h3 className="text-2xl font-serif font-bold mb-8 text-card-foreground">Hobbies</h3>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              "UI/UX Design",
-              "Responsive Design",
-              "API Development",
-              "Database Design",
-              "Performance Optimization",
-              "SEO",
-              "Agile Methodology",
-              "Code Review",
-              "Technical Writing",
-              "Cross-browser Compatibility",
+              "Reel-Spinning","Exploring New Places","Certified Foodie","Travel Enthusiast","Tinkering with AI","Storytelling","Networking & Meeting People"
             ].map((skill, index) => (
               <Badge
                 key={skill}

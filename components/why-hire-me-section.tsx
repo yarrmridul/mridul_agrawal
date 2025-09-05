@@ -18,28 +18,28 @@ export function WhyHireMeSection() {
   // If your site uses a parent heading/subline, you can delete this block and keep only the grid.
   const heading = "Why Hire Me";
   const subline =
-    "I turn data-driven insights and technical know-how into outcomes your business can feel.";
+    "Because AI is my sidekick, not my competition";
 
   const benefits: { title: string; description: string }[] = [
     {
       title: "Not Just Projects — Real Market Experience",
       description:
-        "I’ve handled live campaigns, clients, and outcomes in the real world, not just classroom deliverables.",
+        "Unlike most freshers, you’ve actually handled clients, campaigns, and business outcomes in the real world. That’s a huge edge.",
     },
     {
-      title: "Entrepreneurship Was My Real-Time MBA",
+      title: "Entrepreneurship = My Real-Time MBA",
       description:
-        "Running an agency taught me sales, marketing, client handling, strategy, and execution the hard way—by doing.",
+      "Running Moodale taught me sales, marketing, client handling, strategy, and execution — lessons more practical than any MBA classroom."
     },
     {
-      title: "Clear, Confident Communication",
+      title: "Communication as a Superpower",
       description:
-        "From client calls to cross-functional handoffs, I keep plans crisp, decisions documented, and teams aligned.",
+      "Working with clients, leading teams, and presenting strategies sharpened my ability to communicate persuasively and clearly."
     },
     {
       title: "Bridge Between Strategy and Execution",
       description:
-        "I translate goals into processes and systems—so ideas don’t die in meetings, they ship.",
+      "I don’t just plan strategies — I roll up my sleeves and make them happen with processes, automation, and systems."
     },
     {
       title: "Wore Multiple Hats When It Mattered",
@@ -47,14 +47,14 @@ export function WhyHireMeSection() {
         "Design, social ads, web, data, ops, sales, marketing—whatever moved the work forward, I owned it.",
     },
     {
-      title: "Automation Mindset",
+      title: "AI as My Right Hand",
       description:
-        "I remove repetitive work with clean workflows and simple automation, so teams focus on impact.",
+      "I leverage AI daily to work smarter, automate processes, and scale creativity — making it a natural extension of how I build and solve problems."
     },
     {
       title: "Leadership Before Graduation",
       description:
-        "I’ve led teams and owned delivery for clients early in my journey—accountability is not new to me.",
+      "Managed a 20+ member team and scaled client campaigns — proving I can handle responsibility early."
     },
     {
       title: "Client-Ready From Day One",

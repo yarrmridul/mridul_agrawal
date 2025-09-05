@@ -2,7 +2,9 @@
 
 import type React from "react"
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, Phone, MessageCircle, ArrowDown } from "lucide-react"
+import { Github, Linkedin, Mail, Phone, ArrowDown } from "lucide-react"
+import { SiWhatsapp } from "react-icons/si"
+
 
 export function HeroSection() {
   const scrollToAbout = () => {
@@ -11,6 +13,13 @@ export function HeroSection() {
       aboutSection.scrollIntoView({ behavior: "smooth" })
     }
   }
+
+  // NEW: scroll to #contact
+  const scrollToContact = () => {
+    const el = document.getElementById("contact")
+    if (el) el.scrollIntoView({ behavior: "smooth" })
+  }
+
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4 py-20 relative">
@@ -31,27 +40,44 @@ export function HeroSection() {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-500">
           <Button
+            onClick={scrollToContact}   // ← added
             size="lg"
             className="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
           >
             Hire Me
           </Button>
           <Button
+            asChild
             variant="outline"
             size="lg"
             className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-transparent"
           >
-            Download Resume
+            <a
+              href="https://drive.google.com/drive/folders/1nC52MQEiG7A2B_Bs05HXwvpndiO3knDJ?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Download Resume
+            </a>
           </Button>
+
         </div>
 
         {/* Social Media Icons */}
         <div className="flex justify-center items-center gap-6 pt-8 animate-fade-in delay-700">
-          <SocialIcon icon={Linkedin} href="#" label="LinkedIn" />
-          <SocialIcon icon={Github} href="#" label="GitHub" />
-          <SocialIcon icon={MessageCircle} href="#" label="WhatsApp" />
-          <SocialIcon icon={Mail} href="#" label="Email" />
-          <SocialIcon icon={Phone} href="#" label="Call" />
+          <SocialIcon icon={Linkedin} href="https://www.linkedin.com/in/mridul-agrawal-62029522b" label="LinkedIn" />
+          <SocialIcon icon={Github} href="https://github.com/yarrmridul" label="GitHub" />
+          <SocialIcon
+            icon={SiWhatsapp}
+            href="https://wa.me/917983738443"   // your WhatsApp link; use your number without + and leading zeros
+            label="WhatsApp"
+          />
+          <SocialIcon
+            icon={Mail}
+            label="Email"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=mridulagrawal06@gmail.com&su=Portfolio%20Inquiry&body=Hello%2C%20I%20just%20visited%20your%20portfolio."
+          />
+          <SocialIcon icon={Phone} href="tel:+917983738443" label="Call" />
         </div>
 
         {/* Floating Animation Elements */}
@@ -72,7 +98,7 @@ export function HeroSection() {
           <ArrowDown className="w-5 h-5" />
         </div>
       </button>
-    </section>
+    </section >
   )
 }
 
@@ -87,6 +113,8 @@ function SocialIcon({ icon: Icon, href, label }: SocialIconProps) {
     <a
       href={href}
       aria-label={label}
+      target="_blank"                // 👈 always open in new tab
+      rel="noopener noreferrer"     // 👈 security best practice
       className="w-14 h-14 rounded-full bg-card/60 glassmorphism flex items-center justify-center text-card-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 transform hover:scale-110 hover:shadow-lg group"
     >
       <Icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />

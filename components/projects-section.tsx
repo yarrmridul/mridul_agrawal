@@ -23,7 +23,7 @@ export function ProjectsSection() {
     },
     {
       id: 2,
-      title: "Custom CRM & Automation System",
+      title: "Automation System using Google Sheets",
       status: "completed",
       description:
         "CRM for campaigns, billing, tasks, leave approvals, reminders. Automation reduced manual work and improved efficiency.",
@@ -36,7 +36,6 @@ export function ProjectsSection() {
       image:
         "https://cdn.prod.website-files.com/619c916dd7a3fa284adc0b27/65fac5fcb13ea0e1c548c422_f05a631d-05be-4413-9338-9655adc38c90.webp",
       codeUrl: "https://github.com/yarrmridul/gsheet-taskassignemnt-crm",
-      liveUrl: "https://crm-system.ridul.dev",
     },
   ]
 
@@ -72,7 +71,7 @@ interface Project {
   metrics: string[]
   image: string
   codeUrl: string
-  liveUrl: string
+  liveUrl?: string   // 👈 make optional
 }
 
 interface ProjectCardProps {
@@ -96,16 +95,19 @@ function ProjectCard({ project, isAlternate = false }: ProjectCardProps) {
             View Code
           </a>
         </Button>
-        <Button
-          size="sm"
-          className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white transition-all duration-300"
-          asChild
-        >
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="w-4 h-4 mr-1" />
-            Visit Website
-          </a>
-        </Button>
+  {project.liveUrl && (   // 👈 only render if liveUrl exists
+    <Button
+      size="sm"
+      className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white transition-all duration-300"
+      asChild
+    >
+      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+        <ExternalLink className="w-4 h-4 mr-1" />
+        Visit Website
+      </a>
+    </Button>
+  )}
+
       </div>
 
       {/* Flip Card Container */}

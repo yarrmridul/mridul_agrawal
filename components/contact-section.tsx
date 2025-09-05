@@ -48,7 +48,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 
   return (
-    <section className="py-20 px-4 relative overflow-hidden">
+    <section id="contact" className="py-20 px-4 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full blur-xl"></div>
@@ -165,7 +165,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <div className="text-center">
               <div className="inline-flex items-center space-x-2 bg-card/60 glassmorphism rounded-full px-6 py-3">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium text-card-foreground">Usually responds within 24 hours</span>
+                <span className="text-sm font-medium text-card-foreground">Usually responds within 3 hours</span>
               </div>
             </div>
           </div>
