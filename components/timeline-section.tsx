@@ -78,7 +78,7 @@ export function TimelineSection() {
     {
       year: "2025",
       title: "Your Company Here",
-      company: "Hired me to help achieve your next milestone",
+      company: "Hire me to help achieve your next milestone",
       description:
         "Ready to bring innovative solutions, technical expertise, and entrepreneurial mindset to drive your business forward.",
       type: "professional" as const,
