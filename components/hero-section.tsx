@@ -57,7 +57,7 @@ export function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Download Resume
+              Download Resume.
             </a>
           </Button>
 
