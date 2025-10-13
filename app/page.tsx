@@ -1,13 +1,17 @@
-import { HeroSection } from "@/components/hero-section"
-import { WhyHireMeSection } from "@/components/why-hire-me-section"
-import { ExperienceSection } from "@/components/experience-section"
-import { ProjectsSection } from "@/components/projects-section"
-import { TimelineSection } from "@/components/timeline-section"
-import { SkillsSection } from "@/components/skills-section"
-import { ContactSection } from "@/components/contact-section"
-import { Navigation } from "@/components/navigation"
-import { ScrollAnimation } from "@/components/scroll-animations"
-import { Footer } from "@/components/footer"
+
+import { HeroSection } from "@/components/hero-section";
+
+import { WhyHireMeSection } from "@/components/why-hire-me-section";
+import { ExperienceSection } from "@/components/experience-section";
+import { ProjectsSection } from "@/components/projects-section";
+import { TimelineSection } from "@/components/timeline-section";
+import { SkillsSection } from "@/components/skills-section";
+import { ContactSection } from "@/components/contact-section";
+import { Navigation } from "@/components/navigation";
+import { ScrollAnimation } from "@/components/scroll-animations";
+import { Footer } from "@/components/footer";
+
+
 
 export default function HomePage() {
   return (
@@ -56,5 +60,5 @@ export default function HomePage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

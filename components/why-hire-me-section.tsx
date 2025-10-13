@@ -17,8 +17,7 @@ import { Card } from "@/components/ui/card";
 export function WhyHireMeSection() {
   // If your site uses a parent heading/subline, you can delete this block and keep only the grid.
   const heading = "Why Hire Me";
-  const subline =
-    "Because AI is my sidekick, not my competition";
+  const subline = "Because AI is my sidekick, not my competition";
 
   const benefits: { title: string; description: string }[] = [
     {
@@ -29,17 +28,17 @@ export function WhyHireMeSection() {
     {
       title: "Entrepreneurship = My Real-Time MBA",
       description:
-      "Running Moodale taught me sales, marketing, client handling, strategy, and execution — lessons more practical than any MBA classroom."
+        "Running Moodale taught me sales, marketing, client handling, strategy, and execution — lessons more practical than any MBA classroom.",
     },
     {
       title: "Communication as a Superpower",
       description:
-      "Working with clients, leading teams, and presenting strategies sharpened my ability to communicate persuasively and clearly."
+        "Working with clients, leading teams, and presenting strategies sharpened my ability to communicate persuasively and clearly.",
     },
     {
       title: "Bridge Between Strategy and Execution",
       description:
-      "I don’t just plan strategies — I roll up my sleeves and make them happen with processes, automation, and systems."
+        "I don’t just plan strategies — I roll up my sleeves and make them happen with processes, automation, and systems.",
     },
     {
       title: "Wore Multiple Hats When It Mattered",
@@ -49,12 +48,12 @@ export function WhyHireMeSection() {
     {
       title: "AI as My Right Hand",
       description:
-      "I leverage AI daily to work smarter, automate processes, and scale creativity — making it a natural extension of how I build and solve problems."
+        "I leverage AI daily to work smarter, automate processes, and scale creativity — making it a natural extension of how I build and solve problems.",
     },
     {
       title: "Leadership Before Graduation",
       description:
-      "Managed a 20+ member team and scaled client campaigns — proving I can handle responsibility early."
+        "Managed a 20+ member team and scaled client campaigns — proving I can handle responsibility early.",
     },
     {
       title: "Client-Ready From Day One",
@@ -64,31 +63,38 @@ export function WhyHireMeSection() {
   ];
 
   return (
-    <section className="py-20 px-4">
-      <div className="max-w-6xl mx-auto">
-        {/* Keep or remove this heading/subline block depending on your layout */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 leading-tight">
-            <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-              {heading}
-            </span>
-          </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            {subline}
-          </p>
-          <div className="mt-6 flex justify-center">
-            <span className="h-[3px] w-24 rounded-full bg-gradient-to-r from-primary via-secondary to-primary animate-[pulse_2.2s_ease-in-out_infinite]" />
+    <>
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto ">
+          {/* Keep or remove this heading/subline block depending on your layout */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4 leading-tight">
+              <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+                {heading}
+              </span>
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              {subline}
+            </p>
+            <div className="mt-6 flex justify-center">
+              <span className="h-[3px] w-24 rounded-full bg-gradient-to-r from-primary via-secondary to-primary animate-[pulse_2.2s_ease-in-out_infinite]" />
+            </div>
+          </div>
+
+          {/* Cards grid — 4×2 on lg screens */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-fr">
+            {benefits.map((b, i) => (
+              <FlipCard
+                key={i}
+                title={b.title}
+                description={b.description}
+                index={i}
+              />
+            ))}
           </div>
         </div>
-
-        {/* Cards grid — 4×2 on lg screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
-          {benefits.map((b, i) => (
-            <FlipCard key={i} title={b.title} description={b.description} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
@@ -129,7 +135,7 @@ function FlipCard({
       className={[
         "group relative h-48 md:h-56 cursor-pointer select-none [perspective:1200px]",
         "opacity-0 translate-y-6 transition-all duration-700",
-        "[&.in-view]:opacity-100 [&.in-view]:translate-y-0",
+        "[&.in-view]:opacity-100 [&.in-view]:translate-y-0 ",
       ].join(" ")}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
       onClick={() => setFlipped((v) => !v)}
@@ -160,67 +166,69 @@ function FlipCard({
         ].join(" ")}
       >
         {/* FRONT — big, attractive title (no icon/emoji) */}
-        <Card
-          className={[
-            "absolute inset-0 rounded-2xl border-0",
-            "bg-card/60 backdrop-blur-md",
-            "shadow-lg hover:shadow-xl transition-shadow duration-300",
-            "motion-safe:[backface-visibility:hidden]",
-            "before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none",
-            "before:bg-[radial-gradient(80%_60%_at_50%_0%,theme(colors.primary/10),transparent_60%)]",
-          ].join(" ")}
-        >
-          <div className="h-full w-full p-6 flex items-center justify-center text-center">
-            <h3 className="text-lg md:text-[1.25rem] font-extrabold leading-tight tracking-tight max-w-[22rem]">
-              <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-                {title}
-              </span>
-            </h3>
-          </div>
+       <Card
+  className={[
+    "absolute inset-0 rounded-2xl border-0",
+    "bg-card/60 backdrop-blur-md",
+    "shadow-lg hover:shadow-xl transition-shadow duration-300",
+    "motion-safe:[backface-visibility:hidden]",
+    "before:absolute before:inset-0 before:rounded-2xl before:pointer-events-none",
+    "before:bg-[radial-gradient(80%_60%_at_50%_0%,theme(colors.primary/10),transparent_60%)]",
+  ].join(" ")}
+>
+  <div className="h-full w-full px-3 py-4 sm:p-5 flex items-center justify-center text-center">
+    <h3 className="text-base sm:text-lg md:text-[1.25rem] font-extrabold leading-snug tracking-tight max-w-[16rem] sm:max-w-[20rem] md:max-w-[22rem] break-words">
+      <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+        {title}
+      </span>
+    </h3>
+  </div>
 
-          {/* sheen sweep */}
-          <span
-            className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            style={{
-              background:
-                "linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.12) 30%, transparent 60%)",
-              maskImage:
-                "radial-gradient(60% 180% at -20% 50%, black 20%, transparent 60%)",
-            }}
-          />
-        </Card>
+  {/* sheen sweep */}
+  <span
+    className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+    style={{
+      background:
+        "linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.12) 30%, transparent 60%)",
+      maskImage:
+        "radial-gradient(60% 180% at -20% 50%, black 20%, transparent 60%)",
+    }}
+  />
+</Card>
+
 
         {/* BACK — title + description (no icon/emoji) */}
-        <Card
-          className={[
-            "absolute inset-0 rounded-2xl border-0",
-            "bg-gradient-to-br from-background to-card/90 backdrop-blur-md",
-            "shadow-xl",
-            "motion-safe:rotate-y-180 motion-safe:[backface-visibility:hidden]",
-          ].join(" ")}
-        >
-          <div className="h-full w-full p-6 flex flex-col items-center justify-center text-center gap-3">
-            <h3 className="text-base md:text-[1.06rem] font-semibold leading-snug max-w-[22rem]">
-              {title}
-            </h3>
-            <p className="text-sm text-muted-foreground max-w-[22rem]">
-              <span className="font-semibold">
-                {description.split(" ").slice(0, 4).join(" ")}
-              </span>{" "}
-              {description.split(" ").slice(4).join(" ")}
-            </p>
-            <button
-              className="mt-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/40"
-              onClick={(e) => {
-                e.stopPropagation();
-                setFlipped(false);
-              }}
-              aria-label="Close card"
-            >
-              Close
-            </button>
-          </div>
-        </Card>
+      <Card
+  className={[
+    "absolute inset-0 rounded-2xl border-0",
+    "bg-gradient-to-br from-background to-card/90 backdrop-blur-md",
+    "shadow-xl",
+    "motion-safe:rotate-y-180 motion-safe:[backface-visibility:hidden]",
+  ].join(" ")}
+>
+  <div className="h-full w-full flex flex-col items-center justify-center text-center gap-2 p-3 sm:gap-3 sm:p-4">
+    <h3 className="text-sm sm:text-base md:text-[1.06rem] font-semibold leading-snug max-w-[18rem] sm:max-w-[22rem] break-words">
+      {title}
+    </h3>
+    <p className="text-xs sm:text-sm text-muted-foreground max-w-[18rem] sm:max-w-[22rem] break-words">
+      <span className="font-semibold">
+        {description.split(" ").slice(0, 4).join(" ")}
+      </span>{" "}
+      {description.split(" ").slice(4).join(" ")}
+    </p>
+    <button
+      className="mt-2 inline-flex items-center rounded-md px-2 py-1 text-[0.7rem] sm:text-xs font-medium text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/40"
+      onClick={(e) => {
+        e.stopPropagation();
+        setFlipped(false);
+      }}
+      aria-label="Close card"
+    >
+      Close
+    </button>
+  </div>
+</Card>
+
       </div>
 
       {/* motion-reduce fallback (no 3D flip) */}

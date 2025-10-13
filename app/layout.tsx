@@ -6,6 +6,9 @@ import { Playfair_Display, Source_Sans_3 } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
