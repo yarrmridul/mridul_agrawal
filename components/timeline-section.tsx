@@ -98,7 +98,18 @@ export function TimelineSection() {
   );
 
   return (
-    <section className="py-20 px-4">
+    <section className="py-20 px-4 container mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-balance">
+          Professional {" "}
+          <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        Timeline
+          </span>
+        </h2>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+         A journey of continuous learning and professional growth from 2018 to present.
+        </p>
+      </div>
       {/* Unified Timeline (Works on all screen sizes) */}
       <div className="relative">
         {/* Central Timeline Line */}
