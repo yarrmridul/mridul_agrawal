@@ -10,8 +10,8 @@ export function TimelineSection() {
       company: "Freelance",
       description:
         "Started graphic designing journey as a freelancer, creating visual content for various clients.",
-      type: "professional" as const,
-      category: "freelance" as const,
+      type: "professional",
+      category: "freelance",
     },
     {
       year: "2019",
@@ -19,15 +19,15 @@ export function TimelineSection() {
       company: "Freelance",
       description:
         "Expanded into social media marketing and strategic planning for businesses.",
-      type: "professional" as const,
-      category: "freelance" as const,
+      type: "professional",
+      category: "freelance",
     },
     {
       year: "2019",
       title: "CBSE (X)",
       institution: "PRFS (Birla School), Mathura",
       description: "Secured 92%.",
-      type: "academic" as const,
+      type: "academic",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHPvZN1rYMu9QuPOM_WbMgh1KscZH7-NLhAA&s",
     },
     {
@@ -35,9 +35,9 @@ export function TimelineSection() {
       title: "Moodale - Founder & Operations Lead",
       company: "Digital Marketing Agency",
       description:
-        "Founded and scaled a digital marketing and strategy agency, managing 20+ cross-functional team members across multiple client projects.",
-      type: "professional" as const,
-      category: "entrepreneurship" as const,
+        "Founded and scaled a digital marketing and strategy agency, managing 20+ team members across multiple client projects.",
+      type: "professional",
+      category: "entrepreneurship",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4AMGAx0QIkUt2P5whfFk42OMXNT0S4hPJBg&s",
       isHighlighted: true,
     },
@@ -46,7 +46,7 @@ export function TimelineSection() {
       title: "CBSE (XII)",
       institution: "Prasad Public School, Mathura",
       description: "Secured 81.4%",
-      type: "academic" as const,
+      type: "academic",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI8vkXrTMStY-n8rVH4p6via2DB8k7hRtwNw&s",
     },
     {
@@ -55,7 +55,7 @@ export function TimelineSection() {
       institution: "VIT Vellore",
       description:
         "Currently pursuing Bachelor's in Electronics and Communication Engineering (Present).\nCGPA: 8.85",
-      type: "academic" as const,
+      type: "academic",
       logo: "https://i.pinimg.com/474x/2d/1d/36/2d1d3632086bf8503d9d6fe8e44d8427.jpg",
     },
     {
@@ -64,8 +64,8 @@ export function TimelineSection() {
       company: "Navdrishti Group",
       description:
         "Automated editorial workflows and streamlined operations using Google Sheets & Apps Script for content management.",
-      type: "professional" as const,
-      category: "internship" as const,
+      type: "professional",
+      category: "internship",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfECCZHifSdTCjvM6C2eQnR9lBjPgiVB7Iwg&s",
     },
     {
@@ -74,8 +74,8 @@ export function TimelineSection() {
       company: "Techlive Solutions",
       description:
         "Developed responsive websites with UX focus using HTML, CSS, JavaScript and conducted comprehensive UX research.",
-      type: "professional" as const,
-      category: "internship" as const,
+      type: "professional",
+      category: "internship",
       logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw0KkD4neg9y4qMJ1QpzZCZLftZcWorJjP0A&s",
     },
     {
@@ -84,96 +84,84 @@ export function TimelineSection() {
       company: "Hire me to help achieve your next milestone",
       description:
         "Ready to bring innovative solutions, technical expertise, and entrepreneurial mindset to drive your business forward.",
-      type: "professional" as const,
-      category: "opportunity" as const,
+      type: "professional",
+      category: "opportunity",
       isOpportunity: true,
     },
   ];
 
-  const academicMilestones = timelineEntries.filter(
-    (entry) => entry.type === "academic"
-  );
-  const professionalMilestones = timelineEntries.filter(
-    (entry) => entry.type === "professional"
-  );
-
   return (
     <section className="py-20 px-4 container mx-auto">
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-balance">
-          Professional {" "}
+        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
+          Professional{" "}
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-        Timeline
+            Timeline
           </span>
         </h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-         A journey of continuous learning and professional growth from 2018 to present.
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+          A journey of continuous learning and professional growth from 2018 to
+          present.
         </p>
       </div>
-      {/* Unified Timeline (Works on all screen sizes) */}
+
+      {/* Always Desktop-Style Timeline */}
       <div className="relative">
-        {/* Central Timeline Line */}
+        {/* Central Line */}
         <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary via-secondary to-primary rounded-full"></div>
 
-        <div className="space-y-16">
+        <div className="space-y-20">
           {timelineEntries.map((milestone, index) => {
+            const isLeft = index % 2 === 0;
             const isAcademic = milestone.type === "academic";
-            const isHighlighted =
-              "isHighlighted" in milestone && milestone.isHighlighted;
-            const isOpportunity =
-              "isOpportunity" in milestone && milestone.isOpportunity;
-            const isFreelance =
-              "category" in milestone && milestone.category === "freelance";
+            const isOpportunity = milestone.isOpportunity;
+            const isHighlighted = milestone.isHighlighted;
 
             return (
               <div
                 key={index}
-                className="relative flex flex-col sm:flex-row items-center"
+                className={`relative flex flex-col md:flex-row items-center ${
+                  isLeft ? "justify-start" : "justify-end"
+                }`}
               >
-                {/* Timeline Dot */}
+                {/* Dot */}
                 <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
                   <div
-                    className={`${
-                      isFreelance
-                        ? "w-3 h-3 rounded-full bg-muted-foreground border-2 border-white"
-                        : `w-6 h-6 rounded-full border-4 ${
-                            isOpportunity
-                              ? "bg-gradient-to-r from-accent to-primary border-white shadow-lg scale-125 animate-pulse"
-                              : isHighlighted
-                              ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg scale-125"
-                              : isAcademic
-                              ? "bg-primary border-white"
-                              : "bg-secondary border-white"
-                          }`
-                    } transition-all duration-300 hover:scale-110`}
+                    className={`w-6 h-6 rounded-full border-4 transition-all duration-300 ${
+                      isOpportunity
+                        ? "bg-gradient-to-r from-accent to-primary border-white shadow-lg animate-pulse"
+                        : isHighlighted
+                        ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg"
+                        : isAcademic
+                        ? "bg-primary border-white"
+                        : "bg-secondary border-white"
+                    }`}
                   >
-                    {!isFreelance && (
-                      <>
-                        {isOpportunity ? (
-                          <Target className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        ) : isHighlighted ? (
-                          <Star className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        ) : isAcademic ? (
-                          <GraduationCap className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        ) : (
-                          <Briefcase className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        )}
-                      </>
-                    )}
+                    <div className="flex items-center justify-center w-full h-full text-white">
+                      {isOpportunity ? (
+                        <Target className="w-3 h-3" />
+                      ) : isHighlighted ? (
+                        <Star className="w-3 h-3" />
+                      ) : isAcademic ? (
+                        <GraduationCap className="w-3 h-3" />
+                      ) : (
+                        <Briefcase className="w-3 h-3" />
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                {/* Content Card */}
+                {/* Card */}
                 <div
-                  className={`w-full sm:w-5/12 ${
-                    isAcademic ? "sm:pr-8" : "sm:pl-8 sm:ml-auto"
-                  } mt-12 sm:mt-0`}
+                  className={`w-full md:w-5/12 ${
+                    isLeft ? "pr-8 text-right" : "pl-8 text-left"
+                  }`}
                 >
-                  <TimelineCard milestone={milestone} isLeft={isAcademic} />
+                  <TimelineCard milestone={milestone} />
                 </div>
 
-                {/* Year Badge */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 -top-8">
+                {/* Year */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 -top-10">
                   <Badge
                     variant="outline"
                     className={`font-semibold px-3 py-1 ${
@@ -195,164 +183,78 @@ export function TimelineSection() {
   );
 }
 
-interface TimelineCardProps {
-  milestone: any;
-  isLeft: boolean;
-}
-
-function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
+function TimelineCard({ milestone }: { milestone: any }) {
   const isAcademic = milestone.type === "academic";
-  const isFreelance =
-    "category" in milestone && milestone.category === "freelance";
-  const isEntrepreneurship =
-    "category" in milestone && milestone.category === "entrepreneurship";
-  const isInternship =
-    "category" in milestone && milestone.category === "internship";
-  const isOpportunity = "isOpportunity" in milestone && milestone.isOpportunity;
-  const isHighlighted = "isHighlighted" in milestone && milestone.isHighlighted;
-
-  if (isFreelance) {
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center space-x-2">
-          <Briefcase className="w-4 h-4 text-muted-foreground" />
-          <Badge
-            variant="secondary"
-            className="text-xs bg-muted text-muted-foreground"
-          >
-            Freelance
-          </Badge>
-        </div>
-        <h3 className="text-base font-semibold text-card-foreground">
-          {milestone.title}
-        </h3>
-        <p className="text-sm text-muted-foreground">{milestone.company}</p>
-        <p className="text-sm text-card-foreground leading-relaxed">
-          {milestone.description}
-        </p>
-      </div>
-    );
-  }
+  const isOpportunity = milestone.isOpportunity;
+  const isHighlighted = milestone.isHighlighted;
+  const isEntrepreneurship = milestone.category === "entrepreneurship";
+  const isInternship = milestone.category === "internship";
 
   return (
     <Card
-      className={`glassmorphism border-0 hover:bg-card/80 transition-all duration-300 transform hover:scale-105 hover:shadow-xl group ${
+      className={`border-0 shadow-xl hover:shadow-2xl backdrop-blur-md transition-all duration-300 hover:-translate-y-1 ${
         isOpportunity
-          ? "bg-gradient-to-br from-accent/20 to-primary/20 ring-2 ring-accent/50 shadow-lg"
+          ? "bg-gradient-to-br from-accent/20 to-primary/20 ring-2 ring-accent/40"
           : isHighlighted
-          ? "bg-gradient-to-br from-primary/10 to-secondary/10 ring-2 ring-primary/50 shadow-lg"
-          : isEntrepreneurship
-          ? "bg-card/60 border-2 border-primary/30"
-          : isInternship
-          ? "bg-card/40"
+          ? "bg-gradient-to-br from-primary/10 to-secondary/10 ring-2 ring-primary/30"
           : "bg-card/60"
       }`}
     >
-      <CardContent className="p-6 space-y-4">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center space-x-3">
+      <CardContent className="p-6 space-y-3">
+        <div className="flex items-center space-x-3 justify-between">
+          <div className="flex items-center space-x-2">
             {milestone.logo && (
               <img
-                src={milestone.logo || "/placeholder.svg"}
-                alt={`${
-                  isAcademic ? milestone.institution : milestone.company
-                } logo`}
-                className="w-8 h-8 rounded-full object-cover"
+                src={milestone.logo}
+                alt="logo"
+                className="w-10 h-10 rounded-full object-cover shadow-md"
               />
             )}
-            <div className="flex items-center space-x-2">
-              {isAcademic ? (
-                <GraduationCap className="w-5 h-5 text-primary" />
-              ) : isOpportunity ? (
-                <Target className="w-5 h-5 text-accent" />
-              ) : (
-                <Briefcase className="w-5 h-5 text-secondary" />
-              )}
-              <Badge
-                variant="secondary"
-                className={`text-xs ${
-                  isOpportunity
-                    ? "bg-accent text-white border-accent"
-                    : isAcademic
-                    ? "bg-primary text-white border-primary"
-                    : isEntrepreneurship
-                    ? "bg-gradient-to-r from-primary to-secondary text-white border-primary"
-                    : "bg-secondary text-white border-secondary"
-                }`}
-              >
-                {isOpportunity
-                  ? "Opportunity"
-                  : isAcademic
-                  ? "Academic"
-                  : isEntrepreneurship
-                  ? "Entrepreneurship"
-                  : "Internship"}
-              </Badge>
-            </div>
+            <h3
+              className={`text-lg font-bold ${
+                isOpportunity
+                  ? "text-accent"
+                  : isHighlighted
+                  ? "text-primary"
+                  : "text-card-foreground"
+              }`}
+            >
+              {milestone.title}
+            </h3>
           </div>
-          {isHighlighted && !isOpportunity && (
-            <Badge className="bg-gradient-to-r from-primary to-secondary text-white text-xs">
-              Key Achievement
-            </Badge>
-          )}
-          {isOpportunity && (
-            <Badge className="bg-gradient-to-r from-accent to-primary text-white text-xs animate-pulse">
-              Available Now
-            </Badge>
-          )}
-        </div>
-
-        <div>
-          <h3
-            className={`text-lg font-bold group-hover:text-primary transition-colors duration-300 ${
-              isOpportunity
-                ? "text-accent"
-                : isHighlighted
-                ? "text-primary"
-                : "text-card-foreground"
+          <Badge
+            variant="secondary"
+            className={`text-xs ${
+              isAcademic
+                ? "bg-primary text-white"
+                : isEntrepreneurship
+                ? "bg-gradient-to-r from-primary to-secondary text-white"
+                : isInternship
+                ? "bg-secondary text-white"
+                : isOpportunity
+                ? "bg-accent text-white"
+                : "bg-muted text-muted-foreground"
             }`}
           >
-            {milestone.title}
-          </h3>
-          <p className="text-sm font-medium text-muted-foreground">
-            {isAcademic ? milestone.institution : milestone.company}
-          </p>
+            {isAcademic
+              ? "Academic"
+              : isEntrepreneurship
+              ? "Entrepreneurship"
+              : isInternship
+              ? "Internship"
+              : isOpportunity
+              ? "Opportunity"
+              : "Professional"}
+          </Badge>
         </div>
 
-        <p className="text-sm text-card-foreground leading-relaxed whitespace-pre-line">
-          {milestone.description}
+        <p className="text-sm text-muted-foreground">
+          {isAcademic ? milestone.institution : milestone.company}
         </p>
 
-        {isAcademic && (
-          <div className="pt-3 border-t border-primary/20">
-            <Badge
-              variant="outline"
-              className="text-xs bg-primary/10 text-primary border-primary"
-            >
-              {milestone.year === "2019" && "CBSE (X): 2019"}
-              {milestone.year === "2021" && "CBSE 12: 2021"}
-              {milestone.year === "2022" && "BTech: 2022-Present"}
-            </Badge>
-          </div>
-        )}
-
-        {isHighlighted && !isOpportunity && (
-          <div className="pt-3 border-t border-primary/20">
-            <p className="text-xs text-primary font-medium">
-              🚀 Leading achievement - Successfully scaled from startup to
-              established agency
-            </p>
-          </div>
-        )}
-
-        {isOpportunity && (
-          <div className="pt-3 border-t border-accent/30">
-            <p className="text-xs text-accent font-medium">
-              💼 Let's discuss how I can contribute to your team's success and
-              drive innovation
-            </p>
-          </div>
-        )}
+        <p className="text-sm leading-relaxed text-card-foreground whitespace-pre-line">
+          {milestone.description}
+        </p>
       </CardContent>
     </Card>
   );
