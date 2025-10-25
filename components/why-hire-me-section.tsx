@@ -24,7 +24,7 @@ export function WhyHireMeSection() {
     {
       title: "Not Just Projects — Real Market Experience",
       description:
-        "Unlike most freshers, you’ve actually handled clients, campaigns, and business outcomes in the real world. That’s a huge edge.",
+        "Unlike most freshers, you've actually handled clients, campaigns, and business outcomes in the real world. That's a huge edge.",
     },
     {
       title: "Entrepreneurship = My Real-Time MBA",
@@ -39,7 +39,7 @@ export function WhyHireMeSection() {
     {
       title: "Bridge Between Strategy and Execution",
       description:
-      "I don’t just plan strategies — I roll up my sleeves and make them happen with processes, automation, and systems."
+      "I don't just plan strategies — I roll up my sleeves and make them happen with processes, automation, and systems."
     },
     {
       title: "Wore Multiple Hats When It Mattered",
@@ -102,7 +102,9 @@ function FlipCard({
   index: number;
 }) {
   const [flipped, setFlipped] = useState(false);
+  const [isHolding, setIsHolding] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+  const holdTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // In-view reveal (no libs)
   useEffect(() => {
@@ -123,6 +125,34 @@ function FlipCard({
     return () => obs.disconnect();
   }, []);
 
+  // Handle touch events for mobile
+  const handleTouchStart = () => {
+    setIsHolding(true);
+    setFlipped(true);
+    
+    // Clear any existing timeout
+    if (holdTimeout.current) {
+      clearTimeout(holdTimeout.current);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    // Set a small delay to ensure the touch event is properly handled
+    holdTimeout.current = setTimeout(() => {
+      setIsHolding(false);
+      setFlipped(false);
+    }, 100);
+  };
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (holdTimeout.current) {
+        clearTimeout(holdTimeout.current);
+      }
+    };
+  }, []);
+
   return (
     <div
       ref={ref}
@@ -140,6 +170,10 @@ function FlipCard({
         }
         if (e.key === "Escape") setFlipped(false);
       }}
+      // Touch events for mobile hold functionality
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       role="button"
       tabIndex={0}
       aria-expanded={flipped}
@@ -156,7 +190,7 @@ function FlipCard({
           "transition-[transform,box-shadow] ease-out",
           "group-hover:-rotate-1 group-hover:scale-[1.015]",
           "group-hover:motion-safe:rotate-y-180",
-          flipped ? "motion-safe:rotate-y-180" : "",
+          (flipped || isHolding) ? "motion-safe:rotate-y-180" : "",
         ].join(" ")}
       >
         {/* FRONT — big, attractive title (no icon/emoji) */}
