@@ -31,7 +31,7 @@ export function HeroSection() {
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Mridul.</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto text-pretty animate-fade-in delay-300">
-            I’m the kind of person who turns chaos into clean systems and ideas into action. I love bridging the gap
+            I'm the kind of person who turns chaos into clean systems and ideas into action. I love bridging the gap
             between tech and business — because spreadsheets deserve some personality, and strategies deserve some
             speed.
           </p>
@@ -40,7 +40,7 @@ export function HeroSection() {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-500">
           <Button
-            onClick={scrollToContact}   // ← added
+            onClick={scrollToContact}
             size="lg"
             className="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
           >
@@ -57,10 +57,9 @@ export function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Download Resume.
+              Download Resume
             </a>
           </Button>
-
         </div>
 
         {/* Social Media Icons */}
@@ -69,7 +68,7 @@ export function HeroSection() {
           <SocialIcon icon={Github} href="https://github.com/yarrmridul" label="GitHub" />
           <SocialIcon
             icon={SiWhatsapp}
-            href="https://wa.me/917983738443"   // your WhatsApp link; use your number without + and leading zeros
+            href="https://wa.me/917983738443"
             label="WhatsApp"
           />
           <SocialIcon
@@ -113,8 +112,8 @@ function SocialIcon({ icon: Icon, href, label }: SocialIconProps) {
     <a
       href={href}
       aria-label={label}
-      target="_blank"                // 👈 always open in new tab
-      rel="noopener noreferrer"     // 👈 security best practice
+      target="_blank"
+      rel="noopener noreferrer"
       className="w-14 h-14 rounded-full bg-card/60 glassmorphism flex items-center justify-center text-card-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 transform hover:scale-110 hover:shadow-lg group"
     >
       <Icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />

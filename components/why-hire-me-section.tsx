@@ -103,6 +103,7 @@ function FlipCard({
 }) {
   const [flipped, setFlipped] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+  const isHeld = useRef(false);
 
   // In-view reveal (no libs)
   useEffect(() => {
@@ -123,6 +124,39 @@ function FlipCard({
     return () => obs.disconnect();
   }, []);
 
+  // Handle touch events for mobile
+  const handleTouchStart = () => {
+    isHeld.current = true;
+    setFlipped(true);
+  };
+
+  const handleTouchEnd = () => {
+    isHeld.current = false;
+    setFlipped(false);
+  };
+
+  // Handle mouse events for desktop hold effect
+  const handleMouseDown = () => {
+    isHeld.current = true;
+    setFlipped(true);
+  };
+
+  const handleMouseUp = () => {
+    // Only flip back if it was held (not a click)
+    if (isHeld.current) {
+      isHeld.current = false;
+      setFlipped(false);
+    }
+  };
+
+  // Handle mouse leaving the card area
+  const handleMouseLeave = () => {
+    if (isHeld.current) {
+      isHeld.current = false;
+      setFlipped(false);
+    }
+  };
+
   return (
     <div
       ref={ref}
@@ -132,14 +166,28 @@ function FlipCard({
         "[&.in-view]:opacity-100 [&.in-view]:translate-y-0",
       ].join(" ")}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
-      onClick={() => setFlipped((v) => !v)}
+      onClick={() => {
+        // Only toggle if not held (prevents conflict with hold effect)
+        if (!isHeld.current) {
+          setFlipped((v: boolean) => !v);
+        }
+      }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          setFlipped((v) => !v);
+          setFlipped((v: boolean) => !v);
         }
         if (e.key === "Escape") setFlipped(false);
       }}
+      // Touch events for mobile
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      // Mouse events for desktop hold effect
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
+      // Prevent context menu on hold
+      onContextMenu={(e) => e.preventDefault()}
       role="button"
       tabIndex={0}
       aria-expanded={flipped}

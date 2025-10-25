@@ -35,7 +35,12 @@ export function ScrollAnimation({ children, className = "", animation = "fade-up
       observer.observe(elementRef.current)
     }
 
-    return () => observer.disconnect()
+    return () => {
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current)
+      }
+      observer.disconnect()
+    }
   }, [delay])
 
   return (
