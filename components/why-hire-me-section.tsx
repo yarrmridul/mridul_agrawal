@@ -106,6 +106,9 @@ function FlipCard({
   const ref = useRef<HTMLDivElement | null>(null);
   const holdTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  // Track if last interaction was touch so we can ignore the synthetic click that follows touch.
+  const lastTouchRef = useRef(false);
+
   // In-view reveal (no libs)
   useEffect(() => {
     const el = ref.current;
@@ -125,23 +128,44 @@ function FlipCard({
     return () => obs.disconnect();
   }, []);
 
-  // Handle touch events for mobile
-  const handleTouchStart = () => {
+  // Handle touch events for mobile: flip while holding, revert on release
+  const handleTouchStart = (e?: React.TouchEvent) => {
+    lastTouchRef.current = true;
     setIsHolding(true);
     setFlipped(true);
-    
+
     // Clear any existing timeout
     if (holdTimeout.current) {
       clearTimeout(holdTimeout.current);
+      holdTimeout.current = null;
     }
+
+    // Optionally preventDefault on very small taps to avoid some browser quirks.
+    // Do not prevent default generally, because that blocks scrolling.
+    // e?.preventDefault();
   };
 
-  const handleTouchEnd = () => {
-    // Set a small delay to ensure the touch event is properly handled
+  const handleTouchEnd = (e?: React.TouchEvent) => {
+    // Slight delay ensures any native touch handling completes before we flip back.
+    if (holdTimeout.current) clearTimeout(holdTimeout.current);
     holdTimeout.current = setTimeout(() => {
       setIsHolding(false);
       setFlipped(false);
-    }, 100);
+      // Keep lastTouchRef true briefly so we can detect & ignore the synthetic click.
+      // We'll clear it on the next click handler call.
+    }, 50);
+  };
+
+  // Also support pointer events (useful for stylus / some browsers)
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") {
+      handleTouchStart();
+    }
+  };
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") {
+      handleTouchEnd();
+    }
   };
 
   // Clean up timeout on unmount
@@ -162,7 +186,16 @@ function FlipCard({
         "[&.in-view]:opacity-100 [&.in-view]:translate-y-0",
       ].join(" ")}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
-      onClick={() => setFlipped((v) => !v)}
+      onClick={(e) => {
+        // If the last interaction was touch, ignore the synthetic click and clear the flag.
+        if (lastTouchRef.current) {
+          lastTouchRef.current = false;
+          e.stopPropagation();
+          return;
+        }
+        // Otherwise toggle (desktop mouse / keyboard activation)
+        setFlipped((v) => !v);
+      }}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -174,6 +207,8 @@ function FlipCard({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={handleTouchEnd}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
       role="button"
       tabIndex={0}
       aria-expanded={flipped}
