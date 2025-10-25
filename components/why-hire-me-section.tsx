@@ -9,14 +9,46 @@ export function WhyHireMeSection() {
     "Because I don’t just use AI — I build with it, think with it, and scale with it";
 
   const benefits = [
-    { title: "Not Just Projects — Real Market Experience", description: "Unlike most freshers, you’ve actually handled clients, campaigns, and business outcomes in the real world. That’s a huge edge." },
-    { title: "Entrepreneurship = My Real-Time MBA", description: "Running Moodale taught me sales, marketing, client handling, strategy, and execution — lessons more practical than any MBA classroom." },
-    { title: "Communication as a Superpower", description: "Working with clients, leading teams, and presenting strategies sharpened my ability to communicate persuasively and clearly." },
-    { title: "Bridge Between Strategy and Execution", description: "I don’t just plan strategies — I roll up my sleeves and make them happen with processes, automation, and systems." },
-    { title: "Wore Multiple Hats When It Mattered", description: "Design, social ads, web, data, ops, sales, marketing—whatever moved the work forward, I owned it." },
-    { title: "AI as My Right Hand", description: "I leverage AI daily to work smarter, automate processes, and scale creativity — making it a natural extension of how I build and solve problems." },
-    { title: "Leadership Before Graduation", description: "Managed a 20+ member team and scaled client campaigns — proving I can handle responsibility early." },
-    { title: "Client-Ready From Day One", description: "Comfortable owning communication, deadlines, and delivery without hand-holding." },
+    {
+      title: "Not Just Projects — Real Market Experience",
+      description:
+        "Unlike most freshers, you’ve actually handled clients, campaigns, and business outcomes in the real world. That’s a huge edge.",
+    },
+    {
+      title: "Entrepreneurship = My Real-Time MBA",
+      description:
+        "Running Moodale taught me sales, marketing, client handling, strategy, and execution — lessons more practical than any MBA classroom.",
+    },
+    {
+      title: "Communication as a Superpower",
+      description:
+        "Working with clients, leading teams, and presenting strategies sharpened my ability to communicate persuasively and clearly.",
+    },
+    {
+      title: "Bridge Between Strategy and Execution",
+      description:
+        "I don’t just plan strategies — I roll up my sleeves and make them happen with processes, automation, and systems.",
+    },
+    {
+      title: "Wore Multiple Hats When It Mattered",
+      description:
+        "Design, social ads, web, data, ops, sales, marketing—whatever moved the work forward, I owned it.",
+    },
+    {
+      title: "AI as My Right Hand",
+      description:
+        "I leverage AI daily to work smarter, automate processes, and scale creativity — making it a natural extension of how I build and solve problems.",
+    },
+    {
+      title: "Leadership Before Graduation",
+      description:
+        "Managed a 20+ member team and scaled client campaigns — proving I can handle responsibility early.",
+    },
+    {
+      title: "Client-Ready From Day One",
+      description:
+        "Comfortable owning communication, deadlines, and delivery without hand-holding.",
+    },
   ];
 
   return (
@@ -45,7 +77,7 @@ export function WhyHireMeSection() {
               title={b.title}
               description={b.description}
               index={i}
-              className={i < 6 ? "block" : "hidden sm:block"} // Only show first 6 cards on mobile
+              className={i < 6 ? "block" : "hidden sm:block"} // Show 6 on mobile
             />
           ))}
         </div>
@@ -68,6 +100,7 @@ function FlipCard({
   const [flipped, setFlipped] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
+  // Fade-in animation when card enters viewport
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
@@ -86,21 +119,25 @@ function FlipCard({
     return () => obs.disconnect();
   }, []);
 
+  // Auto flip back after 3 seconds
+  useEffect(() => {
+    if (flipped) {
+      const timer = setTimeout(() => setFlipped(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [flipped]);
+
   return (
     <div
       ref={ref}
       className={[
-        "group relative h-56 sm:h-56 md:h-60 cursor-pointer select-none [perspective:1200px]",
+        "group relative h-56 sm:h-56 md:h-64 lg:h-72 cursor-pointer select-none [perspective:1200px]",
         "opacity-0 translate-y-6 transition-all duration-700",
         "[&.in-view]:opacity-100 [&.in-view]:translate-y-0",
         className,
       ].join(" ")}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
       onClick={() => setFlipped((v) => !v)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") setFlipped((v) => !v);
-        if (e.key === "Escape") setFlipped(false);
-      }}
       role="button"
       tabIndex={0}
       aria-expanded={flipped}
@@ -119,7 +156,7 @@ function FlipCard({
       >
         {/* FRONT */}
         <Card className="absolute inset-0 rounded-2xl border-0 bg-card/60 backdrop-blur-md shadow-lg hover:shadow-xl motion-safe:[backface-visibility:hidden]">
-          <div className="h-full flex items-center justify-center text-center p-4 sm:p-6">
+          <div className="h-full flex items-center justify-center text-center p-4 sm:p-5 md:p-6 lg:p-8">
             <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-extrabold leading-tight max-w-[22rem]">
               <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
                 {title}
@@ -130,15 +167,17 @@ function FlipCard({
 
         {/* BACK */}
         <Card className="absolute inset-0 rounded-2xl border-0 bg-gradient-to-br from-background to-card/90 backdrop-blur-md shadow-xl motion-safe:rotate-y-180 motion-safe:[backface-visibility:hidden]">
-          <div className="h-full w-full p-4 sm:p-6 flex flex-col items-center justify-center text-center gap-2 sm:gap-3">
+          <div className="h-full w-full p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col items-center justify-center text-center gap-2 sm:gap-3">
             <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold leading-snug max-w-[22rem]">
               {title}
             </h3>
             <p className="text-xs sm:text-sm md:text-base lg:text-base text-muted-foreground max-w-[22rem]">
               {description}
             </p>
+
+            {/* Close button */}
             <button
-              className="mt-2 inline-flex items-center rounded-md px-2 py-1 text-xs sm:text-sm md:text-sm font-medium text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/40"
+              className="mt-3 inline-flex items-center rounded-md px-3 py-1 text-xs sm:text-sm md:text-sm font-medium text-primary border border-primary/40 hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/40"
               onClick={(e) => {
                 e.stopPropagation();
                 setFlipped(false);
