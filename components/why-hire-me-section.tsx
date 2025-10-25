@@ -104,10 +104,7 @@ function FlipCard({
   const [flipped, setFlipped] = useState(false);
   const [isHolding, setIsHolding] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
-  const holdTimeout = useRef<NodeJS.Timeout | null>(null);
-
-  // Track if last interaction was touch so we can ignore the synthetic click that follows touch.
-  const lastTouchRef = useRef(false);
+  const lastPointerWasTouch = useRef(false);
 
   // In-view reveal (no libs)
   useEffect(() => {
@@ -128,54 +125,61 @@ function FlipCard({
     return () => obs.disconnect();
   }, []);
 
-  // Handle touch events for mobile: flip while holding, revert on release
-  const handleTouchStart = (e?: React.TouchEvent) => {
-    lastTouchRef.current = true;
-    setIsHolding(true);
-    setFlipped(true);
-
-    // Clear any existing timeout
-    if (holdTimeout.current) {
-      clearTimeout(holdTimeout.current);
-      holdTimeout.current = null;
-    }
-
-    // Optionally preventDefault on very small taps to avoid some browser quirks.
-    // Do not prevent default generally, because that blocks scrolling.
-    // e?.preventDefault();
+  // Helper used for global pointerup
+  const finishTouch = () => {
+    setIsHolding(false);
+    setFlipped(false);
+    lastPointerWasTouch.current = false;
   };
 
-  const handleTouchEnd = (e?: React.TouchEvent) => {
-    // Slight delay ensures any native touch handling completes before we flip back.
-    if (holdTimeout.current) clearTimeout(holdTimeout.current);
-    holdTimeout.current = setTimeout(() => {
-      setIsHolding(false);
-      setFlipped(false);
-      // Keep lastTouchRef true briefly so we can detect & ignore the synthetic click.
-      // We'll clear it on the next click handler call.
-    }, 50);
-  };
-
-  // Also support pointer events (useful for stylus / some browsers)
+  // Handle touch interactions with global pointerup detection
+  // This ensures we detect finger lifts even when they happen outside the card area
   const handlePointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "touch") {
-      handleTouchStart();
-    }
-  };
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (e.pointerType === "touch") {
-      handleTouchEnd();
+      lastPointerWasTouch.current = true;
+      setIsHolding(true);
+      setFlipped(true);
+
+      // Add a one-time global pointerup so we detect the lift even when it happens outside this element.
+      const onWindowPointerUp = (ev: PointerEvent) => {
+        if (ev.pointerType === "touch") {
+          finishTouch();
+        } else {
+          // still clear flag for safety
+          lastPointerWasTouch.current = false;
+          setIsHolding(false);
+        }
+      };
+      window.addEventListener("pointerup", onWindowPointerUp, { once: true });
+      
+      // Also guard for pointercancel
+      const onWindowPointerCancel = (ev: PointerEvent) => {
+        finishTouch();
+      };
+      window.addEventListener("pointercancel", onWindowPointerCancel, { once: true });
     }
   };
 
-  // Clean up timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (holdTimeout.current) {
-        clearTimeout(holdTimeout.current);
-      }
-    };
-  }, []);
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") {
+      finishTouch();
+    }
+  };
+
+  const handlePointerCancel = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") {
+      finishTouch();
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (lastPointerWasTouch.current) {
+      // ignore synthetic click after touch; don't toggle
+      lastPointerWasTouch.current = false;
+      return;
+    }
+    setFlipped((v) => !v);
+  };
 
   return (
     <div
@@ -186,16 +190,7 @@ function FlipCard({
         "[&.in-view]:opacity-100 [&.in-view]:translate-y-0",
       ].join(" ")}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
-      onClick={(e) => {
-        // If the last interaction was touch, ignore the synthetic click and clear the flag.
-        if (lastTouchRef.current) {
-          lastTouchRef.current = false;
-          e.stopPropagation();
-          return;
-        }
-        // Otherwise toggle (desktop mouse / keyboard activation)
-        setFlipped((v) => !v);
-      }}
+      onClick={handleClick}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -203,12 +198,9 @@ function FlipCard({
         }
         if (e.key === "Escape") setFlipped(false);
       }}
-      // Touch events for mobile hold functionality
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchEnd}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
       role="button"
       tabIndex={0}
       aria-expanded={flipped}
@@ -228,7 +220,7 @@ function FlipCard({
           (flipped || isHolding) ? "motion-safe:rotate-y-180" : "",
         ].join(" ")}
       >
-        {/* FRONT — big, attractive title (no icon/emoji) */}
+        {/* FRONT */}
         <Card
           className={[
             "absolute inset-0 rounded-2xl border-0",
@@ -259,7 +251,7 @@ function FlipCard({
           />
         </Card>
 
-        {/* BACK — title + description (no icon/emoji) */}
+        {/* BACK */}
         <Card
           className={[
             "absolute inset-0 rounded-2xl border-0",
@@ -283,6 +275,7 @@ function FlipCard({
               onClick={(e) => {
                 e.stopPropagation();
                 setFlipped(false);
+                lastPointerWasTouch.current = false;
               }}
               aria-label="Close card"
             >
@@ -292,7 +285,7 @@ function FlipCard({
         </Card>
       </div>
 
-      {/* motion-reduce fallback (no 3D flip) */}
+      {/* motion-reduce fallback */}
       <style jsx>{`
         @media (prefers-reduced-motion: reduce) {
           .group:hover .motion-safe\\:rotate-y-180 {
