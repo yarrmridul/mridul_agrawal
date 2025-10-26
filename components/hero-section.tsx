@@ -8,7 +8,7 @@ import { SiWhatsapp } from "react-icons/si"
 
 export function HeroSection() {
   const scrollToAbout = () => {
-    const aboutSection = document.getElementById("about")
+    const aboutSection = document.getElementById("experience")
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: "smooth" })
     }

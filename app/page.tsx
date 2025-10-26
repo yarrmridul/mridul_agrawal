@@ -1,13 +1,13 @@
-import { HeroSection } from "@/components/hero-section"
-import { WhyHireMeSection } from "@/components/why-hire-me-section"
-import { ExperienceSection } from "@/components/experience-section"
-import { ProjectsSection } from "@/components/projects-section"
-import { TimelineSection } from "@/components/timeline-section"
-import { SkillsSection } from "@/components/skills-section"
-import { ContactSection } from "@/components/contact-section"
-import { Navigation } from "@/components/navigation"
-import { ScrollAnimation } from "@/components/scroll-animations"
-import { Footer } from "@/components/footer"
+import { HeroSection } from "@/components/hero-section";
+import { WhyHireMeSection } from "@/components/why-hire-me-section";
+import { ExperienceSection } from "@/components/experience-section";
+import { ProjectsSection } from "@/components/projects-section";
+import { TimelineSection } from "@/components/timeline-section";
+import { SkillsSection } from "@/components/skills-section";
+import { ContactSection } from "@/components/contact-section";
+import { Navigation } from "@/components/navigation";
+import { ScrollAnimation } from "@/components/scroll-animations";
+import { Footer } from "@/components/footer";
 
 export default function HomePage() {
   return (
@@ -16,12 +16,6 @@ export default function HomePage() {
       <main className="min-h-screen gradient-bg">
         <section id="hero">
           <HeroSection />
-        </section>
-
-        <section id="about">
-          <ScrollAnimation animation="fade-up">
-            <WhyHireMeSection />
-          </ScrollAnimation>
         </section>
 
         <section id="experience">
@@ -41,7 +35,11 @@ export default function HomePage() {
             <TimelineSection />
           </ScrollAnimation>
         </section>
-
+        <section id="about">
+          <ScrollAnimation animation="fade-up">
+            <WhyHireMeSection />
+          </ScrollAnimation>
+        </section>
         <section id="skills">
           <ScrollAnimation animation="slide-right" delay={200}>
             <SkillsSection />
@@ -56,5 +54,5 @@ export default function HomePage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

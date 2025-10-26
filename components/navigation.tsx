@@ -11,10 +11,10 @@ export function Navigation() {
 
   const sections = [
     { id: "hero", label: "Home" },
-    { id: "about", label: "Why Me" },
     { id: "experience", label: "Experience" },
     { id: "projects", label: "Projects" },
     { id: "timeline", label: "Timeline" },
+    { id: "about", label: "Why Me" },
     { id: "skills", label: "Skills" },
     { id: "contact", label: "Contact" },
   ]
