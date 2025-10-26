@@ -15,7 +15,7 @@ export function WhyHireMeSection() {
         "Unlike most freshers, you’ve actually handled clients, campaigns, and business outcomes in the real world. That’s a huge edge.",
     },
     {
-      title: "Entrepreneurship = My Real-Time MBA",
+      title: "Entrepreneurship= My Real-Time MBA",
       description:
         "Running Moodale taught me sales, marketing, client handling, strategy, and execution — lessons more practical than any MBA classroom.",
     },
@@ -131,7 +131,7 @@ function FlipCard({
     <div
       ref={ref}
       className={[
-        "group relative h-56 sm:h-56 md:h-64 lg:h-72 cursor-pointer select-none [perspective:1200px]",
+        "group relative h-48 sm:h-48 md:h-56 lg:h-60 cursor-pointer select-none [perspective:1200px]",
         "opacity-0 translate-y-6 transition-all duration-700",
         "[&.in-view]:opacity-100 [&.in-view]:translate-y-0",
         className,
@@ -155,9 +155,9 @@ function FlipCard({
         ].join(" ")}
       >
         {/* FRONT */}
-        <Card className="absolute inset-0 rounded-2xl border-0 bg-card/60 backdrop-blur-md shadow-lg hover:shadow-xl motion-safe:[backface-visibility:hidden]">
+        <Card className="absolute inset-0 rounded-2xl border-0 bg-card/60 backdrop-blur-md shadow-lg hover:shadow-xl motion-safe:[backface-visibility:hidden] max-w-[18rem] mx-auto h-full">
           <div className="h-full flex items-center justify-center text-center p-4 sm:p-5 md:p-6 lg:p-8">
-            <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-extrabold leading-tight max-w-[22rem]">
+            <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-extrabold leading-tight max-w-[16rem]">
               <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
                 {title}
               </span>
@@ -166,18 +166,17 @@ function FlipCard({
         </Card>
 
         {/* BACK */}
-        <Card className="absolute inset-0 rounded-2xl border-0 bg-gradient-to-br from-background to-card/90 backdrop-blur-md shadow-xl motion-safe:rotate-y-180 motion-safe:[backface-visibility:hidden]">
-          <div className="h-full w-full p-4 sm:p-5 md:p-6 lg:p-8 flex flex-col items-center justify-center text-center gap-2 sm:gap-3">
-            <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold leading-snug max-w-[22rem]">
+        <Card className="absolute inset-0 rounded-2xl border-0 bg-gradient-to-br from-background to-card/90 backdrop-blur-md shadow-xl motion-safe:rotate-y-180 motion-safe:[backface-visibility:hidden] max-w-[18rem] mx-auto h-full">
+          <div className="h-full w-full p-4 flex flex-col items-center justify-center text-center gap-2 sm:gap-3">
+            <h3 className=" mt-5 text-xs sm:text-sm md:text-base lg:text-lg font-semibold leading-snug max-w-full break-words">
               {title}
             </h3>
-            <p className="text-xs sm:text-sm md:text-base lg:text-base text-muted-foreground max-w-[22rem]">
+            <p className="text-xs sm:text-sm md:text-base lg:text-base text-muted-foreground max-w-full break-words">
               {description}
             </p>
 
-            {/* Close button */}
             <button
-              className="mt-3 inline-flex items-center rounded-md px-3 py-1 text-xs sm:text-sm md:text-sm font-medium text-primary border border-primary/40 hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/40"
+              className="mb-5 inline-flex items-center rounded-md px-3 py-1 text-xs sm:text-sm md:text-sm font-medium text-primary border border-primary/40 hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/40"
               onClick={(e) => {
                 e.stopPropagation();
                 setFlipped(false);
