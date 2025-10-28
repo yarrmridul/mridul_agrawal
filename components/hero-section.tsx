@@ -1,25 +1,23 @@
-"use client"
-
-import type React from "react"
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, Phone, ArrowDown } from "lucide-react"
-import { SiWhatsapp } from "react-icons/si"
-
+"use client";
+import Link from "next/link";
+import type React from "react";
+import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail, Phone, ArrowDown } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 
 export function HeroSection() {
   const scrollToAbout = () => {
-    const aboutSection = document.getElementById("experience")
+    const aboutSection = document.getElementById("experience");
     if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" })
+      aboutSection.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   // NEW: scroll to #contact
   const scrollToContact = () => {
-    const el = document.getElementById("contact")
-    if (el) el.scrollIntoView({ behavior: "smooth" })
-  }
-
+    const el = document.getElementById("contact");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4 py-20 relative">
@@ -28,24 +26,27 @@ export function HeroSection() {
         <div className="space-y-6 animate-fade-in">
           <h1 className="text-6xl md:text-8xl font-serif font-bold text-balance animate-slide-up">
             Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Mridul.</span>
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Mridul.
+            </span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto text-pretty animate-fade-in delay-300">
-            I’m the kind of person who turns chaos into clean systems and ideas into action. I love bridging the gap
-            between tech and business — because spreadsheets deserve some personality, and strategies deserve some
-            speed.
+            I’m the kind of person who turns chaos into roadmaps and ideas into
+            impact. I live where user pain meets business gain — translating “we
+            should build this” into “wow, this works.”
           </p>
         </div>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-500">
-          <Button
-            onClick={scrollToContact}   // ← added
-            size="lg"
-            className="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-          >
-            Hire Me
-          </Button>
+           <Link href="/about" passHref>
+        <Button
+          size="lg"
+          className="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+        >
+          About Me
+        </Button>
+      </Link>
           <Button
             asChild
             variant="outline"
@@ -60,16 +61,23 @@ export function HeroSection() {
               Download Resume.
             </a>
           </Button>
-
         </div>
 
         {/* Social Media Icons */}
         <div className="flex justify-center items-center gap-6 pt-8 animate-fade-in delay-700">
-          <SocialIcon icon={Linkedin} href="https://www.linkedin.com/in/mridul-agrawal-62029522b" label="LinkedIn" />
-          <SocialIcon icon={Github} href="https://github.com/yarrmridul" label="GitHub" />
+          <SocialIcon
+            icon={Linkedin}
+            href="https://www.linkedin.com/in/mridul-agrawal-62029522b"
+            label="LinkedIn"
+          />
+          <SocialIcon
+            icon={Github}
+            href="https://github.com/yarrmridul"
+            label="GitHub"
+          />
           <SocialIcon
             icon={SiWhatsapp}
-            href="https://wa.me/917983738443"   // your WhatsApp link; use your number without + and leading zeros
+            href="https://wa.me/917983738443" // your WhatsApp link; use your number without + and leading zeros
             label="WhatsApp"
           />
           <SocialIcon
@@ -98,14 +106,14 @@ export function HeroSection() {
           <ArrowDown className="w-5 h-5" />
         </div>
       </button>
-    </section >
-  )
+    </section>
+  );
 }
 
 interface SocialIconProps {
-  icon: React.ElementType
-  href: string
-  label: string
+  icon: React.ElementType;
+  href: string;
+  label: string;
 }
 
 function SocialIcon({ icon: Icon, href, label }: SocialIconProps) {
@@ -113,11 +121,11 @@ function SocialIcon({ icon: Icon, href, label }: SocialIconProps) {
     <a
       href={href}
       aria-label={label}
-      target="_blank"                // 👈 always open in new tab
-      rel="noopener noreferrer"     // 👈 security best practice
+      target="_blank" // 👈 always open in new tab
+      rel="noopener noreferrer" // 👈 security best practice
       className="w-14 h-14 rounded-full bg-card/60 glassmorphism flex items-center justify-center text-card-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 transform hover:scale-110 hover:shadow-lg group"
     >
       <Icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
     </a>
-  )
+  );
 }
