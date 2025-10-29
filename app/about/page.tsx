@@ -69,16 +69,7 @@ export default function AboutPage() {
         {/* Right Section (Experience Text) */}
 
         <div className="space-y-4 text-center md:text-left">
-          <div className="w-50 h-50 relative rounded-2xl overflow-hidden shadow-md m-auto mb-5">
-            <Image
-              src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400"
-              alt="Profile Avatar"
-              fill
-              className="object-cover"
-            />
-            {/* <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 hover:opacity-10 transition-all duration-300"> */}
-            <div>{/* <ArrowUpRight className="text-white" size={30} /> */}</div>
-          </div>
+         
           <p className="text-gray-700 text-base md:text-lg leading-relaxed pt-5 mt-5">
             I’ve always had a thing for figuring out how things work — and how
             they could work better. That curiosity turned into side gigs back in
