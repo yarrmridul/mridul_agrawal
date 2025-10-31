@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { GraduationCap, Briefcase, Star, Calendar, Target } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { GraduationCap, Briefcase, Star, Calendar, Target } from "lucide-react";
 
 export function TimelineSection() {
   const timelineEntries = [
@@ -8,7 +8,8 @@ export function TimelineSection() {
       year: "2018",
       title: "Started Graphic Designing",
       company: "Freelance",
-      description: "Started graphic designing journey as a freelancer, creating visual content for various clients.",
+      description:
+        "Started graphic designing journey as a freelancer, creating visual content for various clients.",
       type: "professional" as const,
       category: "freelance" as const,
     },
@@ -16,7 +17,8 @@ export function TimelineSection() {
       year: "2019",
       title: "Started Social Media Marketing & Content Strategy",
       company: "Freelance",
-      description: "Expanded into social media marketing and strategic planning for businesses.",
+      description:
+        "Expanded into social media marketing and strategic planning for businesses.",
       type: "professional" as const,
       category: "freelance" as const,
     },
@@ -51,7 +53,8 @@ export function TimelineSection() {
       year: "2022",
       title: "B.E. Electronics & Communication Engineering",
       institution: "VIT Vellore",
-      description: "Currently pursuing Bachelor's in Electronics and Communication Engineering (Present).\nCGPA: 8.85",
+      description:
+        "Currently pursuing Bachelor's in Electronics and Communication Engineering (Present).\nCGPA: 8.85",
       type: "academic" as const,
       logo: "https://i.pinimg.com/474x/2d/1d/36/2d1d3632086bf8503d9d6fe8e44d8427.jpg",
     },
@@ -85,10 +88,14 @@ export function TimelineSection() {
       category: "opportunity" as const,
       isOpportunity: true,
     },
-  ]
+  ];
 
-  const academicMilestones = timelineEntries.filter((entry) => entry.type === "academic")
-  const professionalMilestones = timelineEntries.filter((entry) => entry.type === "professional")
+  const academicMilestones = timelineEntries.filter(
+    (entry) => entry.type === "academic"
+  );
+  const professionalMilestones = timelineEntries.filter(
+    (entry) => entry.type === "professional"
+  );
 
   return (
     <section className="py-20 px-4">
@@ -96,10 +103,13 @@ export function TimelineSection() {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-balance">
             Professional{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Timeline</span>
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Timeline
+            </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            A journey of continuous learning and professional growth from 2018 to present
+            A journey of continuous learning and professional growth from 2018
+            to present
           </p>
         </div>
 
@@ -111,10 +121,13 @@ export function TimelineSection() {
 
             <div className="space-y-16">
               {timelineEntries.map((milestone, index) => {
-                const isAcademic = milestone.type === "academic"
-                const isHighlighted = "isHighlighted" in milestone && milestone.isHighlighted
-                const isOpportunity = "isOpportunity" in milestone && milestone.isOpportunity
-                const isFreelance = "category" in milestone && milestone.category === "freelance"
+                const isAcademic = milestone.type === "academic";
+                const isHighlighted =
+                  "isHighlighted" in milestone && milestone.isHighlighted;
+                const isOpportunity =
+                  "isOpportunity" in milestone && milestone.isOpportunity;
+                const isFreelance =
+                  "category" in milestone && milestone.category === "freelance";
 
                 return (
                   <div key={index} className="relative flex items-center">
@@ -128,10 +141,10 @@ export function TimelineSection() {
                                 isOpportunity
                                   ? "bg-gradient-to-r from-accent to-primary border-white shadow-lg scale-125 animate-pulse"
                                   : isHighlighted
-                                    ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg scale-125"
-                                    : isAcademic
-                                      ? "bg-primary border-white"
-                                      : "bg-secondary border-white"
+                                  ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg scale-125"
+                                  : isAcademic
+                                  ? "bg-primary border-white"
+                                  : "bg-secondary border-white"
                               }`
                         } transition-all duration-300 hover:scale-110`}
                       >
@@ -152,7 +165,11 @@ export function TimelineSection() {
                     </div>
 
                     {/* Content Card - Academic on left, Professional on right */}
-                    <div className={`w-5/12 ${isAcademic ? "pr-8" : "pl-8 ml-auto"}`}>
+                    <div
+                      className={`w-5/12 ${
+                        isAcademic ? "pr-8" : "pl-8 ml-auto"
+                      }`}
+                    >
                       <TimelineCard milestone={milestone} isLeft={isAcademic} />
                     </div>
 
@@ -171,7 +188,7 @@ export function TimelineSection() {
                       </Badge>
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
@@ -180,10 +197,13 @@ export function TimelineSection() {
         {/* Mobile Timeline */}
         <div className="lg:hidden space-y-8">
           {timelineEntries.map((milestone, index) => {
-            const isAcademic = milestone.type === "academic"
-            const isHighlighted = "isHighlighted" in milestone && milestone.isHighlighted
-            const isOpportunity = "isOpportunity" in milestone && milestone.isOpportunity
-            const isFreelance = "category" in milestone && milestone.category === "freelance"
+            const isAcademic = milestone.type === "academic";
+            const isHighlighted =
+              "isHighlighted" in milestone && milestone.isHighlighted;
+            const isOpportunity =
+              "isOpportunity" in milestone && milestone.isOpportunity;
+            const isFreelance =
+              "category" in milestone && milestone.category === "freelance";
 
             return (
               <div key={index} className="relative flex items-start space-x-4">
@@ -197,10 +217,10 @@ export function TimelineSection() {
                             isOpportunity
                               ? "bg-gradient-to-r from-accent to-primary border-white shadow-lg animate-pulse"
                               : isHighlighted
-                                ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg"
-                                : isAcademic
-                                  ? "bg-primary border-white"
-                                  : "bg-secondary border-white"
+                              ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg"
+                              : isAcademic
+                              ? "bg-primary border-white"
+                              : "bg-secondary border-white"
                           }`
                     }`}
                   >
@@ -235,41 +255,51 @@ export function TimelineSection() {
                   <TimelineCard milestone={milestone} isLeft={true} />
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 interface TimelineCardProps {
-  milestone: any
-  isLeft: boolean
+  milestone: any;
+  isLeft: boolean;
 }
 
 function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
-  const isAcademic = milestone.type === "academic"
-  const isFreelance = "category" in milestone && milestone.category === "freelance"
-  const isEntrepreneurship = "category" in milestone && milestone.category === "entrepreneurship"
-  const isInternship = "category" in milestone && milestone.category === "internship"
-  const isOpportunity = "isOpportunity" in milestone && milestone.isOpportunity
-  const isHighlighted = "isHighlighted" in milestone && milestone.isHighlighted
+  const isAcademic = milestone.type === "academic";
+  const isFreelance =
+    "category" in milestone && milestone.category === "freelance";
+  const isEntrepreneurship =
+    "category" in milestone && milestone.category === "entrepreneurship";
+  const isInternship =
+    "category" in milestone && milestone.category === "internship";
+  const isOpportunity = "isOpportunity" in milestone && milestone.isOpportunity;
+  const isHighlighted = "isHighlighted" in milestone && milestone.isHighlighted;
 
   if (isFreelance) {
     return (
       <div className="space-y-2">
         <div className="flex items-center space-x-2">
           <Briefcase className="w-4 h-4 text-muted-foreground" />
-          <Badge variant="secondary" className="text-xs bg-muted text-muted-foreground">
+          <Badge
+            variant="secondary"
+            className="text-xs bg-muted text-muted-foreground"
+          >
             Freelance
           </Badge>
         </div>
-        <h3 className="text-base font-semibold text-card-foreground">{milestone.title}</h3>
+        <h3 className="text-base font-semibold text-card-foreground">
+          {milestone.title}
+        </h3>
         <p className="text-sm text-muted-foreground">{milestone.company}</p>
-        <p className="text-sm text-card-foreground leading-relaxed">{milestone.description}</p>
+        <p className="text-sm text-card-foreground leading-relaxed">
+          {milestone.description}
+        </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -278,12 +308,12 @@ function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
         isOpportunity
           ? "bg-gradient-to-br from-accent/20 to-primary/20 ring-2 ring-accent/50 shadow-lg"
           : isHighlighted
-            ? "bg-gradient-to-br from-primary/10 to-secondary/10 ring-2 ring-primary/50 shadow-lg"
-            : isEntrepreneurship
-              ? "bg-card/60 border-2 border-primary/30"
-              : isInternship
-                ? "bg-card/40"
-                : "bg-card/60"
+          ? "bg-gradient-to-br from-primary/10 to-secondary/10 ring-2 ring-primary/50 shadow-lg"
+          : isEntrepreneurship
+          ? "bg-card/60 border-2 border-primary/30"
+          : isInternship
+          ? "bg-card/40"
+          : "bg-card/60"
       }`}
     >
       <CardContent className="p-6 space-y-4">
@@ -292,7 +322,9 @@ function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
             {milestone.logo && (
               <img
                 src={milestone.logo || "/placeholder.svg"}
-                alt={`${isAcademic ? milestone.institution : milestone.company} logo`}
+                alt={`${
+                  isAcademic ? milestone.institution : milestone.company
+                } logo`}
                 className="w-8 h-8 rounded-full object-cover"
               />
             )}
@@ -310,24 +342,26 @@ function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
                   isOpportunity
                     ? "bg-accent text-white border-accent"
                     : isAcademic
-                      ? "bg-primary text-white border-primary"
-                      : isEntrepreneurship
-                        ? "bg-gradient-to-r from-primary to-secondary text-white border-primary"
-                        : "bg-secondary text-white border-secondary"
+                    ? "bg-primary text-white border-primary"
+                    : isEntrepreneurship
+                    ? "bg-gradient-to-r from-primary to-secondary text-white border-primary"
+                    : "bg-secondary text-white border-secondary"
                 }`}
               >
                 {isOpportunity
                   ? "Opportunity"
                   : isAcademic
-                    ? "Academic"
-                    : isEntrepreneurship
-                      ? "Entrepreneurship"
-                      : "Internship"}
+                  ? "Academic"
+                  : isEntrepreneurship
+                  ? "Entrepreneurship"
+                  : "Internship"}
               </Badge>
             </div>
           </div>
           {isHighlighted && !isOpportunity && (
-            <Badge className="bg-gradient-to-r from-primary to-secondary text-white text-xs">Key Achievement</Badge>
+            <Badge className="bg-gradient-to-r from-primary to-secondary text-white text-xs">
+              Key Achievement
+            </Badge>
           )}
           {isOpportunity && (
             <Badge className="bg-gradient-to-r from-accent to-primary text-white text-xs animate-pulse">
@@ -339,7 +373,11 @@ function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
         <div>
           <h3
             className={`text-lg font-bold group-hover:text-primary transition-colors duration-300 ${
-              isOpportunity ? "text-accent" : isHighlighted ? "text-primary" : "text-card-foreground"
+              isOpportunity
+                ? "text-accent"
+                : isHighlighted
+                ? "text-primary"
+                : "text-card-foreground"
             }`}
           >
             {milestone.title}
@@ -349,11 +387,16 @@ function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
           </p>
         </div>
 
-        <p className="text-sm text-card-foreground leading-relaxed whitespace-pre-line">{milestone.description}</p>
+        <p className="text-sm text-card-foreground leading-relaxed whitespace-pre-line">
+          {milestone.description}
+        </p>
 
         {isAcademic && (
           <div className="pt-3 border-t border-primary/20">
-            <Badge variant="outline" className="text-xs bg-primary/10 text-primary border-primary">
+            <Badge
+              variant="outline"
+              className="text-xs bg-primary/10 text-primary border-primary"
+            >
               {milestone.year === "2019" && "CBSE (X): 2019"}
               {milestone.year === "2021" && "CBSE 12: 2021"}
               {milestone.year === "2022" && "BTech: 2022-Present"}
@@ -364,7 +407,8 @@ function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
         {isHighlighted && !isOpportunity && (
           <div className="pt-3 border-t border-primary/20">
             <p className="text-xs text-primary font-medium">
-              🚀 Leading achievement - Successfully scaled from startup to established agency
+              🚀 Leading achievement - Successfully scaled from startup to
+              established agency
             </p>
           </div>
         )}
@@ -372,11 +416,12 @@ function TimelineCard({ milestone, isLeft }: TimelineCardProps) {
         {isOpportunity && (
           <div className="pt-3 border-t border-accent/30">
             <p className="text-xs text-accent font-medium">
-              💼 Let's discuss how I can contribute to your team's success and drive innovation
+              💼 Let's discuss how I can contribute to your team's success and
+              drive innovation
             </p>
           </div>
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

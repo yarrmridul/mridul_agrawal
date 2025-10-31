@@ -19,7 +19,12 @@ export default function AboutPage() {
             </span>
           </h1>
           <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-           Born and raised in Mathura — so yes, I bring both a sweet tooth and a knack for balance. As a true Baniya, I’ve mastered the art of paisa bachao — from making custom CRMs for me to negotiating deals that make everyone smile. I’m big on management, bigger on jugaad and happiest when building systems that make work smoother (and people happier) and solving real world problems.
+            Born and raised in Mathura — so yes, I bring both a sweet tooth and
+            a knack for balance. As a true Baniya, I’ve mastered the art of
+            paisa bachao — from making custom CRMs for me to negotiating deals
+            that make everyone smile. I’m big on management, bigger on jugaad
+            and happiest when building systems that make work smoother (and
+            people happier) and solving real world problems.
           </p>
 
           {/* LinkedIn + CTA Buttons */}
@@ -65,10 +70,18 @@ export default function AboutPage() {
 
         <div className="space-y-4 text-center md:text-left">
           <p className="text-gray-700 text-base md:text-lg leading-relaxed pt-5 mt-5">
-           I’ve always had a thing for figuring out how things work — and how they could work better. That curiosity  turned into side gigs back in Class 10 (2018). By 2020, that curiosity evolved into Moodale — my real-world MBA in operations, marketing, and strategy.I didn’t know where it would lead then (and still don’t fully), but that’s the fun part — and it continues to shape how I approach work today.
+            I’ve always had a thing for figuring out how things work — and how
+            they could work better. That curiosity turned into side gigs back in
+            Class 10 (2018). By 2020, that curiosity evolved into Moodale — my
+            real-world MBA in operations, marketing, and strategy.I didn’t know
+            where it would lead then (and still don’t fully), but that’s the fun
+            part — and it continues to shape how I approach work today.
           </p>
           <p className="text-gray-700 text-base md:text-lg leading-relaxed">
-         Over the years, I’ve learned that great products aren’t just built — they’re understood, tested, and evolved. I love collaborating with people who think differently, figuring out why, and building systems that make life (and work) smoother.
+            Over the years, I’ve learned that great products aren’t just built —
+            they’re understood, tested, and evolved. I love collaborating with
+            people who think differently, figuring out why, and building systems
+            that make life (and work) smoother.
           </p>
         </div>
       </div>
