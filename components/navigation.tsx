@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronUp } from "lucide-react"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X, ChevronUp } from "lucide-react";
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("hero")
-  const [showScrollTop, setShowScrollTop] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const sections = [
     { id: "hero", label: "Home" },
@@ -17,45 +17,45 @@ export function Navigation() {
     { id: "about", label: "Why Me" },
     { id: "skills", label: "Skills" },
     { id: "contact", label: "Contact" },
-  ]
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY
-      setShowScrollTop(scrollPosition > 400)
+      const scrollPosition = window.scrollY;
+      setShowScrollTop(scrollPosition > 400);
 
       // Update active section based on scroll position
       const sectionElements = sections.map((section) => ({
         id: section.id,
         element: document.getElementById(section.id),
-      }))
+      }));
 
       for (const section of sectionElements) {
         if (section.element) {
-          const rect = section.element.getBoundingClientRect()
+          const rect = section.element.getBoundingClientRect();
           if (rect.top <= 100 && rect.bottom >= 100) {
-            setActiveSection(section.id)
-            break
+            setActiveSection(section.id);
+            break;
           }
         }
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [sections])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections]);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -68,7 +68,9 @@ export function Navigation() {
                 <button
                   onClick={() => scrollToSection(section.id)}
                   className={`text-sm font-medium transition-all duration-300 hover:text-primary ${
-                    activeSection === section.id ? "text-primary" : "text-muted-foreground"
+                    activeSection === section.id
+                      ? "text-primary"
+                      : "text-muted-foreground"
                   }`}
                 >
                   {section.label}
@@ -77,6 +79,7 @@ export function Navigation() {
             ))}
           </ul>
         </div>
+        
       </nav>
 
       {/* Mobile Navigation */}
@@ -97,7 +100,9 @@ export function Navigation() {
                   <button
                     onClick={() => scrollToSection(section.id)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-primary/10 hover:text-primary ${
-                      activeSection === section.id ? "text-primary bg-primary/10" : "text-card-foreground"
+                      activeSection === section.id
+                        ? "text-primary bg-primary/10"
+                        : "text-card-foreground"
                     }`}
                   >
                     {section.label}
@@ -120,5 +125,5 @@ export function Navigation() {
         </Button>
       )}
     </>
-  )
+  );
 }

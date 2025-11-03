@@ -39,14 +39,14 @@ export function HeroSection() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-500">
-           <Link href="/about" passHref>
-        <Button
-          size="lg"
-          className="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-        >
-          About Me
-        </Button>
-      </Link>
+          <Link href="/about" passHref>
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-700 hover:to-emerald-700 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              About Me
+            </Button>
+          </Link>
           <Button
             asChild
             variant="outline"
