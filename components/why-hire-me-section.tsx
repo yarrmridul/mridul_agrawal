@@ -119,13 +119,13 @@ function FlipCard({
     return () => obs.disconnect();
   }, []);
 
-  // Auto flip back after 3 seconds
-  useEffect(() => {
-    if (flipped) {
-      const timer = setTimeout(() => setFlipped(false), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [flipped]);
+  const handleTouchStart = () => {
+    setFlipped(true);
+  };
+
+  const handleTouchEnd = () => {
+    setFlipped(false);
+  };
 
   return (
     <div
@@ -137,7 +137,10 @@ function FlipCard({
         className,
       ].join(" ")}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
-      onClick={() => setFlipped((v) => !v)}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       role="button"
       tabIndex={0}
       aria-expanded={flipped}
