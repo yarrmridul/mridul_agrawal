@@ -77,10 +77,7 @@ export function TimelineSection() {
         "Led product development and operations for a clothing startup, managing website creation, influencer collaborations, and business growth strategies.",
       type: "professional" as const,
       category: "product" as const,
-<<<<<<< HEAD
-=======
       // logo: "https://drive.google.com/file/d/1pKZGILhjAd_DqYFSWwSlYhaRRklgXDwK/view?usp=sharing",
->>>>>>> Experience
       logo: "/HOS.jpeg",
 
       //  logo: '<img src="https://drive.google.com/uc?export=view&id=1pKZGILhjAd_DqYFSWwSlYhaRRklgXDwK" alt="My file" />'
