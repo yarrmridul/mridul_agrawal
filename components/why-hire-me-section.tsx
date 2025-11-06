@@ -138,7 +138,12 @@ function FlipCard({
       ].join(" ")}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
       onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
+      onMouseLeave={() => {
+        if ('ontouchstart' in window) {
+          return;
+        }
+        setFlipped(false)
+      }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       role="button"
