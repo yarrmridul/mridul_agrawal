@@ -39,7 +39,12 @@ export const metadata: Metadata = {
   },
   viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
-    generator: 'v0.app'
+  generator: 'v0.app',
+  icons: {
+    icon: '/favicon.jpeg',
+    shortcut: '/favicon.jpeg',
+    apple: '/favicon.jpeg',
+  },
 }
 
 export default function RootLayout({
