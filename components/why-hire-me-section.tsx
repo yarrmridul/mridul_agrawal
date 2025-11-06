@@ -174,16 +174,6 @@ function FlipCard({
             <p className="text-xs sm:text-sm md:text-base lg:text-base text-muted-foreground max-w-full break-words">
               {description}
             </p>
-
-            <button
-              className="mb-5 inline-flex items-center rounded-md px-3 py-1 text-xs sm:text-sm md:text-sm font-medium text-primary border border-primary/40 hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/40"
-              onClick={(e) => {
-                e.stopPropagation();
-                setFlipped(false);
-              }}
-            >
-              Close
-            </button>
           </div>
         </Card>
       </div>
