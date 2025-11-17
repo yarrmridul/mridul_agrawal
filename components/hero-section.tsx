@@ -30,7 +30,7 @@ export function HeroSection() {
               Mridul.
             </span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto text-pretty animate-fade-in delay-300">
+          <p className="text-base sm:text-lg md:text-2xl text-muted-foreground max-w-2xl mx-auto text-pretty animate-fade-in delay-300 text-center px-5">
             I’m the kind of person who turns chaos into roadmaps and ideas into
             impact. I live where user pain meets business gain — translating “we
             should build this” into “wow, this works.”
