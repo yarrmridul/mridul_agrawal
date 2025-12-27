@@ -78,6 +78,41 @@ html, body {
   --sidebar-ring: oklch(0.55 0.15 198.38 / 0.5);
 }
 
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes heartbeat-glow {
+  0% {
+    box-shadow: 0 0 0px rgba(34, 211, 238, 0.0);
+  }
+  40% {
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.45);
+  }
+  60% {
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(34, 211, 238, 0.0);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-heartbeat {
+  animation: heartbeat-glow 2.5s ease-in-out infinite;
+}
+
 @theme inline {
   /* Updated font variables to use Playfair Display and Source Sans Pro */
   --font-sans: "Source Sans Pro", var(--font-geist-sans);

@@ -1,7 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowUp, FileText, Linkedin, Github } from "lucide-react";
+import { ArrowUp, FileText, Linkedin, Github, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -17,12 +18,12 @@ export function Footer() {
         </div>
 
         {/* Links */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
           <Button
             variant="ghost"
             size="sm"
             onClick={scrollToTop}
-            className="text-muted-foreground hover:text-primary transition-colors duration-300"
+            className="text-muted-foreground hover:text-primary transition-colors duration-300 whitespace-nowrap"
           >
             <ArrowUp className="w-4 h-4 mr-1" />
             Top
@@ -32,7 +33,7 @@ export function Footer() {
             variant="ghost"
             size="sm"
             asChild
-            className="text-muted-foreground hover:text-primary transition-colors duration-300"
+            className="text-muted-foreground hover:text-primary transition-colors duration-300 whitespace-nowrap"
           >
             <a
               href="https://drive.google.com/drive/folders/1nC52MQEiG7A2B_Bs05HXwvpndiO3knDJ?usp=drive_link"
@@ -48,7 +49,7 @@ export function Footer() {
             variant="ghost"
             size="sm"
             asChild
-            className="text-muted-foreground hover:text-primary transition-colors duration-300"
+            className="text-muted-foreground hover:text-primary transition-colors duration-300 whitespace-nowrap"
           >
             <a
               href="https://www.linkedin.com/in/mridul-agrawal-62029522b"
@@ -64,7 +65,7 @@ export function Footer() {
             variant="ghost"
             size="sm"
             asChild
-            className="text-muted-foreground hover:text-primary transition-colors duration-300"
+            className="text-muted-foreground hover:text-primary transition-colors duration-300 whitespace-nowrap"
           >
             <a
               href="https://github.com/yarrmridul"
@@ -74,6 +75,28 @@ export function Footer() {
               <Github className="w-4 h-4 mr-1" />
               GitHub
             </a>
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            asChild
+            className="
+              relative text-muted-foreground
+              hover:text-primary
+              transition-all duration-300
+              border border-transparent
+              hover:border-primary/30
+              hover:bg-primary/5
+              whitespace-nowrap
+            "
+          >
+            <Link
+              href="/future"
+              className="text-sm text-muted-foreground hover:text-white"
+            >
+              The Future Card →
+            </Link>
           </Button>
         </div>
       </div>
