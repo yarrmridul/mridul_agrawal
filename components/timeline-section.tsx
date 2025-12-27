@@ -171,10 +171,6 @@ export function TimelineSection() {
             </div>
             {/* Inner vignette */}
             <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-black/5" />
-            {/* Signature detail */}
-            <div className="absolute left-4 bottom-12 rotate-[-90deg] text-[10px] tracking-widest uppercase text-muted-foreground/50">
-              2018 — Present
-            </div>
           </div>
         </div>
       </div>
