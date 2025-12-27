@@ -104,7 +104,7 @@ export function TimelineSection() {
   return (
     <section className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-balance">
             Professional{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -116,151 +116,66 @@ export function TimelineSection() {
             to present
           </p>
         </div>
+        {/* Scroll Canvas Timeline */}
+        <div className="relative max-w-6xl mx-auto mt-12">
+          {/* Anchoring element */}
+          <div className="absolute -left-12 top-1/2 -translate-y-1/2 rotate-[-90deg] text-xs tracking-widest uppercase text-muted-foreground/60">
+            Timeline
+          </div>
+          
+          {/* Scroll hint */}
+          <div className="absolute top-5 right-8 z-20 text-[10px] tracking-[0.3em] uppercase text-muted-foreground/70">
+            Scroll
+          </div>
 
-        {/* Desktop Timeline */}
-        <div className="hidden lg:block">
-          <div className="relative">
-            {/* Central Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary via-secondary to-primary rounded-full"></div>
+          {/* Top fade */}
+          <div className="pointer-events-none absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-background to-transparent z-10" />
 
-            <div className="space-y-16">
-              {timelineEntries.map((milestone, index) => {
-                const isAcademic = milestone.type === "academic";
-                const isHighlighted =
-                  "isHighlighted" in milestone && milestone.isHighlighted;
-                const isOpportunity =
-                  "isOpportunity" in milestone && milestone.isOpportunity;
-                const isFreelance =
-                  "category" in milestone && milestone.category === "freelance";
+          {/* Bottom fade */}
+          <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent z-10" />
 
-                return (
-                  <div key={index} className="relative flex items-center">
-                    {/* Timeline Dot */}
-                    <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                      <div
-                        className={`${
-                          isFreelance
-                            ? "w-3 h-3 rounded-full bg-muted-foreground border-2 border-white"
-                            : `w-6 h-6 rounded-full border-4 ${
-                                isOpportunity
-                                  ? "bg-gradient-to-r from-accent to-primary border-white shadow-lg scale-125 animate-pulse"
-                                  : isHighlighted
-                                  ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg scale-125"
-                                  : isAcademic
-                                  ? "bg-primary border-white"
-                                  : "bg-secondary border-white"
-                              }`
-                        } transition-all duration-300 hover:scale-110`}
-                      >
-                        {!isFreelance && (
-                          <>
-                            {isOpportunity ? (
-                              <Target className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                            ) : isHighlighted ? (
-                              <Star className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                            ) : isAcademic ? (
-                              <GraduationCap className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                            ) : (
-                              <Briefcase className="w-3 h-3 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </div>
+          {/* Canvas */}
+          <div
+            className="
+              h-[85vh] md:h-[100vh]
+              overflow-y-auto
+              rounded-3xl
+              bg-card/50
+              backdrop-blur-xl
+              border border-white/40
+              shadow-[0_40px_120px_-30px_rgba(0,0,0,0.35)]
+              ring-1 ring-black/10
+              scroll-smooth
+              px-6 md:px-10
+              py-24
+              scroll-canvas
+            "
+          >
+            <div className="space-y-40">
+              <img
+                src="/timeline/aa.svg"
+                alt="Academic timeline"
+                className="w-full max-w-5xl mx-auto -mt-8 select-none opacity-95 brightness-[0.98]"
+                draggable={false}
+              />
 
-                    {/* Content Card - Academic on left, Professional on right */}
-                    <div
-                      className={`w-5/12 ${
-                        isAcademic ? "pr-8" : "pl-8 ml-auto"
-                      }`}
-                    >
-                      <TimelineCard milestone={milestone} isLeft={isAcademic} />
-                    </div>
-
-                    {/* Year Badge */}
-                    <div className="absolute left-1/2 transform -translate-x-1/2 -top-8">
-                      <Badge
-                        variant="outline"
-                        className={`font-semibold px-3 py-1 ${
-                          isOpportunity
-                            ? "bg-gradient-to-r from-accent to-primary text-white border-accent"
-                            : "bg-background border-primary text-primary"
-                        }`}
-                      >
-                        <Calendar className="w-3 h-3 mr-1" />
-                        {milestone.year}
-                      </Badge>
-                    </div>
-                  </div>
-                );
-              })}
+              <img
+                src="/timeline/bb.svg"
+                alt="Professional timeline"
+                className="w-full max-w-5xl mx-auto select-none opacity-95 brightness-[0.98]"
+                draggable={false}
+              />
+              <div className="text-center pt-24 pb-12 text-xs text-muted-foreground/70">
+                • End of timeline •
+              </div>
+            </div>
+            {/* Inner vignette */}
+            <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-black/5" />
+            {/* Signature detail */}
+            <div className="absolute left-4 bottom-12 rotate-[-90deg] text-[10px] tracking-widest uppercase text-muted-foreground/50">
+              2018 — Present
             </div>
           </div>
-        </div>
-
-        {/* Mobile Timeline */}
-        <div className="lg:hidden space-y-8">
-          {timelineEntries.map((milestone, index) => {
-            const isAcademic = milestone.type === "academic";
-            const isHighlighted =
-              "isHighlighted" in milestone && milestone.isHighlighted;
-            const isOpportunity =
-              "isOpportunity" in milestone && milestone.isOpportunity;
-            const isFreelance =
-              "category" in milestone && milestone.category === "freelance";
-
-            return (
-              <div key={index} className="relative flex items-start space-x-4">
-                {/* Timeline Line and Dot */}
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`${
-                      isFreelance
-                        ? "w-3 h-3 rounded-full bg-muted-foreground border-2 border-white"
-                        : `w-4 h-4 rounded-full border-2 ${
-                            isOpportunity
-                              ? "bg-gradient-to-r from-accent to-primary border-white shadow-lg animate-pulse"
-                              : isHighlighted
-                              ? "bg-gradient-to-r from-primary to-secondary border-white shadow-lg"
-                              : isAcademic
-                              ? "bg-primary border-white"
-                              : "bg-secondary border-white"
-                          }`
-                    }`}
-                  >
-                    {!isFreelance && (
-                      <>
-                        {isOpportunity && (
-                          <Target className="w-2 h-2 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        )}
-                        {isHighlighted && !isOpportunity && (
-                          <Star className="w-2 h-2 text-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        )}
-                      </>
-                    )}
-                  </div>
-                  {index < timelineEntries.length - 1 && (
-                    <div className="w-0.5 h-16 bg-gradient-to-b from-primary to-secondary mt-2"></div>
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="flex-1">
-                  <Badge
-                    variant="outline"
-                    className={`font-semibold mb-2 ${
-                      isOpportunity
-                        ? "bg-gradient-to-r from-accent to-primary text-white border-accent"
-                        : "bg-background border-primary text-primary"
-                    }`}
-                  >
-                    {milestone.year}
-                  </Badge>
-                  <TimelineCard milestone={milestone} isLeft={true} />
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
     </section>
