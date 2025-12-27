@@ -159,12 +159,7 @@ export function TimelineSection() {
                 draggable={false}
               />
 
-              <img
-                src="/timeline/bb.svg"
-                alt="Professional timeline"
-                className="w-full max-w-5xl mx-auto select-none opacity-95 brightness-[0.98]"
-                draggable={false}
-              />
+
               <div className="text-center pt-24 pb-12 text-xs text-muted-foreground/70">
                 • End of timeline •
               </div>
