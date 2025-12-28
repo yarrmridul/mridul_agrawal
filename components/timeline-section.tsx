@@ -137,7 +137,7 @@ export function TimelineSection() {
           {/* Canvas */}
           <div
             className="
-              h-[85vh] md:h-[100vh]
+              max-h-[90vh]
               overflow-y-auto
               rounded-3xl
               bg-card/50
@@ -147,22 +147,17 @@ export function TimelineSection() {
               ring-1 ring-black/10
               scroll-smooth
               px-6 md:px-10
-              py-24
+              py-10
               scroll-canvas
             "
           >
-            <div className="space-y-40">
+            <div className="space-y-32">
               <img
-                src="/timeline/aa.svg"
+                src="/timeline/time.svg"
                 alt="Academic timeline"
-                className="w-full max-w-5xl mx-auto -mt-8 select-none opacity-95 brightness-[0.98]"
+                className="w-full max-w-5xl mx-auto select-none opacity-95"
                 draggable={false}
               />
-
-
-              <div className="text-center pt-24 pb-12 text-xs text-muted-foreground/70">
-                • End of timeline •
-              </div>
             </div>
             {/* Inner vignette */}
             <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-black/5" />
