@@ -19,30 +19,48 @@ const sourceSans = Source_Sans_3({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mridulagrawal.in"),
+
   title: "Mridul Agrawal",
   description:
     "Professional portfolio showcasing modern web development and design expertise.",
+
   keywords: ["web developer", "full-stack", "React", "Next.js", "UI/UX", "portfolio"],
   authors: [{ name: "Mridul" }],
   creator: "Mridul",
+
   openGraph: {
     title: "Mridul Agrawal",
-    description: "Professional portfolio showcasing modern web development and design expertise",
-    type: "website",
+    description:
+      "Professional portfolio showcasing modern web development and design expertise",
+    url: "https://mridulagrawal.in",
+    siteName: "Mridul Agrawal",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Mridul Agrawal Portfolio",
+      },
+    ],
     locale: "en_US",
+    type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
     title: "Mridul Agrawal",
-    description: "Professional portfolio showcasing modern web development and design expertise",
+    description:
+      "Professional portfolio showcasing modern web development and design expertise",
+    images: ["/og-image.png"],
   },
-  viewport: "width=device-width, initial-scale=1",
+
   robots: "index, follow",
-  generator: 'v0.app',
+
   icons: {
-    icon: '/favicon.jpeg',
-    shortcut: '/favicon.jpeg',
-    apple: '/favicon.jpeg',
+    icon: "/favicon.jpeg",
+    shortcut: "/favicon.jpeg",
+    apple: "/favicon.jpeg",
   },
 }
 
