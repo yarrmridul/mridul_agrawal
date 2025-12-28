@@ -105,8 +105,8 @@ export function WebcamCard({ isRevealed, onReveal }: WebcamCardProps) {
     <div 
       ref={cardRef}
       className={`relative w-72 h-[26rem] cursor-pointer group
-    transition-transform duration-700
-    ${!isRevealed ? "animate-float" : ""}
+    transition-all duration-700
+    ${!isRevealed ? "animate-float hover:scale-105" : "hover:scale-[1.02]"}
     ${isRevealed ? "animate-heartbeat" : ""}
   `}
       onClick={handleReveal}
@@ -114,13 +114,15 @@ export function WebcamCard({ isRevealed, onReveal }: WebcamCardProps) {
       {/* Video container */}
       <div className="absolute inset-0 rounded-2xl overflow-hidden border border-white/10">
 
-        {/* Base image — ALWAYS visible */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "url('/me.jpg')", // <-- REQUIRED
-          }}
-        />
+        {/* Base image — visible only when no webcam */}
+        {!hasCamera || isMobile ? (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/me.jpg')", // <-- REQUIRED
+            }}
+          />
+        ) : null}
 
         {/* Webcam layer (optional) */}
         {hasCamera && !isMobile && (
@@ -134,7 +136,7 @@ export function WebcamCard({ isRevealed, onReveal }: WebcamCardProps) {
               scale-x-[-1]
               brightness-95 contrast-110
               transition-opacity duration-700
-              opacity-100
+              ${isRevealed ? "opacity-100" : "opacity-40"}
             `}
           />
         )}
@@ -146,7 +148,7 @@ export function WebcamCard({ isRevealed, onReveal }: WebcamCardProps) {
             ${
               isRevealed
                 ? "backdrop-blur-0 bg-black/0"
-                : "backdrop-blur-md bg-black/40"
+                : "backdrop-blur-sm bg-black/20"
             }
           `}
         />
@@ -175,38 +177,28 @@ export function WebcamCard({ isRevealed, onReveal }: WebcamCardProps) {
           absolute inset-0 z-10 flex flex-col justify-center items-center
           p-6 text-center pointer-events-none
           transition-all duration-700
-          ${isRevealed ? "text-white/90" : "text-white"}
+          ${isRevealed ? "text-cyan-300" : "text-white"}
         `}
       >
         {/* Access */}
         <span
           className={`
-            text-xs tracking-widest uppercase mb-4
-            transition-opacity duration-500
-            ${isRevealed ? "opacity-100" : "opacity-40"}
+            text-xs tracking-widest uppercase mb-4 font-bold
+            transition-all duration-500
+            ${isRevealed ? "opacity-100 text-cyan-400" : "opacity-40 text-white"}
           `}
         >
-          ● ACCESS GRANTED
+          {isRevealed ? "● ACCESS GRANTED" : "● ACCESS AWAITED"}
         </span>
 
         {/* Title */}
-        <h2 className="text-2xl font-semibold tracking-wide leading-tight">
-          YOUR<br />NEXT<br />MOVE
+        <h2 className={`text-2xl font-bold tracking-wide leading-tight transition-all duration-500 ${isRevealed ? "text-white" : "text-white"}`}>
+          {isRevealed ? "YOUR NEXT MOVE" : "CLICK TO EXPLORE"}
         </h2>
 
-        {/* Subtitle */}
-        <p
-          className={`
-            text-xs mt-3 tracking-widest transition-opacity duration-500
-            ${isRevealed ? "opacity-70" : "opacity-40"}
-          `}
-        >
-          CLICK TO EXPLORE
-        </p>
-
         {/* ID */}
-        <p className="text-white/50 text-xs font-mono mt-6">
-          ID: 2025-NEXT-ROLE
+        <p className={`text-xs font-mono mt-6 transition-all duration-500 ${isRevealed ? "text-cyan-400/80" : "text-white/50"}`}>
+          {isRevealed ? "ID: NEXT-2025" : "ID: ???"}
         </p>
       </div>
     </div>
