@@ -7,87 +7,118 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 
 export function ProjectsSection() {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState("prd");
 
   const tabs = [
-    { id: "all", label: "All" },
     { id: "prd", label: "PRD" },
     { id: "improve", label: "Product Improvement" },
     { id: "teardown", label: "Teardown" },
     { id: "sense", label: "Product Sense" },
+    { id: "uiux", label: "UI/UX" },
+    { id: "automation", label: "Automation" },
+    { id: "frontend", label: "Frontend" },
   ];
 
   const projects = [
     {
       id: 1,
       category: "prd",
-      title: "Operations Panel: Task & Employee Backend System",
+      title: " Moodale – Digital Marketing & Strategy Agency",
       description:
-        "Backend system to streamline employee and task management with role-based access and workflow tracking.",
-      technologies: ["HTML", "CSS", "JavaScript", "Node.js", "Express.js", "SQL"],
+        "A full-service digital marketing and strategy agency I founded to help brands grow through creative design, performance strategy, and business innovation.",
+      status: "Completed",
       image:
-        "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-A3hr1k2BdRN1SrXm82uYNnfVtMGFmp.png",
-      codeUrl: "https://github.com/yarrmridul/moodaleemployee",
+        "https://images.unsplash.com/photo-1761839258605-d1b118266ccc?auto=format&fit=crop&q=80&w=1470",
+      codeUrl: "#",
       liveUrl: "#",
     },
     {
       id: 2,
       category: "improve",
-      title: "Automation System using Google Sheets",
+      title: "Moodale Smart CRM on Google Sheets",
       description:
-        "Automation-driven CRM on Google Sheets to simplify client management, tasks, and internal workflows.",
-      technologies: ["Google Sheets", "Apps Script"],
+        "An internal system built on Google Sheets + Apps Script to streamline client management, project tracking, and communication at Moodale.",
+      status: "Completed",
       image:
         "https://images.unsplash.com/photo-1761839258605-d1b118266ccc?auto=format&fit=crop&q=80&w=1470",
-      codeUrl: "https://github.com/yarrmridul/gsheet-taskassignemnt-crm",
+      codeUrl: "#",
       liveUrl: "#",
     },
     {
       id: 3,
-      category: "sense",
-      title: "Portfolio Website",
+      category: "teardown",
+      title: "Moti Motors – Profit-Sharing & Service Transparency System ",
       description:
-        "A responsive and animated personal portfolio showcasing creative work and experience.",
-      technologies: ["Next.js", "TailwindCSS", "Framer Motion"],
+        "A custom-built web application that digitized after-sales service operations for Moti Motors, ensuring transparency and efficiency across vendors.",
+      status: "Completed",
       image: "https://img.freepik.com/free-vector/portfolio-concept-illustration_114360-126.jpg",
-      codeUrl: "https://github.com/kunal0094/ecommerce-website",
+      codeUrl: "#",
       liveUrl: "#",
     },
     {
       id: 4,
-      category: "teardown",
-      title: "E-Commerce Store UI",
+      category: "sense",
+      title: "Irish Green – Youth Footfall Growth Campaign ",
       description:
-        "Modern store UI with product grid, cart functionality, and checkout flow.",
-      technologies: ["React", "Redux", "Firebase"],
+        "A creative campaign designed for Irish Green Café to attract young audiences, boost organic engagement, and position the brand as a youth favorite.",
+      status: "Completed",
       image:
         "https://img.freepik.com/free-vector/online-shopping-concept-illustration_114360-1084.jpg",
-      codeUrl: "https://github.com/kunal0094/Restaurant_website",
+      codeUrl: "#",
+      liveUrl: "#",
+    },
+    {
+      id: 5,
+      category: "uiux",
+      title: "Sales & Outreach Training Program",
+      description:
+        "A structured “Earn While You Learn” initiative that scaled Moodale’s outreach by training young learners to become skilled, incentive-driven marketers.",
+      status: "Completed",
+      image: "https://img.freepik.com/free-vector/app-interface-design-concept_52683-36057.jpg",
+      codeUrl: "#",
+      liveUrl: "#",
+    },
+    {
+      id: 6,
+      category: "automation",
+      title: "Moodale Operations Panel – Admin & Employee Backend System",
+      description:
+        "A backend management system for task allocation, approvals, and performance tracking — built to bring structure and visibility to Moodale’s operations.",
+      status: "Progress",
+      image:
+        "https://img.freepik.com/free-vector/chat-bot-concept-illustration_114360-5522.jpg",
+      codeUrl: "#",
+      liveUrl: "#",
+    },
+    {
+      id: 7,
+      category: "frontend",
+      title: "QR Code Generator Web Tool",
+      description:
+        "A lightweight QR code generator built for small businesses and internal teams to create custom, never-expiring QR codes.",
+      status: "Completed",
+      image:
+        "https://img.freepik.com/free-vector/flat-weather-forecast-app_23-2148092966.jpg",
+      codeUrl: "#",
       liveUrl: "#",
     },
   ];
 
-  const filtered =
-    activeTab === "all"
-      ? projects
-      : projects.filter((p) => p.category === activeTab);
+  const filtered = projects.filter((p) => p.category === activeTab);
 
   return (
     <section className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
-
-        {/* Page Title */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold">
             Featured <span className="text-emerald-600">Projects</span>
           </h2>
           <p className="text-xl text-muted-foreground mt-2">
-            Where #Problems Met My Fixes.
+            From Problems to Products.
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-6 border-b pb-2 mb-10 justify-center">
+        <div className="flex gap-6 border-b pb-2 mb-10 justify-center flex-wrap">
           {tabs.map((t) => (
             <button
               key={t.id}
@@ -103,14 +134,19 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        {/* Card Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* ⭐ Auto-center when only ONE card exists */}
+        <div
+          className={`${
+            filtered.length === 1
+              ? "flex justify-center"
+              : "grid grid-cols-1 md:grid-cols-3"
+          } gap-8 justify-items-center`}
+        >
           {filtered.map((project) => (
             <Card
               key={project.id}
-              className="rounded-2xl shadow-md hover:shadow-xl transition border overflow-hidden"
+              className="rounded-2xl shadow-md hover:shadow-xl transition border overflow-hidden w-full md:w-[350px]"
             >
-              {/* IMAGE */}
               <img
                 src={project.image}
                 alt={project.title}
@@ -118,26 +154,18 @@ export function ProjectsSection() {
               />
 
               <CardContent className="p-6 space-y-4">
-                {/* TITLE */}
                 <h3 className="text-lg font-semibold">{project.title}</h3>
-
-                {/* DESCRIPTION */}
                 <p className="text-sm text-gray-600">{project.description}</p>
 
-                {/* TECHNOLOGY BADGES */}
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, idx) => (
-                    <Badge
-                      key={idx}
-                      variant="secondary"
-                      className="text-xs px-3 py-1 rounded-full"
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
+                <div>
+                  <Badge
+                    variant="secondary"
+                    className="text-xs px-3 py-1 rounded-full"
+                  >
+                    {project.status}
+                  </Badge>
                 </div>
 
-                {/* BUTTONS */}
                 <div className="flex gap-2 pt-2">
                   <Button variant="outline" className="flex-1" asChild>
                     <a href={project.codeUrl} target="_blank">
@@ -146,7 +174,10 @@ export function ProjectsSection() {
                   </Button>
 
                   {project.liveUrl && (
-                    <Button className="flex-1 bg-emerald-600 hover:bg-emerald-700" asChild>
+                    <Button
+                      className="flex-1 bg-emerald-600 hover:bg-emerald-700"
+                      asChild
+                    >
                       <a href={project.liveUrl} target="_blank">
                         <ExternalLink className="w-4 h-4 mr-1" /> Live
                       </a>
