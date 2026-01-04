@@ -9,10 +9,10 @@ export default function MotiMotorsCaseStudy() {
           {/* TOP BACK BUTTON */}
         <div className="mb-8">
           <a
-            href="/"
+            href="/#projects"
             className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition"
           >
-            ← Back 
+            ← Back to Projects
           </a>
         </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">

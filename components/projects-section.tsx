@@ -131,10 +131,9 @@ export function ProjectsSection() {
 
         {/* Cards */}
         <div
-          className={`${
-            filtered.length === 1
-              ? "flex justify-center"
-              : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          className={`${filtered.length === 1
+            ? "flex justify-center"
+            : "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           } gap-6 justify-items-center`}
         >
           {filtered.length === 0 && (
@@ -146,17 +145,17 @@ export function ProjectsSection() {
           {filtered.map((project) => (
             <Card
               key={project.id}
-              className="rounded-2xl border bg-white shadow-sm hover:shadow-xl transition overflow-hidden w-full max-w-[280px]"
+              className="rounded-2xl border bg-white shadow-sm hover:shadow-xl transition overflow-hidden w-full"
             >
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-36 object-cover"
+                className="w-full h-28 object-cover"
               />
 
-              <CardContent className="p-4 space-y-3">
-                <h3 className="text-base font-semibold">{project.title}</h3>
-                <p className="text-xs text-gray-600">{project.description}</p>
+              <CardContent className="p-3 space-y-2">
+                <h3 className="text-sm font-semibold line-clamp-1">{project.title}</h3>
+                <p className="text-[10px] text-gray-600 line-clamp-2">{project.description}</p>
 
                 <Badge
                   variant="secondary"
@@ -167,16 +166,16 @@ export function ProjectsSection() {
 
                 {/* BUTTONS */}
                 <div
-                  className={`pt-3 ${
+                  className={`pt-2 ${
                     project.category === "improve"
                       ? "flex justify-center"
-                      : "grid grid-cols-2 gap-2"
+                      : "flex flex-col gap-2"
                   }`}
                 >
                   {/* View More */}
                   <Button
                     variant="outline"
-                    className="rounded-full px-4 py-2 text-sm"
+                    className="rounded-full px-3 py-1.5 text-xs"
                     asChild
                   >
                     <Link href={project.viewUrl}>
@@ -187,7 +186,7 @@ export function ProjectsSection() {
                   {/* Live – ONLY for Product */}
                   {project.category === "prd" && project.liveUrl && (
                     <Button
-                      className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-sm"
+                      className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 text-xs"
                       asChild
                     >
                       <a href={project.liveUrl} target="_blank">

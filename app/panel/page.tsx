@@ -6,10 +6,10 @@ export default function MoodaleOperationsPage() {
         {/* BACK BUTTON */}
         <div className="mb-8">
           <a
-            href="/"
+            href="/#projects"
             className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900 transition"
           >
-            ← Back
+            ← Back to Projects
           </a>
         </div>
 
