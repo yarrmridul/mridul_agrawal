@@ -104,27 +104,7 @@ and limited time to personally follow up on every potential client.
           </div>
         </section>
 
-        {/* SCREENSHOTS */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Screenshots / Mockups
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              Training Program Poster
-            </div>
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              Lead Tracking Sheet
-            </div>
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              WhatsApp Outreach Flow
-            </div>
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              Conversion Tracking View
-            </div>
-          </div>
-        </section>
+     
 
         {/* REFLECTION */}
         <section className="mb-16">

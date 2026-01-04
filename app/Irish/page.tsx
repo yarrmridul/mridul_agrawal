@@ -102,28 +102,7 @@ export default function IrishGreenCaseStudy() {
           </div>
         </section>
 
-        {/* SCREENSHOTS */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Screenshots / Campaign Visuals
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              Campaign Poster
-            </div>
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              Social Media Visuals
-            </div>
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              Engagement Dashboard
-            </div>
-            <div className="h-48 rounded-xl border bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-              User-Generated Content Gallery
-            </div>
-          </div>
-        </section>
-
+        
         {/* REFLECTION */}
         <section className="mb-16">
           <h2 className="text-xl font-semibold text-gray-900 mb-3">

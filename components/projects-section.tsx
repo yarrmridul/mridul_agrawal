@@ -27,7 +27,7 @@ export function ProjectsSection() {
       status: "Completed",
       image: "/projects/moodale.jpg",
       viewUrl: "/modale",
-      liveUrl: "#",
+      liveUrl: "https://www.moodale.in/",
     },
     {
       id: 2,
@@ -37,8 +37,7 @@ export function ProjectsSection() {
         "A lightweight CRM built with Google Sheets and Apps Script for managing leads and workflows.",
       status: "Completed",
       image: "/projects/googlesheetcrm.png",
-    viewUrl: "/pag",
-      liveUrl: "#"
+    viewUrl: "/pag"
     },
     {
       id: 3,
@@ -48,8 +47,7 @@ export function ProjectsSection() {
         "A custom system enabling service transparency and vendor profit sharing.",
       status: "Completed",
       image: "/projects/motimotors.jpeg",
-      viewUrl: "/moti",
-      liveUrl: "#"
+      viewUrl: "/moti"
     },
     {
       id: 4,
@@ -60,7 +58,7 @@ export function ProjectsSection() {
       status: "Progress",
       image: "/projects/crm.jpeg",
       viewUrl: "/panel",
-      liveUrl: "#"
+      liveUrl: "https://moodaleadmin.onrender.com/"
     },
     {
       id: 5,
@@ -71,7 +69,7 @@ export function ProjectsSection() {
       status: "Completed",
       image: "/projects/mqr.jpeg",
       viewUrl: "/codetoll",
-      liveUrl: "#"
+      liveUrl: "https://m-qr-beta.vercel.app/"
     },
 
     // ================= STRATEGY =================
@@ -145,16 +143,29 @@ export function ProjectsSection() {
           {filtered.map((project) => (
             <Card
               key={project.id}
-              className="rounded-2xl border bg-white shadow-sm hover:shadow-xl transition overflow-hidden w-full"
+              className="rounded-2xl border bg-white shadow-sm hover:shadow-xl transition overflow-hidden w-full relative flex flex-col min-h-[380px]"
             >
               <img
                 src={project.image}
                 alt={project.title}
                 className="w-full h-28 object-cover"
               />
+              
+              {/* Live button - top right */}
+              {project.category === "prd" && project.liveUrl && (
+                <a 
+                  href={project.liveUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 text-gray-700 hover:text-emerald-600 hover:bg-white transition-all duration-200 z-10"
+                  aria-label="Visit live site"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
 
-              <CardContent className="p-3 space-y-2">
-                <h3 className="text-sm font-semibold line-clamp-1">{project.title}</h3>
+              <CardContent className="p-3 space-y-2 flex-grow flex flex-col">
+                <h3 className="text-sm font-semibold">{project.title}</h3>
                 <p className="text-[10px] text-gray-600 line-clamp-2">{project.description}</p>
 
                 <Badge
@@ -166,11 +177,7 @@ export function ProjectsSection() {
 
                 {/* BUTTONS */}
                 <div
-                  className={`pt-2 ${
-                    project.category === "improve"
-                      ? "flex justify-center"
-                      : "flex flex-col gap-2"
-                  }`}
+                  className="pt-2 flex justify-center mt-auto"
                 >
                   {/* View More */}
                   <Button
@@ -179,21 +186,9 @@ export function ProjectsSection() {
                     asChild
                   >
                     <Link href={project.viewUrl}>
-                      View More <ArrowRight className="w-3 h-3 ml-1" />
+                      Read More <ArrowRight className="w-3 h-3 ml-1" />
                     </Link>
                   </Button>
-
-                  {/* Live – ONLY for Product */}
-                  {project.category === "prd" && project.liveUrl && (
-                    <Button
-                      className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 text-xs"
-                      asChild
-                    >
-                      <a href={project.liveUrl} target="_blank">
-                        Live <ExternalLink className="w-3 h-3 ml-1" />
-                      </a>
-                    </Button>
-                  )}
                 </div>
               </CardContent>
             </Card>
