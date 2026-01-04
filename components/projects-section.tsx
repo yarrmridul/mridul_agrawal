@@ -25,8 +25,7 @@ export function ProjectsSection() {
       description:
         "A full-service digital marketing and strategy agency focused on brand growth and innovation.",
       status: "Completed",
-      image:
-        "https://images.unsplash.com/photo-1761839258605-d1b118266ccc?auto=format&fit=crop&q=80&w=1470",
+      image: "/projects/moodale.jpg",
       viewUrl: "/modale",
       liveUrl: "#",
     },
@@ -37,10 +36,9 @@ export function ProjectsSection() {
       description:
         "A lightweight CRM built with Google Sheets and Apps Script for managing leads and workflows.",
       status: "Completed",
-      image:
-        "https://img.freepik.com/free-vector/portfolio-concept-illustration_114360-126.jpg",
+      image: "/projects/googlesheetcrm.png",
     viewUrl: "/pag",
-      liveUrl: "#",
+      liveUrl: "#"
     },
     {
       id: 3,
@@ -49,10 +47,9 @@ export function ProjectsSection() {
       description:
         "A custom system enabling service transparency and vendor profit sharing.",
       status: "Completed",
-      image:
-        "https://img.freepik.com/free-vector/online-shopping-concept-illustration_114360-1084.jpg",
+      image: "/projects/motimotors.jpeg",
       viewUrl: "/moti",
-      liveUrl: "#",
+      liveUrl: "#"
     },
     {
       id: 4,
@@ -61,10 +58,9 @@ export function ProjectsSection() {
       description:
         "An admin & employee backend system for task tracking and performance monitoring.",
       status: "Progress",
-      image:
-        "https://img.freepik.com/free-vector/chat-bot-concept-illustration_114360-5522.jpg",
+      image: "/projects/crm.jpeg",
       viewUrl: "/panel",
-      liveUrl: "#",
+      liveUrl: "#"
     },
     {
       id: 5,
@@ -73,10 +69,9 @@ export function ProjectsSection() {
       description:
         "A fast, no-expiry QR generator built for small businesses and internal teams.",
       status: "Completed",
-      image:
-        "https://img.freepik.com/free-vector/flat-weather-forecast-app_23-2148092966.jpg",
+      image: "/projects/mqr.jpeg",
       viewUrl: "/codetoll",
-      liveUrl: "#",
+      liveUrl: "#"
     },
 
     // ================= STRATEGY =================
@@ -87,9 +82,8 @@ export function ProjectsSection() {
       description:
         "A youth-focused growth campaign designed to boost café walk-ins and organic engagement.",
       status: "Completed",
-      image:
-        "https://img.freepik.com/free-vector/app-interface-design-concept_52683-36057.jpg",
-      viewUrl: "/Irish",
+      image: "/projects/irishgreen.png",
+      viewUrl: "/Irish"
     },
     {
       id: 7,
@@ -98,9 +92,8 @@ export function ProjectsSection() {
       description:
         "An Earn While You Learn initiative training young professionals in outreach and sales.",
       status: "Completed",
-      image:
-        "https://img.freepik.com/free-vector/portfolio-concept-illustration_114360-126.jpg",
-      viewUrl: "/sales",
+      image: "/projects/sales.png",
+      viewUrl: "/sales"
     },
   ];
 
@@ -141,8 +134,8 @@ export function ProjectsSection() {
           className={`${
             filtered.length === 1
               ? "flex justify-center"
-              : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-          } gap-8 justify-items-center`}
+              : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          } gap-6 justify-items-center`}
         >
           {filtered.length === 0 && (
             <p className="text-gray-400 text-center col-span-full">
@@ -153,28 +146,28 @@ export function ProjectsSection() {
           {filtered.map((project) => (
             <Card
               key={project.id}
-              className="rounded-2xl border bg-white shadow-sm hover:shadow-xl transition overflow-hidden w-full max-w-[360px]"
+              className="rounded-2xl border bg-white shadow-sm hover:shadow-xl transition overflow-hidden w-full max-w-[280px]"
             >
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-44 sm:h-48 object-cover"
+                className="w-full h-36 object-cover"
               />
 
-              <CardContent className="p-6 space-y-4">
-                <h3 className="text-lg font-semibold">{project.title}</h3>
-                <p className="text-sm text-gray-600">{project.description}</p>
+              <CardContent className="p-4 space-y-3">
+                <h3 className="text-base font-semibold">{project.title}</h3>
+                <p className="text-xs text-gray-600">{project.description}</p>
 
                 <Badge
                   variant="secondary"
-                  className="text-xs px-3 py-1 rounded-full"
+                  className="text-[10px] px-2 py-1 rounded-full"
                 >
                   {project.status}
                 </Badge>
 
                 {/* BUTTONS */}
                 <div
-                  className={`pt-4 ${
+                  className={`pt-3 ${
                     project.category === "improve"
                       ? "flex justify-center"
                       : "grid grid-cols-2 gap-2"
@@ -183,22 +176,22 @@ export function ProjectsSection() {
                   {/* View More */}
                   <Button
                     variant="outline"
-                    className="rounded-full px-6"
+                    className="rounded-full px-4 py-2 text-sm"
                     asChild
                   >
                     <Link href={project.viewUrl}>
-                      View More <ArrowRight className="w-4 h-4 ml-1" />
+                      View More <ArrowRight className="w-3 h-3 ml-1" />
                     </Link>
                   </Button>
 
                   {/* Live – ONLY for Product */}
                   {project.category === "prd" && project.liveUrl && (
                     <Button
-                      className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-6"
+                      className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-4 py-2 text-sm"
                       asChild
                     >
                       <a href={project.liveUrl} target="_blank">
-                        Live <ExternalLink className="w-4 h-4 ml-1" />
+                        Live <ExternalLink className="w-3 h-3 ml-1" />
                       </a>
                     </Button>
                   )}
