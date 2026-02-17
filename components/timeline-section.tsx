@@ -153,8 +153,8 @@ export function TimelineSection() {
           >
             <div className="space-y-32">
               <img
-                src="/timeline/time.svg"
-                alt="Academic timeline"
+                src="/timeline/final.svg"
+                alt="Professional timeline"
                 className="w-full max-w-5xl mx-auto select-none opacity-95"
                 draggable={false}
               />
