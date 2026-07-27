@@ -82,11 +82,9 @@ a:hover{color:var(--accent-2)}
 </div>
 </sc-if>
 <sc-if value="{{ navNarrow }}" hint-placeholder-val="{{ false }}">
-<div style="pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--border);border-radius:999px;padding:8px 10px;box-shadow:var(--card-shadow)">
-<button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:0 9px;border:none;background:transparent;cursor:pointer">
+<button onClick="{{ toggleMenu }}" aria-label="Menu" style="pointer-events:auto;display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;padding:0 12px;border-radius:50%;border:1px solid var(--border);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);cursor:pointer;box-shadow:var(--card-shadow);transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">
 <span style="{{ barTop }}"></span><span style="{{ barMid }}"></span><span style="{{ barBot }}"></span>
 </button>
-</div>
 </sc-if>
 <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
 <div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:44;background:transparent;pointer-events:auto"></div>
