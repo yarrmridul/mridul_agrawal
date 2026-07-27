@@ -50,6 +50,11 @@ a:hover{color:var(--accent-2)}
 .om-rail{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .om-rail::-webkit-scrollbar{height:6px}
 .om-rail::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.hero-facts{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:26px}
+@media (max-width:640px){
+ .hero-facts{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x proximity}
+ .hero-facts>div{flex:0 0 auto!important;min-width:210px!important;padding:14px 18px!important;scroll-snap-align:start}
+}
 </style>
 </helmet>
 <div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
@@ -62,50 +67,51 @@ a:hover{color:var(--accent-2)}
 
 <div style="position:relative;z-index:1">
 
-<nav id="topnav" style="position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px clamp(16px,5vw,64px);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);border-bottom:1px solid var(--border)">
-<a href="#home" onClick="{{ closeMenu }}" style="display:flex;align-items:center;gap:10px;color:var(--text)">
-<span style="width:26px;height:26px;border-radius:50%;border:2px solid var(--accent);position:relative;display:inline-block"><span style="position:absolute;top:-3px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent)"></span></span>
-<span style="font-family:'Playfair Display',serif;font-weight:600;font-size:16px;letter-spacing:-.01em">Mridul Agrawal</span>
-</a>
+<nav id="topnav" style="position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px clamp(14px,4vw,40px);background:transparent;pointer-events:none">
 <sc-if value="{{ navWide }}" hint-placeholder-val="{{ true }}">
-<div style="display:flex;align-items:center;gap:20px;font-size:13px;font-weight:500">
+<div class="navpill" style="pointer-events:auto;display:flex;align-items:center;gap:2px;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--border);border-radius:999px;padding:6px 8px;box-shadow:var(--card-shadow)">
+<a href="#home" style="font-size:13px;font-weight:600;color:var(--text);padding:8px 14px;border-radius:999px;transition:background .2s,color .2s" style-hover="background:var(--accent-soft);color:var(--accent)">Home</a>
 <sc-for list="{{ navLinks }}" as="item" hint-placeholder-count="7">
-<a href="{{ item.href }}" style="{{ item.linkStyle }}" style-hover="color:var(--accent)">{{ item.label }}</a>
+<a href="{{ item.href }}" style="{{ item.pillStyle }}" style-hover="background:var(--accent-soft);color:var(--accent)">{{ item.label }}</a>
 </sc-for>
 </div>
 </sc-if>
-<div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font-size:16px;cursor:pointer;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
 <sc-if value="{{ navNarrow }}" hint-placeholder-val="{{ false }}">
-<button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;padding:0 11px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);cursor:pointer">
+<div style="pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--border);border-radius:999px;padding:7px 8px;box-shadow:var(--card-shadow)">
+<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font-size:15px;cursor:pointer">{{ themeIcon }}</button>
+<button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;padding:0 10px;border-radius:50%;border:1px solid var(--border);background:var(--panel-2);cursor:pointer">
 <span style="{{ barTop }}"></span><span style="{{ barMid }}"></span><span style="{{ barBot }}"></span>
 </button>
-</sc-if>
 </div>
+</sc-if>
 <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-<div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:44;background:transparent"></div>
-<div style="position:absolute;top:calc(100% + 8px);right:clamp(14px,5vw,64px);z-index:45;min-width:238px;background:var(--panel);border:1px solid var(--border);border-radius:14px;box-shadow:var(--big-shadow);padding:7px;animation:omFadeUp .22s ease both">
+<div onClick="{{ closeMenu }}" style="position:fixed;inset:0;z-index:44;background:transparent;pointer-events:auto"></div>
+<div style="pointer-events:auto;position:absolute;top:calc(100% + 2px);left:50%;transform:translateX(-50%);z-index:45;min-width:242px;background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--big-shadow);padding:7px;animation:omFadeUp .22s ease both">
+<a href="#home" onClick="{{ closeMenu }}" style="display:flex;justify-content:space-between;align-items:center;gap:18px;padding:11px 12px;border-radius:9px;font-size:14.5px;font-weight:600;color:var(--text)" style-hover="background:var(--panel-2);color:var(--accent)"><span style="white-space:nowrap">Home</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)">00</span></a>
 <sc-for list="{{ navLinks }}" as="item" hint-placeholder-count="7">
 <a href="{{ item.href }}" onClick="{{ closeMenu }}" style="{{ item.ddStyle }}" style-hover="background:var(--panel-2);color:var(--accent)"><span style="white-space:nowrap">{{ item.label }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)">{{ item.mNum }}</span></a>
 </sc-for>
 </div>
 </sc-if>
 </nav>
+<sc-if value="{{ navWide }}" hint-placeholder-val="{{ true }}">
+<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="position:fixed;top:16px;right:clamp(16px,4vw,40px);z-index:41;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);color:var(--text);font-size:16px;cursor:pointer;box-shadow:var(--card-shadow);transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
+</sc-if>
 
-<header id="home" style="position:relative;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(52px,10vw,110px) clamp(20px,5vw,64px);background:var(--hero-glow);scroll-margin-top:70px;overflow:hidden">
+<header id="home" style="position:relative;min-height:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:clamp(30px,4vh,58px) clamp(20px,5vw,64px) clamp(40px,6vw,66px);background:var(--hero-glow);scroll-margin-top:70px;overflow:hidden">
 <div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);border:1px solid var(--border);border-radius:50%;opacity:.6"></div>
 <div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(820px,160vw);height:min(820px,160vw);transform:translate(-50%,-50%);border:1px solid var(--border);border-radius:50%;opacity:.36"></div>
 <div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);animation:omOrbit 40s linear infinite;will-change:transform"><span style="position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)"></span></div>
 <div aria-hidden="true" style="position:absolute;left:6%;top:20%;width:min(340px,52vw);height:min(340px,52vw);border-radius:50%;background:radial-gradient(circle,var(--c1l),transparent 66%);filter:blur(30px);animation:omDrift 20s ease-in-out infinite;will-change:transform;pointer-events:none"></div>
 <div aria-hidden="true" style="position:absolute;right:5%;bottom:12%;width:min(300px,48vw);height:min(300px,48vw);border-radius:50%;background:radial-gradient(circle,var(--c2l),transparent 66%);filter:blur(34px);animation:omDrift 26s ease-in-out infinite reverse;will-change:transform;pointer-events:none"></div>
 
-<div style="position:relative;max-width:900px;display:flex;flex-direction:column;align-items:center;gap:22px">
+<div style="position:relative;max-width:900px;display:flex;flex-direction:column;align-items:center;gap:16px">
 <sc-if value="{{ openToWork }}" hint-placeholder-val="{{ true }}">
 <div style="display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--accent);border:1px solid var(--accent-line);background:var(--accent-soft);border-radius:999px;padding:7px 14px;animation:omFadeUp .6s ease both"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:omPulse 2.2s infinite"></span>OPEN TO PRODUCT ROLES · 2026</div>
 </sc-if>
 <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;color:var(--muted);animation:omFadeUp .6s ease both .05s">PRODUCT · OPERATIONS · AI</div>
 <h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(38px,7vw,74px);line-height:1.16;letter-spacing:-.03em;margin:0;animation:omFadeUp .7s ease both .1s">Hi, I’m <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent));background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:omSheen 5s linear infinite">Mridul</span>.</h1>
-<p style="font-size:clamp(15px,2.2vw,19px);line-height:1.6;color:var(--muted);max-width:560px;margin:0;animation:omFadeUp .7s ease both .16s">I’m a product & operations builder who turns chaos into roadmaps and ideas into measurable impact. I work where user needs meet business goals — and I turn “we should build this” into products that actually ship.</p>
+<p style="font-size:clamp(15px,2.2vw,19px);line-height:1.6;color:var(--muted);max-width:560px;margin:0;animation:omFadeUp .7s ease both .16s">I’m the kind of person who turns chaos into roadmaps and ideas into impact. I live where user pain meets business gain — translating “we should build this” into “wow, this works.”</p>
 <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;animation:omFadeUp .7s ease both .22s">
 <a href="About.dc.html" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:14px;font-weight:600;padding:14px 24px;border-radius:11px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">About me</a>
 <a href="https://drive.google.com/drive/folders/1nC52MQEiG7A2B_Bs05HXwvpndiO3knDJ?usp=drive_link" target="_blank" rel="noopener noreferrer" style="border:1px solid var(--border);color:var(--text);font-size:14px;font-weight:600;padding:13px 24px;border-radius:11px;background:var(--panel)" style-hover="border-color:var(--accent);color:var(--accent)">Résumé ↗</a>
@@ -118,7 +124,7 @@ a:hover{color:var(--accent-2)}
 </div>
 </div>
 
-<div style="position:relative;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:44px;animation:omFadeUp .7s ease both .34s">
+<div class="hero-facts om-rail" style="position:relative;animation:omFadeUp .7s ease both .34s">
 <sc-for list="{{ heroFacts }}" as="item" hint-placeholder-count="3">
 <div style="{{ item.cardStyle }}" style-hover="{{ item.cardHover }}">
 <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:{{ item.col }}">{{ item.tag }}</div>
@@ -534,9 +540,11 @@ class Component extends DCLogic {
 
     const sections = [["experience", "Experience"], ["projects", "Projects"], ["timeline", "Timeline"], ["why", "Why me"], ["skills", "Skills"], ["contact", "Contact"]];
     const navLinks = sections.map(([id, label], i) => ({ id, label, href: "#" + id, mNum: pad(i),
+      pillStyle: { color: "var(--muted)", fontWeight: 600, fontSize: "13px", padding: "8px 14px", borderRadius: "999px", transition: "background .2s,color .2s", whiteSpace: "nowrap" },
       linkStyle: { color: "var(--muted)", fontWeight: 500, transition: "color .2s", paddingBottom: "3px", borderBottom: "2px solid transparent" },
       ddStyle: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "18px", padding: "11px 12px", borderRadius: "9px", fontFamily: "'Source Sans 3',sans-serif", fontSize: "14.5px", fontWeight: 600, color: "var(--text)", transition: "background .15s,color .15s" } }));
     navLinks.push({ id: "future", label: "✦ Future Card", href: "FutureCard.dc.html", mNum: "",
+      pillStyle: { color: "var(--accent)", fontWeight: 700, fontSize: "13px", padding: "8px 14px", borderRadius: "999px", transition: "background .2s,color .2s", whiteSpace: "nowrap" },
       linkStyle: { color: "var(--accent)", fontWeight: 600, transition: "color .2s", paddingBottom: "3px", borderBottom: "2px solid transparent" },
       ddStyle: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "18px", padding: "11px 12px", borderRadius: "9px", fontFamily: "'Source Sans 3',sans-serif", fontSize: "14.5px", fontWeight: 600, color: "var(--accent)", background: "var(--accent-soft)", transition: "background .15s,color .15s" } });
 
