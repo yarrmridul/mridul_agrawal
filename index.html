@@ -50,6 +50,8 @@ a:hover{color:var(--accent-2)}
 .om-rail{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .om-rail::-webkit-scrollbar{height:6px}
 .om-rail::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#topnav{justify-content:center}
+@media (max-width:1000px){#topnav{justify-content:flex-end!important}}
 .hero-facts{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}
 @media (max-width:640px){
  .hero-facts{flex-wrap:nowrap;gap:8px;margin-top:26px;width:100%}
@@ -70,7 +72,7 @@ a:hover{color:var(--accent-2)}
 
 <div style="position:relative;z-index:1">
 
-<nav id="topnav" style="position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:14px clamp(14px,4vw,40px);background:transparent;pointer-events:none">
+<nav id="topnav" style="position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px clamp(14px,4vw,40px);background:transparent;pointer-events:none">
 <sc-if value="{{ navWide }}" hint-placeholder-val="{{ true }}">
 <div class="navpill" style="pointer-events:auto;display:flex;align-items:center;gap:2px;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--border);border-radius:999px;padding:6px 8px;box-shadow:var(--card-shadow)">
 <a href="#home" style="font-size:13px;font-weight:600;color:var(--text);padding:8px 14px;border-radius:999px;transition:background .2s,color .2s" style-hover="background:var(--accent-soft);color:var(--accent)">Home</a>
