@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+:root,[data-theme="light"]{
+ --bg:#F6F9F8;--bg-2:#ECF3F1;--panel:#FFFFFF;--panel-2:#F1F7F5;--text:#121A18;--muted:#546069;--faint:#93A2A2;--border:#E0EAE8;
+ --accent:#0891B2;--accent-2:#059669;--accent-soft:#0891B214;--accent-line:#0891B23D;
+ --card-shadow:0 10px 30px -20px rgba(8,60,64,.42);--big-shadow:0 30px 70px -42px rgba(8,60,64,.48);
+ --hero-glow:radial-gradient(56% 60% at 4% 0%,#0891B23a,transparent 62%),radial-gradient(48% 52% at 98% 6%,#05966932,transparent 66%);
+ --nav-bg:rgba(246,249,248,.78);--page-mesh:radial-gradient(42% 34% at 8% 6%,#0891B21f,transparent 60%),radial-gradient(38% 32% at 94% 4%,#0596691c,transparent 62%);
+ --page-tex:radial-gradient(rgba(8,145,178,.9) .8px,transparent .8px);--tex-op:.05;--tex-size:22px 22px;
+}
+[data-theme="space"]{
+ --bg:#0A0F0F;--bg-2:#0E1514;--panel:#141C1B;--panel-2:#101817;--text:#EAF2F0;--muted:#9BABA9;--faint:#5E706E;--border:#243230;
+ --accent:#22D3EE;--accent-2:#34D399;--accent-soft:#22D3EE1F;--accent-line:#22D3EE4D;
+ --card-shadow:0 14px 40px -26px rgba(0,0,0,.85);--big-shadow:0 40px 90px -46px rgba(0,0,0,.9);
+ --hero-glow:radial-gradient(56% 60% at 4% 0%,#0891B23a,transparent 64%),radial-gradient(48% 52% at 98% 6%,#05966930,transparent 68%);
+ --nav-bg:rgba(10,15,15,.7);--page-mesh:radial-gradient(44% 36% at 8% 6%,#22D3EE17,transparent 62%),radial-gradient(40% 34% at 94% 4%,#34D39914,transparent 64%);
+ --page-tex:radial-gradient(rgba(34,211,238,.6) .9px,transparent .9px);--tex-op:.05;--tex-size:24px 24px;
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{color:var(--accent-2)}
+::selection{background:var(--accent-soft)}
+@keyframes omFadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes omPulse{0%{box-shadow:0 0 0 0 var(--accent-line)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--page-mesh);transform:translateZ(0)"></div>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--tex-op);background:var(--page-tex);background-size:var(--tex-size);transform:translateZ(0);backface-visibility:hidden"></div>
+
+<div style="position:relative;z-index:1">
+<nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(18px,5vw,64px);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);border-bottom:1px solid var(--border)">
+<a href="index.html#projects" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)">← All projects</a>
+<span style="font-family:'Playfair Display',serif;font-weight:600;font-size:15px;letter-spacing:-.01em">Mridul Agrawal</span>
+<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font-size:16px;cursor:pointer;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
+</nav>
+
+<sc-if value="{{ notFound }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:640px;margin:0 auto;padding:clamp(60px,12vw,120px) clamp(20px,5vw,40px);text-align:center">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--accent)">404 · NO CASE STUDY</div>
+<h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(28px,5vw,44px);margin:14px 0 12px">This project isn’t here.</h1>
+<p style="font-size:15px;color:var(--muted);margin:0 0 26px">The link may be out of date. Head back and pick a project from the grid.</p>
+<a href="index.html#projects" style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:14px;font-weight:600;padding:13px 24px;border-radius:11px">← Back to projects</a>
+</div>
+</sc-if>
+
+<sc-if value="{{ found }}" hint-placeholder-val="{{ true }}">
+<header style="position:relative;background:var(--hero-glow);overflow:hidden;padding:clamp(34px,6vw,64px) clamp(20px,5vw,64px) clamp(20px,3vw,30px)">
+<div style="max-width:820px;margin:0 auto;animation:omFadeUp .6s ease both">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent)">{{ eyebrow }}</div>
+<h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(30px,5.5vw,52px);line-height:1.1;letter-spacing:-.025em;margin:14px 0 0">{{ title }}</h1>
+<p style="font-size:clamp(15px,2.2vw,19px);line-height:1.6;color:var(--muted);margin:16px 0 0;max-width:640px">{{ tagline }}</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px">
+<sc-for list="{{ tools }}" as="t" hint-placeholder-count="4">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:7px 13px">{{ t }}</span>
+</sc-for>
+</div>
+<sc-if value="{{ hasLive }}" hint-placeholder-val="{{ false }}">
+<a href="{{ liveUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:9px;margin-top:24px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:11px;box-shadow:0 12px 30px -12px var(--accent-line);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px -14px var(--accent-line)"><span style="width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:omPulse 2.2s infinite"></span>Visit live site ↗</a>
+</sc-if>
+</div>
+</header>
+
+<main style="max-width:820px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(20px,5vw,64px) clamp(56px,8vw,96px)">
+<div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--big-shadow);margin-bottom:clamp(32px,5vw,52px)">
+<img src="{{ image }}" alt="{{ title }}" loading="lazy" style="display:block;width:100%;height:clamp(190px,34vw,360px);object-fit:cover">
+<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.28))"></div>
+</div>
+
+<section style="margin-bottom:clamp(30px,4vw,44px)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE PROBLEM</div>
+<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Problem statement</h2>
+<p style="margin:0;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ problem }}</p>
+</section>
+
+<section style="margin-bottom:clamp(30px,4vw,44px)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE APPROACH</div>
+<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Process &amp; tools</h2>
+<sc-if value="{{ hasProcessIntro }}" hint-placeholder-val="{{ true }}">
+<p style="margin:0 0 14px;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ processIntro }}</p>
+</sc-if>
+<sc-if value="{{ hasProcessList }}" hint-placeholder-val="{{ false }}">
+<div style="margin:4px 0 0">
+<sc-for list="{{ processList }}" as="step" hint-placeholder-count="3">
+<div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:12px"><span style="flex-shrink:0;width:16px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));margin-top:12px"></span><p style="margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)">{{ step }}</p></div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ hasProcessOutro }}" hint-placeholder-val="{{ false }}">
+<p style="margin:14px 0 0;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ processOutro }}</p>
+</sc-if>
+</section>
+
+<sc-if value="{{ hasMetrics }}" hint-placeholder-val="{{ false }}">
+<section style="margin-bottom:clamp(30px,4vw,44px)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE RESULT</div>
+<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 16px">Outcome</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+<sc-for list="{{ metrics }}" as="m" hint-placeholder-count="3">
+<div style="background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:14px;padding:20px;text-align:center;box-shadow:var(--card-shadow)">
+<div style="font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(26px,4vw,34px);line-height:1;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">{{ m.n }}</div>
+<div style="font-size:12.5px;color:var(--muted);margin-top:9px;line-height:1.4">{{ m.l }}</div>
+</div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ hasOutcomeText }}" hint-placeholder-val="{{ false }}">
+<section style="margin-bottom:clamp(30px,4vw,44px)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE RESULT</div>
+<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Outcome</h2>
+<p style="margin:0;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ outcomeText }}</p>
+</section>
+</sc-if>
+
+<sc-if value="{{ hasBenefits }}" hint-placeholder-val="{{ false }}">
+<section style="margin-bottom:clamp(30px,4vw,44px)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE UPSIDE</div>
+<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Benefits</h2>
+<sc-for list="{{ benefits }}" as="b" hint-placeholder-count="3">
+<div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:12px"><span style="flex-shrink:0;width:16px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));margin-top:12px"></span><p style="margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)">{{ b }}</p></div>
+</sc-for>
+</section>
+</sc-if>
+
+<sc-if value="{{ hasStatus }}" hint-placeholder-val="{{ false }}">
+<div style="display:inline-flex;align-items:center;gap:9px;margin-bottom:clamp(30px,4vw,44px);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:9px 16px"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);animation:omPulse 2.2s infinite"></span>{{ statusNote }}</div>
+</sc-if>
+
+<sc-if value="{{ hasReflection }}" hint-placeholder-val="{{ false }}">
+<section style="position:relative;background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:16px;padding:clamp(22px,3vw,30px);box-shadow:var(--card-shadow);margin-bottom:clamp(30px,4vw,44px)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ REFLECTION</div>
+<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(19px,2.6vw,24px);letter-spacing:-.01em;margin:0 0 12px">What I learned</h2>
+<p style="margin:0;font-size:16px;line-height:1.7;color:var(--text);font-style:italic">“{{ reflection }}”</p>
+</section>
+</sc-if>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:26px;margin-top:8px">
+<a href="index.html#projects" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;font-weight:600" style-hover="color:var(--accent)">← All projects</a>
+<a href="{{ nextHref }}" style="display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:11px;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);color:var(--accent);transform:translateY(-1px)">Next · {{ nextTitle }} →</a>
+</div>
+</main>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;space&quot;],&quot;tsType&quot;:&quot;'light'|'space'&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { theme: "light" };
+
+  componentDidMount() {
+    let t = null;
+    try { t = localStorage.getItem("om-portfolio-theme"); } catch (e) {}
+    if (!t) t = this.props.defaultTheme || "light";
+    if (t !== this.state.theme) this.setState({ theme: t });
+  }
+
+  setTheme(t) { this.setState({ theme: t }); try { localStorage.setItem("om-portfolio-theme", t); } catch (e) {} }
+
+  data(P) {
+    return {
+      "moodale": {
+        category: "PRODUCT", title: "Moodale — Digital Marketing & Strategy Agency", image: P + "moodale.jpg",
+        liveUrl: "https://www.moodale.in/",
+        tagline: "How a run of freelance gigs became a full-service agency — and my real-world MBA.",
+        tools: ["Agency leadership", "Brand strategy", "Team building", "Client delivery"],
+        problem: "I wanted to be financially independent while doing work I genuinely enjoyed.",
+        processIntro: "I never planned to build an agency — it began with small freelance projects and side gigs for local clients. Over time those pieces fit together into Moodale, a full-service digital marketing and strategy agency. I got to work with hundreds of clients and lead a talented team, turning everyday challenges into learning. It became my real-world MBA in leadership, problem-solving, and scaling ideas into systems.",
+        metrics: [{ n: "500+", l: "campaigns delivered" }, { n: "10+", l: "team led" }, { n: "5 yrs", l: "as founder" }],
+        reflection: "Moodale taught me end-to-end ownership — how to combine creativity, strategy and structure to build something meaningful from scratch."
+      },
+      "smart-crm": {
+        category: "PRODUCT", title: "Moodale Smart CRM on Google Sheets", image: P + "googlesheetcrm.png",
+        tagline: "A no-code CRM built on Google Sheets that quietly ran an entire agency's operations.",
+        tools: ["Google Sheets", "Apps Script", "Automation", "No-code"],
+        problem: "Tracking projects, payments, client communication and content calendars manually became inefficient and error-prone. Assigning tasks and monitoring deadlines across campaigns kept leading to confusion and missed timelines.",
+        processIntro: "I built a Smart CRM using Google Sheets + Apps Script to streamline operations. Typing simple commands like “Send” or “Assign” auto-routed tasks to the right person, while triggers handled reminders, approvals and payment follow-ups seamlessly.",
+        metrics: [{ n: "60%", l: "reduction in manual effort" }, { n: "100%", l: "on-time task completion" }, { n: "0", l: "additional hires needed" }],
+        reflection: "Innovation isn’t about complexity — it’s about solving recurring pain points with clarity."
+      },
+      "moti": {
+        category: "PRODUCT", title: "Moti Motors — Profit-Sharing & Service Transparency", image: P + "motimotors.jpeg",
+        tagline: "A unique-ID service system that made vendor profit-sharing fully transparent.",
+        tools: ["Web app", "Unique-ID system", "Real-time tracking", "Field training"],
+        problem: "Moti Motors relied on third-party garages for after-sales service, but partners frequently reported inconsistent or unclear profit figures. With no transparent, real-time tracking, this led to disputes, slow reconciliation and eroding trust between the company and its vendors.",
+        processList: [
+          "Built a web application to digitize service entries in real time, assigning each vehicle a unique ID linked to its job details and financial data — giving instant visibility into every transaction.",
+          "Ran a two-day on-ground training session for garage staff to ensure smooth adoption, and let Moti Motors staff verify any partner garage's records instantly through the system."
+        ],
+        metrics: [{ n: "0%", l: "data mismatch after launch" }, { n: "Hours", l: "saved weekly on reconciliation" }],
+        reflection: "Designing for non-technical users sharpened my empathy in UX."
+      },
+      "ops-panel": {
+        category: "PRODUCT", title: "Moodale Operations Panel", image: P + "crm.jpeg",
+        liveUrl: "https://moodaleadmin.onrender.com/",
+        tagline: "Moving Moodale off spreadsheets onto a structured, role-based operations backend.",
+        tools: ["Role-based access", "Workflow mgmt", "Task logs", "Leave tracking"],
+        problem: "To make Moodale’s internal operations more formal, transparent and scalable, we needed to move from Google Sheets–based systems to a dedicated backend panel for structured process management.",
+        processIntro: "Building a backend operations panel featuring role-based access, task logs, workflow management and leave tracking — to streamline day-to-day operations and performance monitoring.",
+        statusNote: "Status: currently in progress"
+      },
+      "qr-tool": {
+        category: "PRODUCT", title: "QR Code Generator Web Tool", image: P + "mqr.jpeg",
+        liveUrl: "https://m-qr-beta.vercel.app/",
+        tagline: "A fast, no-expiry QR generator built for real client campaigns.",
+        tools: ["HTML / JS", "QRCode.js", "Firebase"],
+        problem: "Clients needed reliable, custom QR codes that never expired.",
+        processIntro: "I developed a lightweight web application that lets users generate branded, trackable QR codes instantly.",
+        processList: ["Frontend built with HTML and JavaScript", "QR generation powered by QRCode.js", "Firebase for data storage and tracking"],
+        outcomeText: "Multiple branded QR codes created and used across multiple client campaigns.",
+        reflection: "Tiny tools can create massive convenience when built right."
+      },
+      "irish-green": {
+        category: "STRATEGY", title: "Irish Green — Youth Footfall Growth Campaign", image: P + "irishgreen.png",
+        tagline: "A gamified photo contest that doubled youth footfall — on a shoestring budget.",
+        tools: ["Campaign design", "Gamification", "Google Forms", "Social analytics"],
+        problem: "Irish Green Café wanted to grow youth footfall and create authentic, high-engagement social content — without spending heavily on professional shoots or influencer marketing.",
+        processList: [
+          "Conceptualized and launched “Click, Eat & Win”, a 14-day gamified photography contest.",
+          "Designed prize tiers — ₹5,000, ₹3,000 and ₹1,000, each bundled with a Netflix subscription.",
+          "Tuned prizes to attract nearby youth while discouraging non-local participation.",
+          "Designed all promotional creatives and managed contest entries.",
+          "Tracked participation and engagement via Google Forms and social media analytics."
+        ],
+        benefits: [
+          "Collected participant data for future remarketing via Google Forms.",
+          "Generated authentic photo and video content, saving ₹15–20K in shoot costs.",
+          "Strengthened local community engagement and café brand recall."
+        ],
+        metrics: [{ n: "2×", l: "increase in youth visitors" }, { n: "High", l: "growth in organic engagement" }],
+        reflection: "Effective marketing = smart psychology, not big budgets."
+      },
+      "sales-training": {
+        category: "STRATEGY", title: "Sales & Outreach Training Program", image: P + "sales.png",
+        tagline: "A lead-scoring model + earn-while-you-learn program that scaled outreach 10×.",
+        tools: ["Lead scoring", "WhatsApp outreach", "Training program", "Team scaling"],
+        problem: "As the sole person handling sales at Moodale, I faced high lead volumes, rising drop-off rates, and too little time to personally follow up on every potential client.",
+        processIntro: "I introduced a lead-classification system to prioritize outreach:",
+        processList: [
+          "High potential — direct leads from referrals and website forms.",
+          "Medium potential — warm leads from past interactions.",
+          "Low potential — cold leads from raw data sources."
+        ],
+        processOutro: "I focused personally on high-potential leads while my team handled medium and low potential via WhatsApp outreach and structured follow-up campaigns. To scale further, I launched “Free Digital Marketing Training + Earn While You Learn” — run in tier-3 colleges to onboard students, train them in outreach fundamentals, and incentivize them for every successful conversion.",
+        metrics: [{ n: "10×", l: "outreach scalability" }, { n: "15+", l: "trained contributors" }, { n: "↑", l: "consistent rise in conversions" }],
+        reflection: "Scaling people is harder — and more rewarding — than scaling systems."
+      }
+    };
+  }
+
+  renderVals() {
+    const S = this.state, isSpace = S.theme === "space";
+    const P = "uploads/mridul-portfolio/public/opt/projects/";
+    const D = this.data(P);
+    const ORDER = ["moodale", "smart-crm", "moti", "ops-panel", "qr-tool", "irish-green", "sales-training"];
+    let slug = "moodale";
+    try { const q = new URLSearchParams(location.search).get("p"); if (q) slug = q; } catch (e) {}
+    const base = {
+      theme: S.theme, isSpace,
+      toggleTheme: () => this.setTheme(isSpace ? "light" : "space"),
+      themeIcon: isSpace ? "☀️" : "🌙",
+      themeLabel: isSpace ? "Switch to light theme" : "Switch to dark theme"
+    };
+    const p = D[slug];
+    if (!p) return { ...base, notFound: true, found: false };
+    const idx = ORDER.indexOf(slug);
+    const nextSlug = ORDER[(idx + 1) % ORDER.length];
+    return {
+      ...base, notFound: false, found: true,
+      category: p.category, eyebrow: p.category + " · CASE STUDY", title: p.title, tagline: p.tagline, image: p.image,
+      tools: p.tools || [],
+      hasLive: !!p.liveUrl, liveUrl: p.liveUrl || "",
+      problem: p.problem,
+      hasProcessIntro: !!p.processIntro, processIntro: p.processIntro || "",
+      hasProcessList: (p.processList || []).length > 0, processList: p.processList || [],
+      hasProcessOutro: !!p.processOutro, processOutro: p.processOutro || "",
+      hasMetrics: (p.metrics || []).length > 0, metrics: p.metrics || [],
+      hasOutcomeText: !!p.outcomeText, outcomeText: p.outcomeText || "",
+      hasBenefits: (p.benefits || []).length > 0, benefits: p.benefits || [],
+      hasStatus: !!p.statusNote, statusNote: p.statusNote || "",
+      hasReflection: !!p.reflection, reflection: p.reflection || "",
+      nextTitle: (D[nextSlug] || {}).title || "", nextHref: "Project.dc.html?p=" + nextSlug
+    };
+  }
+}
+</script>
+</body>
+</html>
