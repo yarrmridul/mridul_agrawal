@@ -3,5 +3,5 @@
   "framework": null,
   "installCommand": "echo 'no install needed'",
   "buildCommand": "echo 'static site — no build step'",
-  "outputDirectory": "deploy"
+  "outputDirectory": "."
 }
