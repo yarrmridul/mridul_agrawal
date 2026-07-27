@@ -50,10 +50,13 @@ a:hover{color:var(--accent-2)}
 .om-rail{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .om-rail::-webkit-scrollbar{height:6px}
 .om-rail::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.hero-facts{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:26px}
+.hero-facts{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}
 @media (max-width:640px){
- .hero-facts{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x proximity}
- .hero-facts>div{flex:0 0 auto!important;min-width:210px!important;padding:14px 18px!important;scroll-snap-align:start}
+ .hero-facts{flex-wrap:nowrap;gap:8px;margin-top:26px;width:100%}
+ .hero-facts>div{flex:1 1 0!important;min-width:0!important;padding:12px 11px!important;border-radius:13px!important}
+ .hero-facts>div>div:nth-child(1){font-size:8.5px!important;letter-spacing:.08em!important}
+ .hero-facts>div>div:nth-child(2){font-size:11.5px!important;line-height:1.25!important;margin-top:4px!important}
+ .hero-facts>div>div:nth-child(3){font-size:10px!important}
 }
 </style>
 </helmet>
@@ -67,7 +70,7 @@ a:hover{color:var(--accent-2)}
 
 <div style="position:relative;z-index:1">
 
-<nav id="topnav" style="position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px clamp(14px,4vw,40px);background:transparent;pointer-events:none">
+<nav id="topnav" style="position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px clamp(14px,4vw,40px);background:transparent;pointer-events:none">
 <sc-if value="{{ navWide }}" hint-placeholder-val="{{ true }}">
 <div class="navpill" style="pointer-events:auto;display:flex;align-items:center;gap:2px;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--border);border-radius:999px;padding:6px 8px;box-shadow:var(--card-shadow)">
 <a href="#home" style="font-size:13px;font-weight:600;color:var(--text);padding:8px 14px;border-radius:999px;transition:background .2s,color .2s" style-hover="background:var(--accent-soft);color:var(--accent)">Home</a>
@@ -77,9 +80,8 @@ a:hover{color:var(--accent-2)}
 </div>
 </sc-if>
 <sc-if value="{{ navNarrow }}" hint-placeholder-val="{{ false }}">
-<div style="pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--border);border-radius:999px;padding:7px 8px;box-shadow:var(--card-shadow)">
-<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font-size:15px;cursor:pointer">{{ themeIcon }}</button>
-<button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;padding:0 10px;border-radius:50%;border:1px solid var(--border);background:var(--panel-2);cursor:pointer">
+<div style="pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid var(--border);border-radius:999px;padding:8px 10px;box-shadow:var(--card-shadow)">
+<button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:inline-flex;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:0 9px;border:none;background:transparent;cursor:pointer">
 <span style="{{ barTop }}"></span><span style="{{ barMid }}"></span><span style="{{ barBot }}"></span>
 </button>
 </div>
@@ -94,18 +96,16 @@ a:hover{color:var(--accent-2)}
 </div>
 </sc-if>
 </nav>
-<sc-if value="{{ navWide }}" hint-placeholder-val="{{ true }}">
-<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="position:fixed;top:16px;right:clamp(16px,4vw,40px);z-index:41;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);color:var(--text);font-size:16px;cursor:pointer;box-shadow:var(--card-shadow);transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
-</sc-if>
+<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="position:fixed;top:14px;left:clamp(14px,4vw,32px);z-index:41;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);color:var(--text);font-size:16px;cursor:pointer;box-shadow:var(--card-shadow);transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
 
-<header id="home" style="position:relative;min-height:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:clamp(30px,4vh,58px) clamp(20px,5vw,64px) clamp(40px,6vw,66px);background:var(--hero-glow);scroll-margin-top:70px;overflow:hidden">
+<header id="home" style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(96px,13vh,140px) clamp(20px,5vw,64px) clamp(48px,7vw,76px);background:var(--hero-glow);scroll-margin-top:70px;overflow:hidden">
 <div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);border:1px solid var(--border);border-radius:50%;opacity:.6"></div>
 <div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(820px,160vw);height:min(820px,160vw);transform:translate(-50%,-50%);border:1px solid var(--border);border-radius:50%;opacity:.36"></div>
 <div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);animation:omOrbit 40s linear infinite;will-change:transform"><span style="position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)"></span></div>
 <div aria-hidden="true" style="position:absolute;left:6%;top:20%;width:min(340px,52vw);height:min(340px,52vw);border-radius:50%;background:radial-gradient(circle,var(--c1l),transparent 66%);filter:blur(30px);animation:omDrift 20s ease-in-out infinite;will-change:transform;pointer-events:none"></div>
 <div aria-hidden="true" style="position:absolute;right:5%;bottom:12%;width:min(300px,48vw);height:min(300px,48vw);border-radius:50%;background:radial-gradient(circle,var(--c2l),transparent 66%);filter:blur(34px);animation:omDrift 26s ease-in-out infinite reverse;will-change:transform;pointer-events:none"></div>
 
-<div style="position:relative;max-width:900px;display:flex;flex-direction:column;align-items:center;gap:16px">
+<div style="position:relative;max-width:900px;display:flex;flex-direction:column;align-items:center;gap:20px">
 <sc-if value="{{ openToWork }}" hint-placeholder-val="{{ true }}">
 <div style="display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--accent);border:1px solid var(--accent-line);background:var(--accent-soft);border-radius:999px;padding:7px 14px;animation:omFadeUp .6s ease both"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:omPulse 2.2s infinite"></span>OPEN TO PRODUCT ROLES · 2026</div>
 </sc-if>
