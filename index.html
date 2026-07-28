@@ -441,7 +441,7 @@ a:hover{color:var(--accent-2)}
 <polygon points="{{ skillRadar.grid }}" fill="var(--panel-2)" stroke="var(--border)" stroke-width="1"></polygon>
 <polygon points="{{ skillRadar.mid }}" fill="none" stroke="var(--border)" stroke-width="0.6"></polygon>
 <sc-for list="{{ skillRadar.spokes }}" as="s" hint-placeholder-count="5"><line x1="150" y1="118" x2="{{ s.x2 }}" y2="{{ s.y2 }}" stroke="var(--border)" stroke-width="0.6"></line></sc-for>
-<polygon points="{{ skillRadar.data }}" fill="{{ skillRadar.selColor }}" fill-opacity="0.18" stroke="{{ skillRadar.selColor }}" stroke-width="2.5" stroke-linejoin="round" style="transition:all .3s"></polygon>
+<polygon id="skillblob" points="{{ skillRadar.data }}" fill="{{ skillRadar.selColor }}" fill-opacity="0.18" stroke="{{ skillRadar.selColor }}" stroke-width="2.5" stroke-linejoin="round" style="transition:fill .3s,stroke .3s"></polygon>
 </svg>
 <sc-for list="{{ skillRadar.verts }}" as="v" hint-placeholder-count="5">
 <button onClick="{{ v.onPick }}" aria-label="{{ v.label }}" style="{{ v.dotStyle }}"></button>
@@ -859,7 +859,10 @@ class Component extends DCLogic {
     });
     const skC = skCats[skSel];
     const skChips = skC.skills.map(n => ({ name: n, style: { fontFamily: mono, fontSize: "12.5px", color: skC.col, background: skC.soft, border: "1px solid " + skC.line, borderRadius: "999px", padding: "7px 13px" } }));
-    const skillRadar = { grid: skPoly(() => 1), mid: skPoly(() => 0.55), data: skPoly(i => skCats[i].str), spokes: skSpokes, verts: skVerts, selColor: skC.col, selTitle: skC.title, chips: skChips };
+    const skBase = skCats.map(c => c.str);
+    const skLeanR = skAng.map((av, i) => Math.max(0.12, Math.min(1.12, skBase[i] * 0.5 + 0.6 * Math.max(0, Math.cos(skAng[skSel] - av)))));
+    const skLean = skAng.map((a, i) => (skCX + skR * skLeanR[i] * Math.cos(a)).toFixed(1) + "," + (skCY + skR * skLeanR[i] * Math.sin(a)).toFixed(1)).join(" ");
+    const skillRadar = { grid: skPoly(() => 1), mid: skPoly(() => 0.55), data: skLean, spokes: skSpokes, verts: skVerts, selColor: skC.col, selTitle: skC.title, chips: skChips };
 
     return {
       theme: S.theme, isSpace, wide, narrow: S.narrow, navWide: !S.navNarrow, navNarrow: S.navNarrow, menuOpen: S.menuOpen, openToWork, showEdu,
@@ -877,23 +880,31 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
 </script>
 <script>
 (function(){
-  var CX=150,CY=118,A=[-90,-18,54,126,-162],drag=false;
+  var CX=150,CY=118,RAD=92,A=[-90,-18,54,126,-162].map(function(d){return d*Math.PI/180;});
+  var base=[0.95,0.9,0.62,0.72,0.85];
+  var drag=false,pAng=null,sel=0,raf=null,cur=[];
+  for(var k=0;k<5;k++){ cur[k]=Math.max(0.12,base[k]*0.5+0.6*Math.max(0,Math.cos(A[0]-A[k]))); }
+  function pts(r){ var s=""; for(var i=0;i<5;i++){ s+=(CX+RAD*r[i]*Math.cos(A[i])).toFixed(1)+","+(CY+RAD*r[i]*Math.sin(A[i])).toFixed(1)+" "; } return s.replace(/\s+$/,''); }
+  function tgt(){ var ang=(drag&&pAng!==null)?pAng:A[sel]; var t=[]; for(var i=0;i<5;i++){ var w=Math.max(0,Math.cos(ang-A[i])); t[i]=Math.max(0.12,Math.min(1.12,base[i]*0.5+0.6*w)); } return t; }
+  function frame(){ var b=document.getElementById('skillblob'); if(!b){ raf=null; return; } var t=tgt(),mv=false; for(var i=0;i<5;i++){ var d=t[i]-cur[i]; cur[i]+=d*0.2; if(Math.abs(d)>0.003) mv=true; } b.setAttribute('points',pts(cur)); if(mv||drag) raf=requestAnimationFrame(frame); else raf=null; }
+  function kick(){ if(!raf) raf=requestAnimationFrame(frame); }
   function pick(e){
-    var el=document.getElementById('skillradar'); if(!el||!window.__omSkill) return false;
+    var el=document.getElementById('skillradar'); if(!el) return false;
     var svg=el.querySelector('svg'); if(!svg) return false;
     var r=svg.getBoundingClientRect(); if(!r.width) return false;
     var cx=(e.touches&&e.touches[0]?e.touches[0].clientX:e.clientX);
     var cy=(e.touches&&e.touches[0]?e.touches[0].clientY:e.clientY);
     var vx=(cx-r.left)/r.width*300, vy=(cy-r.top)/r.height*236;
-    var ang=Math.atan2(vy-CY,vx-CX)*180/Math.PI, best=0, bd=999;
-    for(var i=0;i<A.length;i++){ var d=Math.abs(((ang-A[i])%360+540)%360-180); if(d<bd){bd=d;best=i;} }
-    window.__omSkill(best); return true;
+    pAng=Math.atan2(vy-CY,vx-CX);
+    var best=0,bd=9; for(var i=0;i<5;i++){ var w=Math.cos(pAng-A[i]); if(w>bd||i===0){bd=w;best=i;} }
+    if(best!==sel){ sel=best; if(window.__omSkill) window.__omSkill(best); }
+    kick(); return true;
   }
   function inRadar(t){ var el=document.getElementById('skillradar'); return !!(el&&el.contains(t)); }
   document.addEventListener('pointerdown',function(e){ if(inRadar(e.target)){ drag=true; if(pick(e)) e.preventDefault(); } },{passive:false});
   document.addEventListener('pointermove',function(e){ if(drag){ pick(e); e.preventDefault(); } },{passive:false});
-  document.addEventListener('pointerup',function(){ drag=false; });
-  document.addEventListener('pointercancel',function(){ drag=false; });
+  document.addEventListener('pointerup',function(){ drag=false; pAng=null; kick(); });
+  document.addEventListener('pointercancel',function(){ drag=false; pAng=null; kick(); });
 })();
 </script>
 </body>
