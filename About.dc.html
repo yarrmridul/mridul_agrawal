@@ -42,8 +42,8 @@ a{color:var(--accent);text-decoration:none}
 .hand{font-family:'Caveat',cursive;font-weight:600;line-height:1}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--card-shadow)}
 .shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
-.dash{flex:1;display:grid;gap:14px;width:100%;max-width:1520px;margin:0 auto;padding:12px clamp(16px,3vw,44px) 14px;
- grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:minmax(0,1fr) auto auto;align-content:stretch}
+.dash{flex:1;display:grid;gap:13px 14px;width:100%;max-width:1520px;margin:0 auto;padding:10px clamp(16px,3vw,44px) 14px;
+ grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:auto auto auto;align-items:start;align-content:space-between}
 .c-about{grid-column:1;grid-row:1;min-width:0}
 .c-spec{grid-column:2;grid-row:1;position:relative;min-width:0;display:flex;flex-direction:column}
 .c-right{grid-column:3;grid-row:1;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0}
@@ -54,7 +54,7 @@ a{color:var(--accent);text-decoration:none}
 .jconn{align-self:center;flex:0 0 20px;height:1px;border-top:2px dashed var(--border)}
 .brow{display:grid;grid-template-columns:18px 1fr 40px;align-items:center;gap:9px}
 .btrack{height:7px;border-radius:999px;background:var(--panel-2);overflow:hidden;border:1px solid var(--border)}
-@media (min-width:1080px){ .shell{height:100vh} .dash{overflow:hidden} }
+@media (min-width:1080px){ .jcard{min-height:76px} }
 @media (max-width:1079px){
  .shell{height:auto}
  .dash{grid-template-columns:1fr;grid-template-rows:none;padding:16px clamp(16px,5vw,40px) 40px;gap:16px}
@@ -103,12 +103,12 @@ a{color:var(--accent);text-decoration:none}
 <div class="hand note-me" style="position:absolute;top:2px;left:6px;z-index:4;font-size:19px;color:var(--muted);transform:rotate(-8deg)">That's me!
 <svg width="46" height="30" viewBox="0 0 46 30" fill="none" style="position:absolute;left:70px;top:6px"><path d="M2 4 C22 2, 40 10, 42 24" stroke="var(--muted)" stroke-width="1.6" fill="none"/><path d="M36 20 L43 25 L38 27" stroke="var(--muted)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </div>
-<div class="card" style="flex:1;display:flex;flex-direction:column;padding:16px 18px;position:relative;overflow:hidden">
-<div style="position:relative;display:flex;justify-content:center;padding-top:6px">
+<div class="card" style="display:flex;flex-direction:column;padding:15px 17px;position:relative">
+<div style="position:relative;display:flex;justify-content:center;padding-top:2px">
 <span style="position:absolute;left:10%;top:24%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);border:1px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel);animation:floatY 5s ease-in-out infinite">&lt;/&gt;</span>
 <span style="position:absolute;right:8%;top:14%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);border:1px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel);animation:floatY 6s ease-in-out infinite .5s">&lt;/&gt;</span>
 <span style="position:absolute;right:12%;bottom:8%;font-size:15px;animation:floatY 5.5s ease-in-out infinite 1s">☕</span>
-<div style="width:min(200px,64%);aspect-ratio:1/1;border-radius:50%;background:var(--hero-glow);border:1px solid var(--border);display:flex;align-items:flex-end;justify-content:center;overflow:hidden">
+<div style="width:min(164px,52%);aspect-ratio:1/1;border-radius:50%;background:var(--hero-glow);border:1px solid var(--border);display:flex;align-items:flex-end;justify-content:center;overflow:hidden">
 <img src="uploads/mridul-portfolio/public/opt/mridul_img.jpeg" alt="Mridul Agrawal" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top center">
 </div>
 </div>
