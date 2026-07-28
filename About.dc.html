@@ -10,7 +10,7 @@
 <helmet data-dc-atomics>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -30,88 +30,157 @@ body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-seri
  --c1:#22D3EE;--c1s:#22D3EE22;--c1l:#22D3EE4D;--c2:#34D399;--c2s:#34D39922;--c2l:#34D3994D;
  --c3:#E7B24D;--c3s:#E7B24D1E;--c3l:#E7B24D4D;--c4:#2DD4BF;--c4s:#2DD4BF1E;--c4l:#2DD4BF4D;
  --card-shadow:0 14px 40px -26px rgba(0,0,0,.85);--big-shadow:0 40px 90px -46px rgba(0,0,0,.9);
- --hero-glow:radial-gradient(48% 44% at 12% 8%,#0891B23a,transparent 70%),radial-gradient(46% 42% at 90% 14%,#05966933,transparent 70%),radial-gradient(70% 60% at 50% 118%,#0E74902e,transparent 72%),radial-gradient(30% 30% at 78% 82%,#34D3991f,transparent 70%);
+ --hero-glow:radial-gradient(48% 44% at 12% 8%,#0891B23a,transparent 70%),radial-gradient(46% 42% at 90% 14%,#05966933,transparent 70%);
  --nav-bg:rgba(10,15,15,.7);--page-mesh:radial-gradient(44% 36% at 10% 12%,#22D3EE17,transparent 62%),radial-gradient(40% 34% at 90% 10%,#34D39914,transparent 64%);
  --page-tex:radial-gradient(rgba(34,211,238,.6) .9px,transparent .9px);--tex-op:.05;--tex-size:24px 24px;
 }
 a{color:var(--accent);text-decoration:none}
-a:hover{color:var(--accent-2)}
 ::selection{background:var(--accent-soft)}
-@keyframes omTwinkle{0%,100%{opacity:.3}50%{opacity:.85}}
-@keyframes omShoot{0%{opacity:0;transform:translate(0,0) rotate(20deg)}4%{opacity:1}15%{opacity:0;transform:translate(118vw,54vh) rotate(20deg)}100%{opacity:0;transform:translate(118vw,54vh) rotate(20deg)}}
-@keyframes omSheen{to{background-position:200% center}}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important}}
+.hand{font-family:'Caveat',cursive;font-weight:600;line-height:1}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--card-shadow)}
+.shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+.dash{flex:1;display:grid;gap:14px;width:100%;max-width:1520px;margin:0 auto;padding:12px clamp(16px,3vw,44px) 14px;
+ grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:minmax(0,1fr) auto auto;align-content:stretch}
+.c-about{grid-column:1;grid-row:1;min-width:0}
+.c-spec{grid-column:2;grid-row:1;position:relative;min-width:0;display:flex;flex-direction:column}
+.c-right{grid-column:3;grid-row:1;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0}
+.c-journey{grid-column:1 / -1;grid-row:2;position:relative}
+.c-bottom{grid-column:1 / -1;grid-row:3}
+.jrow{display:flex;gap:10px;align-items:stretch}
+.jcard{flex:1 1 0;min-width:0}
+.jconn{align-self:center;flex:0 0 20px;height:1px;border-top:2px dashed var(--border)}
+.brow{display:grid;grid-template-columns:18px 1fr 40px;align-items:center;gap:9px}
+.btrack{height:7px;border-radius:999px;background:var(--panel-2);overflow:hidden;border:1px solid var(--border)}
+@media (min-width:1080px){ .shell{height:100vh} .dash{overflow:hidden} }
+@media (max-width:1079px){
+ .shell{height:auto}
+ .dash{grid-template-columns:1fr;grid-template-rows:none;padding:16px clamp(16px,5vw,40px) 40px;gap:16px}
+ .c-about,.c-spec,.c-right,.c-journey,.c-bottom{grid-column:1;grid-row:auto}
+ .jrow{overflow-x:auto;padding-bottom:8px}
+ .jcard{flex:0 0 210px}
+ .c-bottom .bwrap{flex-direction:column;text-align:center;gap:14px}
+}
 </style>
 </helmet>
-<div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
-<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--page-mesh);transform:translateZ(0)"></div>
-<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--tex-op);transition:opacity .5s;background:var(--page-tex);background-size:var(--tex-size);transform:translateZ(0);backface-visibility:hidden"></div>
-<sc-if value="{{ isSpace }}" hint-placeholder-val="{{ false }}">
-<div aria-hidden="true" style="position:fixed;top:8%;left:-14%;width:120px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff);z-index:0;pointer-events:none;opacity:0;animation:none;display:none;will-change:transform,opacity"></div>
-</sc-if>
-<div style="position:relative;z-index:1">
+<div data-theme="{{ theme }}" class="about-root" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text)">
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--page-mesh)"></div>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--tex-op);background:var(--page-tex);background-size:var(--tex-size)"></div>
 
-<nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px clamp(18px,5vw,64px);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);border-bottom:1px solid var(--border)">
-<a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)">← Back to portfolio</a>
-<span style="font-family:'Playfair Display',serif;font-weight:600;font-size:15px;letter-spacing:-.01em">Mridul Agrawal</span>
-<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font-size:16px;cursor:pointer;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
+<div class="shell">
+<nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,4vw,44px);flex:0 0 auto">
+<a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)"><span style="font-size:16px">←</span> Back to Home</a>
+<span class="hand" style="font-size:20px;color:var(--accent)">building in public ✦</span>
+<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--text);font-size:15px;cursor:pointer" style-hover="border-color:var(--accent)">{{ themeIcon }}</button>
 </nav>
 
-<header style="position:relative;padding:clamp(48px,8vw,88px) clamp(20px,5vw,64px) clamp(28px,4vw,44px);background:var(--hero-glow);overflow:hidden">
-<div style="max-width:1120px;margin:0 auto">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.22em;color:var(--accent)">ABOUT ME</div>
-<h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(38px,7vw,72px);line-height:1.12;letter-spacing:-.03em;margin:14px 0 0;max-width:760px">Building systems, sipping chai, and figuring out life <span style="background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent));background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:omSheen 5s linear infinite">one product at a time</span>.</h1>
-<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px">
-<sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
-<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:7px 14px">{{ f }}</span>
+<div class="dash">
+
+<section class="c-about">
+<div style="display:flex;align-items:flex-end;gap:4px">
+<h1 style="font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(34px,3.6vw,52px);line-height:1;letter-spacing:-.03em;margin:0">About <span style="color:var(--accent)">Me</span></h1>
+<svg width="70" height="16" viewBox="0 0 70 16" fill="none" style="margin-bottom:6px"><path d="M2 11 C18 4, 40 4, 68 8" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/><path d="M6 15 C22 9, 44 9, 64 13" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" opacity=".5"/></svg>
+</div>
+<div style="display:flex;gap:8px;margin-top:12px">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:5px 11px">v25.3</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:5px 11px">◦ Still shipping…</span>
+</div>
+<p style="font-family:'Playfair Display',serif;font-size:clamp(18px,1.9vw,25px);font-weight:600;line-height:1.35;letter-spacing:-.01em;margin:16px 0 0">I <span style="color:var(--accent)">build systems</span>, sip chai, and figure out life — <span style="color:var(--accent-2)">one product</span> at a time.</p>
+<p style="font-size:13.5px;line-height:1.62;color:var(--muted);margin:14px 0 0">As a true Baniya, I've mastered the art of <span class="hand" style="font-size:18px;color:var(--accent)">paisa bachao</span> — from making custom CRMs to negotiating deals that make everyone smile. Big on management, bigger on jugaad, and happiest when building systems that make work smoother (and people happier) and solving real-world problems.</p>
+<div style="display:flex;align-items:center;gap:11px;margin-top:16px;background:var(--panel-2);border:1px solid var(--border);border-radius:14px;padding:12px 15px">
+<span style="font-size:19px">💡</span>
+<span style="font-size:13px;line-height:1.4;color:var(--text)">Currently building a better version of myself, every single day.</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+<a href="https://www.linkedin.com/in/mridul-agrawal-62029522b" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13.5px;font-weight:600;padding:11px 20px;border-radius:12px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">Let's connect <span aria-hidden="true">→</span></a>
+<a href="mailto:mridulagrawal06@gmail.com" style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);color:var(--text);background:var(--panel);font-size:13.5px;font-weight:600;padding:10px 18px;border-radius:12px" style-hover="border-color:var(--accent);color:var(--accent)">✉ Say Hello</a>
+</div>
+</section>
+
+<section class="c-spec">
+<div class="hand note-me" style="position:absolute;top:2px;left:6px;z-index:4;font-size:19px;color:var(--muted);transform:rotate(-8deg)">That's me!
+<svg width="46" height="30" viewBox="0 0 46 30" fill="none" style="position:absolute;left:70px;top:6px"><path d="M2 4 C22 2, 40 10, 42 24" stroke="var(--muted)" stroke-width="1.6" fill="none"/><path d="M36 20 L43 25 L38 27" stroke="var(--muted)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<div class="card" style="flex:1;display:flex;flex-direction:column;padding:16px 18px;position:relative;overflow:hidden">
+<div style="position:relative;display:flex;justify-content:center;padding-top:6px">
+<span style="position:absolute;left:10%;top:24%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);border:1px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel);animation:floatY 5s ease-in-out infinite">&lt;/&gt;</span>
+<span style="position:absolute;right:8%;top:14%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);border:1px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel);animation:floatY 6s ease-in-out infinite .5s">&lt;/&gt;</span>
+<span style="position:absolute;right:12%;bottom:8%;font-size:15px;animation:floatY 5.5s ease-in-out infinite 1s">☕</span>
+<div style="width:min(200px,64%);aspect-ratio:1/1;border-radius:50%;background:var(--hero-glow);border:1px solid var(--border);display:flex;align-items:flex-end;justify-content:center;overflow:hidden">
+<img src="uploads/mridul-portfolio/public/opt/mridul_img.jpeg" alt="Mridul Agrawal" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:var(--accent)">PRODUCT SPECIFICATION</span>
+<span style="display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--c2);background:var(--c2s);border:1px solid var(--c2l);border-radius:999px;padding:3px 8px"><span style="width:5px;height:5px;border-radius:50%;background:var(--c2)"></span>Stable Release</span>
+</div>
+<div style="font-family:'Playfair Display',serif;font-weight:700;font-size:22px;letter-spacing:-.01em;margin-top:3px">Mridul Agrawal</div>
+<div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:12px">
+<div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">◈ Origin</span><span style="font-weight:600">Mathura, UP</span></div>
+<div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">⌖ Function</span><span style="font-weight:600">Finding inefficient systems &amp; fixing them.</span></div>
+<div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">⚙ Depends on</span><span style="display:flex;gap:6px;flex-wrap:wrap"><span style="background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:1px 7px">Chai</span><span style="background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:1px 7px">Music</span><span style="background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:1px 7px">Internet</span></span></div>
+<div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">◔ Known bugs</span><span style="color:var(--muted);line-height:1.5">Overthinks UI · starts side projects at 2AM · says "just one more improvement" 43 times.</span></div>
+<div style="display:flex;gap:10px;align-items:center"><span style="width:82px;flex-shrink:0;color:var(--muted)">◉ Status</span><span style="display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--c2)"><span style="width:7px;height:7px;border-radius:50%;background:var(--c2);box-shadow:0 0 8px var(--c2)"></span>Always Shipping</span></div>
+</div>
+</div>
+</section>
+
+<section class="c-right">
+<div class="card" style="padding:14px 16px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:11px"><span style="font-size:16px">🧠</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">My brain, as a dashboard</span></div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ brain }}" as="b" hint-placeholder-count="6">
+<div class="brow"><span style="text-align:center">{{ b.icon }}</span><div class="btrack"><div style="{{ b.fillStyle }}"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);text-align:right">{{ b.val }}</span></div>
 </sc-for>
 </div>
 </div>
-</header>
+<div class="card" style="padding:14px 16px;position:relative">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px"><span style="font-family:'Playfair Display',serif;font-size:24px;color:var(--accent);line-height:0">“</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">What drives me</span></div>
+<p style="margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)">I love solving real problems for real people. Building systems that make life (and work) smoother is my kind of dopamine.</p>
+<span class="hand" style="position:absolute;right:12px;bottom:8px;font-size:16px;color:var(--accent)">that's the goal ↝</span>
+</div>
+<div class="card" style="padding:14px 16px">
+<div style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px;margin-bottom:11px">When I'm not building…</div>
+<div style="display:flex;justify-content:space-between;gap:6px;text-align:center">
+<div style="flex:1"><div style="font-size:20px">⛰️</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Mountains</div></div>
+<div style="flex:1"><div style="font-size:20px">🚗</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Late drives</div></div>
+<div style="flex:1"><div style="font-size:20px">🎵</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Music</div></div>
+<div style="flex:1"><div style="font-size:20px">📚</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Books</div></div>
+<div style="flex:1"><div style="font-size:20px">💬</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Great convos</div></div>
+</div>
+</div>
+</section>
 
-<main style="padding:clamp(28px,4vw,44px) clamp(20px,5vw,64px) clamp(56px,8vw,90px)">
-<div style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:{{ cols }};gap:clamp(28px,4vw,48px);align-items:start">
+<section class="c-journey">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+<span style="font-size:15px">🗺️</span>
+<span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">The Journey So Far</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)">— key chapters in the making</span>
+<span class="hand" style="margin-left:auto;font-size:17px;color:var(--accent)">the best is yet to come ✦</span>
+</div>
+<div class="jrow">
+<sc-for list="{{ journey }}" as="j" hint-placeholder-count="5">
+<div class="jcard card" style="border-top:3px solid {{ j.col }};padding:10px 13px">
+<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:{{ j.col }}">{{ j.year }}</span><span style="width:9px;height:9px;border-radius:50%;background:{{ j.col }};box-shadow:0 0 0 3px {{ j.soft }}"></span></div>
+<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:13.5px;line-height:1.2;margin-top:5px">{{ j.title }}</div>
+<div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35">{{ j.desc }}</div>
+</div>
+<sc-if value="{{ j.hasNext }}" hint-placeholder-val="{{ true }}"><div class="jconn"></div></sc-if>
+</sc-for>
+</div>
+</section>
 
-<div>
-<p style="font-size:15.5px;line-height:1.7;color:var(--text);margin:0 0 18px">Born and raised in <strong style="font-weight:600">Mathura</strong> — so I bring both a sweet tooth and a knack for balance. A true Baniya at heart, I’ve mastered the art of <em style="font-style:italic;color:var(--accent)">paisa bachao</em> — from building custom CRMs to negotiating deals that make everyone smile.</p>
-<p style="font-size:14.5px;line-height:1.7;color:var(--muted);margin:0 0 26px">Big on management, bigger on jugaad, and happiest building systems that make work smoother and people happier. I’m most at home turning messy problems into clean, working products.</p>
-<div style="display:flex;flex-wrap:wrap;gap:12px">
-<a href="https://www.linkedin.com/in/mridul-agrawal-62029522b" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:14px;font-weight:600;padding:12px 22px;border-radius:11px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">LinkedIn ↗</a>
-<a href="mailto:mridulagrawal06@gmail.com" style="border:1px solid var(--border);color:var(--text);background:var(--panel);font-size:14px;font-weight:600;padding:11px 22px;border-radius:11px" style-hover="border-color:var(--accent);color:var(--accent)">Email me</a>
-</div>
-</div>
-
-<div style="display:flex;justify-content:center">
-<div style="position:relative;padding:8px;border:1px solid var(--border);border-radius:20px;background:var(--panel);box-shadow:var(--big-shadow)">
-<img src="uploads/mridul-portfolio/public/opt/mridul_img.jpeg" alt="Mridul Agrawal" loading="lazy" decoding="async" style="display:block;width:100%;max-width:300px;aspect-ratio:4/5;object-fit:cover;border-radius:14px">
-</div>
-</div>
-
-<div style="display:flex;flex-direction:column;gap:16px">
-<div style="background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--c1);border-radius:16px;padding:24px;box-shadow:var(--card-shadow)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--c1);margin-bottom:9px">THE JOURNEY</div>
-<p style="margin:0;font-size:13.5px;line-height:1.65;color:var(--muted)">I’ve always had a thing for figuring out how things work — and how they could work better. That curiosity turned into side gigs back in Class 10 (2018). By 2020 it became Moodale — my real-world MBA in operations, marketing and strategy. I didn’t fully know where it would lead, and that’s still the fun part.</p>
-</div>
-<div style="background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--c2);border-radius:16px;padding:24px;box-shadow:var(--card-shadow)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--c2);margin-bottom:9px">BUILDING BETTER</div>
-<p style="margin:0;font-size:13.5px;line-height:1.65;color:var(--muted)">Great products aren’t just built — they’re understood, tested and evolved. I love working with people who think differently, digging into the <em style="font-style:italic;color:var(--text)">why</em>, and building systems that make life and work smoother.</p>
+<div class="c-bottom">
+<div class="bwrap card" style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 20px;background:var(--panel)">
+<span class="hand" style="font-size:19px;color:var(--text)">✦ I don't have it all figured out — but I'm good at figuring things out.</span>
+<span style="font-size:12.5px;color:var(--muted)">Let's build something meaningful together.</span>
+<a href="https://www.linkedin.com/in/mridul-agrawal-62029522b" target="_blank" rel="noopener noreferrer" style="flex-shrink:0;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:11px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">Let's Connect <span aria-hidden="true">→</span></a>
 </div>
 </div>
 
 </div>
-
-<div style="max-width:1120px;margin:clamp(40px,6vw,64px) auto 0;text-align:center;border-top:1px solid var(--border);padding-top:clamp(32px,5vw,48px)">
-<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,3.5vw,34px);letter-spacing:-.02em;margin:0">Want the full picture?</h2>
-<p style="font-size:14.5px;color:var(--muted);margin:12px auto 22px;max-width:440px">Head back to the portfolio for experience, projects and the timeline.</p>
-<a href="index.html" style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:14px;font-weight:600;padding:14px 26px;border-radius:12px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">← Back to portfolio</a>
-</div>
-</main>
-
-<footer style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding:22px clamp(20px,5vw,64px);border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint)">
-<span>© 2026 Mridul Agrawal</span>
-<span>Mathura → Vellore → your roadmap</span>
-</footer>
-
 </div>
 </div>
 </x-dc>
@@ -119,11 +188,11 @@ a:hover{color:var(--accent-2)}
 class Component extends DCLogic {
   state = {
     theme: "light",
-    narrow: (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(max-width:900px)").matches) || false
+    narrow: (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(max-width:1079px)").matches) || false
   };
   componentDidMount() {
     try {
-      this.mq = window.matchMedia("(max-width:900px)");
+      this.mq = window.matchMedia("(max-width:1079px)");
       this.onMq = e => this.setState({ narrow: e.matches });
       this.setState({ narrow: this.mq.matches });
       this.mq.addEventListener("change", this.onMq);
@@ -138,16 +207,30 @@ class Component extends DCLogic {
   renderVals() {
     const S = this.state;
     const isLight = S.theme !== "space";
-    const segBase = { border: "none", cursor: "pointer", fontFamily: "'Source Sans 3',sans-serif", fontSize: "12px", fontWeight: 600, padding: "7px 15px", borderRadius: "999px", transition: "all .2s" };
+    const grad = "linear-gradient(90deg,var(--accent),var(--accent-2))";
+    const brain = [
+      { name: "Curiosity", pct: 94, icon: "💡" },
+      { name: "Systems Thinking", pct: 98, icon: "🧩" },
+      { name: "Execution", pct: 87, icon: "⚡" },
+      { name: "Empathy", pct: 81, icon: "❤️" },
+      { name: "Caffeine", pct: 67, icon: "☕" },
+      { name: "Product Ideas", pct: 100, inf: true, icon: "✦" }
+    ].map(b => ({ name: b.name, icon: b.icon, val: b.inf ? "∞" : b.pct + "%",
+      fillStyle: { width: b.pct + "%", height: "100%", borderRadius: "999px", background: grad, transformOrigin: "left", animation: "barGrow 1.1s cubic-bezier(.2,.8,.2,1) both" } }));
+    const jc = ["var(--c2)", "var(--c3)", "var(--c1)", "var(--c2)", "var(--c4)"];
+    const js = ["var(--c2s)", "var(--c3s)", "var(--c1s)", "var(--c2s)", "var(--c4s)"];
+    const jRaw = [
+      { year: "2018", title: "Curiosity Sparks", desc: "Side gigs & school projects that started it all." },
+      { year: "2020", title: "Moodale Begins", desc: "Founded a marketing & strategy agency in college." },
+      { year: "2025", title: "ION Trading Group", desc: "Building automations & systems that scale." },
+      { year: "Now", title: "Leveling Up", desc: "Learning, building, and shipping products." },
+      { year: "Next", title: "What's Next?", desc: "AI products, bigger impact, and global problems." }
+    ];
+    const journey = jRaw.map((j, i) => ({ ...j, col: jc[i], soft: js[i], hasNext: i < jRaw.length - 1 }));
     return {
-      theme: S.theme,
-      isSpace: S.theme === "space",
-      cols: S.narrow ? "1fr" : "1.1fr 300px 1fr",
-      facts: ["Mathura-born", "Chai-powered", "Jugaad > excuses", "Systems builder"],
-      setLight: () => this.setTheme("light"), setSpace: () => this.setTheme("space"),
+      theme: S.theme, isSpace: S.theme === "space", narrow: S.narrow,
       toggleTheme: () => this.setTheme(isLight ? "space" : "light"), themeIcon: isLight ? "🌙" : "☀️", themeLabel: isLight ? "Switch to dark theme" : "Switch to light theme",
-      segLightStyle: { ...segBase, background: isLight ? "var(--accent)" : "transparent", color: isLight ? "#fff" : "var(--muted)" },
-      segSpaceStyle: { ...segBase, background: !isLight ? "var(--accent)" : "transparent", color: !isLight ? "#fff" : "var(--muted)" }
+      brain, journey
     };
   }
 }
