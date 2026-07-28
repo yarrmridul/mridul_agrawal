@@ -46,6 +46,7 @@ a:hover{color:var(--accent-2)}
 @keyframes omShoot{0%{opacity:0;transform:translate(0,0) rotate(20deg)}4%{opacity:1}15%{opacity:0;transform:translate(118vw,54vh) rotate(20deg)}100%{opacity:0;transform:translate(118vw,54vh) rotate(20deg)}}
 @keyframes omScan{0%{top:-4%;opacity:0}10%{opacity:.85}52%{top:100%;opacity:.85}62%{opacity:0}100%{top:100%;opacity:0}}
 @keyframes omDrift{0%,100%{transform:translate(0,0)}50%{transform:translate(36px,-28px)}}
+@keyframes eggUnfold{0%{opacity:0;transform:scale(.55) translateY(6px)}60%{opacity:1;transform:scale(1.03)}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
 .om-rail{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .om-rail::-webkit-scrollbar{height:6px}
@@ -262,6 +263,14 @@ a:hover{color:var(--accent-2)}
 <sc-for list="{{ tlDesk }}" as="item" hint-placeholder-count="10">
 <div style="{{ item.cardWrap }}">
 <div style="{{ item.cardStyle }}" style-hover="transform:translateY(-3px);box-shadow:var(--big-shadow)">
+<button onClick="{{ item.onEgg }}" aria-label="Crack the egg to reveal details" title="Crack me!" style="{{ item.eggWrapStyle }}">
+<svg viewBox="0 0 40 52" width="30" height="40" style="overflow:visible">
+<path d="M7,30 L33,30 C34,42 28,50 20,50 C12,50 6,42 7,30 Z" fill="var(--panel)" stroke="var(--accent-line)" stroke-width="1.5" style="{{ item.eggBotStyle }}"></path>
+<path d="M20,3 C31,3 34,20 33,30 L7,30 C6,20 9,3 20,3 Z" fill="var(--panel-2)" stroke="var(--accent-line)" stroke-width="1.5" style="{{ item.eggTopStyle }}"></path>
+<path d="M7,30 L13,25 L18,31 L23,25 L28,31 L33,28" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="{{ item.crackStyle }}"></path>
+<g style="{{ item.sparkStyle }}"><circle cx="20" cy="23" r="2.6" fill="var(--accent)"></circle><path d="M20,13 L20,7 M28,17 L32,14 M12,17 L8,14" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"></path></g>
+</svg>
+</button>
 <div style="{{ item.innerStyle }}">
 <sc-if value="{{ item.hasLogo }}" hint-placeholder-val="{{ true }}"><img src="{{ item.logo }}" alt="" loading="lazy" style="{{ item.logoStyle }}"></sc-if>
 <sc-if value="{{ item.noLogo }}" hint-placeholder-val="{{ false }}"><span style="{{ item.monoStyle }}">{{ item.mono }}</span></sc-if>
@@ -273,7 +282,17 @@ a:hover{color:var(--accent-2)}
 </div>
 </div>
 </div>
-<div style="{{ item.dotCell }}"><span style="{{ item.connector }}"></span><span style="{{ item.dot }}"></span></div>
+<div style="{{ item.dotCell }}"><span style="{{ item.connector }}"></span><sc-if value="{{ item.isOpen }}" hint-placeholder-val="{{ false }}"><span style="{{ item.infoConnector }}"></span></sc-if><span style="{{ item.dot }}"></span></div>
+<sc-if value="{{ item.isOpen }}" hint-placeholder-val="{{ false }}">
+<div style="{{ item.infoCellStyle }}">
+<div style="{{ item.infoPanelStyle }}">
+<button onClick="{{ item.onClose }}" aria-label="Close" style="position:absolute;top:7px;right:9px;width:24px;height:24px;border:none;background:transparent;color:var(--faint);font-size:17px;cursor:pointer;line-height:1">×</button>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:{{ item.col }}">HATCHED · {{ item.year }}</div>
+<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:15px;line-height:1.25;margin-top:5px">{{ item.title }}</div>
+<p style="margin:8px 0 0;font-size:12.8px;line-height:1.55;color:var(--muted)">{{ item.desc }}</p>
+</div>
+</div>
+</sc-if>
 </sc-for>
 </div>
 </sc-if>
@@ -286,6 +305,14 @@ a:hover{color:var(--accent-2)}
 <sc-for list="{{ tlRail }}" as="item" hint-placeholder-count="10">
 <div style="flex:0 0 220px;position:relative;height:280px">
 <div style="{{ item.cardStyle }}">
+<button onClick="{{ item.onEgg }}" aria-label="Crack the egg to reveal details" title="Crack me!" style="{{ item.eggWrapStyle }}">
+<svg viewBox="0 0 40 52" width="28" height="38" style="overflow:visible">
+<path d="M7,30 L33,30 C34,42 28,50 20,50 C12,50 6,42 7,30 Z" fill="var(--panel)" stroke="var(--accent-line)" stroke-width="1.5" style="{{ item.eggBotStyle }}"></path>
+<path d="M20,3 C31,3 34,20 33,30 L7,30 C6,20 9,3 20,3 Z" fill="var(--panel-2)" stroke="var(--accent-line)" stroke-width="1.5" style="{{ item.eggTopStyle }}"></path>
+<path d="M7,30 L13,25 L18,31 L23,25 L28,31 L33,28" fill="none" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="{{ item.crackStyle }}"></path>
+<g style="{{ item.sparkStyle }}"><circle cx="20" cy="23" r="2.6" fill="var(--accent)"></circle><path d="M20,13 L20,7 M28,17 L32,14 M12,17 L8,14" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"></path></g>
+</svg>
+</button>
 <div style="display:flex;align-items:center;gap:10px">
 <sc-if value="{{ item.hasLogo }}" hint-placeholder-val="{{ true }}"><img src="{{ item.logo }}" alt="" loading="lazy" style="{{ item.logoStyle }}"></sc-if>
 <sc-if value="{{ item.noLogo }}" hint-placeholder-val="{{ false }}"><span style="{{ item.monoStyle }}">{{ item.mono }}</span></sc-if>
@@ -299,6 +326,14 @@ a:hover{color:var(--accent-2)}
 </sc-for>
 </div>
 </div>
+<sc-if value="{{ tlOpen.has }}" hint-placeholder-val="{{ false }}">
+<div style="{{ tlOpen.panelStyle }}">
+<button onClick="{{ tlOpen.onClose }}" aria-label="Close" style="position:absolute;top:8px;right:10px;width:26px;height:26px;border:none;background:transparent;color:var(--faint);font-size:19px;cursor:pointer;line-height:1">×</button>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;color:{{ tlOpen.col }}">HATCHED · {{ tlOpen.year }}</div>
+<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:16px;line-height:1.25;margin-top:5px">{{ tlOpen.title }}</div>
+<p style="margin:8px 0 0;font-size:13px;line-height:1.55;color:var(--muted)">{{ tlOpen.desc }}</p>
+</div>
+</sc-if>
 </sc-if>
 </div>
 </section>
@@ -404,7 +439,8 @@ class Component extends DCLogic {
     narrow: mm("(max-width:900px)"),
     navNarrow: mm("(max-width:1000px)"),
     exp: 0, tab: "prd", mExp: 0,
-    menuOpen: false
+    menuOpen: false,
+    tlEgg: { i: -1, s: 0 }
   };
 
   componentDidMount() {
@@ -494,17 +530,17 @@ class Component extends DCLogic {
     const L = "uploads/mridul-portfolio/public/opt/logos/";
     const R = "uploads/mridul-portfolio/public/opt/";
     return [
-      { year: "2018", type: "work", title: "Started Graphic Designing", sub: "Freelance", mono: "GD" },
-      { year: "2019", type: "work", title: "Social Media Marketing & Strategy", sub: "Freelance", mono: "SM" },
-      { year: "2019", type: "edu", title: "CBSE (X) — 92%", sub: "Birla School, Mathura", mono: "X" },
-      { year: "2020", type: "milestone", title: "Founded Moodale", sub: "Founder & CEO · 10+ team", logo: L + "moodale.png3.jpg" },
-      { year: "2021", type: "edu", title: "CBSE (XII) — 81.4%", sub: "Prasad Public School", mono: "XII" },
-      { year: "2022", type: "edu", title: "B.E. ECE — VIT Vellore", sub: "CGPA 8.85 · Class of ’26", mono: "VIT" },
-      { year: "2023", type: "work", title: "Navdrishti", sub: "Content & Ops Coordinator", logo: L + "images.png" },
-      { year: "2024", type: "work", title: "Techlive Solutions", sub: "Web Dev & UX Intern", logo: L + "techlive.jpg" },
-      { year: "2025", type: "work", title: "House of SJ", sub: "Business Ops & Product Lead", logo: R + "HOS.jpeg" },
-      { year: "2026", type: "work", title: "ION Group", sub: "Technical Analyst", logo: L + "ion.png", current: true },
-      { year: "Next", type: "open", title: "Your company here", sub: "the next stop is open", mono: "?" }
+      { year: "2018", type: "work", title: "Started Graphic Designing", sub: "Freelance", mono: "GD", desc: "Kicked off my creative career as a freelance graphic designer — building visual content, brand assets and social creatives for a range of early clients." },
+      { year: "2019", type: "work", title: "Social Media Marketing & Strategy", sub: "Freelance", mono: "SM", desc: "Grew from pure design into social media marketing and content strategy — planning and running campaigns that moved real engagement for small businesses." },
+      { year: "2019", type: "edu", title: "CBSE (X) — 92%", sub: "Birla School, Mathura", mono: "X", desc: "Completed CBSE Class X at PRFS (Birla School), Mathura, securing 92%." },
+      { year: "2020", type: "milestone", title: "Founded Moodale", sub: "Founder & CEO · 10+ team", logo: L + "moodale.png3.jpg", desc: "Founded and scaled Moodale, a digital marketing & strategy agency — leading a 10+ member cross-functional team and delivering 500+ campaigns over five years." },
+      { year: "2021", type: "edu", title: "CBSE (XII) — 81.4%", sub: "Prasad Public School", mono: "XII", desc: "Completed CBSE Class XII at Prasad Public School, Mathura, securing 81.4%." },
+      { year: "2022", type: "edu", title: "B.E. ECE — VIT Vellore", sub: "CGPA 8.85 · Class of ’26", mono: "VIT", desc: "Pursuing a B.E. in Electronics & Communication Engineering at VIT Vellore — CGPA 8.85, Class of 2026." },
+      { year: "2023", type: "work", title: "Navdrishti", sub: "Content & Ops Coordinator", logo: L + "images.png", desc: "As Content & Ops Coordinator, automated editorial workflows with Google Sheets & Apps Script — cutting manual tracking by roughly half and keeping teams shipping on time." },
+      { year: "2024", type: "work", title: "Techlive Solutions", sub: "Web Dev & UX Intern", logo: L + "techlive.jpg", desc: "Built responsive websites using AI-assisted tools and prompt engineering, turning client needs into shipped features and interactive product demos." },
+      { year: "2025", type: "work", title: "House of SJ", sub: "Business Ops & Product Lead", logo: R + "HOS.jpeg", desc: "Led product and operations for a clothing startup — owning website creation, influencer collaborations and growth strategy end to end." },
+      { year: "2026", type: "work", title: "ION Group", sub: "Technical Analyst", logo: L + "ion.png", current: true, desc: "Monitoring mission-critical trading systems and automating operational toil — built a Teams onboarding hub and a Copilot agent that retrieves historical tickets for faster resolution." },
+      { year: "Next", type: "open", title: "Your company here", sub: "the next stop is open", mono: "?", desc: "The next milestone is open. Hire me to bring a product-and-operations mindset — and a builder who actually ships — to your team." }
     ];
   }
 
@@ -621,28 +657,57 @@ class Component extends DCLogic {
       const badgeStyle = { display: "inline-block", fontFamily: mono, fontSize: "9px", letterSpacing: ".13em", padding: "3px 8px", borderRadius: "999px", color: col, background: soft };
       return { ...e, c, col, soft, line, side, dot, hasLogo, noLogo, logoStyle, monoStyle, badgeStyle, badgeText: badgeByType[e.type] };
     };
-    const cardBase = () => ({ background: "var(--panel)", borderRadius: "14px", padding: "15px 17px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" });
+    const cardBase = () => ({ background: "var(--panel)", borderRadius: "14px", padding: "15px 17px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative" });
+    const egg = S.tlEgg || { i: -1, s: 0 };
+    const onEggTap = i => () => { const cur = (egg.i === i ? egg.s : 0); const ns = cur >= 2 ? 0 : cur + 1; this.setState({ tlEgg: { i: ns === 0 ? -1 : i, s: ns } }); };
+    const eggClose = () => this.setState({ tlEgg: { i: -1, s: 0 } });
+    const eggBase = { position: "absolute", zIndex: 4, width: "34px", height: "42px", padding: 0, border: "none", background: "transparent", cursor: "pointer" };
+    const eggBind = i => {
+      const st = (egg.i === i ? egg.s : 0);
+      return { eggStage: st, isOpen: st === 2, onEgg: onEggTap(i),
+        eggTopStyle: { transform: st === 2 ? "translate(-2px,-11px) rotate(-24deg)" : "none", transformOrigin: "20px 24px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
+        eggBotStyle: { transform: st === 2 ? "translate(1px,2px)" : "none", transformOrigin: "20px 40px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
+        crackStyle: { opacity: st === 1 ? 1 : 0, transition: "opacity .3s" },
+        sparkStyle: { opacity: st === 2 ? 1 : 0, transition: "opacity .35s" } };
+    };
     const tlDesk = tl.map((e, i) => {
       const b = build(e);
       const spineBorder = b.side === "right" ? "borderLeft" : "borderRight";
       const otherBorder = b.side === "right" ? "borderRight" : "borderLeft";
       const cardStyle = { ...cardBase(), width: "100%", maxWidth: "360px", [spineBorder]: "3px solid " + b.col, [otherBorder]: "1px solid var(--border)" };
       const connector = { position: "absolute", top: "50%", transform: "translateY(-50%)", height: "2px", background: b.col, opacity: .5, width: "26px", [b.side === "right" ? "left" : "right"]: "calc(50% + 4px)" };
-      return { ...b,
+      const eb = eggBind(i);
+      const eggSide = b.side === "right" ? "left" : "right";
+      const infoCol = b.side === "right" ? "1" : "3";
+      const infoInner = infoCol === "3" ? "flex-start" : "flex-end";
+      const infoBorder = infoCol === "3" ? "borderLeft" : "borderRight";
+      return { ...b, ...eb,
         cardWrap: { gridColumn: b.side === "right" ? "3" : "1", gridRow: String(i + 1), display: "flex", justifyContent: b.side === "right" ? "flex-start" : "flex-end", padding: "12px 26px" },
         cardStyle,
         innerStyle: { display: "flex", gap: "13px", alignItems: "center", flexDirection: b.side === "right" ? "row" : "row-reverse" },
         textAlign: b.side === "right" ? "left" : "right",
         metaStyle: { display: "flex", alignItems: "center", gap: "8px", justifyContent: b.side === "right" ? "flex-start" : "flex-end" },
         dotCell: { gridColumn: "2", gridRow: String(i + 1), position: "relative", display: "flex", alignItems: "center", justifyContent: "center" },
-        connector };
+        connector,
+        eggWrapStyle: { ...eggBase, top: "-17px", [eggSide]: "-13px" },
+        infoConnector: { position: "absolute", top: "50%", transform: "translateY(-50%)", height: "2px", background: b.col, opacity: .5, width: "26px", [b.side === "right" ? "right" : "left"]: "calc(50% + 4px)" },
+        infoCellStyle: { gridColumn: infoCol, gridRow: String(i + 1), display: "flex", justifyContent: infoInner, alignItems: "center", padding: "12px 26px" },
+        infoPanelStyle: { position: "relative", width: "100%", maxWidth: "360px", background: "var(--panel)", border: "1px solid var(--border)", [infoBorder]: "3px solid " + b.col, borderRadius: "14px", padding: "15px 40px 16px 18px", boxShadow: "var(--big-shadow)", transformOrigin: infoCol === "3" ? "left center" : "right center", animation: "eggUnfold .5s cubic-bezier(.2,.8,.2,1) both" },
+        onClose: eggClose };
     });
-    const tlRail = tl.map(e => {
+    const tlRail = tl.map((e, i) => {
       const b = build(e);
       const above = b.side === "right";
       const cardStyle = { ...cardBase(), position: "absolute", left: "6px", right: "6px", borderLeft: "3px solid " + b.col, borderRight: "1px solid var(--border)", [above ? "bottom" : "top"]: "150px" };
-      return { ...b, cardStyle };
+      const eb = eggBind(i);
+      return { ...b, ...eb, cardStyle, eggWrapStyle: { ...eggBase, top: "-15px", right: "-6px" } };
     });
+    const oIdx = egg.s === 2 ? egg.i : -1;
+    const oe = oIdx >= 0 ? tl[oIdx] : null;
+    const ob = oe ? build(oe) : null;
+    const tlOpen = ob ? { has: true, title: oe.title, year: oe.year, desc: oe.desc, col: ob.col,
+      panelStyle: { position: "relative", marginTop: "14px", background: "var(--panel)", border: "1px solid var(--border)", borderTop: "3px solid " + ob.col, borderRadius: "14px", padding: "16px 40px 18px 18px", boxShadow: "var(--big-shadow)", animation: "eggUnfold .45s cubic-bezier(.2,.8,.2,1) both" },
+      onClose: eggClose } : { has: false };
 
     const whyRaw = [
       { title: "Real market experience", desc: "Clients, campaigns and business outcomes handled in the real world — an edge most freshers don’t have." },
@@ -675,7 +740,7 @@ class Component extends DCLogic {
       setLight: () => this.setTheme("light"), setSpace: () => this.setTheme("space"), toggleTheme: () => this.setTheme(isSpace ? "light" : "space"), themeIcon: isSpace ? "☀️" : "🌙", themeLabel: isSpace ? "Switch to light theme" : "Switch to dark theme", segLightStyle, segSpaceStyle,
       barTop, barMid, barBot,
       heroFacts, ledger, sel: selOut, dossierStyle, accordion, projTabs, projList, projEmpty,
-      tlDesk, tlRail, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
+      tlDesk, tlRail, tlOpen, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
       skillTiles, skillsGridStyle, hobbies
     };
   }
