@@ -71,8 +71,8 @@ a:hover{color:var(--accent-2)}
  .tl-years{animation:tlYearScroll linear both;animation-timeline:--tlv;animation-range:cover 0% cover 100%}
  .tl-fill{animation:tlGrow linear both;animation-timeline:--tlv;animation-range:cover 8% cover 90%}
  .tl-head{animation:tlHeadDown linear both;animation-timeline:--tlv;animation-range:cover 8% cover 90%}
- .tl-fillh{animation:tlGrowX linear both;animation-timeline:--tlv;animation-range:cover 8% cover 92%}
- .tl-headh{animation:tlHeadRight linear both;animation-timeline:--tlv;animation-range:cover 8% cover 92%}
+ .tl-fillh{animation:tlGrowX linear both;animation-timeline:--tlrail}
+ .tl-headh{animation:tlHeadRight linear both;animation-timeline:--tlrail}
 }
 @supports (animation-timeline:view()){
  .tl-reveal{animation:tlReveal linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
@@ -333,7 +333,7 @@ a:hover{color:var(--accent-2)}
 
 <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
 <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);text-align:center;margin-bottom:8px">work above · education below · swipe →</div>
-<div class="om-rail" style="overflow-x:auto;padding:24px 0 16px;scroll-snap-type:x proximity">
+<div class="om-rail" style="overflow-x:auto;padding:24px 0 16px;scroll-snap-type:x proximity;scroll-timeline-name:--tlrail;scroll-timeline-axis:x">
 <div style="position:relative;display:flex;gap:14px;min-width:max-content;padding:0 16px;height:340px">
 <div style="position:absolute;left:16px;right:16px;top:170px;height:3px;background:var(--border);opacity:.9;border-radius:2px"></div>
 <div class="tl-fillh" aria-hidden="true" style="position:absolute;left:16px;top:170px;width:calc(100% - 32px);height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;box-shadow:0 0 12px 1px var(--accent);z-index:1"></div>
