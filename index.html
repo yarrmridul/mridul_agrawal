@@ -258,10 +258,6 @@ a:hover{color:var(--accent-2)}
 <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));padding:7px 12px;border-radius:9px;letter-spacing:.08em">03</span>
 <h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,4.2vw,42px);letter-spacing:-.02em;margin:0">The journey — 2018 to now</h2>
 </div>
-<div style="display:flex;gap:22px;align-items:center;justify-content:center;margin-bottom:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">
-<sc-if value="{{ showEdu }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:50%;background:var(--bg);border:3px solid var(--c2)"></span>Education · left</span></sc-if>
-<span style="display:inline-flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:50%;background:var(--bg);border:3px solid var(--c1)"></span>Work · right</span>
-</div>
 
 <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
 <div style="position:relative;max-width:1000px;margin:24px auto 0;display:grid;grid-template-columns:1fr 80px 1fr">
@@ -551,16 +547,16 @@ class Component extends DCLogic {
     const L = "uploads/mridul-portfolio/public/opt/logos/";
     const R = "uploads/mridul-portfolio/public/opt/";
     return [
-      { year: "2018", type: "work", title: "Started Graphic Designing", sub: "Freelance", mono: "GD", desc: "Kicked off my creative career as a freelance graphic designer — building visual content, brand assets and social creatives for a range of early clients." },
-      { year: "2019", type: "work", title: "Social Media Marketing & Strategy", sub: "Freelance", mono: "SM", desc: "Grew from pure design into social media marketing and content strategy — planning and running campaigns that moved real engagement for small businesses." },
+      { year: "2018", type: "work", badge: "Freelance", title: "Started Graphic Designing", sub: "Freelance", mono: "GD", desc: "Started graphic designing journey as a freelancer, creating visual content for various clients." },
+      { year: "2019", type: "work", badge: "Freelance", title: "Started Social Media Marketing & Content Strategy", sub: "Freelance", mono: "SM", desc: "Expanded into social media marketing and strategic planning for businesses." },
       { year: "2019", type: "edu", title: "CBSE (X) — 92%", sub: "Birla School, Mathura", mono: "X", logo: L + "prfs.png", desc: "Completed CBSE Class X at PRFS (Birla School), Mathura, securing 92%." },
-      { year: "2020", type: "milestone", title: "Founded Moodale", sub: "Founder & CEO · 10+ team", logo: L + "moodale.png3.jpg", desc: "Founded and scaled Moodale, a digital marketing & strategy agency — leading a 10+ member cross-functional team and delivering 500+ campaigns over five years." },
+      { year: "2020", type: "milestone", badge: "Entrepreneurship", title: "Moodale – Founder & CEO (Chief EVERYTHING officer)", sub: "Digital Marketing & Strategy Agency", logo: L + "moodale.png3.jpg", desc: "Founded and scaled a digital marketing and strategy agency, managing 20+ cross-functional team members across multiple client projects. Successfully scaled from a startup to an established agency." },
       { year: "2021", type: "edu", title: "CBSE (XII) — 81.4%", sub: "Prasad Public School", mono: "XII", logo: L + "pps.png", desc: "Completed CBSE Class XII at Prasad Public School, Mathura, securing 81.4%." },
-      { year: "2022", type: "edu", title: "B.E. ECE — VIT Vellore", sub: "CGPA 8.85 · Class of ’26", mono: "VIT", logo: L + "vit.png", desc: "Pursuing a B.E. in Electronics & Communication Engineering at VIT Vellore — CGPA 8.85, Class of 2026." },
-      { year: "2023", type: "work", title: "Navdrishti", sub: "Content & Ops Coordinator", logo: L + "images.png", desc: "As Content & Ops Coordinator, automated editorial workflows with Google Sheets & Apps Script — cutting manual tracking by roughly half and keeping teams shipping on time." },
-      { year: "2024", type: "work", title: "Techlive Solutions", sub: "Web Dev & UX Intern", logo: L + "techlive.jpg", desc: "Built responsive websites using AI-assisted tools and prompt engineering, turning client needs into shipped features and interactive product demos." },
-      { year: "2025", type: "work", title: "House of SJ", sub: "Business Ops & Product Lead", logo: R + "HOS.jpeg", desc: "Led product and operations for a clothing startup — owning website creation, influencer collaborations and growth strategy end to end." },
-      { year: "2026", type: "work", title: "ION Group", sub: "Technical Analyst", logo: L + "ion.png", current: true, desc: "Monitoring mission-critical trading systems and automating operational toil — built a Teams onboarding hub and a Copilot agent that retrieves historical tickets for faster resolution." },
+      { year: "2022", type: "edu", title: "B.E. ECE — VIT Vellore", sub: "CGPA 8.88 · Class of ’26", mono: "VIT", logo: L + "vit.png", desc: "Completed a B.E. in Electronics & Communication Engineering at VIT Vellore — CGPA 8.88, Class of 2026." },
+      { year: "2023", type: "work", badge: "Internship", title: "Navdrishti – Technical Content Coordinator", sub: "Navdrishti Group", logo: L + "images.png", desc: "Automated editorial workflows and streamlined operations using Google Sheets & Apps Script for content management." },
+      { year: "2024", type: "work", badge: "Internship", title: "Techlive Solutions", sub: "Web Dev & UX Intern", logo: L + "techlive.jpg", desc: "Built responsive websites using AI-assisted tools and prompt engineering, turning client needs into shipped features and interactive product demos." },
+      { year: "2025", type: "work", badge: "Product", title: "House of SJ – Business Operations & Product Lead", sub: "Clothing startup", logo: R + "HOS.jpeg", desc: "Led product development and operations for a clothing startup, managing website creation, influencer collaborations, and business growth strategies." },
+      { year: "2026", type: "work", badge: "Full-time", title: "ION Group", sub: "Technical Analyst", logo: L + "ion.png", current: true, desc: "Monitoring mission-critical trading systems and automating operational toil — built a Teams onboarding hub and a Copilot agent that retrieves historical tickets for faster resolution." },
       { year: "Next", type: "open", title: "Your company here", sub: "the next stop is open", mono: "?", desc: "The next milestone is open. Hire me to bring a product-and-operations mindset — and a builder who actually ships — to your team." }
     ];
   }
@@ -676,7 +672,7 @@ class Component extends DCLogic {
       const logoStyle = { width: "46px", height: "46px", borderRadius: "50%", objectFit: "cover", border: "2px solid " + col, flexShrink: 0 };
       const monoStyle = { width: "46px", height: "46px", borderRadius: "50%", background: soft, color: col, border: "1px solid " + line, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: mono, fontWeight: 600, fontSize: "12.5px", flexShrink: 0 };
       const badgeStyle = { display: "inline-block", fontFamily: mono, fontSize: "9px", letterSpacing: ".13em", padding: "3px 8px", borderRadius: "999px", color: col, background: soft };
-      return { ...e, c, col, soft, line, side, dot, hasLogo, noLogo, logoStyle, monoStyle, badgeStyle, badgeText: badgeByType[e.type] };
+      return { ...e, c, col, soft, line, side, dot, hasLogo, noLogo, logoStyle, monoStyle, badgeStyle, badgeText: e.badge || badgeByType[e.type] };
     };
     const cardBase = () => ({ background: "var(--panel)", borderRadius: "14px", padding: "15px 17px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative" });
     const egg = S.tlEgg || { i: -1, s: 0 };
