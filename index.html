@@ -50,6 +50,9 @@ a:hover{color:var(--accent-2)}
 @keyframes sheetUp{0%{transform:translateY(100%)}100%{transform:translateY(0)}}
 @keyframes eggWobble{0%,100%{transform:rotate(0)}30%{transform:rotate(-8deg)}70%{transform:rotate(8deg)}}
 #timeline button[aria-label^="Crack"]:hover{animation:eggWobble .5s ease}
+@keyframes hammerHit{0%{transform:rotate(-64deg);opacity:0}18%{opacity:1}44%{transform:rotate(6deg)}58%{transform:rotate(-10deg)}72%{transform:rotate(3deg)}100%{transform:rotate(-64deg);opacity:0}}
+@keyframes eggJolt{0%,34%{transform:none}44%{transform:translateY(2px) scale(1.06,.94)}58%{transform:translateY(0) scale(.97,1.03)}74%{transform:scale(1.01,.99)}100%{transform:none}}
+.egg-hammer{animation:hammerHit .72s cubic-bezier(.3,.7,.4,1) both}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
 .om-rail{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .om-rail::-webkit-scrollbar{height:6px}
@@ -272,6 +275,7 @@ a:hover{color:var(--accent-2)}
 <g style="{{ item.eggTopStyle }}"><path d="M20,2.5 C31,2.5 34.5,20 33,30 L7,30 C5.5,20 9,2.5 20,2.5 Z" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1"></path><path d="M10,9.5 Q20,7 30,9.5" fill="none" stroke="#A06BFF" stroke-width="2.3" stroke-linecap="round"></path><circle cx="12" cy="14.3" r="1.2" fill="#FF9130"></circle><circle cx="17" cy="13.7" r="1.2" fill="#3AA5FF"></circle><circle cx="23" cy="13.7" r="1.2" fill="#FF5FA2"></circle><circle cx="28" cy="14.3" r="1.2" fill="#35C46A"></circle><path d="M7.5,19 Q20,16.5 32.5,19" fill="none" stroke="#35C46A" stroke-width="2.4" stroke-linecap="round"></path><path d="M7,24.6 Q20,22 33,24.6" fill="none" stroke="#FF9130" stroke-width="2.4" stroke-linecap="round"></path></g>
 <path d="M7,30 L13,25 L18,31 L23,25 L28,31 L33,28" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ item.crackStyle }}"></path>
 <g style="{{ item.sparkStyle }}"><circle cx="20" cy="22" r="2.6" fill="#FF9130"></circle><path d="M20,12 L20,6 M28,16 L32,13 M12,16 L8,13" stroke="#FF9130" stroke-width="1.8" stroke-linecap="round"></path></g>
+<sc-if value="{{ item.justCracked }}" hint-placeholder-val="{{ false }}"><g class="egg-hammer" style="transform-box:view-box;transform-origin:34px 12px"><line x1="19" y1="1.5" x2="33.5" y2="11.5" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"></line><rect x="6.5" y="-5.5" width="14" height="8" rx="2" fill="#7b8492" stroke="#3b4250" stroke-width="0.7"></rect><rect x="10.5" y="-7.5" width="4.5" height="12" rx="1.2" fill="#aab2bd"></rect></g></sc-if>
 </svg>
 </button>
 <div style="{{ item.innerStyle }}">
@@ -309,6 +313,7 @@ a:hover{color:var(--accent-2)}
 <g style="{{ item.eggTopStyle }}"><path d="M20,2.5 C31,2.5 34.5,20 33,30 L7,30 C5.5,20 9,2.5 20,2.5 Z" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1"></path><path d="M10,9.5 Q20,7 30,9.5" fill="none" stroke="#A06BFF" stroke-width="2.3" stroke-linecap="round"></path><circle cx="12" cy="14.3" r="1.2" fill="#FF9130"></circle><circle cx="17" cy="13.7" r="1.2" fill="#3AA5FF"></circle><circle cx="23" cy="13.7" r="1.2" fill="#FF5FA2"></circle><circle cx="28" cy="14.3" r="1.2" fill="#35C46A"></circle><path d="M7.5,19 Q20,16.5 32.5,19" fill="none" stroke="#35C46A" stroke-width="2.4" stroke-linecap="round"></path><path d="M7,24.6 Q20,22 33,24.6" fill="none" stroke="#FF9130" stroke-width="2.4" stroke-linecap="round"></path></g>
 <path d="M7,30 L13,25 L18,31 L23,25 L28,31 L33,28" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ item.crackStyle }}"></path>
 <g style="{{ item.sparkStyle }}"><circle cx="20" cy="22" r="2.6" fill="#FF9130"></circle><path d="M20,12 L20,6 M28,16 L32,13 M12,16 L8,13" stroke="#FF9130" stroke-width="1.8" stroke-linecap="round"></path></g>
+<sc-if value="{{ item.justCracked }}" hint-placeholder-val="{{ false }}"><g class="egg-hammer" style="transform-box:view-box;transform-origin:34px 12px"><line x1="19" y1="1.5" x2="33.5" y2="11.5" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"></line><rect x="6.5" y="-5.5" width="14" height="8" rx="2" fill="#7b8492" stroke="#3b4250" stroke-width="0.7"></rect><rect x="10.5" y="-7.5" width="4.5" height="12" rx="1.2" fill="#aab2bd"></rect></g></sc-if>
 </svg>
 </button>
 <div style="display:flex;align-items:center;gap:9px;padding-right:34px">
@@ -680,7 +685,7 @@ class Component extends DCLogic {
     const eggBase = { position: "absolute", zIndex: 4, width: "34px", height: "42px", padding: 0, border: "none", background: "transparent", cursor: "pointer", filter: "drop-shadow(0 3px 4px rgba(0,0,0,.22))" };
     const eggBind = i => {
       const st = (egg.i === i ? egg.s : 0);
-      return { eggStage: st, isOpen: st === 2, onEgg: onEggTap(i),
+      return { eggStage: st, isOpen: st === 2, justCracked: st === 1, onEgg: onEggTap(i),
         eggTopStyle: { transform: st === 2 ? "translate(-2px,-11px) rotate(-24deg)" : "none", transformOrigin: "20px 24px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
         eggBotStyle: { transform: st === 2 ? "translate(1px,2px)" : "none", transformOrigin: "20px 40px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
         crackStyle: { opacity: st === 1 ? 1 : 0, transition: "opacity .3s" },
@@ -707,7 +712,7 @@ class Component extends DCLogic {
         connector,
         eggFill: b.col, eggStroke: "rgba(0,0,0,.18)",
         revealStyle: { marginTop: "11px", paddingTop: "11px", borderTop: "1px dashed " + b.col, textAlign: b.side === "right" ? "left" : "right", animation: "eggUnfold .45s cubic-bezier(.2,.8,.2,1) both" },
-        eggWrapStyle: { ...eggBase, top: "-17px", [eggSide]: "-13px" },
+        eggWrapStyle: { ...eggBase, top: "-17px", [eggSide]: "-13px", ...(eb.eggStage === 1 ? { animation: "eggJolt .55s ease both" } : {}) },
         onClose: eggClose };
     });
     const tlRail = tl.map((e, i) => {
@@ -720,7 +725,7 @@ class Component extends DCLogic {
         flipInner: { position: "relative", width: "100%", height: "100%", transformStyle: "preserve-3d", transition: "transform .65s cubic-bezier(.2,.8,.2,1)", transform: eb.isOpen ? "rotateY(180deg)" : "none" },
         faceFront: face,
         faceBack: { ...face, transform: "rotateY(180deg)", overflowY: "auto", display: "flex", flexDirection: "column" },
-        eggWrapStyle: { ...eggBase, top: "7px", right: "7px", width: "30px", height: "36px" },
+        eggWrapStyle: { ...eggBase, top: "7px", right: "7px", width: "30px", height: "36px", ...(eb.eggStage === 1 ? { animation: "eggJolt .55s ease both" } : {}) },
         onClose: eggClose };
     });
     const oIdx = egg.s === 2 ? egg.i : -1;
