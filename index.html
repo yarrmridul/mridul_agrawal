@@ -59,11 +59,23 @@ a:hover{color:var(--accent-2)}
 @keyframes tlYearScroll{from{transform:translate(8%,-50%)}to{transform:translate(-58%,-50%)}}
 @keyframes tlReveal{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes tlGrow{from{transform:translateX(-50%) scaleY(0)}to{transform:translateX(-50%) scaleY(1)}}
+@keyframes tlGrowX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes tlHeadDown{from{top:0%}to{top:100%}}
+@keyframes tlHeadRight{from{left:2%}to{left:98%}}
+@keyframes tlStream{from{background-position-y:0}to{background-position-y:40px}}
+@keyframes tlFloat{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(-48px);opacity:.9}}
 .tl-fill{transform:translateX(-50%) scaleY(0);transform-origin:top center}
+.tl-fillh{transform:scaleX(0);transform-origin:left center}
+.tl-stream{animation:tlStream 1.4s linear infinite}
+@supports (animation-timeline:--tlv){
+ .tl-years{animation:tlYearScroll linear both;animation-timeline:--tlv;animation-range:cover 0% cover 100%}
+ .tl-fill{animation:tlGrow linear both;animation-timeline:--tlv;animation-range:cover 8% cover 90%}
+ .tl-head{animation:tlHeadDown linear both;animation-timeline:--tlv;animation-range:cover 8% cover 90%}
+ .tl-fillh{animation:tlGrowX linear both;animation-timeline:--tlv;animation-range:cover 8% cover 92%}
+ .tl-headh{animation:tlHeadRight linear both;animation-timeline:--tlv;animation-range:cover 8% cover 92%}
+}
 @supports (animation-timeline:view()){
- .tl-years{animation:tlYearScroll linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
  .tl-reveal{animation:tlReveal linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
- .tl-fill{animation:tlGrow linear both;animation-timeline:view();animation-range:cover 4% cover 92%}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
 .om-rail{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
@@ -264,12 +276,18 @@ a:hover{color:var(--accent-2)}
 </div>
 </section>
 
-<section id="timeline" style="position:relative;overflow:hidden;isolation:isolate;padding:clamp(56px,8vw,90px) clamp(16px,4vw,64px);scroll-margin-top:66px;background:radial-gradient(130% 90% at 50% -10%,var(--accent-soft),transparent 55%),var(--bg-2)">
+<section id="timeline" style="position:relative;overflow:hidden;isolation:isolate;view-timeline-name:--tlv;view-timeline-axis:block;padding:clamp(56px,8vw,90px) clamp(16px,4vw,64px);scroll-margin-top:66px;background:radial-gradient(130% 90% at 50% -10%,var(--accent-soft),transparent 55%),var(--bg-2)">
 <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0">
 <div style="position:absolute;left:4%;top:6%;width:min(420px,60vw);height:min(420px,60vw);border-radius:50%;background:radial-gradient(circle,var(--c1l),transparent 64%);filter:blur(38px);opacity:.85;animation:omDrift 22s ease-in-out infinite"></div>
 <div style="position:absolute;right:3%;bottom:4%;width:min(380px,54vw);height:min(380px,54vw);border-radius:50%;background:radial-gradient(circle,var(--c2l),transparent 64%);filter:blur(40px);opacity:.85;animation:omDrift 28s ease-in-out infinite reverse"></div>
 <div style="position:absolute;left:44%;top:30%;width:min(260px,40vw);height:min(260px,40vw);border-radius:50%;background:radial-gradient(circle,var(--c3l),transparent 64%);filter:blur(36px);opacity:.6;animation:omDrift 34s ease-in-out infinite"></div>
 <div class="tl-years" style="position:absolute;top:50%;left:0;transform:translate(0,-50%);display:flex;gap:clamp(24px,5vw,64px);white-space:nowrap;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(92px,17vw,210px);line-height:1;color:var(--accent);opacity:.13;animation:tlMarquee 40s linear infinite;will-change:transform"><span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span><span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span></div>
+<div class="tl-stream" aria-hidden="true" style="position:absolute;left:7%;top:0;bottom:0;width:2px;opacity:.2;background:repeating-linear-gradient(180deg,var(--accent) 0 6px,transparent 6px 24px);background-size:2px 40px;-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)"></div>
+<div class="tl-stream" aria-hidden="true" style="position:absolute;right:7%;top:0;bottom:0;width:2px;opacity:.2;background:repeating-linear-gradient(180deg,var(--accent-2) 0 6px,transparent 6px 24px);background-size:2px 40px;animation-duration:1.9s;-webkit-mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)"></div>
+<div aria-hidden="true" style="position:absolute;left:15%;top:66%;width:9px;height:9px;border-radius:50%;background:var(--c1);opacity:.5;filter:blur(1px);animation:tlFloat 8s ease-in-out infinite"></div>
+<div aria-hidden="true" style="position:absolute;left:23%;top:38%;width:6px;height:6px;border-radius:50%;background:var(--c3);opacity:.45;filter:blur(1px);animation:tlFloat 11s ease-in-out infinite 1s"></div>
+<div aria-hidden="true" style="position:absolute;right:16%;top:56%;width:8px;height:8px;border-radius:50%;background:var(--c2);opacity:.5;filter:blur(1px);animation:tlFloat 9.5s ease-in-out infinite .6s"></div>
+<div aria-hidden="true" style="position:absolute;right:25%;top:28%;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.4;filter:blur(1px);animation:tlFloat 12s ease-in-out infinite 1.6s"></div>
 </div>
 <div style="position:relative;z-index:1;max-width:1120px;margin:0 auto">
 <div style="display:flex;align-items:center;gap:14px;justify-content:center;margin-bottom:14px">
@@ -279,9 +297,9 @@ a:hover{color:var(--accent-2)}
 
 <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
 <div style="position:relative;max-width:1000px;margin:24px auto 0;display:grid;grid-template-columns:1fr 80px 1fr">
-<div style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:3px;background:linear-gradient(var(--c2),var(--accent),var(--c1));opacity:.35;border-radius:2px"></div>
-<div class="tl-fill" aria-hidden="true" style="position:absolute;top:0;left:50%;width:3px;height:100%;background:linear-gradient(var(--accent),var(--accent-2));border-radius:2px;box-shadow:0 0 14px 1px var(--accent);z-index:1"></div>
-<div aria-hidden="true" style="position:absolute;left:50%;margin-left:-7px;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 22px 4px var(--accent),0 0 6px 1px #fff;animation:tlPulseDown 6s ease-in-out infinite;z-index:2"></div>
+<div style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:3px;background:var(--border);opacity:.9;border-radius:2px"></div>
+<div class="tl-fill" aria-hidden="true" style="position:absolute;top:0;left:50%;width:3px;height:100%;background:linear-gradient(var(--accent),var(--accent-2));border-radius:2px;box-shadow:0 0 16px 2px var(--accent);z-index:1"></div>
+<div class="tl-head" aria-hidden="true" style="position:absolute;left:50%;margin-left:-9px;top:0;width:18px;height:18px;border-radius:50%;background:var(--accent);box-shadow:0 0 28px 7px var(--accent),0 0 9px 2px #fff;z-index:2"></div>
 <sc-for list="{{ tlDesk }}" as="item" hint-placeholder-count="10">
 <div class="tl-reveal" style="{{ item.cardWrap }}">
 <div style="{{ item.cardStyle }}" style-hover="{{ item.cardHover }}">
@@ -317,8 +335,9 @@ a:hover{color:var(--accent-2)}
 <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);text-align:center;margin-bottom:8px">work above · education below · swipe →</div>
 <div class="om-rail" style="overflow-x:auto;padding:24px 0 16px;scroll-snap-type:x proximity">
 <div style="position:relative;display:flex;gap:14px;min-width:max-content;padding:0 16px;height:340px">
-<div style="position:absolute;left:16px;right:16px;top:170px;height:3px;background:linear-gradient(90deg,var(--c2),var(--accent),var(--c1));opacity:.7"></div>
-<div aria-hidden="true" style="position:absolute;top:170px;margin-top:-7px;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 22px 4px var(--accent),0 0 6px 1px #fff;animation:tlPulseRight 5s ease-in-out infinite;z-index:2"></div>
+<div style="position:absolute;left:16px;right:16px;top:170px;height:3px;background:var(--border);opacity:.9;border-radius:2px"></div>
+<div class="tl-fillh" aria-hidden="true" style="position:absolute;left:16px;top:170px;width:calc(100% - 32px);height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;box-shadow:0 0 12px 1px var(--accent);z-index:1"></div>
+<div class="tl-headh" aria-hidden="true" style="position:absolute;top:170px;margin-top:-8px;left:2%;width:16px;height:16px;border-radius:50%;background:var(--accent);box-shadow:0 0 24px 5px var(--accent),0 0 8px 2px #fff;z-index:2"></div>
 <sc-for list="{{ tlRail }}" as="item" hint-placeholder-count="10">
 <div class="tl-reveal" style="flex:0 0 250px;position:relative;height:340px;scroll-snap-align:center">
 <div style="{{ item.wrapStyle }}">
