@@ -207,9 +207,9 @@ class Component extends DCLogic {
     const S = this.state;
     const isLight = S.theme !== "space";
     const now = new Date();
-    let age = now.getFullYear() - 2003;
-    if (now.getMonth() < 5 || (now.getMonth() === 5 && now.getDate() < 6)) age--;
-    const version = "v" + age + "." + (now.getMonth() + 1);
+    let months = (now.getFullYear() - 2003) * 12 + (now.getMonth() - 5);
+    if (now.getDate() < 6) months--;
+    const version = "v" + Math.floor(months / 12) + "." + (months % 12);
     const grad = "linear-gradient(90deg,var(--accent),var(--accent-2))";
     const brain = [
       { name: "Curiosity", pct: 94, icon: "💡" },
