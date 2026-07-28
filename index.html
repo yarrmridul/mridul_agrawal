@@ -53,6 +53,9 @@ a:hover{color:var(--accent-2)}
 @keyframes hammerHit{0%{transform:rotate(-64deg);opacity:0}18%{opacity:1}44%{transform:rotate(6deg)}58%{transform:rotate(-10deg)}72%{transform:rotate(3deg)}100%{transform:rotate(-64deg);opacity:0}}
 @keyframes eggJolt{0%,34%{transform:none}44%{transform:translateY(2px) scale(1.06,.94)}58%{transform:translateY(0) scale(.97,1.03)}74%{transform:scale(1.01,.99)}100%{transform:none}}
 .egg-hammer{animation:hammerHit .72s cubic-bezier(.3,.7,.4,1) both}
+@keyframes tlMarquee{0%{transform:translate(0,-50%)}100%{transform:translate(-50%,-50%)}}
+@keyframes tlPulseDown{0%{top:-2%;opacity:0}10%{opacity:.95}90%{opacity:.95}100%{top:102%;opacity:0}}
+@keyframes tlPulseRight{0%{left:-1%;opacity:0}10%{opacity:.95}90%{opacity:.95}100%{left:101%;opacity:0}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
 .om-rail{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .om-rail::-webkit-scrollbar{height:6px}
@@ -252,8 +255,13 @@ a:hover{color:var(--accent-2)}
 </div>
 </section>
 
-<section id="timeline" style="padding:clamp(56px,8vw,90px) clamp(16px,4vw,64px);scroll-margin-top:66px">
-<div style="max-width:1120px;margin:0 auto">
+<section id="timeline" style="position:relative;overflow:hidden;isolation:isolate;padding:clamp(56px,8vw,90px) clamp(16px,4vw,64px);scroll-margin-top:66px">
+<div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0">
+<div style="position:absolute;left:6%;top:12%;width:min(360px,52vw);height:min(360px,52vw);border-radius:50%;background:radial-gradient(circle,var(--c1l),transparent 66%);filter:blur(42px);opacity:.55;animation:omDrift 26s ease-in-out infinite"></div>
+<div style="position:absolute;right:5%;bottom:8%;width:min(320px,46vw);height:min(320px,46vw);border-radius:50%;background:radial-gradient(circle,var(--c2l),transparent 66%);filter:blur(46px);opacity:.55;animation:omDrift 34s ease-in-out infinite reverse"></div>
+<div class="tl-years" style="position:absolute;top:50%;left:0;transform:translate(0,-50%);display:flex;gap:clamp(28px,6vw,72px);white-space:nowrap;font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(80px,15vw,180px);line-height:1;color:var(--accent);opacity:.06;animation:tlMarquee 55s linear infinite;will-change:transform"><span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span><span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span></div>
+</div>
+<div style="position:relative;z-index:1;max-width:1120px;margin:0 auto">
 <div style="display:flex;align-items:center;gap:14px;justify-content:center;margin-bottom:14px">
 <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-2));padding:7px 12px;border-radius:9px;letter-spacing:.08em">03</span>
 <h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,4.2vw,42px);letter-spacing:-.02em;margin:0">The journey — 2018 to now</h2>
@@ -262,9 +270,10 @@ a:hover{color:var(--accent-2)}
 <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
 <div style="position:relative;max-width:1000px;margin:24px auto 0;display:grid;grid-template-columns:1fr 80px 1fr">
 <div style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;background:linear-gradient(var(--c2),var(--c1));opacity:.4;border-radius:2px"></div>
+<div aria-hidden="true" style="position:absolute;left:50%;margin-left:-5px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px 2px var(--accent),0 0 4px #fff;animation:tlPulseDown 7s ease-in-out infinite;z-index:2"></div>
 <sc-for list="{{ tlDesk }}" as="item" hint-placeholder-count="10">
 <div style="{{ item.cardWrap }}">
-<div style="{{ item.cardStyle }}" style-hover="transform:translateY(-3px);box-shadow:var(--big-shadow)">
+<div style="{{ item.cardStyle }}" style-hover="{{ item.cardHover }}">
 <button onClick="{{ item.onEgg }}" aria-label="Crack the egg to reveal details" title="Crack me!" style="{{ item.eggWrapStyle }}">
 <svg viewBox="0 0 40 52" width="30" height="40" style="overflow:visible">
 <g style="{{ item.eggBotStyle }}"><path d="M7,30 L33,30 C34.5,42 28,50.5 20,50.5 C12,50.5 5.5,42 7,30 Z" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1"></path><path d="M7,34.6 Q20,32 33,34.6" fill="none" stroke="#3AA5FF" stroke-width="2.4" stroke-linecap="round"></path><circle cx="13" cy="39" r="1.25" fill="#FFC93C"></circle><circle cx="20" cy="39.7" r="1.25" fill="#A06BFF"></circle><circle cx="27" cy="39" r="1.25" fill="#FF5FA2"></circle><path d="M8.5,44 Q20,41.4 31.5,44" fill="none" stroke="#FF5FA2" stroke-width="2.4" stroke-linecap="round"></path><path d="M11,48 Q20,46 29,48" fill="none" stroke="#FFC93C" stroke-width="2.2" stroke-linecap="round"></path></g>
@@ -298,6 +307,7 @@ a:hover{color:var(--accent-2)}
 <div class="om-rail" style="overflow-x:auto;padding:26px 0 14px">
 <div style="position:relative;display:flex;gap:14px;min-width:max-content;padding:0 16px;height:280px">
 <div style="position:absolute;left:16px;right:16px;top:140px;height:2px;background:linear-gradient(90deg,var(--c2),var(--c1));opacity:.4"></div>
+<div aria-hidden="true" style="position:absolute;top:140px;margin-top:-5px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px 2px var(--accent),0 0 4px #fff;animation:tlPulseRight 6s ease-in-out infinite;z-index:2"></div>
 <sc-for list="{{ tlRail }}" as="item" hint-placeholder-count="10">
 <div style="flex:0 0 220px;position:relative;height:280px">
 <div style="{{ item.wrapStyle }}">
@@ -674,7 +684,7 @@ class Component extends DCLogic {
       const badgeStyle = { display: "inline-block", fontFamily: mono, fontSize: "9px", letterSpacing: ".13em", padding: "3px 8px", borderRadius: "999px", color: col, background: soft };
       return { ...e, c, col, soft, line, side, dot, hasLogo, noLogo, logoStyle, monoStyle, badgeStyle, badgeText: e.badge || badgeByType[e.type] };
     };
-    const cardBase = () => ({ background: "var(--panel)", borderRadius: "14px", padding: "15px 17px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative" });
+    const cardBase = () => ({ background: "var(--panel)", borderRadius: "16px", padding: "16px 18px", boxShadow: "var(--card-shadow)", transition: "transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative" });
     const egg = S.tlEgg || { i: -1, s: 0 };
     const onEggTap = i => () => { const cur = (egg.i === i ? egg.s : 0); const ns = cur >= 2 ? 0 : cur + 1; if (ns >= 1) this.playCrack(ns); this.setState({ tlEgg: { i: ns === 0 ? -1 : i, s: ns } }); };
     const eggClose = () => this.setState({ tlEgg: { i: -1, s: 0 } });
@@ -708,6 +718,7 @@ class Component extends DCLogic {
         connector,
         eggFill: b.col, eggStroke: "rgba(0,0,0,.18)",
         revealStyle: { marginTop: "11px", paddingTop: "11px", borderTop: "1px dashed " + b.col, textAlign: b.side === "right" ? "left" : "right", animation: "eggUnfold .45s cubic-bezier(.2,.8,.2,1) both" },
+        cardHover: "transform:translateY(-5px);box-shadow:0 26px 56px -26px " + b.col,
         eggWrapStyle: { ...eggBase, top: "-17px", [eggSide]: "-13px", ...(eb.eggStage === 1 ? { animation: "eggJolt .55s ease both" } : {}) },
         onClose: eggClose };
     });
