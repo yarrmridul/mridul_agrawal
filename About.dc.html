@@ -59,6 +59,7 @@ a{color:var(--accent);text-decoration:none}
 .jnode.down .jcard{top:calc(50% + 14px)} .jnode.down .jstub{top:50%;height:14px}
 .brow{display:grid;grid-template-columns:18px 1fr 40px;align-items:center;gap:9px}
 .btrack{height:7px;border-radius:999px;background:var(--panel-2);overflow:hidden;border:1px solid var(--border)}
+.bdiv{flex:0 0 auto;width:1px;height:26px;background:var(--border);margin:0 clamp(12px,2vw,22px)}
 @media (max-width:1079px){
  .shell{height:auto}
  .dash{grid-template-columns:1fr;grid-template-rows:none;padding:16px clamp(16px,5vw,40px) 40px;gap:16px}
@@ -69,6 +70,9 @@ a{color:var(--accent);text-decoration:none}
  .jcard{position:static}
  .jstub,.jdot{display:none}
  .c-bottom .bwrap{flex-direction:column;text-align:center;gap:12px}
+ .c-bottom .bwrap>*{flex:none!important;justify-content:center;text-align:center}
+ .bdiv{display:none}
+ .dnote{position:static!important;display:block;text-align:right;margin-top:9px}
 }
 </style>
 </helmet>
@@ -101,7 +105,7 @@ a{color:var(--accent);text-decoration:none}
 <span style="font-size:13px;line-height:1.4;color:var(--text)">Currently building a better version of myself, every single day.</span>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
-<a href="https://www.linkedin.com/in/mridul-agrawal-62029522b" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13.5px;font-weight:600;padding:11px 20px;border-radius:12px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">Let's connect <span aria-hidden="true">→</span></a>
+<a href="https://wa.me/917983738443" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13.5px;font-weight:600;padding:11px 20px;border-radius:12px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">Let's connect <span aria-hidden="true">→</span></a>
 <a href="mailto:mridulagrawal06@gmail.com" style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);color:var(--text);background:var(--panel);font-size:13.5px;font-weight:600;padding:10px 18px;border-radius:12px" style-hover="border-color:var(--accent);color:var(--accent)">✉ Say Hello</a>
 </div>
 </section>
@@ -143,7 +147,7 @@ a{color:var(--accent);text-decoration:none}
 <div class="card" style="padding:14px 16px;position:relative">
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px"><span style="font-family:'Playfair Display',serif;font-size:24px;color:var(--accent);line-height:0">“</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">What drives me</span></div>
 <p style="margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)">I love solving real problems for real people. Building systems that make life (and work) smoother is my kind of dopamine.</p>
-<span class="hand" style="position:absolute;right:14px;bottom:9px;font-size:17px;color:var(--accent)"><svg width="30" height="14" viewBox="0 0 30 14" fill="none" style="vertical-align:-2px;margin-right:3px"><path d="M28 5 C20 11, 10 11, 3 6" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/><path d="M8 3 L2 6 L7 10" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>that's the goal</span>
+<span class="hand dnote" style="position:absolute;right:14px;bottom:9px;font-size:17px;color:var(--accent)"><svg width="30" height="14" viewBox="0 0 30 14" fill="none" style="vertical-align:-2px;margin-right:3px"><path d="M28 5 C20 11, 10 11, 3 6" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/><path d="M8 3 L2 6 L7 10" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>that's the goal</span>
 </div>
 <div class="card" style="padding:14px 16px">
 <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px;margin-bottom:11px">When I'm not building…</div>
@@ -158,10 +162,13 @@ a{color:var(--accent);text-decoration:none}
 </section>
 
 <div class="c-bottom">
-<div class="bwrap card" style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 20px;background:var(--panel)">
-<span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text)"><span style="color:var(--accent)">✦</span> I don't have it all figured out — but I'm good at figuring things out.</span>
-<span style="font-size:13px;color:var(--muted)">Let's build something meaningful together.</span>
-<a href="https://www.linkedin.com/in/mridul-agrawal-62029522b" target="_blank" rel="noopener noreferrer" style="flex-shrink:0;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:11px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">Let's Connect <span aria-hidden="true">→</span></a>
+<div style="text-align:center;margin-bottom:11px"><span class="hand" style="font-size:23px;color:var(--accent)">The best is <span style="position:relative;white-space:nowrap">yet to come<svg width="94" height="9" viewBox="0 0 94 9" fill="none" style="position:absolute;left:0;bottom:-5px"><path d="M2 4 C26 8, 68 8, 92 3" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg></span>.</span></div>
+<div class="bwrap card" style="display:flex;align-items:center;gap:0;padding:14px 24px;background:var(--panel)">
+<span style="flex:1;min-width:0;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text)"><span style="color:var(--accent);flex-shrink:0">✦</span> I don't have it all figured out — but I'm good at figuring things out.</span>
+<span class="bdiv"></span>
+<span style="flex:1;min-width:0;text-align:center;font-size:13px;color:var(--muted)">Let's build something meaningful together.</span>
+<span class="bdiv"></span>
+<div style="flex:1;display:flex;justify-content:flex-end"><a href="https://wa.me/917983738443" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:11px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">Let's Connect <span aria-hidden="true">→</span></a></div>
 </div>
 </div>
 
