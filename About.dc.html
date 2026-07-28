@@ -38,12 +38,14 @@ a{color:var(--accent);text-decoration:none}
 ::selection{background:var(--accent-soft)}
 @keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(14px,-12px)}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important}}
 .hand{font-family:'Caveat',cursive;font-weight:600;line-height:1}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--card-shadow)}
 .shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
 .dash{flex:1;display:grid;gap:13px 14px;width:100%;max-width:1520px;margin:0 auto;padding:10px clamp(16px,3vw,44px) 14px;
- grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:auto auto;align-items:start;align-content:space-between}
+ grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:auto auto;align-items:start;align-content:start;row-gap:18px}
 .c-about{grid-column:1;grid-row:1;min-width:0}
 .c-spec{grid-column:2;grid-row:1;position:relative;min-width:0;display:flex;flex-direction:column}
 .c-right{grid-column:3;grid-row:1;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0}
@@ -95,7 +97,7 @@ a{color:var(--accent);text-decoration:none}
 <svg width="70" height="16" viewBox="0 0 70 16" fill="none" style="margin-bottom:6px"><path d="M2 11 C18 4, 40 4, 68 8" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/><path d="M6 15 C22 9, 44 9, 64 13" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" opacity=".5"/></svg>
 </div>
 <div style="display:flex;gap:8px;margin-top:12px">
-<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:5px 11px">v25.3</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:5px 11px">{{ version }}</span>
 <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:5px 11px">◦ Still shipping…</span>
 </div>
 <p style="font-family:'Playfair Display',serif;font-size:clamp(18px,1.9vw,25px);font-weight:600;line-height:1.35;letter-spacing:-.01em;margin:16px 0 0">I <span style="color:var(--accent)">build systems</span>, sip chai, and figure out life — <span style="color:var(--accent-2)">one product</span> at a time.</p>
@@ -116,10 +118,15 @@ a{color:var(--accent);text-decoration:none}
 </div>
 <div class="card" style="display:flex;flex-direction:column;padding:15px 17px;position:relative">
 <div style="position:relative;display:flex;justify-content:center;padding-top:2px">
-<span style="position:absolute;left:8%;top:22%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);border:1px solid var(--accent-line);border-radius:8px;padding:3px 6px;background:var(--accent-soft);animation:floatY 5s ease-in-out infinite">&lt;/&gt;</span>
-<span style="position:absolute;right:6%;top:12%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);border:1px solid var(--accent-line);border-radius:8px;padding:3px 6px;background:var(--accent-soft);animation:floatY 6s ease-in-out infinite .5s">&lt;/&gt;</span>
-<span style="position:absolute;right:12%;bottom:6%;font-size:15px;animation:floatY 5.5s ease-in-out infinite 1s">☕</span>
-<div style="position:relative;width:min(172px,54%);aspect-ratio:1/1;border-radius:50%;background:var(--hero-glow);box-shadow:0 0 0 6px var(--accent-soft),var(--card-shadow);overflow:hidden">
+<div aria-hidden="true" style="position:absolute;left:50%;top:calc(50% + 1px);transform:translate(-50%,-50%);width:206px;height:206px;border:1px solid var(--border);border-radius:50%;opacity:.6;z-index:0"></div>
+<div aria-hidden="true" style="position:absolute;left:50%;top:calc(50% + 1px);transform:translate(-50%,-50%);width:246px;height:246px;border:1px solid var(--border);border-radius:50%;opacity:.32;z-index:0"></div>
+<div aria-hidden="true" style="position:absolute;left:50%;top:calc(50% + 1px);width:206px;height:206px;margin:-103px 0 0 -103px;z-index:0;animation:spin 16s linear infinite;will-change:transform"><span style="position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)"></span></div>
+<div aria-hidden="true" style="position:absolute;left:9%;top:16%;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,var(--c1l),transparent 66%);filter:blur(26px);opacity:.75;z-index:0;animation:drift 9s ease-in-out infinite"></div>
+<div aria-hidden="true" style="position:absolute;right:8%;bottom:12%;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,var(--c2l),transparent 66%);filter:blur(28px);opacity:.75;z-index:0;animation:drift 12s ease-in-out infinite reverse"></div>
+<span style="position:absolute;left:8%;top:22%;z-index:3;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);border:1px solid var(--accent-line);border-radius:8px;padding:3px 6px;background:var(--accent-soft);animation:floatY 5s ease-in-out infinite">&lt;/&gt;</span>
+<span style="position:absolute;right:6%;top:12%;z-index:3;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);border:1px solid var(--accent-line);border-radius:8px;padding:3px 6px;background:var(--accent-soft);animation:floatY 6s ease-in-out infinite .5s">&lt;/&gt;</span>
+<span style="position:absolute;right:12%;bottom:6%;z-index:3;font-size:15px;animation:floatY 5.5s ease-in-out infinite 1s">☕</span>
+<div style="position:relative;z-index:2;width:min(172px,54%);aspect-ratio:1/1;border-radius:50%;background:var(--hero-glow);box-shadow:0 0 0 6px var(--accent-soft),var(--card-shadow);overflow:hidden">
 <img src="uploads/mridul-portfolio/public/opt/mridul_img.jpeg" alt="Mridul Agrawal" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top center">
 <div aria-hidden="true" style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 40%,transparent 56%,var(--panel) 98%);pointer-events:none"></div>
 </div>
@@ -199,6 +206,10 @@ class Component extends DCLogic {
   renderVals() {
     const S = this.state;
     const isLight = S.theme !== "space";
+    const now = new Date();
+    let age = now.getFullYear() - 2003;
+    if (now.getMonth() < 5 || (now.getMonth() === 5 && now.getDate() < 6)) age--;
+    const version = "v" + age + "." + (now.getMonth() + 1);
     const grad = "linear-gradient(90deg,var(--accent),var(--accent-2))";
     const brain = [
       { name: "Curiosity", pct: 94, icon: "💡" },
@@ -222,7 +233,7 @@ class Component extends DCLogic {
     return {
       theme: S.theme, isSpace: S.theme === "space", narrow: S.narrow,
       toggleTheme: () => this.setTheme(isLight ? "space" : "light"), themeIcon: isLight ? "🌙" : "☀️", themeLabel: isLight ? "Switch to dark theme" : "Switch to light theme",
-      brain, journey
+      brain, journey, version
     };
   }
 }
