@@ -417,21 +417,29 @@ a:hover{color:var(--accent-2)}
 <div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:var(--muted)">SKILLS</div><h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,4.2vw,42px);letter-spacing:-.02em;margin:2px 0 0">The toolkit</h2></div>
 </div>
 <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
-<div style="{{ skillsGridStyle }}">
-<sc-for list="{{ skillTiles }}" as="t" hint-placeholder-count="5">
-<div style="{{ t.tileStyle }}" style-hover="transform:translateY(-3px);box-shadow:var(--big-shadow)">
-<div style="display:flex;align-items:center;gap:12px">
-<span style="{{ t.badgeStyle }}">{{ t.tag }}</span>
-<div style="{{ t.titleStyle }}">{{ t.title }}</div>
-</div>
-<sc-if value="{{ t.hasLine }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:13px;line-height:1.55;color:var(--muted)">{{ t.line }}</p></sc-if>
-<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:auto">
-<sc-for list="{{ t.skills }}" as="s" hint-placeholder-count="6">
-<span style="{{ s.style }}" style-hover="{{ s.hover }}">{{ s.name }}</span>
+<div style="display:grid;grid-template-columns:minmax(320px,1fr) 1.1fr;gap:clamp(30px,4vw,60px);align-items:center">
+<div id="skillradar" style="position:relative;width:100%;max-width:410px;aspect-ratio:300 / 236;margin:0 auto;touch-action:none;-webkit-user-select:none;user-select:none">
+<svg viewBox="0 0 300 236" width="100%" style="display:block;overflow:visible">
+<polygon points="{{ skillRadar.grid }}" fill="var(--panel-2)" stroke="var(--border)" stroke-width="1"></polygon>
+<polygon points="{{ skillRadar.mid }}" fill="none" stroke="var(--border)" stroke-width="0.6"></polygon>
+<sc-for list="{{ skillRadar.spokes }}" as="s" hint-placeholder-count="5"><line x1="150" y1="118" x2="{{ s.x2 }}" y2="{{ s.y2 }}" stroke="var(--border)" stroke-width="0.6"></line></sc-for>
+<polygon id="skillblob" points="{{ skillRadar.data }}" fill="{{ skillRadar.selColor }}" fill-opacity="0.18" stroke="{{ skillRadar.selColor }}" stroke-width="2.5" stroke-linejoin="round" style="transition:fill .3s,stroke .3s"></polygon>
+</svg>
+<sc-for list="{{ skillRadar.verts }}" as="v" hint-placeholder-count="5">
+<button onClick="{{ v.onPick }}" aria-label="{{ v.label }}" style="{{ v.dotStyle }}"></button>
+<span style="{{ v.labelStyle }}">{{ v.label }}</span>
 </sc-for>
 </div>
-</div>
+<div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:var(--muted)">EXPLORE THE TOOLKIT</div>
+<div style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,2.8vw,34px);letter-spacing:-.02em;color:{{ skillRadar.selColor }};margin-top:6px;transition:color .3s">{{ skillRadar.selTitle }}</div>
+<div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:20px">
+<sc-for list="{{ skillRadar.chips }}" as="c" hint-placeholder-count="7">
+<span style="{{ c.style }}">{{ c.name }}</span>
 </sc-for>
+</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--faint);margin-top:24px">◦ hover or drag a point to explore ◦</div>
+</div>
 </div>
 </sc-if>
 <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
@@ -882,10 +890,10 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
 (function(){
   var CX=150,CY=118,RAD=92,A=[-90,-18,54,126,-162].map(function(d){return d*Math.PI/180;});
   var base=[0.95,0.9,0.62,0.72,0.85];
-  var drag=false,pAng=null,sel=0,raf=null,cur=[];
+  var drag=false,hover=false,pAng=null,sel=0,raf=null,cur=[];
   for(var k=0;k<5;k++){ cur[k]=Math.max(0.12,base[k]*0.5+0.6*Math.max(0,Math.cos(A[0]-A[k]))); }
   function pts(r){ var s=""; for(var i=0;i<5;i++){ s+=(CX+RAD*r[i]*Math.cos(A[i])).toFixed(1)+","+(CY+RAD*r[i]*Math.sin(A[i])).toFixed(1)+" "; } return s.replace(/\s+$/,''); }
-  function tgt(){ var ang=(drag&&pAng!==null)?pAng:A[sel]; var t=[]; for(var i=0;i<5;i++){ var w=Math.max(0,Math.cos(ang-A[i])); t[i]=Math.max(0.12,Math.min(1.12,base[i]*0.5+0.6*w)); } return t; }
+  function tgt(){ var ang=((drag||hover)&&pAng!==null)?pAng:A[sel]; var t=[]; for(var i=0;i<5;i++){ var w=Math.max(0,Math.cos(ang-A[i])); t[i]=Math.max(0.12,Math.min(1.12,base[i]*0.5+0.6*w)); } return t; }
   function frame(){ var b=document.getElementById('skillblob'); if(!b){ raf=null; return; } var t=tgt(),mv=false; for(var i=0;i<5;i++){ var d=t[i]-cur[i]; cur[i]+=d*0.2; if(Math.abs(d)>0.003) mv=true; } b.setAttribute('points',pts(cur)); if(mv||drag) raf=requestAnimationFrame(frame); else raf=null; }
   function kick(){ if(!raf) raf=requestAnimationFrame(frame); }
   function pick(e){
@@ -902,7 +910,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
   }
   function inRadar(t){ var el=document.getElementById('skillradar'); return !!(el&&el.contains(t)); }
   document.addEventListener('pointerdown',function(e){ if(inRadar(e.target)){ drag=true; if(pick(e)) e.preventDefault(); } },{passive:false});
-  document.addEventListener('pointermove',function(e){ if(drag){ pick(e); e.preventDefault(); } },{passive:false});
+  document.addEventListener('pointermove',function(e){ if(drag){ pick(e); e.preventDefault(); return; } if(e.pointerType==='mouse'){ if(inRadar(e.target)){ hover=true; pick(e); } else if(hover){ hover=false; pAng=null; kick(); } } },{passive:false});
   document.addEventListener('pointerup',function(){ drag=false; pAng=null; kick(); });
   document.addEventListener('pointercancel',function(){ drag=false; pAng=null; kick(); });
 })();
