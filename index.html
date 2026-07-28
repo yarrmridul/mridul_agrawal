@@ -294,39 +294,43 @@ a:hover{color:var(--accent-2)}
 </sc-if>
 
 <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
-<div style="max-width:520px;margin:14px auto 0">
-<sc-for list="{{ tlMob }}" as="item" hint-placeholder-count="10">
-<div style="display:flex;gap:12px;align-items:stretch">
-<div style="flex:0 0 24px;display:flex;justify-content:center;position:relative">
-<div style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:2px;background:var(--border)"></div>
-<span style="{{ item.dotStyle }}"></span>
-</div>
-<div style="flex:1;min-width:0;padding-bottom:14px">
-<div style="{{ item.cardStyle }}">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);text-align:center;margin-bottom:8px">work above · education below · swipe →</div>
+<div class="om-rail" style="overflow-x:auto;padding:26px 0 14px">
+<div style="position:relative;display:flex;gap:14px;min-width:max-content;padding:0 16px;height:280px">
+<div style="position:absolute;left:16px;right:16px;top:140px;height:2px;background:linear-gradient(90deg,var(--c2),var(--c1));opacity:.4"></div>
+<sc-for list="{{ tlRail }}" as="item" hint-placeholder-count="10">
+<div style="flex:0 0 220px;position:relative;height:280px">
+<div style="{{ item.wrapStyle }}">
+<div style="{{ item.flipInner }}">
+<div style="{{ item.faceFront }}">
 <button onClick="{{ item.onEgg }}" aria-label="Crack the egg to reveal details" title="Crack me!" style="{{ item.eggWrapStyle }}">
-<svg viewBox="0 0 40 52" width="28" height="38" style="overflow:visible">
+<svg viewBox="0 0 40 52" width="26" height="34" style="overflow:visible">
 <g style="{{ item.eggBotStyle }}"><path d="M7,30 L33,30 C34.5,42 28,50.5 20,50.5 C12,50.5 5.5,42 7,30 Z" fill="{{ item.eggFill }}" stroke="{{ item.eggStroke }}" stroke-width="1"></path><path d="M7,37.5 L11,35 L15,37.5 L19,35 L23,37.5 L27,35 L31,37.5 L33,36.5" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" opacity=".95"></path><path d="M7,44 Q13.5,41 20,44 T33,44" fill="none" stroke="var(--c3)" stroke-width="2.3" stroke-linecap="round" opacity=".95"></path><circle cx="12" cy="47.5" r="1.4" fill="#fff"></circle><circle cx="20" cy="48.2" r="1.4" fill="#fff"></circle><circle cx="28" cy="47.5" r="1.4" fill="#fff"></circle></g>
 <g style="{{ item.eggTopStyle }}"><path d="M20,2.5 C31,2.5 34.5,20 33,30 L7,30 C5.5,20 9,2.5 20,2.5 Z" fill="{{ item.eggFill }}" stroke="{{ item.eggStroke }}" stroke-width="1"></path><path d="M7,12.5 Q13.5,9.5 20,12.5 T33,12.5" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" opacity=".92"></path><path d="M7,21.5 L11,19 L15,21.5 L19,19 L23,21.5 L27,19 L31,21.5 L33,20.5" fill="none" stroke="var(--c3)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" opacity=".92"></path><circle cx="20" cy="8" r="1.5" fill="#fff"></circle></g>
 <path d="M7,30 L13,25 L18,31 L23,25 L28,31 L33,28" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="{{ item.crackStyle }}"></path>
 <g style="{{ item.sparkStyle }}"><circle cx="20" cy="22" r="2.6" fill="{{ item.eggFill }}"></circle><path d="M20,12 L20,6 M28,16 L32,13 M12,16 L8,13" stroke="{{ item.eggFill }}" stroke-width="1.8" stroke-linecap="round"></path></g>
 </svg>
 </button>
-<div style="{{ item.innerStyle }}">
+<div style="display:flex;align-items:center;gap:9px;padding-right:34px">
 <sc-if value="{{ item.hasLogo }}" hint-placeholder-val="{{ true }}"><img src="{{ item.logo }}" alt="" loading="lazy" style="{{ item.logoStyle }}"></sc-if>
 <sc-if value="{{ item.noLogo }}" hint-placeholder-val="{{ false }}"><span style="{{ item.monoStyle }}">{{ item.mono }}</span></sc-if>
-<div style="flex:1;min-width:0">
-<div style="display:flex;align-items:center;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text)">{{ item.year }}</span><span style="{{ item.badgeStyle }}">{{ item.badgeText }}</span></div>
-<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:15px;line-height:1.25;margin-top:6px">{{ item.title }}</div>
-<div style="font-size:12.5px;color:var(--muted);margin-top:3px">{{ item.sub }}</div>
+<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px">{{ item.year }}</span><span style="{{ item.badgeStyle }}">{{ item.badgeText }}</span></div></div>
+</div>
+<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:14px;line-height:1.25;margin-top:9px">{{ item.title }}</div>
+<div style="font-size:12px;color:var(--muted);margin-top:3px">{{ item.sub }}</div>
+</div>
+<div style="{{ item.faceBack }}">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:{{ item.col }}">HATCHED · {{ item.year }}</div>
+<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:13px;line-height:1.2;margin:4px 0 6px">{{ item.title }}</div>
+<p style="margin:0;font-size:11.5px;line-height:1.5;color:var(--muted);flex:1">{{ item.desc }}</p>
+<button onClick="{{ item.onClose }}" style="align-self:flex-start;margin-top:7px;border:none;background:transparent;color:{{ item.col }};font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;cursor:pointer;padding:0">RESEAL ✕</button>
 </div>
 </div>
-<sc-if value="{{ item.isOpen }}" hint-placeholder-val="{{ false }}">
-<div style="{{ item.revealStyle }}"><p style="margin:0;font-size:12.8px;line-height:1.55;color:var(--muted)">{{ item.desc }}</p><button onClick="{{ item.onClose }}" style="margin-top:9px;border:none;background:transparent;color:{{ item.col }};font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;cursor:pointer;padding:0">RESEAL ✕</button></div>
-</sc-if>
 </div>
-</div>
+<div style="position:absolute;top:140px;left:50%;transform:translate(-50%,-50%);z-index:1"><span style="{{ item.dot }}"></span></div>
 </div>
 </sc-for>
+</div>
 </div>
 </sc-if>
 </div>
@@ -709,9 +713,15 @@ class Component extends DCLogic {
     const tlRail = tl.map((e, i) => {
       const b = build(e);
       const above = b.side === "right";
-      const cardStyle = { ...cardBase(), position: "absolute", left: "6px", right: "6px", borderLeft: "3px solid " + b.col, borderRight: "1px solid var(--border)", [above ? "bottom" : "top"]: "150px" };
       const eb = eggBind(i);
-      return { ...b, ...eb, cardStyle, eggFill: b.col, eggStroke: "rgba(0,0,0,.18)", eggWrapStyle: { ...eggBase, top: "-14px", right: "-4px" } };
+      const face = { position: "absolute", inset: 0, background: "var(--panel)", border: "1px solid var(--border)", borderLeft: "3px solid " + b.col, borderRadius: "14px", padding: "13px 15px", boxShadow: "var(--card-shadow)", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", overflow: "hidden" };
+      return { ...b, ...eb, eggFill: b.col, eggStroke: "rgba(0,0,0,.18)",
+        wrapStyle: { position: "absolute", left: "6px", right: "6px", height: "140px", [above ? "bottom" : "top"]: "150px", perspective: "1100px" },
+        flipInner: { position: "relative", width: "100%", height: "100%", transformStyle: "preserve-3d", transition: "transform .65s cubic-bezier(.2,.8,.2,1)", transform: eb.isOpen ? "rotateY(180deg)" : "none" },
+        faceFront: face,
+        faceBack: { ...face, transform: "rotateY(180deg)", overflowY: "auto", display: "flex", flexDirection: "column" },
+        eggWrapStyle: { ...eggBase, top: "7px", right: "7px", width: "30px", height: "36px" },
+        onClose: eggClose };
     });
     const oIdx = egg.s === 2 ? egg.i : -1;
     const oe = oIdx >= 0 ? tl[oIdx] : null;
@@ -719,17 +729,6 @@ class Component extends DCLogic {
     const tlOpen = ob ? { has: true, title: oe.title, year: oe.year, desc: oe.desc, col: ob.col,
       sheetStyle: { position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 61, background: "var(--panel)", borderTopLeftRadius: "22px", borderTopRightRadius: "22px", borderTop: "3px solid " + ob.col, padding: "14px 20px 28px", boxShadow: "0 -20px 55px -22px rgba(0,0,0,.5)", animation: "sheetUp .34s cubic-bezier(.2,.8,.2,1) both" },
       onClose: eggClose } : { has: false };
-    const tlMob = tl.map((e, i) => {
-      const b = build(e);
-      const eb = eggBind(i);
-      return { ...b, ...eb, eggFill: b.col, eggStroke: "rgba(0,0,0,.18)",
-        dotStyle: { ...b.dot, marginTop: "20px", flexShrink: 0 },
-        cardStyle: { background: "var(--panel)", border: "1px solid var(--border)", borderLeft: "3px solid " + b.col, borderRadius: "14px", padding: "14px 16px", boxShadow: "var(--card-shadow)", position: "relative", transition: "box-shadow .25s" },
-        innerStyle: { display: "flex", gap: "12px", alignItems: "center" },
-        revealStyle: { marginTop: "11px", paddingTop: "11px", borderTop: "1px dashed " + b.col, animation: "eggUnfold .45s cubic-bezier(.2,.8,.2,1) both" },
-        eggWrapStyle: { ...eggBase, top: "-15px", right: "-6px" },
-        onClose: eggClose };
-    });
 
     const whyRaw = [
       { title: "Real market experience", desc: "Clients, campaigns and business outcomes handled in the real world — an edge most freshers don’t have." },
@@ -762,7 +761,7 @@ class Component extends DCLogic {
       setLight: () => this.setTheme("light"), setSpace: () => this.setTheme("space"), toggleTheme: () => this.setTheme(isSpace ? "light" : "space"), themeIcon: isSpace ? "☀️" : "🌙", themeLabel: isSpace ? "Switch to light theme" : "Switch to dark theme", segLightStyle, segSpaceStyle,
       barTop, barMid, barBot,
       heroFacts, ledger, sel: selOut, dossierStyle, accordion, projTabs, projList, projEmpty,
-      tlDesk, tlMob, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
+      tlDesk, tlRail, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
       skillTiles, skillsGridStyle, hobbies
     };
   }
