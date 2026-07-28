@@ -49,19 +49,26 @@ a{color:var(--accent);text-decoration:none}
 .c-right{grid-column:3;grid-row:1;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0}
 .c-journey{grid-column:1 / -1;grid-row:2;position:relative}
 .c-bottom{grid-column:1 / -1;grid-row:3}
-.jrow{display:flex;gap:10px;align-items:stretch}
-.jcard{flex:1 1 0;min-width:0}
-.jconn{align-self:center;flex:0 0 20px;height:1px;border-top:2px dashed var(--border)}
+.jrow{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;height:142px;align-items:center}
+.jaxis{position:absolute;left:2%;right:2%;top:50%;border-top:2px dashed var(--border);z-index:0}
+.jnode{position:relative;height:100%}
+.jcard{position:absolute;left:0;right:0;padding:9px 12px}
+.jdot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;z-index:2;border:2px solid var(--bg)}
+.jstub{position:absolute;left:50%;transform:translateX(-50%);width:2px;background:var(--border);z-index:1}
+.jnode.up .jcard{bottom:calc(50% + 14px)} .jnode.up .jstub{bottom:50%;height:14px}
+.jnode.down .jcard{top:calc(50% + 14px)} .jnode.down .jstub{top:50%;height:14px}
 .brow{display:grid;grid-template-columns:18px 1fr 40px;align-items:center;gap:9px}
 .btrack{height:7px;border-radius:999px;background:var(--panel-2);overflow:hidden;border:1px solid var(--border)}
-@media (min-width:1080px){ .jcard{min-height:76px} }
 @media (max-width:1079px){
  .shell{height:auto}
  .dash{grid-template-columns:1fr;grid-template-rows:none;padding:16px clamp(16px,5vw,40px) 40px;gap:16px}
  .c-about,.c-spec,.c-right,.c-journey,.c-bottom{grid-column:1;grid-row:auto}
- .jrow{overflow-x:auto;padding-bottom:8px}
- .jcard{flex:0 0 210px}
- .c-bottom .bwrap{flex-direction:column;text-align:center;gap:14px}
+ .jrow{display:flex;grid-template-columns:none;height:auto;overflow-x:auto;gap:10px;padding-bottom:8px}
+ .jaxis{display:none}
+ .jnode{position:static;height:auto;flex:0 0 208px}
+ .jcard{position:static}
+ .jstub,.jdot{display:none}
+ .c-bottom .bwrap{flex-direction:column;text-align:center;gap:12px}
 }
 </style>
 </helmet>
@@ -72,7 +79,7 @@ a{color:var(--accent);text-decoration:none}
 <div class="shell">
 <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,4vw,44px);flex:0 0 auto">
 <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)"><span style="font-size:16px">←</span> Back to Home</a>
-<span class="hand" style="font-size:20px;color:var(--accent)">building in public ✦</span>
+<span class="hand" style="font-size:20px;color:var(--accent)">automating the mundane ✦</span>
 <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--text);font-size:15px;cursor:pointer" style-hover="border-color:var(--accent)">{{ themeIcon }}</button>
 </nav>
 
@@ -139,7 +146,7 @@ a{color:var(--accent);text-decoration:none}
 <div class="card" style="padding:14px 16px;position:relative">
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px"><span style="font-family:'Playfair Display',serif;font-size:24px;color:var(--accent);line-height:0">“</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">What drives me</span></div>
 <p style="margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)">I love solving real problems for real people. Building systems that make life (and work) smoother is my kind of dopamine.</p>
-<span class="hand" style="position:absolute;right:12px;bottom:8px;font-size:16px;color:var(--accent)">that's the goal ↝</span>
+<span class="hand" style="position:absolute;right:14px;bottom:9px;font-size:17px;color:var(--accent)">that's the goal<svg width="30" height="14" viewBox="0 0 30 14" fill="none" style="vertical-align:-2px;margin-left:3px"><path d="M2 4 C10 11, 20 11, 27 5" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/><path d="M23 3 L28 5 L24 9" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
 </div>
 <div class="card" style="padding:14px 16px">
 <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px;margin-bottom:11px">When I'm not building…</div>
@@ -154,28 +161,35 @@ a{color:var(--accent);text-decoration:none}
 </section>
 
 <section class="c-journey">
-<div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:4px">
 <span style="font-size:15px">🗺️</span>
 <span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">The Journey So Far</span>
 <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)">— key chapters in the making</span>
-<span class="hand" style="margin-left:auto;font-size:17px;color:var(--accent)">the best is yet to come ✦</span>
 </div>
 <div class="jrow">
+<div class="jaxis"></div>
 <sc-for list="{{ journey }}" as="j" hint-placeholder-count="5">
-<div class="jcard card" style="border-top:3px solid {{ j.col }};padding:10px 13px">
-<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:{{ j.col }}">{{ j.year }}</span><span style="width:9px;height:9px;border-radius:50%;background:{{ j.col }};box-shadow:0 0 0 3px {{ j.soft }}"></span></div>
-<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:13.5px;line-height:1.2;margin-top:5px">{{ j.title }}</div>
-<div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35">{{ j.desc }}</div>
+<div class="jnode {{ j.pos }}">
+<div class="jcard card" style="border-top:3px solid {{ j.col }}">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:{{ j.col }}">{{ j.year }}</span>
+<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:13px;line-height:1.16;margin-top:2px">{{ j.title }}</div>
+<div style="font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.32">{{ j.desc }}</div>
 </div>
-<sc-if value="{{ j.hasNext }}" hint-placeholder-val="{{ true }}"><div class="jconn"></div></sc-if>
+<span class="jstub" style="background:{{ j.col }}"></span>
+<span class="jdot" style="background:{{ j.col }};box-shadow:0 0 0 3px {{ j.soft }}"></span>
+</div>
 </sc-for>
+</div>
+<div style="text-align:center;margin-top:3px">
+<span class="hand" style="font-size:20px;color:var(--accent)">the best is yet to come</span>
+<svg width="34" height="16" viewBox="0 0 34 16" fill="none" style="vertical-align:-3px;margin-left:3px"><path d="M2 5 C12 13, 24 13, 31 6" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/><path d="M26 3 L32 6 L27 9" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </div>
 </section>
 
 <div class="c-bottom">
 <div class="bwrap card" style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 20px;background:var(--panel)">
-<span class="hand" style="font-size:19px;color:var(--text)">✦ I don't have it all figured out — but I'm good at figuring things out.</span>
-<span style="font-size:12.5px;color:var(--muted)">Let's build something meaningful together.</span>
+<span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text)"><span style="color:var(--accent)">✦</span> I don't have it all figured out — but I'm good at figuring things out.</span>
+<span style="font-size:13px;color:var(--muted)">Let's build something meaningful together.</span>
 <a href="https://www.linkedin.com/in/mridul-agrawal-62029522b" target="_blank" rel="noopener noreferrer" style="flex-shrink:0;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13px;font-weight:600;padding:10px 20px;border-radius:11px" style-hover="box-shadow:0 12px 30px -10px var(--accent-line);transform:translateY(-1px)">Let's Connect <span aria-hidden="true">→</span></a>
 </div>
 </div>
@@ -226,7 +240,7 @@ class Component extends DCLogic {
       { year: "Now", title: "Leveling Up", desc: "Learning, building, and shipping products." },
       { year: "Next", title: "What's Next?", desc: "AI products, bigger impact, and global problems." }
     ];
-    const journey = jRaw.map((j, i) => ({ ...j, col: jc[i], soft: js[i], hasNext: i < jRaw.length - 1 }));
+    const journey = jRaw.map((j, i) => ({ ...j, col: jc[i], soft: js[i], pos: i % 2 === 0 ? "up" : "down" }));
     return {
       theme: S.theme, isSpace: S.theme === "space", narrow: S.narrow,
       toggleTheme: () => this.setTheme(isLight ? "space" : "light"), themeIcon: isLight ? "🌙" : "☀️", themeLabel: isLight ? "Switch to dark theme" : "Switch to light theme",
