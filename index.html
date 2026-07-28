@@ -83,6 +83,17 @@ a:hover{color:var(--accent-2)}
 .om-rail::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 #topnav{justify-content:center}
 @media (max-width:1000px){#topnav{justify-content:flex-end!important}}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+@media (max-width:640px){
+ .proj-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .proj-card{border-radius:13px}
+ .proj-img{height:94px!important}
+ .proj-body{padding:10px 11px 12px!important;gap:5px!important}
+ .proj-title{font-size:13.5px!important;line-height:1.2!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .proj-desc{display:none!important}
+ .proj-more{font-size:11px!important;padding:6px 11px!important;margin-top:2px!important;gap:5px!important}
+ .proj-live{height:20px!important;padding:0 7px!important;font-size:8px!important;top:8px!important;right:8px!important}
+}
 .hero-facts{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}
 @media (max-width:640px){
  .hero-facts{flex-wrap:nowrap;gap:8px;margin-top:26px;width:100%}
@@ -257,18 +268,18 @@ a:hover{color:var(--accent-2)}
 <sc-if value="{{ projEmpty }}" hint-placeholder-val="{{ false }}">
 <div style="border:1.5px dashed var(--border);border-radius:16px;padding:48px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint)">Case-study teardowns — coming soon.</div>
 </sc-if>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px">
+<div class="proj-grid">
 <sc-for list="{{ projList }}" as="item" hint-placeholder-count="5">
-<article style="background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--card-shadow);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:var(--big-shadow)">
-<div style="position:relative"><img src="{{ item.img }}" alt="" loading="lazy" style="width:100%;height:150px;object-fit:cover;display:block">
+<article class="proj-card" style="background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--card-shadow);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:var(--big-shadow)">
+<div style="position:relative"><img class="proj-img" src="{{ item.img }}" alt="" loading="lazy" style="width:100%;height:150px;object-fit:cover;display:block">
 <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),transparent 42%,rgba(0,0,0,.14))"></div>
-<sc-if value="{{ item.liveUrl }}" hint-placeholder-val="{{ false }}"><a href="{{ item.liveUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Visit live site" style="position:absolute;top:11px;right:11px;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;box-shadow:0 6px 18px -6px rgba(0,0,0,.55),0 0 0 3px rgba(255,255,255,.22);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-1px) scale(1.05);box-shadow:0 12px 26px -8px var(--accent-line),0 0 0 3px rgba(255,255,255,.36)"><span style="width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:omPulse 2.2s infinite"></span>LIVE ↗</a></sc-if>
+<sc-if value="{{ item.liveUrl }}" hint-placeholder-val="{{ false }}"><a class="proj-live" href="{{ item.liveUrl }}" target="_blank" rel="noopener noreferrer" aria-label="Visit live site" style="position:absolute;top:11px;right:11px;display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;box-shadow:0 6px 18px -6px rgba(0,0,0,.55),0 0 0 3px rgba(255,255,255,.22);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-1px) scale(1.05);box-shadow:0 12px 26px -8px var(--accent-line),0 0 0 3px rgba(255,255,255,.36)"><span style="width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:omPulse 2.2s infinite"></span>LIVE ↗</a></sc-if>
 </div>
-<div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1">
+<div class="proj-body" style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1">
 <span style="{{ item.chipStyle }}">{{ item.status }}</span>
-<h3 style="font-family:'Playfair Display',serif;font-weight:600;font-size:16.5px;line-height:1.25;margin:2px 0 0">{{ item.title }}</h3>
-<p style="margin:0;font-size:12.5px;line-height:1.5;color:var(--muted);flex:1">{{ item.desc }}</p>
-<a href="Project.dc.html?p={{ item.slug }}" style="align-self:flex-start;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;margin-top:4px;font-size:12.5px;font-weight:600;color:var(--accent);border:1px solid var(--accent-line);background:var(--accent-soft);padding:8px 15px;border-radius:999px;transition:background .2s,color .2s,gap .2s" style-hover="background:var(--accent);color:#fff;gap:11px">Read more <span aria-hidden="true">→</span></a>
+<h3 class="proj-title" style="font-family:'Playfair Display',serif;font-weight:600;font-size:16.5px;line-height:1.25;margin:2px 0 0">{{ item.title }}</h3>
+<p class="proj-desc" style="margin:0;font-size:12.5px;line-height:1.5;color:var(--muted);flex:1">{{ item.desc }}</p>
+<a class="proj-more" href="Project.dc.html?p={{ item.slug }}" style="align-self:flex-start;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;margin-top:4px;font-size:12.5px;font-weight:600;color:var(--accent);border:1px solid var(--accent-line);background:var(--accent-soft);padding:8px 15px;border-radius:999px;transition:background .2s,color .2s,gap .2s" style-hover="background:var(--accent);color:#fff;gap:11px">Read more <span aria-hidden="true">→</span></a>
 </div>
 </article>
 </sc-for>
