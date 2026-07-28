@@ -43,12 +43,12 @@ a{color:var(--accent);text-decoration:none}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--card-shadow)}
 .shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
 .dash{flex:1;display:grid;gap:13px 14px;width:100%;max-width:1520px;margin:0 auto;padding:10px clamp(16px,3vw,44px) 14px;
- grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:auto auto auto;align-items:start;align-content:space-between}
+ grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:auto auto;align-items:start;align-content:space-between}
 .c-about{grid-column:1;grid-row:1;min-width:0}
 .c-spec{grid-column:2;grid-row:1;position:relative;min-width:0;display:flex;flex-direction:column}
 .c-right{grid-column:3;grid-row:1;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0}
 .c-journey{grid-column:1 / -1;grid-row:2;position:relative}
-.c-bottom{grid-column:1 / -1;grid-row:3}
+.c-bottom{grid-column:1 / -1;grid-row:2}
 .jrow{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;height:142px;align-items:center}
 .jaxis{position:absolute;left:2%;right:2%;top:50%;border-top:2px dashed var(--border);z-index:0}
 .jnode{position:relative;height:100%}
@@ -112,11 +112,12 @@ a{color:var(--accent);text-decoration:none}
 </div>
 <div class="card" style="display:flex;flex-direction:column;padding:15px 17px;position:relative">
 <div style="position:relative;display:flex;justify-content:center;padding-top:2px">
-<span style="position:absolute;left:10%;top:24%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);border:1px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel);animation:floatY 5s ease-in-out infinite">&lt;/&gt;</span>
-<span style="position:absolute;right:8%;top:14%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);border:1px solid var(--border);border-radius:8px;padding:3px 6px;background:var(--panel);animation:floatY 6s ease-in-out infinite .5s">&lt;/&gt;</span>
-<span style="position:absolute;right:12%;bottom:8%;font-size:15px;animation:floatY 5.5s ease-in-out infinite 1s">☕</span>
-<div style="width:min(164px,52%);aspect-ratio:1/1;border-radius:50%;background:var(--hero-glow);border:1px solid var(--border);display:flex;align-items:flex-end;justify-content:center;overflow:hidden">
+<span style="position:absolute;left:8%;top:22%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);border:1px solid var(--accent-line);border-radius:8px;padding:3px 6px;background:var(--accent-soft);animation:floatY 5s ease-in-out infinite">&lt;/&gt;</span>
+<span style="position:absolute;right:6%;top:12%;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);border:1px solid var(--accent-line);border-radius:8px;padding:3px 6px;background:var(--accent-soft);animation:floatY 6s ease-in-out infinite .5s">&lt;/&gt;</span>
+<span style="position:absolute;right:12%;bottom:6%;font-size:15px;animation:floatY 5.5s ease-in-out infinite 1s">☕</span>
+<div style="position:relative;width:min(172px,54%);aspect-ratio:1/1;border-radius:50%;background:var(--hero-glow);box-shadow:0 0 0 6px var(--accent-soft),var(--card-shadow);overflow:hidden">
 <img src="uploads/mridul-portfolio/public/opt/mridul_img.jpeg" alt="Mridul Agrawal" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top center">
+<div aria-hidden="true" style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 40%,transparent 56%,var(--panel) 98%);pointer-events:none"></div>
 </div>
 </div>
 <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
@@ -135,18 +136,14 @@ a{color:var(--accent);text-decoration:none}
 </section>
 
 <section class="c-right">
-<div class="card" style="padding:14px 16px">
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:11px"><span style="font-size:16px">🧠</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">My brain, as a dashboard</span></div>
-<div style="display:flex;flex-direction:column;gap:9px">
-<sc-for list="{{ brain }}" as="b" hint-placeholder-count="6">
-<div class="brow"><span style="text-align:center">{{ b.icon }}</span><div class="btrack"><div style="{{ b.fillStyle }}"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);text-align:right">{{ b.val }}</span></div>
-</sc-for>
-</div>
+<div class="card" style="padding:15px 17px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:9px"><span style="font-size:16px">🧭</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">The Journey</span></div>
+<p style="margin:0;font-size:12.5px;line-height:1.62;color:var(--muted)">I've always had a thing for figuring out how things work — and how they could work better. That curiosity turned into side gigs back in <span style="color:var(--text);font-weight:600">Class 10 (2018)</span>. By 2020, that curiosity evolved into <span style="color:var(--accent);font-weight:600">Moodale</span> — my real-world MBA in operations, marketing, and strategy. I didn't know where it would lead then (and still don't fully), but that's the fun part — and it continues to shape how I approach work today.</p>
 </div>
 <div class="card" style="padding:14px 16px;position:relative">
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px"><span style="font-family:'Playfair Display',serif;font-size:24px;color:var(--accent);line-height:0">“</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">What drives me</span></div>
 <p style="margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)">I love solving real problems for real people. Building systems that make life (and work) smoother is my kind of dopamine.</p>
-<span class="hand" style="position:absolute;right:14px;bottom:9px;font-size:17px;color:var(--accent)">that's the goal<svg width="30" height="14" viewBox="0 0 30 14" fill="none" style="vertical-align:-2px;margin-left:3px"><path d="M2 4 C10 11, 20 11, 27 5" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/><path d="M23 3 L28 5 L24 9" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span class="hand" style="position:absolute;right:14px;bottom:9px;font-size:17px;color:var(--accent)"><svg width="30" height="14" viewBox="0 0 30 14" fill="none" style="vertical-align:-2px;margin-right:3px"><path d="M28 5 C20 11, 10 11, 3 6" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/><path d="M8 3 L2 6 L7 10" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>that's the goal</span>
 </div>
 <div class="card" style="padding:14px 16px">
 <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px;margin-bottom:11px">When I'm not building…</div>
@@ -157,32 +154,6 @@ a{color:var(--accent);text-decoration:none}
 <div style="flex:1"><div style="font-size:20px">📚</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Books</div></div>
 <div style="flex:1"><div style="font-size:20px">💬</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Great convos</div></div>
 </div>
-</div>
-</section>
-
-<section class="c-journey">
-<div style="display:flex;align-items:center;gap:9px;margin-bottom:4px">
-<span style="font-size:15px">🗺️</span>
-<span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">The Journey So Far</span>
-<span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)">— key chapters in the making</span>
-</div>
-<div class="jrow">
-<div class="jaxis"></div>
-<sc-for list="{{ journey }}" as="j" hint-placeholder-count="5">
-<div class="jnode {{ j.pos }}">
-<div class="jcard card" style="border-top:3px solid {{ j.col }}">
-<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:{{ j.col }}">{{ j.year }}</span>
-<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:13px;line-height:1.16;margin-top:2px">{{ j.title }}</div>
-<div style="font-size:10.5px;color:var(--muted);margin-top:2px;line-height:1.32">{{ j.desc }}</div>
-</div>
-<span class="jstub" style="background:{{ j.col }}"></span>
-<span class="jdot" style="background:{{ j.col }};box-shadow:0 0 0 3px {{ j.soft }}"></span>
-</div>
-</sc-for>
-</div>
-<div style="text-align:center;margin-top:3px">
-<span class="hand" style="font-size:20px;color:var(--accent)">the best is yet to come</span>
-<svg width="34" height="16" viewBox="0 0 34 16" fill="none" style="vertical-align:-3px;margin-left:3px"><path d="M2 5 C12 13, 24 13, 31 6" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/><path d="M26 3 L32 6 L27 9" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </div>
 </section>
 
