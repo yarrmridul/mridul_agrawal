@@ -205,6 +205,7 @@ a:hover{color:var(--accent-2)}
 </div>
 <div style="{{ dossierStyle }}">
 <div aria-hidden="true" style="position:absolute;inset:0;background:var(--hero-glow);opacity:.5;pointer-events:none"></div>
+<sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
 <div style="position:relative">
 <div style="display:flex;align-items:center;gap:16px">
 <img src="{{ sel.logo }}" alt="" loading="lazy" style="{{ sel.logoStyle }}">
@@ -234,12 +235,22 @@ a:hover{color:var(--accent-2)}
 </sc-for>
 </div>
 </div>
+</sc-if>
+<sc-if value="{{ noSel }}" hint-placeholder-val="{{ true }}">
+<div style="position:relative;min-height:clamp(240px,26vw,320px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:13px">
+<div style="width:54px;height:54px;border-radius:15px;background:var(--accent-soft);border:1px solid var(--accent-line);display:flex;align-items:center;justify-content:center;font-size:25px">🗂️</div>
+<div style="font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(19px,2.4vw,26px);letter-spacing:-.01em">Pick a role to open its story</div>
+<p style="font-size:13.5px;line-height:1.55;color:var(--muted);max-width:340px;margin:0">Tap any role on the left — its full dossier (the impact, the highlights, the skills) unfolds right here.</p>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--accent)">◦ YOUR MOVE — CLICK ONE ◦</span>
+</div>
+</sc-if>
 </div>
 </div>
 </sc-if>
 
 <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
 <div style="display:flex;flex-direction:column;gap:10px">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--faint);text-align:center;margin-bottom:2px">◦ tap a role to peek inside ↓</div>
 <sc-for list="{{ accordion }}" as="item" hint-placeholder-count="4">
 <div style="{{ item.wrapStyle }}">
 <button onClick="{{ item.onPick }}" style="{{ item.headStyle }}">
@@ -532,7 +543,7 @@ class Component extends DCLogic {
     theme: "light",
     narrow: mm("(max-width:900px)"),
     navNarrow: mm("(max-width:1000px)"),
-    exp: 0, tab: "prd", mExp: 0,
+    exp: -1, tab: "prd", mExp: -1,
     menuOpen: false,
     tlEgg: { i: -1, s: 0 },
     skillCat: 0
@@ -721,6 +732,7 @@ class Component extends DCLogic {
         background: i === S.exp ? cs(r.c) : "transparent",
         boxShadow: i === S.exp ? "inset 3px 0 0 " + cv(r.c) : "inset 3px 0 0 transparent" }
     }));
+    const hasSel = S.exp >= 0, noSel = !hasSel;
     const sr = roles[S.exp] || roles[0];
     const selOut = { ...sr, hasStats: sr.stats.length > 0, col: cv(sr.c),
       logoStyle: { width: "54px", height: "54px", borderRadius: "50%", objectFit: "cover", border: "2px solid " + cv(sr.c) },
@@ -885,7 +897,7 @@ class Component extends DCLogic {
       navLinks, toggleMenu: () => this.setState({ menuOpen: !S.menuOpen }), closeMenu: () => this.setState({ menuOpen: false }), scrollTop: () => { try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) { window.scrollTo(0, 0); } },
       setLight: () => this.setTheme("light"), setSpace: () => this.setTheme("space"), toggleTheme: () => this.setTheme(isSpace ? "light" : "space"), themeIcon: isSpace ? "☀️" : "🌙", themeLabel: isSpace ? "Switch to light theme" : "Switch to dark theme", segLightStyle, segSpaceStyle,
       barTop, barMid, barBot,
-      heroFacts, ledger, sel: selOut, dossierStyle, accordion, projTabs, projList, projEmpty,
+      heroFacts, ledger, sel: selOut, hasSel, noSel, dossierStyle, accordion, projTabs, projList, projEmpty,
       tlDesk, tlRail, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
       skillTiles, skillsGridStyle, hobbies, skillRadar
     };
