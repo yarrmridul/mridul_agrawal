@@ -1037,17 +1037,22 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
         if(sr.bottom<-160||sr.top>innerHeight+160){ setOp(0); cap.style.opacity='0'; pad.style.opacity='0'; return; }
         var t=performance.now()/1000, pxL,pyL,rot=0,zBehind,depth,p,vel;
         if(r.mobile){
-          /* Horizontal rail — rocket orbits the timeline as you swipe left→right. (phone is fine — keep) */
+          /* Horizontal timeline — rocket sweeps left→right as you swipe, orbiting the badges in big,
+             smooth, slightly-organic loops. Driven by a smoothed progress (not raw scroll) so it never jitters. */
           var rail=r.rail, rb=rail.getBoundingClientRect(), max=rail.scrollWidth-rail.clientWidth;
-          p=max>0?clamp(rail.scrollLeft/max):0; curP+=(p-curP)*(reduce?1:0.24); vel=curP-prevP; prevP=curP;
-          var fr=r.first.getBoundingClientRect(), lr=r.last.getBoundingClientRect();
-          var fC=(fr.left-rb.left)+rail.scrollLeft+fr.width/2, lC=(lr.left-rb.left)+rail.scrollLeft+lr.width/2;
-          var contX=fC+curP*(lC-fC);
-          var lineY=r.line?r.line.getBoundingClientRect().top:rb.top+rb.height*0.5;
-          var mAmp=44, mF=1-ss(0.82,1,curP), ph=curP*2.5*6.2832, cph=Math.cos(ph);
-          pxL=(rb.left-sr.left)+contX-rail.scrollLeft;
-          pyL=(lineY-sr.top)+mAmp*Math.sin(ph)*mF;
-          rot=90+(reduce?0:cph*15*mF); zBehind=(cph<0)&&mF>0.28; depth=1+0.09*cph*mF;
+          p=max>0?clamp(rail.scrollLeft/max):0; curP+=(p-curP)*(reduce?1:0.12); vel=curP-prevP; prevP=curP;
+          var lineY=(r.line?r.line.getBoundingClientRect().top:rb.top+rb.height*0.5)-sr.top;
+          var railX=rb.left-sr.left, margin=44, loops=2.5, ampX=56, ampY=Math.min(118,rb.height*0.32);
+          var posAtM=function(cp){ if(cp<0)cp=0; if(cp>1)cp=1;
+            var th=cp*loops*6.2832+0.6;
+            var rmp=ss(0.03,0.16,cp)*(1-ss(0.93,1,cp));
+            return { x:railX+margin+cp*(rb.width-2*margin)+(ampX*Math.cos(th)+20*Math.sin(th*1.9+1.1))*rmp,
+                     y:lineY+(ampY*Math.sin(th)+16*Math.sin(th*1.7+0.4))*rmp }; };
+          var M0=posAtM(curP), M1=posAtM(curP+0.01);
+          pxL=M0.x; pyL=M0.y;
+          rot=Math.atan2(M1.y-M0.y,M1.x-M0.x)*180/Math.PI+90;
+          var thM=curP*loops*6.2832+0.6, rmpM=ss(0.03,0.16,curP)*(1-ss(0.93,1,curP)), sM=Math.sin(thM);
+          zBehind=(sM<-0.2)&&rmpM>0.3; depth=1+0.08*sM*rmpM;
         }else{
           /* Nose LEADS the path (tangent) so it flies, not falls. Starts top-left, curves in toward
              the timeline, then orbits the spine once per journey, and parks at the last badge. */
