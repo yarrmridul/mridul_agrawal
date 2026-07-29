@@ -838,7 +838,7 @@ class Component extends DCLogic {
       const b = build(e);
       const spineBorder = b.side === "right" ? "borderLeft" : "borderRight";
       const otherBorder = b.side === "right" ? "borderRight" : "borderLeft";
-      const cardStyle = { ...cardBase(), width: "fit-content", maxWidth: "360px", [spineBorder]: "3px solid " + b.col, [otherBorder]: "1px solid var(--border)" };
+      const cardStyle = { ...cardBase(), width: "100%", maxWidth: "360px", [spineBorder]: "3px solid " + b.col, [otherBorder]: "1px solid var(--border)" };
       const connector = { position: "absolute", top: "50%", transform: "translateY(-50%)", height: "2px", background: b.col, opacity: .5, width: "26px", [b.side === "right" ? "left" : "right"]: "calc(50% + 4px)" };
       const eb = eggBind(i);
       const eggSide = b.side === "right" ? "left" : "right";
@@ -1024,7 +1024,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
     function clamp(v){ return v<0?0:v>1?1:v; }
     function cl(v,a,b){ return v<a?a:v>b?b:v; }
     function ss(a,b,x){ x=clamp((x-a)/(b-a)); return x*x*(3-2*x); }
-    function getRefs(){ var rail=sec.querySelector('.om-rail'); var mobile=!!(rail&&rail.offsetParent!==null); var c=sec.querySelectorAll('.tl-reveal'); refs={ mobile:mobile, rail:mobile?rail:null, first:c[0]||null, last:c[c.length-1]||null, spine:sec.querySelector('.tl-fill'), line:(mobile&&rail)?rail.querySelector('.tl-fillh'):null }; }
+    function getRefs(){ var rail=sec.querySelector('.om-rail'); var mobile=!!(rail&&rail.offsetParent!==null); var c=sec.querySelectorAll('.tl-reveal'); refs={ mobile:mobile, rail:mobile?rail:null, first:c[0]||null, last:c[c.length-1]||null, count:c.length, spine:sec.querySelector('.tl-fill'), line:(mobile&&rail)?rail.querySelector('.tl-fillh'):null }; }
     function setZ(v){ v=''+v; if(_z!==v){ _z=v; plane.style.zIndex=v; } }
     function setOp(v){ v=''+v; if(_op!==v){ _op=v; plane.style.opacity=v; } }
     function frame(){
@@ -1035,7 +1035,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
         var r=refs; if(!r||!r.first){ setOp(0); return; }
         var sr=sec.getBoundingClientRect();
         if(sr.bottom<-160||sr.top>innerHeight+160){ setOp(0); cap.style.opacity='0'; pad.style.opacity='0'; return; }
-        var t=performance.now()/1000, pxL,pyL,baseAng,bank,zBehind,depth,p,vel;
+        var t=performance.now()/1000, pxL,pyL,rot=0,zBehind,depth,p,vel;
         if(r.mobile){
           /* Horizontal rail — rocket orbits the timeline as you swipe left→right. (phone is fine — keep) */
           var rail=r.rail, rb=rail.getBoundingClientRect(), max=rail.scrollWidth-rail.clientWidth;
@@ -1047,26 +1047,33 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
           var mAmp=44, mF=1-ss(0.82,1,curP), ph=curP*2.5*6.2832, cph=Math.cos(ph);
           pxL=(rb.left-sr.left)+contX-rail.scrollLeft;
           pyL=(lineY-sr.top)+mAmp*Math.sin(ph)*mF;
-          baseAng=90; bank=reduce?0:cph*15*mF; zBehind=(cph<0)&&mF>0.28; depth=1+0.09*cph*mF;
+          rot=90+(reduce?0:cph*15*mF); zBehind=(cph<0)&&mF>0.28; depth=1+0.09*cph*mF;
         }else{
-          /* Nose DOWN. Starts top-left, curves in toward the timeline, circles the cards, parks at the last badge. */
+          /* Nose LEADS the path (tangent) so it flies, not falls. Starts top-left, curves in toward
+             the timeline, then orbits the spine once per journey, and parks at the last badge. */
           var fr2=r.first.getBoundingClientRect(), lr2=r.last.getBoundingClientRect();
           var spineX=r.spine?r.spine.getBoundingClientRect().left+1.5:sr.left+sr.width/2;
           var startYl=(fr2.top-sr.top)-42, endYl=(lr2.top-sr.top)+lr2.height*0.5;
           var anchorL=innerHeight*0.42-sr.top;
           p=clamp((anchorL-startYl)/((endYl-startYl)||1)); curP+=(p-curP)*(reduce?1:0.17); vel=curP-prevP; prevP=curP;
-          var spineLX=spineX-sr.left, leadStart=-0.36*sr.width, amp=Math.min(150,sr.width*0.16);
-          var xoff=function(cp){ if(cp<0)cp=0; if(cp>1)cp=1; var ld=leadStart*(1-ss(0,0.5,cp)); var aFx=1-ss(0.9,1,cp); var rmp=ss(0.06,0.32,cp); var a=cp*7.9+0.4,b=cp*12.7+1.9; return ld+amp*(0.62*Math.sin(a)+0.38*Math.sin(b))*aFx*rmp; };
-          var xo=xoff(curP);
-          pxL=spineLX+xo; pyL=startYl+curP*(endYl-startYl);
-          baseAng=180;
-          bank=reduce?0:cl((xoff(curP+0.012)-xo)*1.6,-24,24);
-          var aF=1-ss(0.9,1,curP), dsig=Math.sin(curP*10.5+2.1);
-          zBehind=(dsig<-0.12)&&aF>0.3&&curP>0.32; depth=1+0.09*dsig*aF;
+          var spineLX=spineX-sr.left, totalD=(endYl-startYl)||1;
+          var loops=Math.max(4,Math.min(9,(r.count||8)));
+          var leadStart=-0.34*sr.width, ampX=Math.min(115,sr.width*0.13), ampY=1.15*totalD/(loops*6.2832);
+          var posAt=function(cp){ if(cp<0)cp=0; if(cp>1)cp=1;
+            var lead=leadStart*(1-ss(0,0.42,cp));
+            var rmp=ss(0.05,0.22,cp)*(1-ss(0.9,1,cp));
+            var th=cp*loops*6.2832+0.9;
+            var cx=ampX*Math.cos(th); if(cx>0)cx*=0.72;
+            return { x:spineLX+lead+cx*rmp, y:startYl+cp*totalD+ampY*Math.sin(th)*rmp }; };
+          var P0=posAt(curP), P1=posAt(curP+0.008);
+          pxL=P0.x; pyL=P0.y;
+          rot=Math.atan2(P1.y-P0.y,P1.x-P0.x)*180/Math.PI+90;
+          var thN=curP*loops*6.2832+0.9, rmpN=ss(0.05,0.22,curP)*(1-ss(0.9,1,curP)), sN=Math.sin(thN);
+          zBehind=(sN<-0.2)&&rmpN>0.3; depth=1+0.08*sN*rmpN;
         }
         var landed=curP>0.97; if(landed) zBehind=false;
         setZ(zBehind?0:2); setOp(1);
-        plane.style.transform='translate('+pxL.toFixed(1)+'px,'+pyL.toFixed(1)+'px) rotate('+(baseAng+bank).toFixed(1)+'deg) scale('+depth.toFixed(3)+')';
+        plane.style.transform='translate('+pxL.toFixed(1)+'px,'+pyL.toFixed(1)+'px) rotate('+rot.toFixed(1)+'deg) scale('+depth.toFixed(3)+')';
         var speed=Math.min(1,Math.abs(vel)*80);
         var fy=landed?0.3:(0.7+speed*1.4), fx=0.85+(reduce?0:Math.sin(t*28)*0.13);
         if(flame){ flame.style.transform='scaleY('+fy.toFixed(2)+') scaleX('+fx.toFixed(2)+')'; flame.style.opacity=landed?'0.5':'1'; }
