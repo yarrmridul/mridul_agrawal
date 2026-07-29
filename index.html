@@ -983,7 +983,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
   try{
     if(window.__rk)return; window.__rk=1;
     var SEC='timeline', reduce=(matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches);
-    var sec,plane,flame,pad,cap,ready=false,curP=0,prevP=0;
+    var sec,plane,flame,pad,cap,ready=false,curP=0,prevP=0,refs=null,_z='',_op='';
     /* Modular rocket, drawn nose-UP with a tail flame. Rotated for banking; orbits the timeline. */
     var SVG='<svg viewBox="0 0 64 118" width="52" height="96" style="overflow:visible;filter:drop-shadow(0 8px 14px rgba(10,20,50,.42))">'
       +'<defs>'
@@ -1014,7 +1014,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
       pad.style.cssText='position:absolute;left:0;top:0;width:90px;height:22px;margin:-11px 0 0 -45px;z-index:0;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,rgba(90,200,255,.5),transparent 74%);opacity:0;transition:opacity .5s;will-change:transform';
       sec.appendChild(pad);
       plane=document.createElement('div'); plane.setAttribute('aria-hidden','true');
-      plane.style.cssText='position:absolute;left:0;top:0;width:52px;height:96px;margin:-44px 0 0 -26px;z-index:2;pointer-events:none;will-change:transform;opacity:0;transition:opacity .45s;transform-origin:50% 48%;background:radial-gradient(circle at 50% 66%,rgba(255,150,60,.3),transparent 62%)';
+      plane.style.cssText='position:absolute;left:0;top:0;width:52px;height:96px;margin:-44px 0 0 -26px;z-index:2;pointer-events:none;will-change:transform;opacity:0;transition:opacity .45s;transform-origin:50% 48%;background:radial-gradient(circle at 50% 60%,rgba(255,150,60,.2),transparent 58%)';
       plane.innerHTML=SVG; sec.appendChild(plane); flame=plane.querySelector('#rkflame');
       cap=document.createElement('div'); cap.setAttribute('aria-hidden','true');
       cap.style.cssText="position:absolute;left:0;top:0;z-index:3;pointer-events:none;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--accent,#57C6FF);white-space:nowrap;opacity:0;transform:translate(-50%,8px);transition:opacity .5s,transform .5s;text-shadow:0 2px 12px rgba(0,0,0,.35)";
@@ -1022,51 +1022,61 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
       ready=true; return true;
     }
     function clamp(v){ return v<0?0:v>1?1:v; }
+    function cl(v,a,b){ return v<a?a:v>b?b:v; }
     function ss(a,b,x){ x=clamp((x-a)/(b-a)); return x*x*(3-2*x); }
+    function getRefs(){ var rail=sec.querySelector('.om-rail'); var mobile=!!(rail&&rail.offsetParent!==null); var c=sec.querySelectorAll('.tl-reveal'); refs={ mobile:mobile, rail:mobile?rail:null, first:c[0]||null, last:c[c.length-1]||null, spine:sec.querySelector('.tl-fill'), line:(mobile&&rail)?rail.querySelector('.tl-fillh'):null }; }
+    function setZ(v){ v=''+v; if(_z!==v){ _z=v; plane.style.zIndex=v; } }
+    function setOp(v){ v=''+v; if(_op!==v){ _op=v; plane.style.opacity=v; } }
     function frame(){
       requestAnimationFrame(frame);
       if(!ready)return;
       try{
-        var sr=sec.getBoundingClientRect(), near=sr.bottom>-160&&sr.top<innerHeight+160;
-        if(!near){ plane.style.opacity='0'; cap.style.opacity='0'; pad.style.opacity='0'; return; }
-        var rail=sec.querySelector('.om-rail'), mobile=rail&&rail.offsetParent!==null;
-        var cards=sec.querySelectorAll('.tl-reveal'); if(!cards.length){ plane.style.opacity='0'; return; }
-        var first=cards[0].getBoundingClientRect(), last=cards[cards.length-1].getBoundingClientRect();
-        var t=performance.now()/1000, TURNS,amp,phase,ampF,pxL,pyL,baseAng,p;
-        if(mobile){
-          /* Horizontal rail — rocket orbits the timeline as you swipe left→right. */
-          var rb=rail.getBoundingClientRect(), max=rail.scrollWidth-rail.clientWidth;
-          p=max>0?clamp(rail.scrollLeft/max):0; curP+=(p-curP)*(reduce?1:0.2);
-          var fC=(first.left-rb.left)+rail.scrollLeft+first.width/2, lC=(last.left-rb.left)+rail.scrollLeft+last.width/2;
-          var scrX=rb.left+(fC+curP*(lC-fC))-rail.scrollLeft;
-          var lineEl=rail.querySelector('.tl-fillh'), lineY=lineEl?lineEl.getBoundingClientRect().top:rb.top+rb.height*0.5;
-          TURNS=2.5; amp=44; phase=curP*TURNS*6.2832; ampF=1-ss(0.8,1,curP);
-          pxL=scrX-sr.left; pyL=(lineY+amp*Math.sin(phase)*ampF)-sr.top; baseAng=90;
+        if(!refs||!refs.first) getRefs();
+        var r=refs; if(!r||!r.first){ setOp(0); return; }
+        var sr=sec.getBoundingClientRect();
+        if(sr.bottom<-160||sr.top>innerHeight+160){ setOp(0); cap.style.opacity='0'; pad.style.opacity='0'; return; }
+        var t=performance.now()/1000, pxL,pyL,baseAng,bank,zBehind,depth,p,vel;
+        if(r.mobile){
+          /* Horizontal rail — rocket orbits the timeline as you swipe left→right. (phone is fine — keep) */
+          var rail=r.rail, rb=rail.getBoundingClientRect(), max=rail.scrollWidth-rail.clientWidth;
+          p=max>0?clamp(rail.scrollLeft/max):0; curP+=(p-curP)*(reduce?1:0.24); vel=curP-prevP; prevP=curP;
+          var fr=r.first.getBoundingClientRect(), lr=r.last.getBoundingClientRect();
+          var fC=(fr.left-rb.left)+rail.scrollLeft+fr.width/2, lC=(lr.left-rb.left)+rail.scrollLeft+lr.width/2;
+          var contX=fC+curP*(lC-fC);
+          var lineY=r.line?r.line.getBoundingClientRect().top:rb.top+rb.height*0.5;
+          var mAmp=44, mF=1-ss(0.82,1,curP), ph=curP*2.5*6.2832, cph=Math.cos(ph);
+          pxL=(rb.left-sr.left)+contX-rail.scrollLeft;
+          pyL=(lineY-sr.top)+mAmp*Math.sin(ph)*mF;
+          baseAng=90; bank=reduce?0:cph*15*mF; zBehind=(cph<0)&&mF>0.28; depth=1+0.09*cph*mF;
         }else{
-          /* Vertical spine — rocket spirals around the cards, descending, and lands on the ground. */
-          var spineEl=sec.querySelector('.tl-fill'), spineX=spineEl?spineEl.getBoundingClientRect().left+1.5:sr.left+sr.width/2;
-          var startYv=first.top+first.height*0.16, endYv=last.top+last.height*0.86, anchorY=innerHeight*0.44;
-          p=clamp((anchorY-startYv)/((endYv-startYv)||1)); curP+=(p-curP)*(reduce?1:0.12);
-          var startYl=first.top-sr.top+first.height*0.16, endYl=last.top-sr.top+last.height*0.86;
-          TURNS=3.5; amp=Math.min(168,sr.width*0.17); phase=curP*TURNS*6.2832; ampF=1-ss(0.8,1,curP);
-          pxL=(spineX-sr.left)+amp*Math.sin(phase)*ampF; pyL=startYl+curP*(endYl-startYl); baseAng=0;
+          /* Vertical descent — nose points DOWN, wandering (non-circular) path around the cards, lands on the ground. */
+          var fr2=r.first.getBoundingClientRect(), lr2=r.last.getBoundingClientRect();
+          var spineX=r.spine?r.spine.getBoundingClientRect().left+1.5:sr.left+sr.width/2;
+          var startYl=(fr2.top-sr.top)-34, endYl=(lr2.top-sr.top)+lr2.height+20;
+          var anchorL=innerHeight*0.42-sr.top;
+          p=clamp((anchorL-startYl)/((endYl-startYl)||1)); curP+=(p-curP)*(reduce?1:0.17); vel=curP-prevP; prevP=curP;
+          var amp=Math.min(240,sr.width*0.25), aF=1-ss(0.9,1,curP);
+          var a=curP*7.9+0.4, b=curP*12.7+1.9;
+          var wob=0.62*Math.sin(a)+0.38*Math.sin(b);
+          pxL=(spineX-sr.left)+amp*wob*aF;
+          pyL=startYl+curP*(endYl-startYl);
+          baseAng=180;
+          bank=reduce?0:cl((0.62*7.9*Math.cos(a)+0.38*12.7*Math.cos(b))*2.0,-24,24);
+          var dsig=Math.sin(curP*10.5+2.1);
+          zBehind=(dsig<-0.12)&&aF>0.3; depth=1+0.09*dsig*aF;
         }
-        var vel=curP-prevP; prevP=curP;
-        var landed=curP>0.965, cph=Math.cos(phase);
-        var zBehind=(cph<0)&&ampF>0.28&&!landed;
-        var depth=1+0.1*cph*ampF;
-        var bank=reduce?0:cph*(mobile?15:19)*ampF;
-        plane.style.zIndex=zBehind?'0':'2';
-        plane.style.opacity=zBehind?'0.82':'1';
+        var landed=curP>0.97; if(landed) zBehind=false;
+        setZ(zBehind?0:2); setOp(1);
         plane.style.transform='translate('+pxL.toFixed(1)+'px,'+pyL.toFixed(1)+'px) rotate('+(baseAng+bank).toFixed(1)+'deg) scale('+depth.toFixed(3)+')';
         var speed=Math.min(1,Math.abs(vel)*80);
-        var fy=landed?0.32:(0.68+speed*1.5), fx=0.85+(reduce?0:Math.sin(t*30)*0.13);
+        var fy=landed?0.3:(0.7+speed*1.4), fx=0.85+(reduce?0:Math.sin(t*28)*0.13);
         if(flame){ flame.style.transform='scaleY('+fy.toFixed(2)+') scaleX('+fx.toFixed(2)+')'; flame.style.opacity=landed?'0.5':'1'; }
-        if(landed){ pad.style.opacity='1'; pad.style.transform='translate('+pxL.toFixed(1)+'px,'+(pyL+46).toFixed(1)+'px)'; cap.style.opacity='1'; cap.style.transform='translate(-50%,0)'; cap.style.left=pxL.toFixed(0)+'px'; cap.style.top=(pyL+58).toFixed(0)+'px'; }
+        if(landed){ var oy=r.mobile?46:54; pad.style.opacity='1'; pad.style.transform='translate('+pxL.toFixed(1)+'px,'+(pyL+oy).toFixed(1)+'px)'; cap.style.opacity='1'; cap.style.transform='translate(-50%,0)'; cap.style.left=pxL.toFixed(0)+'px'; cap.style.top=(pyL+oy+14).toFixed(0)+'px'; }
         else { pad.style.opacity='0'; cap.style.opacity='0'; }
       }catch(e){}
     }
-    function init(){ if(!build()){ setTimeout(init,300); return; } requestAnimationFrame(frame); }
+    function init(){ if(!build()){ setTimeout(init,300); return; } getRefs(); requestAnimationFrame(frame); }
+    addEventListener('resize',function(){ if(ready)getRefs(); });
     if(document.readyState==='loading') addEventListener('DOMContentLoaded',function(){ setTimeout(init,500); }); else setTimeout(init,500);
   }catch(e){}
 })();
