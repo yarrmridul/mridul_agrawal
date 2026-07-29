@@ -838,7 +838,7 @@ class Component extends DCLogic {
       const b = build(e);
       const spineBorder = b.side === "right" ? "borderLeft" : "borderRight";
       const otherBorder = b.side === "right" ? "borderRight" : "borderLeft";
-      const cardStyle = { ...cardBase(), width: "100%", maxWidth: "360px", [spineBorder]: "3px solid " + b.col, [otherBorder]: "1px solid var(--border)" };
+      const cardStyle = { ...cardBase(), width: "fit-content", maxWidth: "360px", [spineBorder]: "3px solid " + b.col, [otherBorder]: "1px solid var(--border)" };
       const connector = { position: "absolute", top: "50%", transform: "translateY(-50%)", height: "2px", background: b.col, opacity: .5, width: "26px", [b.side === "right" ? "left" : "right"]: "calc(50% + 4px)" };
       const eb = eggBind(i);
       const eggSide = b.side === "right" ? "left" : "right";
@@ -1049,21 +1049,20 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
           pyL=(lineY-sr.top)+mAmp*Math.sin(ph)*mF;
           baseAng=90; bank=reduce?0:cph*15*mF; zBehind=(cph<0)&&mF>0.28; depth=1+0.09*cph*mF;
         }else{
-          /* Vertical descent — nose points DOWN, wandering (non-circular) path around the cards, lands on the ground. */
+          /* Nose DOWN. Starts top-left, curves in toward the timeline, circles the cards, parks at the last badge. */
           var fr2=r.first.getBoundingClientRect(), lr2=r.last.getBoundingClientRect();
           var spineX=r.spine?r.spine.getBoundingClientRect().left+1.5:sr.left+sr.width/2;
-          var startYl=(fr2.top-sr.top)-34, endYl=(lr2.top-sr.top)+lr2.height+20;
+          var startYl=(fr2.top-sr.top)-42, endYl=(lr2.top-sr.top)+lr2.height*0.5;
           var anchorL=innerHeight*0.42-sr.top;
           p=clamp((anchorL-startYl)/((endYl-startYl)||1)); curP+=(p-curP)*(reduce?1:0.17); vel=curP-prevP; prevP=curP;
-          var amp=Math.min(240,sr.width*0.25), aF=1-ss(0.9,1,curP);
-          var a=curP*7.9+0.4, b=curP*12.7+1.9;
-          var wob=0.62*Math.sin(a)+0.38*Math.sin(b);
-          pxL=(spineX-sr.left)+amp*wob*aF;
-          pyL=startYl+curP*(endYl-startYl);
+          var spineLX=spineX-sr.left, leadStart=-0.36*sr.width, amp=Math.min(150,sr.width*0.16);
+          var xoff=function(cp){ if(cp<0)cp=0; if(cp>1)cp=1; var ld=leadStart*(1-ss(0,0.5,cp)); var aFx=1-ss(0.9,1,cp); var rmp=ss(0.06,0.32,cp); var a=cp*7.9+0.4,b=cp*12.7+1.9; return ld+amp*(0.62*Math.sin(a)+0.38*Math.sin(b))*aFx*rmp; };
+          var xo=xoff(curP);
+          pxL=spineLX+xo; pyL=startYl+curP*(endYl-startYl);
           baseAng=180;
-          bank=reduce?0:cl((0.62*7.9*Math.cos(a)+0.38*12.7*Math.cos(b))*2.0,-24,24);
-          var dsig=Math.sin(curP*10.5+2.1);
-          zBehind=(dsig<-0.12)&&aF>0.3; depth=1+0.09*dsig*aF;
+          bank=reduce?0:cl((xoff(curP+0.012)-xo)*1.6,-24,24);
+          var aF=1-ss(0.9,1,curP), dsig=Math.sin(curP*10.5+2.1);
+          zBehind=(dsig<-0.12)&&aF>0.3&&curP>0.32; depth=1+0.09*dsig*aF;
         }
         var landed=curP>0.97; if(landed) zBehind=false;
         setZ(zBehind?0:2); setOp(1);
