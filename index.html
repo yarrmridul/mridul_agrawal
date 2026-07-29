@@ -1031,7 +1031,11 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
       requestAnimationFrame(frame);
       if(!ready)return;
       try{
-        if(!refs||!refs.first) getRefs();
+        if(!sec||!document.contains(sec)) sec=document.getElementById(SEC);
+        if(!sec) return;
+        /* the timeline re-renders on state changes and wipes our overlay — re-attach if it's gone */
+        if(!document.contains(plane)){ sec.appendChild(pad); sec.appendChild(plane); sec.appendChild(cap); _z=''; _op=''; refs=null; }
+        if(!refs||!refs.first||!document.contains(refs.first)) getRefs();
         var r=refs; if(!r||!r.first){ setOp(0); return; }
         var sr=sec.getBoundingClientRect();
         if(sr.bottom<-160||sr.top>innerHeight+160){ setOp(0); cap.style.opacity='0'; pad.style.opacity='0'; return; }
@@ -1042,7 +1046,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
           var rail=r.rail, rb=rail.getBoundingClientRect(), max=rail.scrollWidth-rail.clientWidth;
           p=max>0?clamp(rail.scrollLeft/max):0; curP+=(p-curP)*(reduce?1:0.12); vel=curP-prevP; prevP=curP;
           var lineY=(r.line?r.line.getBoundingClientRect().top:rb.top+rb.height*0.5)-sr.top;
-          var railX=rb.left-sr.left, margin=44, loops=2.5, ampX=56, ampY=Math.min(118,rb.height*0.32);
+          var railX=rb.left-sr.left, margin=44, loops=Math.max(4,Math.min(7,r.count||5)), ampX=58, ampY=Math.min(120,rb.height*0.33);
           var posAtM=function(cp){ if(cp<0)cp=0; if(cp>1)cp=1;
             var th=cp*loops*6.2832+0.6;
             var rmp=ss(0.03,0.16,cp)*(1-ss(0.93,1,cp));
