@@ -417,6 +417,7 @@ a:hover{color:var(--accent-2)}
 </div>
 <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:18px 0 0">I don’t just use AI — I build with it, think with it, and scale with it. Here’s the short version of why I’m worth a conversation.</p>
 </div>
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px">
 <sc-for list="{{ whyCards }}" as="item" hint-placeholder-count="4">
 <div style="{{ item.cardStyle }}" style-hover="transform:translateY(-3px);box-shadow:var(--big-shadow)">
@@ -426,6 +427,22 @@ a:hover{color:var(--accent-2)}
 </div>
 </sc-for>
 </div>
+</sc-if>
+<sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--faint);margin-bottom:9px">◦ the boxes I tick — tap to expand</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ whyCards }}" as="item" hint-placeholder-count="4">
+<div style="{{ item.rowStyle }}">
+<button onClick="{{ item.onToggle }}" style="{{ item.headStyle }}">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><circle cx="12" cy="12" r="10" fill="{{ item.soft }}" stroke="{{ item.col }}" stroke-width="1.5"></circle><path d="M8 12.4l2.6 2.6 5-6" stroke="{{ item.col }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span style="flex:1;text-align:left;font-family:'Playfair Display',serif;font-weight:600;font-size:14.5px;line-height:1.22">{{ item.title }}</span>
+<span style="{{ item.chevStyle }}">▾</span>
+</button>
+<div style="{{ item.bodyStyle }}"><div style="min-height:0;overflow:hidden"><p style="margin:0;padding:2px 15px 14px 46px;font-size:13px;line-height:1.55;color:var(--muted)">{{ item.desc }}</p></div></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
 </div>
 </section>
 
@@ -543,7 +560,7 @@ class Component extends DCLogic {
     theme: "light",
     narrow: mm("(max-width:900px)"),
     navNarrow: mm("(max-width:1000px)"),
-    exp: -1, tab: "prd", mExp: -1,
+    exp: -1, tab: "prd", mExp: -1, whyOpen: -1,
     menuOpen: false,
     tlEgg: { i: -1, s: 0 },
     skillCat: 0
@@ -848,8 +865,13 @@ class Component extends DCLogic {
       { title: "I bridge strategy and execution", desc: "I don’t stop at the roadmap — I build the processes, automations and systems that actually ship it." },
       { title: "AI is my right hand", desc: "I build with it daily — automating operations, prototyping products and scaling creative work." }
     ];
-    const whyCards = whyRaw.map((w, i) => { const c = (i % 4) + 1; return { ...w, num: pad(i), col: cv(c), soft: cs(c),
-      cardStyle: { background: "var(--panel)", border: "1px solid var(--border)", borderTop: "3px solid " + cv(c), borderRadius: "16px", padding: "22px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s" } }; });
+    const whyCards = whyRaw.map((w, i) => { const c = (i % 4) + 1; const wo = i === S.whyOpen; return { ...w, num: pad(i), col: cv(c), soft: cs(c),
+      cardStyle: { background: "var(--panel)", border: "1px solid var(--border)", borderTop: "3px solid " + cv(c), borderRadius: "16px", padding: "22px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s" },
+      isOpen: wo, onToggle: () => this.setState({ whyOpen: wo ? -1 : i }),
+      rowStyle: { background: "var(--panel)", border: "1px solid var(--border)", borderLeft: (wo ? "3px" : "1px") + " solid " + (wo ? cv(c) : "var(--border)"), borderRadius: "12px", overflow: "hidden", boxShadow: "var(--card-shadow)", transition: "border-color .2s" },
+      headStyle: { display: "flex", alignItems: "center", gap: "10px", width: "100%", padding: "12px 13px", border: "none", background: wo ? cs(c) : "transparent", cursor: "pointer", fontFamily: "'Source Sans 3',sans-serif", transition: "background .2s" },
+      bodyStyle: { display: "grid", gridTemplateRows: wo ? "1fr" : "0fr", transition: "grid-template-rows .34s ease" },
+      chevStyle: { color: wo ? cv(c) : "var(--faint)", fontSize: "12px", flexShrink: 0, transform: wo ? "rotate(180deg)" : "none", transition: "transform .3s" } }; });
 
     const PLACE = { product: { gridColumn: "1 / span 2", gridRow: "1 / span 2" }, ai: { gridColumn: "3 / span 2", gridRow: "1" }, eng: { gridColumn: "3", gridRow: "2" }, tools: { gridColumn: "4", gridRow: "2" }, soft: { gridColumn: "1 / span 4", gridRow: "3" } };
     const chipBase = { fontFamily: mono, fontSize: "12.5px", borderRadius: "9px", padding: "7px 12px", transition: "transform .16s,border-color .16s,color .16s", cursor: "default" };
