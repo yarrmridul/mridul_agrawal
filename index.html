@@ -980,11 +980,11 @@ class Component extends DCLogic {
         hover: "transform:translateY(-3px);background:" + cs(c) + ";box-shadow:0 9px 22px -10px " + cv(c) };
     });
     const skCats = [
-      { title: "Product & Consulting", label: "Product", str: 0.95, col: cv(1), soft: cs(1), line: cl(1), skills: ["Business analysis", "Problem structuring", "Roadmapping", "Process improvement", "Requirement gathering", "Client relationships", "Stakeholder mgmt"] },
-      { title: "AI & Automation", label: "AI", str: 0.9, col: cv(2), soft: cs(2), line: cl(2), skills: ["Workflow automation", "Prompt engineering", "Copilot agents", "CRM automation", "AI prototyping"] },
-      { title: "Engineering", label: "Eng", str: 0.62, col: cv(3), soft: cs(3), line: cl(3), skills: ["JavaScript", "Node.js", "Java", "C", "SQL", "HTML/CSS"] },
-      { title: "Tools", label: "Tools", str: 0.72, col: cv(4), soft: cs(4), line: cl(4), skills: ["GitHub", "Vercel", "Render", "Google Sheets", "Excel", "Notion", "Power BI"] },
-      { title: "Leadership & Comms", label: "Lead", str: 0.85, col: cv(1), soft: cs(1), line: cl(1), skills: ["Leadership", "Team management", "Strategic planning", "Exec presentations", "Stakeholder negotiation", "Multitasking"] }
+      { title: "Product", label: "Product", str: 0.95, col: cv(1), soft: cs(1), line: cl(1), skills: ["Product Thinking", "Business Analysis", "Problem Structuring", "Requirement Gathering", "Process Improvement", "Roadmapping"] },
+      { title: "AI & Automation", label: "AI", str: 0.9, col: cv(2), soft: cs(2), line: cl(2), skills: ["Workflow Automation", "AI Prototyping", "Prompt Engineering", "Copilot Agents", "CRM Automation"] },
+      { title: "Technical", label: "Tech", str: 0.75, col: cv(3), soft: cs(3), line: cl(3), skills: ["SQL", "JavaScript", "Node.js", "HTML/CSS", "Linux", "Java", "AI Prompt Engineering", "CRM Development"] },
+      { title: "Tools & Platforms", label: "Tools", str: 0.78, col: cv(4), soft: cs(4), line: cl(4), skills: ["Power BI", "Excel", "Google Sheets", "Notion", "GitHub", "Vercel", "Render", "Power Automate", "Remedy"] },
+      { title: "Leadership", label: "Lead", str: 0.88, col: cv(1), soft: cs(1), line: cl(1), skills: ["Leadership", "Team Management", "Cross-functional Collaboration", "Decision Making", "Prioritization", "Stakeholder Management", "Client Relationship Management", "Executive Presentations"] }
     ];
     const skSel = Math.max(0, Math.min(4, S.skillCat || 0));
     const skR = 92, skCX = 150, skCY = 118;
