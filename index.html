@@ -28,14 +28,14 @@ body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-seri
  --page-tex:radial-gradient(rgba(8,145,178,.9) .8px,transparent .8px);--tex-op:.05;--tex-size:22px 22px;
 }
 [data-theme="space"]{
- --bg:#0A0F0F;--bg-2:#0E1514;--panel:#141C1B;--panel-2:#101817;--text:#EAF2F0;--muted:#9BABA9;--faint:#5E706E;--border:#243230;
- --accent:#22D3EE;--accent-2:#34D399;--accent-soft:#22D3EE1F;--accent-line:#22D3EE4D;
- --c1:#22D3EE;--c1s:#22D3EE22;--c1l:#22D3EE4D;--c2:#34D399;--c2s:#34D39922;--c2l:#34D3994D;
- --c3:#E7B24D;--c3s:#E7B24D1E;--c3l:#E7B24D4D;--c4:#2DD4BF;--c4s:#2DD4BF1E;--c4l:#2DD4BF4D;
- --card-shadow:0 14px 40px -26px rgba(0,0,0,.85);--big-shadow:0 40px 90px -46px rgba(0,0,0,.9);
- --hero-glow:radial-gradient(48% 44% at 12% 8%,#0891B23a,transparent 70%),radial-gradient(46% 42% at 90% 14%,#05966933,transparent 70%),radial-gradient(70% 60% at 50% 118%,#0E74902e,transparent 72%),radial-gradient(30% 30% at 78% 82%,#34D3991f,transparent 70%);
- --nav-bg:rgba(10,15,15,.7);--page-mesh:radial-gradient(44% 36% at 10% 12%,#22D3EE17,transparent 62%),radial-gradient(40% 34% at 90% 10%,#34D39914,transparent 64%);
- --page-tex:radial-gradient(rgba(34,211,238,.6) .9px,transparent .9px);--tex-op:.05;--tex-size:24px 24px;
+ --bg:#08080A;--bg-2:#0D0B0E;--panel:#151016;--panel-2:#100C10;--text:#F3ECE4;--muted:#B4A79A;--faint:#6E635B;--border:#2A2320;
+ --accent:#FF7A2D;--accent-2:#FFB454;--accent-soft:#FF7A2D1F;--accent-line:#FF7A2D4D;
+ --c1:#FF7A2D;--c1s:#FF7A2D22;--c1l:#FF7A2D4D;--c2:#FFB454;--c2s:#FFB45422;--c2l:#FFB4544D;
+ --c3:#FF9E2C;--c3s:#FF9E2C1E;--c3l:#FF9E2C4D;--c4:#E8663C;--c4s:#E8663C1E;--c4l:#E8663C4D;
+ --card-shadow:0 14px 40px -26px rgba(0,0,0,.9);--big-shadow:0 40px 90px -46px rgba(0,0,0,.92);
+ --hero-glow:radial-gradient(50% 46% at 12% 8%,#FF7A2D33,transparent 70%),radial-gradient(46% 42% at 90% 14%,#FFB4542a,transparent 70%),radial-gradient(70% 60% at 50% 118%,#E8663C22,transparent 72%),radial-gradient(30% 30% at 78% 82%,#FF9E2C1c,transparent 70%);
+ --nav-bg:rgba(8,8,10,.72);--page-mesh:radial-gradient(46% 38% at 10% 12%,#FF7A2D15,transparent 62%),radial-gradient(42% 34% at 90% 10%,#FFB45410,transparent 64%),radial-gradient(60% 50% at 50% 108%,#E8663C10,transparent 70%);
+ --page-tex:radial-gradient(rgba(255,150,80,.5) .9px,transparent .9px);--tex-op:.04;--tex-size:26px 26px;
 }
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--accent-2)}
@@ -122,12 +122,61 @@ a:hover{color:var(--accent-2)}
  .hero-facts>div>div:nth-child(2){font-size:11.5px!important;line-height:1.25!important;margin-top:4px!important}
  .hero-facts>div>div:nth-child(3){font-size:10px!important}
 }
+/* ===== Space theme — cosmic backdrop + playful toys (space theme only) ===== */
+.space-sky{display:none}
+[data-theme="space"] .space-sky{display:block;position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* let the cosmos show through solid sections; keep a faint per-section tint for identity */
+[data-theme="space"] #projects{background:radial-gradient(82% 62% at 14% -8%,rgba(255,122,45,.055),transparent 60%)!important}
+[data-theme="space"] #why{background:radial-gradient(82% 62% at 86% -8%,rgba(255,180,84,.055),transparent 60%)!important}
+.sky-stars{position:absolute;inset:-1%;background-image:radial-gradient(1.5px 1.5px at 12% 8%,#fff,transparent),radial-gradient(1.2px 1.2px at 62% 4%,#ffd9b0,transparent),radial-gradient(1.6px 1.6px at 38% 15%,#fff,transparent),radial-gradient(1px 1px at 82% 11%,#ffc98f,transparent),radial-gradient(1.4px 1.4px at 22% 20%,#fff,transparent),radial-gradient(1px 1px at 54% 24%,#ffe0c0,transparent),radial-gradient(1.5px 1.5px at 90% 19%,#fff,transparent),radial-gradient(1.1px 1.1px at 30% 27%,#fff,transparent),radial-gradient(1px 1px at 70% 22%,#fff,transparent),radial-gradient(1.3px 1.3px at 46% 30%,#fff,transparent);background-repeat:repeat;background-size:330px 300px;animation:starTwinkle 5s ease-in-out infinite}
+.sky-stars.far{background-size:190px 175px;opacity:.5;animation-duration:7.5s;animation-delay:-2s}
+.sky-neb{position:absolute;border-radius:50%;filter:blur(52px);opacity:.5;animation:omDrift 34s ease-in-out infinite;will-change:transform}
+.sky-comet{position:absolute;width:150px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#FFB454,#fff);opacity:0;filter:drop-shadow(0 0 6px #FF9E2C);animation:skyComet 17s ease-in infinite 5s}
+@keyframes skyComet{0%{opacity:0;transform:translate(0,0) rotate(15deg)}4%{opacity:.95}18%{opacity:0;transform:translate(112vw,58vh) rotate(15deg)}100%{opacity:0;transform:translate(112vw,58vh) rotate(15deg)}}
+.sky-obj{position:absolute;pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sky-planet{width:clamp(150px,22vw,290px);height:clamp(150px,22vw,290px);border-radius:50%;background:radial-gradient(circle at 34% 30%,#7a4a2e,#33190f 64%,#160b08);box-shadow:inset -20px -24px 58px rgba(0,0,0,.72),0 0 60px rgba(255,120,45,.14);transition:transform .4s ease}
+.sky-planet::after{content:"";position:absolute;left:-30%;top:40%;width:160%;height:26%;border-radius:50%;border:3px solid rgba(255,180,110,.3);transform:rotate(-20deg);box-shadow:0 0 14px rgba(255,150,80,.16)}
+.sky-planet.spin{animation:skySpin 2.4s cubic-bezier(.4,0,.2,1)}
+.sky-planet2{width:clamp(70px,10vw,120px);height:clamp(70px,10vw,120px);border-radius:50%;background:radial-gradient(circle at 38% 32%,#c98a4a,#6e3f22 66%,#2a160b);box-shadow:inset -10px -12px 26px rgba(0,0,0,.6),0 0 34px rgba(255,150,70,.12);transition:transform .4s}
+.sky-planet2.spin{animation:skySpin 2s cubic-bezier(.4,0,.2,1)}
+.sky-moon{width:clamp(56px,7vw,84px);height:clamp(56px,7vw,84px);border-radius:50%;background:radial-gradient(circle at 36% 32%,#f2e9dc,#c3b7a6 68%,#9a9082);box-shadow:0 0 26px rgba(255,220,180,.16),inset -8px -8px 16px rgba(0,0,0,.32);transition:box-shadow .4s}
+.sky-moon i{position:absolute;border-radius:50%;background:rgba(120,110,96,.45)}
+.sky-moon.glow{box-shadow:0 0 46px 6px rgba(255,190,120,.55),inset -8px -8px 16px rgba(0,0,0,.32);animation:skyWobble 1.4s ease}
+.sky-sat{width:56px;height:20px;opacity:.85;transition:transform .4s}
+.sky-sat.spin{animation:skySpin 1.8s ease}
+@keyframes skySpin{to{transform:rotate(360deg)}}
+@keyframes skyWobble{0%,100%{transform:scale(1)}40%{transform:scale(1.12)}}
+/* docked, always-clickable spaceship */
+.sky-ship{display:none}
+[data-theme="space"] .sky-ship{display:block;position:fixed;left:16px;bottom:16px;width:52px;height:52px;z-index:42;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5));transition:transform .3s ease}
+[data-theme="space"] .sky-ship:hover{transform:translateY(-4px) rotate(-6deg)}
+.sky-ship.launch{animation:shipLaunch 2.8s cubic-bezier(.5,.05,.4,1)}
+@keyframes shipLaunch{0%{transform:translate(0,0) rotate(0)}18%{transform:translate(22vw,-30vh) rotate(20deg)}42%{transform:translate(64vw,-58vh) rotate(46deg)}60%{transform:translate(88vw,-30vh) rotate(120deg)}80%{transform:translate(52vw,-8vh) rotate(300deg)}100%{transform:translate(0,0) rotate(360deg)}}
+.sky-hint{display:none}
+[data-theme="space"] .sky-hint{display:block;position:fixed;left:74px;bottom:30px;z-index:42;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--faint);opacity:.85;pointer-events:none;animation:omFadeUp .6s ease both}
+@media (max-width:640px){[data-theme="space"] .sky-hint{display:none}[data-theme="space"] .sky-ship{width:44px;height:44px;left:12px;bottom:12px}}
+@media (prefers-reduced-motion:reduce){.sky-stars,.sky-neb,.sky-comet{animation:none!important}}
 </style>
 </helmet>
 <div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
 
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--page-mesh);transform:translateZ(0)"></div>
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--tex-op);transition:opacity .5s;background:var(--page-tex);background-size:var(--tex-size);transform:translateZ(0);backface-visibility:hidden"></div>
+<div class="space-sky" aria-hidden="true">
+<div class="sky-stars sky-plx" data-plx="0.04"></div>
+<div class="sky-stars far sky-plx" data-plx="0.09"></div>
+<div class="sky-neb sky-plx" data-plx="0.14" style="top:1%;left:55%;width:min(460px,72vw);height:min(460px,72vw);background:radial-gradient(circle,#FF7A2D,transparent 66%)"></div>
+<div class="sky-neb sky-plx" data-plx="0.18" style="top:40%;left:-12%;width:min(520px,82vw);height:min(520px,82vw);background:radial-gradient(circle,#E8663C,transparent 66%);animation-duration:42s"></div>
+<div class="sky-neb sky-plx" data-plx="0.12" style="top:74%;left:62%;width:min(480px,76vw);height:min(480px,76vw);background:radial-gradient(circle,#FFB454,transparent 66%);animation-duration:38s"></div>
+<div class="sky-comet" style="top:5%"></div>
+<div class="sky-comet" style="top:50%;animation-delay:13s;animation-duration:21s"></div>
+<div class="sky-obj sky-planet" title="Give me a spin" style="top:5%;right:-4%"></div>
+<div class="sky-obj sky-moon" title="Poke the moon" style="top:32%;left:4%"><i style="width:12px;height:12px;left:22%;top:28%"></i><i style="width:8px;height:8px;left:58%;top:50%"></i><i style="width:6px;height:6px;left:40%;top:66%"></i></div>
+<div class="sky-obj sky-planet2" title="Give me a spin" style="top:60%;right:6%"></div>
+<div class="sky-obj sky-sat" title="Ping the satellite" style="top:83%;left:7%"><svg viewBox="0 0 56 20" width="56" height="20"><rect x="24" y="6" width="8" height="8" rx="1.5" fill="#cbbaa4"></rect><rect x="2" y="4" width="16" height="12" rx="1" fill="#FF9E2C" opacity=".82"></rect><rect x="38" y="4" width="16" height="12" rx="1" fill="#FF9E2C" opacity=".82"></rect><line x1="18" y1="10" x2="24" y2="10" stroke="#8a7c6c" stroke-width="1.4"></line><line x1="32" y1="10" x2="38" y2="10" stroke="#8a7c6c" stroke-width="1.4"></line></svg></div>
+</div>
+<div class="sky-ship" role="button" tabindex="0" aria-label="Little ship — tap to launch"><svg viewBox="0 0 40 60" width="52" height="52" style="overflow:visible"><path d="M20 3 C27 10,29 22,28 33 L12 33 C11 22,13 10,20 3Z" fill="#F2ECE4" stroke="#FF7A2D" stroke-width="1.4"></path><path d="M20 3 C25 9,27 17,27 23 L13 23 C13 17,15 9,20 3Z" fill="#FF7A2D"></path><circle cx="20" cy="27" r="4" fill="#8FD0FF" stroke="#2F6FE0" stroke-width="1.2"></circle><path d="M12 31 C6 35,5 43,7 47 L13 39Z" fill="#FFB454"></path><path d="M28 31 C34 35,35 43,33 47 L27 39Z" fill="#FFB454"></path><g class="shipflame" style="transform-box:fill-box;transform-origin:50% 0%"><path d="M15 33 C14 42,17 50,20 56 C23 50,26 42,25 33Z" fill="#FF7A2D"></path><path d="M17 33 C16.5 40,18 46,20 50 C22 46,23.5 40,23 33Z" fill="#FFC24D"></path></g></svg></div>
+<div class="sky-hint">← launch me</div>
 <sc-if value="{{ isSpace }}" hint-placeholder-val="{{ false }}">
 <div aria-hidden="true" style="position:fixed;top:8%;left:-14%;width:120px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff);z-index:0;pointer-events:none;opacity:0;animation:none;display:none;will-change:transform,opacity"></div>
 </sc-if>
@@ -1093,6 +1142,34 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
     function init(){ if(!build()){ setTimeout(init,300); return; } getRefs(); requestAnimationFrame(frame); }
     addEventListener('resize',function(){ if(ready)getRefs(); });
     if(document.readyState==='loading') addEventListener('DOMContentLoaded',function(){ setTimeout(init,500); }); else setTimeout(init,500);
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  try{
+    if(window.__sky)return; window.__sky=1;
+    function play(el){
+      if(!el||!el.classList)return;
+      var cls=el.classList.contains('sky-moon')?'glow':el.classList.contains('sky-ship')?'launch':'spin';
+      if(el.classList.contains(cls))return;
+      el.classList.add(cls);
+      var done=function(){ el.classList.remove(cls); };
+      el.addEventListener('animationend',done,{once:true});
+      setTimeout(done,3400);
+    }
+    document.addEventListener('click',function(e){
+      var t=e.target&&e.target.closest?e.target.closest('.sky-obj,.sky-ship'):null; if(t)play(t);
+    });
+    document.addEventListener('keydown',function(e){
+      var a=document.activeElement;
+      if((e.key==='Enter'||e.key===' ')&&a&&a.classList&&a.classList.contains('sky-ship')){ e.preventDefault(); play(a); }
+    });
+    var ticking=false;
+    function apply(){ ticking=false; var y=window.pageYOffset||0, els=document.querySelectorAll('.sky-plx');
+      for(var i=0;i<els.length;i++){ var f=parseFloat(els[i].getAttribute('data-plx'))||0; els[i].style.transform='translate3d(0,'+(y*f).toFixed(1)+'px,0)'; } }
+    addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(apply); } },{passive:true});
+    addEventListener('resize',apply); apply();
   }catch(e){}
 })();
 </script>
