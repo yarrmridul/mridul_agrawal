@@ -11,11 +11,27 @@ FOLDER LAYOUT
 ├─ FutureCard.dc.html         ← Future Card page (uses the visitor's camera)
 ├─ Project.dc.html            ← case-study page (opens as Project.dc.html?p=<slug>)
 ├─ support.js                 ← required runtime; every page loads ./support.js
+├─ resume.html                ← résumé viewer page (opens in a new tab; has zoom + download)
+├─ resume/
+│  └─ resume.pdf              ← YOUR RÉSUMÉ lives here (see "UPDATING YOUR RÉSUMÉ" below)
 └─ uploads/mridul-portfolio/public/opt/   ← all images (keep this exact path)
    ├─ logos/     (ion.png, techlive.jpg, images.png, moodale.png3.jpg)
    ├─ projects/  (moodale.jpg, googlesheetcrm.png, motimotors.jpeg, crm.jpeg, mqr.jpeg, irishgreen.png, sales.png)
    ├─ HOS.jpeg
    └─ mridul_img.jpeg
+
+UPDATING YOUR RÉSUMÉ  (no code needed)
+--------------------------------------
+Every "Download Resume" / "résumé" button on the site opens  resume.html  in a new
+tab — a viewer that shows your PDF (zoom, scroll, clickable links) plus a Download button.
+The viewer always shows the file at:   resume/resume.pdf
+
+To change your résumé:
+  1. Put your new résumé PDF into the  resume/  folder.
+  2. Rename it to exactly  resume.pdf  (replace the existing file).
+  3. Commit & push to GitHub — the site picks it up automatically.
+Keep the file name  resume.pdf  so none of the links ever need to change.
+(The current resume/resume.pdf is a placeholder — replace it with your real résumé.)
 
 NOTES
 -----

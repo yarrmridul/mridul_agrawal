@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mridul Agrawal — Résumé</title>
+<link rel="icon" type="image/jpeg" href="favicon.jpeg">
+<link rel="apple-touch-icon" href="favicon.jpeg">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{display:flex;flex-direction:column;height:100vh;background:#0E1116;font-family:system-ui,'Segoe UI',Roboto,sans-serif;color:#EAF1FF}
+  .rz-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px clamp(14px,4vw,26px);background:#12161F;border-bottom:1px solid #232a36}
+  .rz-title{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;color:#EAF1FF;text-decoration:none}
+  .rz-title .bk{color:#57C6FF;font-size:17px;line-height:1}
+  .rz-title small{color:#8FA0C4;font-weight:400;font-size:12px}
+  .rz-actions{display:flex;gap:9px}
+  .rz-btn{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;text-decoration:none;padding:8px 15px;border-radius:10px;border:1px solid #2b3342;color:#cdd8ee;background:transparent;transition:background .18s,border-color .18s,color .18s;cursor:pointer}
+  .rz-btn:hover{border-color:#57C6FF;color:#57C6FF}
+  .rz-btn.primary{background:linear-gradient(135deg,#57C6FF,#3E8BFF);color:#05060F;border:none}
+  .rz-btn.primary:hover{color:#05060F;box-shadow:0 10px 24px -10px rgba(87,198,255,.7)}
+  .rz-frame{flex:1 1 auto;width:100%;border:0;background:#525659}
+  @media(max-width:560px){ .rz-title small{display:none} .rz-btn{padding:8px 12px} }
+</style>
+</head>
+<body>
+  <header class="rz-head">
+    <a class="rz-title" href="index.html"><span class="bk">←</span> Mridul Agrawal <small>· Résumé</small></a>
+    <div class="rz-actions">
+      <a class="rz-btn" href="index.html">Portfolio</a>
+      <a class="rz-btn primary" href="resume/resume.pdf" download="Mridul-Agrawal-Resume.pdf">Download</a>
+    </div>
+  </header>
+  <iframe class="rz-frame" src="resume/resume.pdf#view=FitH&toolbar=1&navpanes=0" title="Mridul Agrawal résumé"></iframe>
+</body>
+</html>
