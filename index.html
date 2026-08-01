@@ -18,7 +18,7 @@
 html{scroll-behavior:smooth;scroll-padding-top:74px}
 body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 :root,[data-theme="light"]{
- --bg:#F6F9F8;--bg-2:#ECF3F1;--panel:#FFFFFF;--panel-2:#F1F7F5;--text:#121A18;--muted:#546069;--faint:#93A2A2;--border:#E0EAE8;
+ --bg:#F6F9F8;--bg-2:#ECF3F1;--panel:#FFFFFF;--panel-2:#F1F7F5;--text:#121A18;--muted:#546069;--faint:#93A2A2;--border:#E0EAE8;--ring:#E0EAE8;
  --accent:#0891B2;--accent-2:#059669;--accent-soft:#0891B214;--accent-line:#0891B23D;
  --c1:#0891B2;--c1s:#0891B216;--c1l:#0891B242;--c2:#059669;--c2s:#05966916;--c2l:#05966942;
  --c3:#B0741E;--c3s:#B0741E18;--c3l:#B0741E45;--c4:#0E7490;--c4s:#0E749016;--c4l:#0E749042;
@@ -28,14 +28,14 @@ body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-seri
  --page-tex:radial-gradient(rgba(8,145,178,.9) .8px,transparent .8px);--tex-op:.05;--tex-size:22px 22px;
 }
 [data-theme="space"]{
- --bg:#08080A;--bg-2:#0D0B0E;--panel:#151016;--panel-2:#100C10;--text:#F3ECE4;--muted:#B4A79A;--faint:#6E635B;--border:#2A2320;
- --accent:#FF7A2D;--accent-2:#FFB454;--accent-soft:#FF7A2D1F;--accent-line:#FF7A2D4D;
- --c1:#FF7A2D;--c1s:#FF7A2D22;--c1l:#FF7A2D4D;--c2:#FFB454;--c2s:#FFB45422;--c2l:#FFB4544D;
- --c3:#FF9E2C;--c3s:#FF9E2C1E;--c3l:#FF9E2C4D;--c4:#E8663C;--c4s:#E8663C1E;--c4l:#E8663C4D;
- --card-shadow:0 14px 40px -26px rgba(0,0,0,.9);--big-shadow:0 40px 90px -46px rgba(0,0,0,.92);
- --hero-glow:radial-gradient(50% 46% at 12% 8%,#FF7A2D33,transparent 70%),radial-gradient(46% 42% at 90% 14%,#FFB4542a,transparent 70%),radial-gradient(70% 60% at 50% 118%,#E8663C22,transparent 72%),radial-gradient(30% 30% at 78% 82%,#FF9E2C1c,transparent 70%);
- --nav-bg:rgba(8,8,10,.72);--page-mesh:radial-gradient(46% 38% at 10% 12%,#FF7A2D15,transparent 62%),radial-gradient(42% 34% at 90% 10%,#FFB45410,transparent 64%),radial-gradient(60% 50% at 50% 108%,#E8663C10,transparent 70%);
- --page-tex:radial-gradient(rgba(255,150,80,.5) .9px,transparent .9px);--tex-op:.04;--tex-size:26px 26px;
+ --bg:#08070A;--bg-2:#0E0A0C;--panel:#181017;--panel-2:#120C11;--text:#F6EFE7;--muted:#BDAE9F;--faint:#77695E;--border:#33261F;--ring:rgba(255,150,80,.17);
+ --accent:#FF7A22;--accent-2:#FFC24D;--accent-soft:#FF7A2229;--accent-line:#FF8A3A66;
+ --c1:#FF7A22;--c1s:#FF7A2226;--c1l:#FF7A2257;--c2:#FFC24D;--c2s:#FFC24D26;--c2l:#FFC24D57;
+ --c3:#FF9E2C;--c3s:#FF9E2C22;--c3l:#FF9E2C57;--c4:#FF5E3A;--c4s:#FF5E3A22;--c4l:#FF5E3A57;
+ --card-shadow:0 14px 40px -26px rgba(0,0,0,.92);--big-shadow:0 40px 90px -46px rgba(0,0,0,.94);
+ --hero-glow:radial-gradient(56% 52% at 14% 4%,#FF7A2247,transparent 70%),radial-gradient(52% 46% at 88% 12%,#FFC24D38,transparent 70%),radial-gradient(94% 64% at 50% 124%,#FF5E3A3a,transparent 72%),radial-gradient(36% 34% at 80% 84%,#FF9E2C2b,transparent 70%);
+ --nav-bg:rgba(8,7,10,.74);--page-mesh:radial-gradient(50% 42% at 10% 12%,#FF7A2224,transparent 62%),radial-gradient(46% 38% at 90% 10%,#FFC24D18,transparent 64%),radial-gradient(66% 54% at 50% 110%,#FF5E3A1c,transparent 70%);
+ --page-tex:radial-gradient(rgba(255,155,85,.6) .9px,transparent .9px);--tex-op:.05;--tex-size:26px 26px;
 }
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--accent-2)}
@@ -130,8 +130,8 @@ button{color:inherit}
 /* let the cosmos show through solid sections; keep a faint per-section tint for identity */
 [data-theme="space"] #projects{background:radial-gradient(82% 62% at 14% -8%,rgba(255,122,45,.055),transparent 60%)!important}
 [data-theme="space"] #why{background:radial-gradient(82% 62% at 86% -8%,rgba(255,180,84,.055),transparent 60%)!important}
-.sky-stars{position:absolute;inset:-1%;opacity:.7;background-image:radial-gradient(1.5px 1.5px at 6% 14%,#fff,transparent),radial-gradient(1.2px 1.2px at 17% 63%,#ffd9b0,transparent),radial-gradient(1.4px 1.4px at 23% 31%,#fff,transparent),radial-gradient(1.1px 1.1px at 31% 82%,#fff,transparent),radial-gradient(1.6px 1.6px at 38% 47%,#ffc98f,transparent),radial-gradient(1.2px 1.2px at 44% 9%,#fff,transparent),radial-gradient(1.3px 1.3px at 52% 71%,#ffe0c0,transparent),radial-gradient(1.1px 1.1px at 58% 38%,#fff,transparent),radial-gradient(1.5px 1.5px at 63% 92%,#fff,transparent),radial-gradient(1.2px 1.2px at 69% 21%,#ffd9b0,transparent),radial-gradient(1.4px 1.4px at 74% 58%,#fff,transparent),radial-gradient(1.1px 1.1px at 81% 84%,#fff,transparent),radial-gradient(1.5px 1.5px at 87% 44%,#fff,transparent),radial-gradient(1.2px 1.2px at 92% 12%,#ffc98f,transparent),radial-gradient(1.3px 1.3px at 96% 74%,#fff,transparent),radial-gradient(1.1px 1.1px at 12% 89%,#fff,transparent);background-repeat:repeat;background-size:820px 760px;animation:starTwinkle 5.5s ease-in-out infinite}
-.sky-stars.far{opacity:.34;background-image:radial-gradient(1px 1px at 9% 27%,#fff,transparent),radial-gradient(1px 1px at 21% 71%,#ffd9b0,transparent),radial-gradient(1px 1px at 34% 12%,#fff,transparent),radial-gradient(1px 1px at 47% 54%,#fff,transparent),radial-gradient(1px 1px at 58% 86%,#ffe0c0,transparent),radial-gradient(1px 1px at 66% 33%,#fff,transparent),radial-gradient(1px 1px at 78% 66%,#fff,transparent),radial-gradient(1px 1px at 88% 19%,#fff,transparent),radial-gradient(1px 1px at 41% 41%,#fff,transparent),radial-gradient(1px 1px at 15% 48%,#fff,transparent);background-size:560px 520px;background-position:40px 80px;animation-duration:8s;animation-delay:-2.5s}
+.sky-stars{position:absolute;inset:-1%;opacity:.85;background-image:radial-gradient(1.5px 1.5px at 6% 14%,#fff,transparent),radial-gradient(1.2px 1.2px at 17% 63%,#ffd9b0,transparent),radial-gradient(1.4px 1.4px at 23% 31%,#fff,transparent),radial-gradient(1.1px 1.1px at 31% 82%,#fff,transparent),radial-gradient(1.6px 1.6px at 38% 47%,#ffc98f,transparent),radial-gradient(1.2px 1.2px at 44% 9%,#fff,transparent),radial-gradient(1.3px 1.3px at 52% 71%,#ffe0c0,transparent),radial-gradient(1.1px 1.1px at 58% 38%,#fff,transparent),radial-gradient(1.5px 1.5px at 63% 92%,#fff,transparent),radial-gradient(1.2px 1.2px at 69% 21%,#ffd9b0,transparent),radial-gradient(1.4px 1.4px at 74% 58%,#fff,transparent),radial-gradient(1.1px 1.1px at 81% 84%,#fff,transparent),radial-gradient(1.5px 1.5px at 87% 44%,#fff,transparent),radial-gradient(1.2px 1.2px at 92% 12%,#ffc98f,transparent),radial-gradient(1.3px 1.3px at 96% 74%,#fff,transparent),radial-gradient(1.1px 1.1px at 12% 89%,#fff,transparent);background-repeat:repeat;background-size:820px 760px;animation:starTwinkle 5.5s ease-in-out infinite}
+.sky-stars.far{opacity:.48;background-image:radial-gradient(1px 1px at 9% 27%,#fff,transparent),radial-gradient(1px 1px at 21% 71%,#ffd9b0,transparent),radial-gradient(1px 1px at 34% 12%,#fff,transparent),radial-gradient(1px 1px at 47% 54%,#fff,transparent),radial-gradient(1px 1px at 58% 86%,#ffe0c0,transparent),radial-gradient(1px 1px at 66% 33%,#fff,transparent),radial-gradient(1px 1px at 78% 66%,#fff,transparent),radial-gradient(1px 1px at 88% 19%,#fff,transparent),radial-gradient(1px 1px at 41% 41%,#fff,transparent),radial-gradient(1px 1px at 15% 48%,#fff,transparent);background-size:560px 520px;background-position:40px 80px;animation-duration:8s;animation-delay:-2.5s}
 .sky-neb{position:absolute;border-radius:50%;filter:blur(56px);opacity:.42;animation:omDrift 34s ease-in-out infinite;will-change:transform}
 .sky-comet{position:absolute;width:150px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#FFB454,#fff);opacity:0;filter:drop-shadow(0 0 6px #FF9E2C);animation:skyComet 17s ease-in infinite 5s}
 @keyframes skyComet{0%{opacity:0;transform:translate(0,0) rotate(15deg)}4%{opacity:.95}18%{opacity:0;transform:translate(112vw,58vh) rotate(15deg)}100%{opacity:0;transform:translate(112vw,58vh) rotate(15deg)}}
@@ -158,6 +158,13 @@ button{color:inherit}
 [data-theme="space"] .sky-hint{display:block;position:fixed;right:78px;bottom:32px;z-index:42;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--faint);opacity:.85;pointer-events:none;animation:omFadeUp .6s ease both}
 @media (max-width:640px){[data-theme="space"] .sky-hint{display:none}[data-theme="space"] .sky-ship{width:44px;height:44px;right:14px;bottom:14px}}
 @media (prefers-reduced-motion:reduce){.sky-stars,.sky-neb,.sky-comet{animation:none!important}}
+/* richer dark-mode landing: warm horizon glow + a denser star cluster (space theme only) */
+.hero-cosmos{display:none}
+[data-theme="space"] .hero-cosmos{display:block;position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.hero-cosmos .hglow{position:absolute;left:50%;bottom:-36%;width:170%;height:88%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(255,120,34,.26),rgba(255,94,58,.1) 52%,transparent 74%);filter:blur(4px);animation:heroBreathe 9s ease-in-out infinite}
+.hero-cosmos .hstars{position:absolute;inset:0;opacity:.92;background-repeat:repeat;background-size:360px 340px;animation:starTwinkle 4s ease-in-out infinite;background-image:radial-gradient(1.7px 1.7px at 8% 12%,#fff,transparent),radial-gradient(1.4px 1.4px at 19% 66%,#ffdcb0,transparent),radial-gradient(1.8px 1.8px at 27% 33%,#fff,transparent),radial-gradient(1.4px 1.4px at 34% 84%,#fff,transparent),radial-gradient(1.9px 1.9px at 41% 48%,#ffd08a,transparent),radial-gradient(1.4px 1.4px at 48% 14%,#fff,transparent),radial-gradient(1.6px 1.6px at 55% 73%,#ffe0c0,transparent),radial-gradient(1.4px 1.4px at 61% 39%,#fff,transparent),radial-gradient(1.8px 1.8px at 68% 90%,#fff,transparent),radial-gradient(1.4px 1.4px at 74% 24%,#ffdcb0,transparent),radial-gradient(1.7px 1.7px at 81% 60%,#fff,transparent),radial-gradient(1.4px 1.4px at 88% 84%,#fff,transparent),radial-gradient(1.8px 1.8px at 93% 44%,#fff,transparent),radial-gradient(1.4px 1.4px at 14% 47%,#fff,transparent)}
+@keyframes heroBreathe{0%,100%{opacity:.72}50%{opacity:1}}
+@media (max-width:640px){.hero-ring.outer{display:none}.hero-ring:not(.outer){opacity:.5!important}.hero-orbit{width:min(360px,92vw)!important;height:min(360px,92vw)!important}}
 </style>
 </helmet>
 <div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
@@ -212,9 +219,10 @@ button{color:inherit}
 <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="position:fixed;top:14px;left:clamp(14px,4vw,32px);z-index:41;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);color:var(--text);font-size:16px;cursor:pointer;box-shadow:var(--card-shadow);transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
 
 <header id="home" style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(96px,13vh,140px) clamp(20px,5vw,64px) clamp(48px,7vw,76px);background:var(--hero-glow);scroll-margin-top:70px;overflow:hidden">
-<div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);border:1px solid var(--border);border-radius:50%;opacity:.6"></div>
-<div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(820px,160vw);height:min(820px,160vw);transform:translate(-50%,-50%);border:1px solid var(--border);border-radius:50%;opacity:.36"></div>
-<div aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);animation:omOrbit 40s linear infinite;will-change:transform"><span style="position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)"></span></div>
+<div class="hero-cosmos" aria-hidden="true"><div class="hglow"></div><div class="hstars"></div></div>
+<div class="hero-ring" aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);border:1px solid var(--ring);border-radius:50%;opacity:.7"></div>
+<div class="hero-ring outer" aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(820px,160vw);height:min(820px,160vw);transform:translate(-50%,-50%);border:1px solid var(--ring);border-radius:50%;opacity:.42"></div>
+<div class="hero-orbit" aria-hidden="true" style="position:absolute;left:50%;top:48%;width:min(560px,124vw);height:min(560px,124vw);transform:translate(-50%,-50%);animation:omOrbit 40s linear infinite;will-change:transform"><span style="position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);box-shadow:0 0 16px var(--accent)"></span></div>
 <div aria-hidden="true" style="position:absolute;left:6%;top:20%;width:min(340px,52vw);height:min(340px,52vw);border-radius:50%;background:radial-gradient(circle,var(--c1l),transparent 66%);filter:blur(30px);animation:omDrift 20s ease-in-out infinite;will-change:transform;pointer-events:none"></div>
 <div aria-hidden="true" style="position:absolute;right:5%;bottom:12%;width:min(300px,48vw);height:min(300px,48vw);border-radius:50%;background:radial-gradient(circle,var(--c2l),transparent 66%);filter:blur(34px);animation:omDrift 26s ease-in-out infinite reverse;will-change:transform;pointer-events:none"></div>
 
