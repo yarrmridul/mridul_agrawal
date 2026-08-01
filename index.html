@@ -99,23 +99,23 @@ button{color:inherit}
 #topnav{justify-content:center}
 @media (max-width:1000px){#topnav{justify-content:flex-end!important}}
 #topnav a[data-nav-active]{font-weight:800!important;color:var(--accent)!important;background:var(--accent-soft)!important}
-.term{max-width:560px;margin:32px auto 0;text-align:left;background:var(--panel-2);border:1px solid var(--border);border-radius:14px;box-shadow:var(--card-shadow);overflow:hidden;font-family:'IBM Plex Mono',monospace}
-.term-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--panel)}
+.term{max-width:560px;margin:32px auto 0;text-align:left;background:#0B0E14;border:1px solid #222835;border-radius:14px;box-shadow:0 24px 60px -28px rgba(0,0,0,.7);overflow:hidden;font-family:'IBM Plex Mono',monospace}
+.term-bar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid #222835;background:#12161F}
 .term-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
-.term-title{margin-left:8px;font-size:11px;color:var(--faint);letter-spacing:.06em}
-.term-body{padding:16px;font-size:13px;line-height:1.85;min-height:168px}
+.term-title{margin-left:8px;font-size:11px;color:#6B7280;letter-spacing:.06em}
+.term-body{padding:16px;font-size:13px;line-height:1.85;min-height:168px;color:#C9D1D9}
 .term-line{white-space:pre-wrap;word-break:break-word}
-.term-body .pr{color:var(--accent);font-weight:500}
-.term-body .mut{color:var(--muted)}
-.term-cur{display:inline-block;width:8px;background:var(--accent);animation:termBlink 1s steps(1) infinite;margin-left:1px}
+.term-body .pr{color:#FF9E4D;font-weight:500}
+.term-body .mut{color:#7A8291}
+.term-cur{display:inline-block;width:8px;background:#FF9E4D;animation:termBlink 1s steps(1) infinite;margin-left:1px}
 @keyframes termBlink{50%{opacity:0}}
 .term-boxes{display:flex;flex-wrap:wrap;gap:9px;margin:11px 0 4px}
-.term-box{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--text);background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer;transition:transform .15s,border-color .15s,color .15s,background .15s}
-.term-box:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);transform:translateY(-2px)}
-.term-box .b{color:var(--faint)}
-.term-box:hover .b{color:var(--accent)}
-.term-clear{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);background:transparent;border:1px solid var(--border);border-radius:6px;padding:3px 10px;cursor:pointer;transition:color .15s,border-color .15s}
-.term-clear:hover{color:var(--accent);border-color:var(--accent)}
+.term-box{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#C9D1D9;background:#12161F;border:1px solid #2A3140;border-radius:8px;padding:8px 14px;cursor:pointer;transition:transform .15s,border-color .15s,color .15s,background .15s}
+.term-box:hover{border-color:#FF9E4D;color:#FFB765;background:rgba(255,140,58,.13);transform:translateY(-2px)}
+.term-box .b{color:#5A6474}
+.term-box:hover .b{color:#FF9E4D}
+.term-clear{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7A8291;background:transparent;border:1px solid #2A3140;border-radius:6px;padding:3px 10px;cursor:pointer;transition:color .15s,border-color .15s}
+.term-clear:hover{color:#FF9E4D;border-color:#FF9E4D}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
 @media (max-width:640px){
  .proj-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -1233,10 +1233,10 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
     function boxes(body){ var w=document.createElement("div"); w.className="term-boxes";
       CH.forEach(function(c){ var b=document.createElement("button"); b.className="term-box"; b.setAttribute("data-cch",c.k); b.setAttribute("aria-label","Connect via "+c.k); b.innerHTML='<span class="b">[</span> '+c.k+' <span class="b">]</span>'; w.appendChild(b); });
       body.appendChild(w); }
-    function prompt(body){ body.appendChild(line('<span class="pr">$</span> <span class="term-cur">&nbsp;</span>')); }
+    function prompt(body){ body.appendChild(line('<span class="pr">mridul@portfolio:~$</span> <span class="term-cur">&nbsp;</span>')); }
     function type(body,text,cb){
-      if(reduce){ body.appendChild(line('<span class="pr">$</span> '+text)); cb&&cb(); return; }
-      var d=line('<span class="pr">$</span> '); body.appendChild(d);
+      if(reduce){ body.appendChild(line('<span class="pr">mridul@portfolio:~$</span> '+text)); cb&&cb(); return; }
+      var d=line('<span class="pr">mridul@portfolio:~$</span> '); body.appendChild(d);
       var span=document.createElement("span"); d.appendChild(span);
       var cur=document.createElement("span"); cur.className="term-cur"; cur.innerHTML="&nbsp;"; d.appendChild(cur);
       var i=0; (function step(){ if(i<=text.length){ span.textContent=text.slice(0,i); i++; setTimeout(step,40+Math.random()*45); } else { cur.remove(); cb&&cb(); } })();
