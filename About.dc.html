@@ -47,12 +47,16 @@ a{color:var(--accent);text-decoration:none}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--card-shadow)}
 .shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
 .dash{flex:1;display:grid;gap:13px 14px;width:100%;max-width:1520px;margin:0 auto;padding:10px clamp(16px,3vw,44px) 14px;
- grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:auto auto;align-items:start;align-content:start;row-gap:18px}
+ grid-template-columns:1.04fr 1.02fr 1.16fr;grid-template-rows:auto auto auto;align-items:start;align-content:start;row-gap:18px}
 .c-about{grid-column:1;grid-row:1;min-width:0}
 .c-spec{grid-column:2;grid-row:1;position:relative;min-width:0;display:flex;flex-direction:column}
 .c-right{grid-column:3;grid-row:1;display:flex;flex-direction:column;gap:12px;min-width:0;min-height:0}
 .c-journey{grid-column:1 / -1;grid-row:2;position:relative}
-.c-bottom{grid-column:1 / -1;grid-row:2}
+.c-proud{grid-column:1 / -1;grid-row:2}
+.c-bottom{grid-column:1 / -1;grid-row:3}
+.proud-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px 18px}
+.proud-item{display:flex;gap:8px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.proud-item .pm{color:var(--accent);flex-shrink:0;font-weight:700}
 .jrow{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;height:142px;align-items:center}
 .jaxis{position:absolute;left:2%;right:2%;top:50%;border-top:2px dashed var(--border);z-index:0}
 .jnode{position:relative;height:100%}
@@ -67,7 +71,7 @@ a{color:var(--accent);text-decoration:none}
 @media (max-width:1079px){
  .shell{height:auto}
  .dash{grid-template-columns:1fr;grid-template-rows:none;padding:16px clamp(16px,5vw,40px) 40px;gap:16px}
- .c-about,.c-spec,.c-right,.c-journey,.c-bottom{grid-column:1;grid-row:auto}
+ .c-about,.c-spec,.c-right,.c-journey,.c-proud,.c-bottom{grid-column:1;grid-row:auto}
  .jrow{display:flex;grid-template-columns:none;height:auto;overflow-x:auto;gap:10px;padding-bottom:8px}
  .jaxis{display:none}
  .jnode{position:static;height:auto;flex:0 0 208px}
@@ -140,7 +144,7 @@ a{color:var(--accent);text-decoration:none}
 <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:22px;letter-spacing:-.01em;margin-top:3px">Mridul Agrawal</div>
 <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;font-size:12px">
 <div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">◈ Origin</span><span style="font-weight:600">Mathura, UP</span></div>
-<div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">⌖ Function</span><span style="font-weight:600">Finding inefficient systems &amp; fixing them.</span></div>
+<div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">⌖ Function</span><span style="font-weight:600">Finding friction. Building systems. Automating the boring stuff.</span></div>
 <div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">⚙ Depends on</span><span style="display:flex;gap:6px;flex-wrap:wrap"><span style="background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:1px 7px">Chai</span><span style="background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:1px 7px">Music</span><span style="background:var(--panel-2);border:1px solid var(--border);border-radius:6px;padding:1px 7px">Internet</span></span></div>
 <div style="display:flex;gap:10px"><span style="width:82px;flex-shrink:0;color:var(--muted)">◔ Known bugs</span><span style="color:var(--muted);line-height:1.5">Overthinks UI · starts side projects at 2AM · says "just one more improvement" 43 times.</span></div>
 <div style="display:flex;gap:10px;align-items:center"><span style="width:82px;flex-shrink:0;color:var(--muted)">◉ Status</span><span style="display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--c2)"><span style="width:7px;height:7px;border-radius:50%;background:var(--c2);box-shadow:0 0 8px var(--c2)"></span>Always Shipping</span></div>
@@ -155,7 +159,7 @@ a{color:var(--accent);text-decoration:none}
 </div>
 <div class="card" style="padding:14px 16px;position:relative">
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px"><span style="font-family:'Playfair Display',serif;font-size:24px;color:var(--accent);line-height:0">“</span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">What drives me</span></div>
-<p style="margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)">I love solving real problems for real people. Building systems that make life (and work) smoother is my kind of dopamine.</p>
+<p style="margin:0;font-size:12.5px;line-height:1.55;color:var(--muted)">Nothing is more satisfying than finding an annoying process, simplifying it, and watching people wonder how they ever worked without it. That's my kind of dopamine.</p>
 <span class="hand dnote" style="position:absolute;right:14px;bottom:9px;font-size:17px;color:var(--accent)"><svg width="30" height="14" viewBox="0 0 30 14" fill="none" style="vertical-align:-2px;margin-right:3px"><path d="M28 5 C20 11, 10 11, 3 6" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round"/><path d="M8 3 L2 6 L7 10" stroke="var(--accent)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>that's the goal</span>
 </div>
 <div class="card" style="padding:14px 16px">
@@ -166,6 +170,19 @@ a{color:var(--accent);text-decoration:none}
 <div style="flex:1"><div style="font-size:20px">🎵</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Music</div></div>
 <div style="flex:1"><div style="font-size:20px">📚</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Books</div></div>
 <div style="flex:1"><div style="font-size:20px">💬</div><div style="font-size:10px;color:var(--muted);margin-top:4px;line-height:1.2">Great convos</div></div>
+</div>
+</div>
+</section>
+
+<section class="c-proud">
+<div class="card" style="padding:13px 18px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0"></span><span style="font-family:'Playfair Display',serif;font-weight:700;font-size:15px">Things I'm proud of</span></div>
+<div class="proud-grid">
+<div class="proud-item"><span class="pm">▹</span>Built and scaled Moodale to a 15+ member team</div>
+<div class="proud-item"><span class="pm">▹</span>Built multiple workflow automations at ION Group</div>
+<div class="proud-item"><span class="pm">▹</span>Delivered 1000+ client campaigns</div>
+<div class="proud-item"><span class="pm">▹</span>Built internal CRMs instead of buying SaaS</div>
+<div class="proud-item"><span class="pm">▹</span>Love turning repetitive work into one-click workflows</div>
 </div>
 </div>
 </section>
