@@ -177,7 +177,7 @@ button{color:inherit}
 [data-theme="space"] .sky-hint{display:block;position:fixed;right:78px;bottom:32px;z-index:42;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--faint);opacity:.85;pointer-events:none;animation:omFadeUp .6s ease both}
 @media (max-width:640px){[data-theme="space"] .sky-hint{display:none}[data-theme="space"] .sky-ship{width:44px;height:44px;right:14px;bottom:14px}}
 @media (prefers-reduced-motion:reduce){.sky-stars,.sky-neb,.sky-comet{animation:none!important}}
-@media (max-width:640px){.hero-ring.outer{display:none}.hero-ring:not(.outer){opacity:.5!important}.hero-orbit{width:min(360px,92vw)!important;height:min(360px,92vw)!important}.sky-crescent{top:9%;right:7%}}
+@media (max-width:640px){.hero-ring.outer{display:none}.hero-ring:not(.outer){opacity:.5!important}.hero-orbit{width:min(360px,92vw)!important;height:min(360px,92vw)!important}.sky-crescent{display:none}.sky-neb{display:none}}
 </style>
 </helmet>
 <div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
@@ -1053,7 +1053,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
   try{
     if(window.__rk)return; window.__rk=1;
     var SEC='timeline', reduce=(matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches);
-    var sec,plane,flame,pad,cap,ready=false,curP=0,prevP=0,refs=null,_z='',_op='';
+    var sec,plane,flame,pad,cap,ready=false,curP=0,prevP=0,refs=null,_z='',_op='',idleSkip=0;
     /* Modular rocket, drawn nose-UP with a tail flame. Rotated for banking; orbits the timeline. */
     var SVG='<svg viewBox="0 0 64 118" width="52" height="96" style="overflow:visible;filter:drop-shadow(0 8px 14px rgba(10,20,50,.42))">'
       +'<defs>'
@@ -1100,15 +1100,16 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
     function frame(){
       requestAnimationFrame(frame);
       if(!ready)return;
+      if(idleSkip>0){ idleSkip--; return; }
       try{
         if(!sec||!document.contains(sec)) sec=document.getElementById(SEC);
-        if(!sec) return;
+        if(!sec){ idleSkip=8; return; }
         /* the timeline re-renders on state changes and wipes our overlay — re-attach if it's gone */
         if(!document.contains(plane)){ sec.appendChild(pad); sec.appendChild(plane); sec.appendChild(cap); _z=''; _op=''; refs=null; }
         if(!refs||!refs.first||!document.contains(refs.first)) getRefs();
-        var r=refs; if(!r||!r.first){ setOp(0); return; }
+        var r=refs; if(!r||!r.first){ setOp(0); idleSkip=8; return; }
         var sr=sec.getBoundingClientRect();
-        if(sr.bottom<-160||sr.top>innerHeight+160){ setOp(0); cap.style.opacity='0'; pad.style.opacity='0'; return; }
+        if(sr.bottom<-160||sr.top>innerHeight+160){ setOp(0); cap.style.opacity='0'; pad.style.opacity='0'; idleSkip=8; return; }
         var t=performance.now()/1000, pxL,pyL,rot=0,zBehind,depth,p,vel;
         if(r.mobile){
           /* Horizontal timeline — rocket sweeps left→right as you swipe, orbiting the badges in big,
@@ -1187,8 +1188,8 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
       if((e.key==='Enter'||e.key===' ')&&a&&a.classList&&a.classList.contains('sky-ship')){ e.preventDefault(); play(a); }
     });
     var ticking=false;
-    function apply(){ ticking=false; var y=window.pageYOffset||0, els=document.querySelectorAll('.sky-plx');
-      for(var i=0;i<els.length;i++){ var f=parseFloat(els[i].getAttribute('data-plx'))||0; els[i].style.transform='translate3d(0,'+(y*f).toFixed(1)+'px,0)'; } }
+    function apply(){ ticking=false; var mob=innerWidth<=640, y=window.pageYOffset||0, els=document.querySelectorAll('.sky-plx');
+      for(var i=0;i<els.length;i++){ var f=parseFloat(els[i].getAttribute('data-plx'))||0; els[i].style.transform=mob?'none':('translate3d(0,'+(y*f).toFixed(1)+'px,0)'); } }
     addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(apply); } },{passive:true});
     addEventListener('resize',apply); apply();
   }catch(e){}
