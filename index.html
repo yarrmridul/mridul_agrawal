@@ -114,6 +114,8 @@ button{color:inherit}
 .term-box:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);transform:translateY(-2px)}
 .term-box .b{color:var(--faint)}
 .term-box:hover .b{color:var(--accent)}
+.term-clear{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);background:transparent;border:1px solid var(--border);border-radius:6px;padding:3px 10px;cursor:pointer;transition:color .15s,border-color .15s}
+.term-clear:hover{color:var(--accent);border-color:var(--accent)}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
 @media (max-width:640px){
  .proj-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -605,7 +607,7 @@ button{color:inherit}
 <h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(32px,5.5vw,58px);line-height:1.05;letter-spacing:-.025em;margin:16px 0 0">Got a vision?<br>Let’s bring it <span style="color:var(--accent)">to life</span>.</h2>
 <p style="font-size:15.5px;line-height:1.6;color:var(--muted);max-width:500px;margin:18px auto 0">Always up for conversations about product roles, new opportunities, and measurable business impact.</p>
 <div id="cterm" class="term" data-armed="0" aria-label="Interactive contact terminal — pick a channel to reach Mridul">
-<div class="term-bar"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><span class="term-title">connect — mridul@portfolio</span></div>
+<div class="term-bar"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i><span class="term-title">connect — mridul@portfolio</span><button class="term-clear" data-cclear aria-label="Clear terminal">clear</button></div>
 <div class="term-body"><div class="term-line"><span class="mut">initializing…</span></div></div>
 </div>
 <div style="margin-top:18px">
@@ -1222,7 +1224,7 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
     if(window.__cterm)return; window.__cterm=1;
     var reduce=(matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches);
     var CH=[
-      {k:"email",   cmd:"connect email",    url:"mailto:mridulagrawal06@gmail.com", open:"opening your mail app"},
+      {k:"email",   cmd:"connect email",    url:"https://mail.google.com/mail/?view=cm&fs=1&to=mridulagrawal06@gmail.com&su=Let%27s%20connect", open:"opening Gmail"},
       {k:"whatsapp",cmd:"connect whatsapp", url:"https://wa.me/917983738443",        open:"opening WhatsApp"},
       {k:"linkedin",cmd:"connect linkedin", url:"https://www.linkedin.com/in/mridul-agrawal-62029522b", open:"opening LinkedIn"},
       {k:"github",  cmd:"connect github",   url:"https://github.com/yarrmridul",      open:"opening GitHub"}
@@ -1245,11 +1247,18 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
     function connect(term,c){ var body=term.querySelector(".term-body"); trimPrompt(body);
       term.querySelectorAll(".term-box").forEach(function(b){ b.style.pointerEvents="none"; b.style.opacity=(b.getAttribute("data-cch")===c.k?"1":".45"); });
       type(body,c.cmd,function(){ body.appendChild(line('<span class="mut">→ '+c.open+"…</span>"));
-        setTimeout(function(){ try{ if(c.url.indexOf("mailto:")===0) window.location.href=c.url; else window.open(c.url,"_blank","noopener"); }catch(e){}
+        setTimeout(function(){ try{ window.open(c.url,"_blank","noopener"); }catch(e){}
           setTimeout(function(){ body.appendChild(line('<span class="mut">done. pick another →</span>')); boxes(body); prompt(body); },550);
         },650); });
     }
-    document.addEventListener("click",function(e){ var b=e.target.closest?e.target.closest(".term-box"):null; if(!b)return; var term=b.closest("#cterm"); if(!term)return; var k=b.getAttribute("data-cch"); for(var i=0;i<CH.length;i++){ if(CH[i].k===k){ connect(term,CH[i]); break; } } });
+    function clearTerm(term){ var body=term.querySelector(".term-body"); if(!body)return; body.innerHTML="";
+      body.appendChild(line('<span class="mut">cleared. pick a channel to reach me →</span>')); boxes(body); prompt(body); }
+    document.addEventListener("click",function(e){
+      if(!e.target.closest)return;
+      var cl=e.target.closest(".term-clear"); if(cl){ var t=cl.closest("#cterm"); if(t) clearTerm(t); return; }
+      var b=e.target.closest(".term-box"); if(!b)return; var term=b.closest("#cterm"); if(!term)return;
+      var k=b.getAttribute("data-cch"); for(var i=0;i<CH.length;i++){ if(CH[i].k===k){ connect(term,CH[i]); break; } }
+    });
     function tick(){ var term=document.getElementById("cterm"); if(!term||term.getAttribute("data-armed")==="1")return; var r=term.getBoundingClientRect(); if(r.top<innerHeight*0.85 && r.bottom>0){ term.setAttribute("data-armed","1"); run(term); } }
     setInterval(tick,300); addEventListener("scroll",tick,{passive:true}); setTimeout(tick,500);
   }catch(e){}
