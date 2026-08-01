@@ -1265,5 +1265,20 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
   }catch(e){}
 })();
 </script>
+<script>
+(function(){
+  try{
+    function goHash(){
+      var h=location.hash; if(!h||h.length<2)return;
+      var id=decodeURIComponent(h.slice(1)), tries=0;
+      (function step(){ var el=document.getElementById(id);
+        if(el){ el.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+        if(tries++<40) setTimeout(step,120); })();
+    }
+    if(document.readyState==="loading") addEventListener("DOMContentLoaded",function(){ setTimeout(goHash,350); }); else setTimeout(goHash,350);
+    addEventListener("hashchange",goHash);
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
