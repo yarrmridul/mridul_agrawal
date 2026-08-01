@@ -498,9 +498,9 @@ button{color:inherit}
 <div>
 <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
 <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--fill-fg);background:var(--fill);border:1px solid var(--fill-bd);padding:7px 12px;border-radius:9px;letter-spacing:.08em">04</span>
-<div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:var(--muted)">WHY ME</div><h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,4vw,38px);letter-spacing:-.02em;margin:2px 0 0">Why hire me</h2></div>
+<div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:var(--muted)">WHY ME</div><h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,4vw,38px);letter-spacing:-.02em;margin:2px 0 0">What I Bring</h2></div>
 </div>
-<p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:18px 0 0">I don’t just use AI — I build with it, think with it, and scale with it. Here’s the short version of why I’m worth a conversation.</p>
+<p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:18px 0 0">I naturally gravitate toward messy processes, repetitive work, and inefficient systems. Whether it's a startup, an enterprise team, or my own business, I enjoy figuring out how things can work better—and then building them.</p>
 </div>
 <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px">
@@ -945,10 +945,12 @@ class Component extends DCLogic {
       onClose: eggClose } : { has: false };
 
     const whyRaw = [
-      { title: "Real market experience", desc: "Clients, campaigns and business outcomes handled in the real world — an edge most freshers don’t have." },
-      { title: "Entrepreneurship = my real-time MBA", desc: "Founding Moodale meant sales, strategy, hiring and delivery: a 10+ member team and 500+ campaigns over five years." },
-      { title: "I bridge strategy and execution", desc: "I don’t stop at the roadmap — I build the processes, automations and systems that actually ship it." },
-      { title: "AI is my right hand", desc: "I build with it daily — automating operations, prototyping products and scaling creative work." }
+      { title: "Learned by shipping", desc: "Worked with real businesses, real users, and real deadlines long before graduation—learning from outcomes instead of case studies." },
+      { title: "Entrepreneurship = my real-time MBA", desc: "Running Moodale meant wearing every hat—sales, hiring, operations, strategy, finance, design, tech and product. It taught me how every decision affects the bigger picture." },
+      { title: "I bridge strategy and execution", desc: "I enjoy turning ideas into systems that people actually use—whether that's an internal workflow, a CRM, or an automation." },
+      { title: "AI as a teammate", desc: "I use AI to prototype faster, automate repetitive work, explore ideas, and spend more time solving problems—not doing busywork." },
+      { title: "I build systems, not shortcuts", desc: "Whenever I see repetitive work, I naturally start asking, \"Can this be automated?\" That's how I ended up building CRMs, editorial workflows, enterprise automations, and internal AI tools." },
+      { title: "Comfortable in chaos", desc: "Between running Moodale, managing academics, coordinating teams, and somehow keeping a social life alive, I've learned to stay calm, prioritize effectively, and enjoy the chaos." }
     ];
     const whyCards = whyRaw.map((w, i) => { const c = (i % 4) + 1; const wo = i === S.whyOpen; return { ...w, num: pad(i), col: cv(c), soft: cs(c),
       cardStyle: { background: "var(--panel)", border: "1px solid var(--border)", borderTop: "3px solid " + cv(c), borderRadius: "16px", padding: "22px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s" },
