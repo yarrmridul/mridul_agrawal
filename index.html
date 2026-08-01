@@ -98,6 +98,7 @@ button{color:inherit}
 .om-rail::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 #topnav{justify-content:center}
 @media (max-width:1000px){#topnav{justify-content:flex-end!important}}
+#topnav a[data-nav-active]{font-weight:800!important;color:var(--accent)!important;background:var(--accent-soft)!important}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
 @media (max-width:640px){
  .proj-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -803,7 +804,7 @@ class Component extends DCLogic {
 
     const heroFacts = [
       { tag: "NOW", col: cv(1), title: "Technical Analyst @ ION Group", sub: "Operations & automation" },
-      { tag: "FOUNDED", col: cv(4), title: "Moodale — 5 yrs", sub: "500+ campaigns · 10+ team" },
+      { tag: "FOUNDED", col: cv(4), title: "Moodale — 5 yrs", sub: "500+ campaigns · 25+ team" },
       { tag: "EDUCATION", col: cv(2), title: "B.E. ECE, VIT Vellore ’26", sub: "CGPA 8.88" }
     ].map(f => ({ ...f, cardStyle: { background: "var(--panel)", border: "1px solid var(--border)", borderTop: "3px solid " + f.col, borderRadius: "14px", padding: "16px 22px", textAlign: "left", boxShadow: "var(--card-shadow)", minWidth: "180px", transition: "transform .25s,box-shadow .25s" }, cardHover: { transform: "translateY(-3px)", boxShadow: "0 18px 42px -20px " + f.col } }));
 
@@ -1176,6 +1177,30 @@ function mm(q) { try { return typeof window !== "undefined" && window.matchMedia
       for(var i=0;i<els.length;i++){ var f=parseFloat(els[i].getAttribute('data-plx'))||0; els[i].style.transform='translate3d(0,'+(y*f).toFixed(1)+'px,0)'; } }
     addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(apply); } },{passive:true});
     addEventListener('resize',apply); apply();
+  }catch(e){}
+})();
+</script>
+<script>
+(function(){
+  try{
+    if(window.__navspy)return; window.__navspy=1;
+    function update(){
+      try{
+        var links=document.querySelectorAll('#topnav a[href^="#"]'); if(!links.length)return;
+        var line=innerHeight*0.32, activeId=null, best=-1e9, first=null, last=null, seen={};
+        links.forEach(function(a){ var id=a.getAttribute('href').slice(1); if(!id||seen[id])return; seen[id]=1;
+          var el=document.getElementById(id); if(!el)return; if(first===null)first=id; last=id;
+          var top=el.getBoundingClientRect().top; if(top<=line && top>best){ best=top; activeId=id; } });
+        if(activeId===null) activeId=first;
+        if((innerHeight+window.pageYOffset)>=(document.documentElement.scrollHeight-4) && last) activeId=last;
+        links.forEach(function(a){ var id=a.getAttribute('href').slice(1); if(id===activeId) a.setAttribute('data-nav-active',''); else a.removeAttribute('data-nav-active'); });
+      }catch(e){}
+    }
+    var tick=false;
+    addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(function(){ tick=false; update(); }); } },{passive:true});
+    addEventListener('resize',update);
+    setInterval(update,600); /* self-heal after the framework re-renders the nav */
+    setTimeout(update,400);
   }catch(e){}
 })();
 </script>
