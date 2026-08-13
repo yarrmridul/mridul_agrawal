@@ -75,10 +75,18 @@ a:hover{color:var(--accent-2)}
 .cs-p:last-child{margin-bottom:0}
 .cs-lead{margin:0 0 16px;font-size:17.5px;line-height:1.7;color:var(--text);font-weight:500}
 
+/* inline code */
+.cs-code{font-family:'IBM Plex Mono',monospace;font-size:.86em;font-weight:500;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:1.5px 6px;white-space:nowrap}
+
 /* lists */
 .cs-list{margin:2px 0 16px;padding:0;list-style:none;display:grid;gap:9px}
 .cs-list li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.65;color:var(--muted)}
 .cs-list li .dot{flex:0 0 auto;width:16px;height:2px;border-radius:2px;margin-top:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+/* numbered steps */
+.cs-steps{margin:4px 0 18px;padding:0;list-style:none;display:grid;gap:11px;counter-reset:csx}
+.cs-steps li{display:flex;gap:13px;align-items:flex-start;font-size:15.5px;line-height:1.65;color:var(--muted)}
+.cs-steps li .num{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;margin-top:2px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600}
 
 /* quote / note */
 .cs-quote{margin:6px 0 18px;padding:18px 22px;border-radius:14px;background:var(--quote-bg);border:1px solid var(--accent-line);border-left:3px solid var(--accent)}
@@ -154,7 +162,7 @@ a:hover{color:var(--accent-2)}
 <div style="max-width:760px;animation:omFadeUp .6s ease both">
 <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
 <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:6px 12px">{{ category }}</span>
-<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--faint)">CASE STUDY</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:var(--faint)">{{ counter }}</span>
 <sc-if value="{{ hasStatus }}" hint-placeholder-val="{{ false }}">
 <span style="display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:6px 12px"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:omPulse 2.2s infinite"></span>{{ statusNote }}</span>
 </sc-if>
@@ -203,11 +211,11 @@ a:hover{color:var(--accent-2)}
 <sc-for list="{{ sec.blocks }}" as="b" hint-placeholder-count="2">
 
 <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}">
-<p class="cs-p">{{ b.text }}</p>
+<p class="cs-p"><sc-for list="{{ b.parts }}" as="r" hint-placeholder-count="1"><sc-if value="{{ r.plain }}" hint-placeholder-val="{{ true }}">{{ r.text }}</sc-if><sc-if value="{{ r.code }}" hint-placeholder-val="{{ false }}"><code class="cs-code">{{ r.text }}</code></sc-if></sc-for></p>
 </sc-if>
 
 <sc-if value="{{ b.isLead }}" hint-placeholder-val="{{ false }}">
-<p class="cs-lead">{{ b.text }}</p>
+<p class="cs-lead"><sc-for list="{{ b.parts }}" as="r" hint-placeholder-count="1"><sc-if value="{{ r.plain }}" hint-placeholder-val="{{ true }}">{{ r.text }}</sc-if><sc-if value="{{ r.code }}" hint-placeholder-val="{{ false }}"><code class="cs-code">{{ r.text }}</code></sc-if></sc-for></p>
 </sc-if>
 
 <sc-if value="{{ b.isSub }}" hint-placeholder-val="{{ false }}">
@@ -217,9 +225,17 @@ a:hover{color:var(--accent-2)}
 <sc-if value="{{ b.isList }}" hint-placeholder-val="{{ false }}">
 <ul class="cs-list">
 <sc-for list="{{ b.items }}" as="li" hint-placeholder-count="3">
-<li><span class="dot" aria-hidden="true"></span><span>{{ li }}</span></li>
+<li><span class="dot" aria-hidden="true"></span><span><sc-for list="{{ li.parts }}" as="r" hint-placeholder-count="1"><sc-if value="{{ r.plain }}" hint-placeholder-val="{{ true }}">{{ r.text }}</sc-if><sc-if value="{{ r.code }}" hint-placeholder-val="{{ false }}"><code class="cs-code">{{ r.text }}</code></sc-if></sc-for></span></li>
 </sc-for>
 </ul>
+</sc-if>
+
+<sc-if value="{{ b.isSteps }}" hint-placeholder-val="{{ false }}">
+<ol class="cs-steps">
+<sc-for list="{{ b.items }}" as="li" hint-placeholder-count="3">
+<li><span class="num" aria-hidden="true">{{ li.num }}</span><span><sc-for list="{{ li.parts }}" as="r" hint-placeholder-count="1"><sc-if value="{{ r.plain }}" hint-placeholder-val="{{ true }}">{{ r.text }}</sc-if><sc-if value="{{ r.code }}" hint-placeholder-val="{{ false }}"><code class="cs-code">{{ r.text }}</code></sc-if></sc-for></span></li>
+</sc-for>
+</ol>
 </sc-if>
 
 <sc-if value="{{ b.isQuote }}" hint-placeholder-val="{{ false }}">
@@ -392,13 +408,81 @@ class Component extends DCLogic {
         reflection: "Moodale taught me to start with the problem, work within the constraints, and build the simplest solution that creates real impact — whether that’s a team, a process, an automation, or just a Google Sheet."
       },
       "smart-crm": {
-        category: "PRODUCT", title: "Moodale Smart CRM on Google Sheets", image: P + "googlesheetcrm.png",
-        tagline: "A no-code CRM built on Google Sheets that quietly ran an entire agency's operations.",
-        tools: ["Google Sheets", "Apps Script", "Automation", "No-code"],
-        problem: "Tracking projects, payments, client communication and content calendars manually became inefficient and error-prone. Assigning tasks and monitoring deadlines across campaigns kept leading to confusion and missed timelines.",
-        processIntro: "I built a Smart CRM using Google Sheets + Apps Script to streamline operations. Typing simple commands like “Send” or “Assign” auto-routed tasks to the right person, while triggers handled reminders, approvals and payment follow-ups seamlessly.",
-        metrics: [{ n: "60%", l: "reduction in manual effort" }, { n: "100%", l: "on-time task completion" }, { n: "0", l: "additional hires needed" }],
-        reflection: "Innovation isn’t about complexity — it’s about solving recurring pain points with clarity."
+        category: "PRODUCT", title: "Moodale — Task & Workflow Automation", image: P + "googlesheetcrm.png",
+        tagline: "How I turned a Google Sheet into an internal workflow system that replaced hours of manual coordination with a few automated actions.",
+        tools: ["Workflow automation", "Google Apps Script", "Internal tools", "Process design"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "Managing work was becoming work itself",
+            blocks: [
+              { t: "p", text: "As Moodale grew, coordinating a team became increasingly manual." },
+              { t: "p", text: "Every day, I had to decide who should work on what, communicate individual tasks, track deadlines, and follow up on whether the work had actually been completed." },
+              { t: "p", text: "With around 10 people involved across different functions, task assignment alone could take close to an hour a day." },
+              { t: "lead", text: "The bigger problem wasn’t just the time. There was no single source of truth for:" },
+              { t: "list", items: [
+                "who had been assigned a task,",
+                "whether they had received it,",
+                "what they were currently working on,",
+                "and whether the task had been completed."
+              ] },
+              { t: "p", text: "The same coordination problems repeated almost every day. I needed a system that could help me manage the workflow without adding another person just to manage the work." }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "Building the simplest system that could scale",
+            blocks: [
+              { t: "p", text: "I didn’t need an expensive project-management platform or a custom enterprise application." },
+              { t: "p", text: "The requirements were straightforward: assign tasks, notify the right people, track their status, and maintain a central record." },
+              { t: "note", text: "So I built a custom workflow system using Google Sheets and Google Apps Script." },
+              { t: "p", text: "The spreadsheet became the central dashboard where I could create and monitor tasks. Each row represented a specific task, along with its relevant details, assignees, and delivery status." },
+              { t: "sub", text: "The key workflow was simple" },
+              { t: "flow", items: ["Create task", "Add recipients", "Trigger automation", "Notify employees", "Update delivery status"], key: 2 },
+              { t: "p", text: "For example, when `send` was entered in Column M, the automation:" },
+              { t: "steps", items: [
+                "Read the recipient email addresses from Column G",
+                "Sent the task to those recipients via BCC",
+                "Updated the corresponding task’s delivery status in Column H"
+              ] },
+              { t: "p", text: "This meant a repetitive coordination workflow could be triggered directly from the dashboard itself." },
+              { t: "lead", text: "The sheet was no longer just a spreadsheet. It had become the interface for an internal workflow automation system." }
+            ]
+          },
+          {
+            eyebrow: "THE PRODUCT INSIGHT", heading: "The interface didn’t need to be rebuilt",
+            blocks: [
+              { t: "p", text: "One of the key decisions behind the product was deliberately choosing not to build a traditional CRM from scratch." },
+              { t: "p", text: "The people managing the system were already comfortable using spreadsheets, and the underlying workflow didn’t justify the cost or complexity of a dedicated platform." },
+              { t: "p", text: "So instead of introducing a new interface and workflow, I extended a familiar tool with automation. This approach allowed me to:" },
+              { t: "list", items: [
+                "build faster,",
+                "keep costs low,",
+                "iterate directly on the live workflow,",
+                "and adapt the system as Moodale’s operations changed."
+              ] },
+              { t: "p", text: "The same approach eventually became a pattern for solving other operational problems across the business." }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "From one workflow to an internal automation ecosystem",
+            blocks: [
+              { t: "p", text: "The daily task-assignment process went from roughly one hour to just a few minutes." },
+              { t: "p", text: "The system created clearer ownership, reduced missed tasks, and gave me a centralized view of ongoing work." },
+              { t: "metrics", items: [
+                { n: "~1 hour → minutes", l: "daily task coordination" },
+                { n: "5–6 days/week", l: "actively used in operations" },
+                { n: "3–4 years", l: "of continued use and iteration" }
+              ] },
+              { t: "p", text: "The success of the system also led to additional internal tools for:" },
+              { t: "list", items: [
+                "automated leave tracking,",
+                "centralized task submissions,",
+                "and client follow-ups and reminder workflows."
+              ] },
+              { t: "p", text: "What started as a solution for assigning tasks eventually became a repeatable approach for solving operational problems throughout Moodale." }
+            ]
+          }
+        ],
+        reflection: "You don’t always need to build a new platform to solve a workflow problem. Sometimes the best product is simply extending a tool people already use and automating the parts they shouldn’t have to do manually."
       },
       "moti": {
         category: "PRODUCT", title: "Moti Motors — Service Management Web App", image: P + "motimotors.jpeg",
@@ -551,26 +635,47 @@ class Component extends DCLogic {
     return S;
   }
 
+  /* Split a string on `backticks` into plain / code runs so paragraphs and list
+     items can carry inline code without needing raw HTML. */
+  runs(text) {
+    return String(text == null ? "" : text)
+      .split(/(`[^`]+`)/g)
+      .filter((s) => s !== "")
+      .map((s) => s.startsWith("`") && s.endsWith("`") && s.length > 1
+        ? { code: true, plain: false, text: s.slice(1, -1) }
+        : { code: false, plain: true, text: s });
+  }
+
   decorate(sections) {
     return sections.map((s, i) => {
       const num = String(i + 1).padStart(2, "0");
-      const blocks = (s.blocks || []).map((b) => ({
-        ...b,
-        isP: b.t === "p", isLead: b.t === "lead", isSub: b.t === "sub",
-        isList: b.t === "list", isQuote: b.t === "quote", isNote: b.t === "note",
-        isQa: b.t === "qa", isMetrics: b.t === "metrics", isFlow: b.t === "flow",
-        items: b.t === "metrics"
-          ? (b.items || []).map((m) => {
-              const len = String(m.n || "").length;
-              return { ...m, cls: "n" + (len > 13 ? " lg" : len > 7 ? " md" : "") };
-            })
-          : (b.items || []),
-        steps: b.t === "flow" ? (b.items || []).map((label, i, a) => ({
-          label,
-          arrow: i < a.length - 1,
-          cls: "step" + (i === b.key ? " key" : "")
-        })) : []
-      }));
+      const blocks = (s.blocks || []).map((b) => {
+        let items = b.items || [];
+        if (b.t === "metrics") {
+          items = items.map((m) => {
+            const len = String(m.n || "").length;
+            return { ...m, cls: "n" + (len > 13 ? " lg" : len > 7 ? " md" : "") };
+          });
+        } else if (b.t === "list") {
+          items = items.map((x) => ({ parts: this.runs(x) }));
+        } else if (b.t === "steps") {
+          items = items.map((x, j) => ({ num: j + 1, parts: this.runs(x) }));
+        }
+        return {
+          ...b,
+          isP: b.t === "p", isLead: b.t === "lead", isSub: b.t === "sub",
+          isList: b.t === "list", isSteps: b.t === "steps", isQuote: b.t === "quote",
+          isNote: b.t === "note", isQa: b.t === "qa", isMetrics: b.t === "metrics",
+          isFlow: b.t === "flow",
+          parts: (b.t === "p" || b.t === "lead") ? this.runs(b.text) : [],
+          items,
+          steps: b.t === "flow" ? (b.items || []).map((label, k, a) => ({
+            label,
+            arrow: k < a.length - 1,
+            cls: "step" + (k === b.key ? " key" : "")
+          })) : []
+        };
+      });
       return { ...s, blocks, num, id: "sec-" + num };
     });
   }
@@ -602,6 +707,7 @@ class Component extends DCLogic {
     return {
       ...base, notFound: false, found: true,
       category: p.category, title: p.title, tagline: p.tagline, image: p.image,
+      counter: String(idx + 1).padStart(2, "0") + " / " + String(ORDER.length).padStart(2, "0"),
       tools: p.tools || [],
       hasLive: !!p.liveUrl, liveUrl: p.liveUrl || "",
       hasStatus: !!p.statusNote, statusNote: p.statusNote || "",
