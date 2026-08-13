@@ -104,6 +104,19 @@ a:hover{color:var(--accent-2)}
 .cs-qa .txt{margin:0;font-size:15.5px;line-height:1.5;color:var(--muted);font-weight:500}
 .cs-qa .box.hi .txt{color:var(--text);font-weight:600}
 
+/* screenshot */
+.cs-shot{margin:10px 0 20px}
+.cs-shot .frame{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--panel-2);box-shadow:var(--big-shadow)}
+.cs-shot img{display:block;width:100%;height:auto}
+.cs-shot figcaption{margin:10px 2px 0;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;color:var(--faint);letter-spacing:.02em}
+
+/* numbered items with titles */
+.cs-num{margin:6px 0 18px;padding:0;list-style:none;display:grid;gap:14px}
+.cs-num li{display:flex;gap:14px;align-items:flex-start}
+.cs-num .num{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:9px;background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600}
+.cs-num .ttl{margin:3px 0 4px;font-size:15px;font-weight:700;color:var(--text);line-height:1.35}
+.cs-num .bd{margin:0;font-size:15px;line-height:1.65;color:var(--muted)}
+
 /* flow chain */
 .cs-flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:8px 0 18px}
 .cs-flow .step{display:flex;align-items:center;gap:8px;min-width:0}
@@ -198,10 +211,12 @@ a:hover{color:var(--accent-2)}
 
 <div class="cs-main">
 
+<sc-if value="{{ hasCover }}" hint-placeholder-val="{{ true }}">
 <div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--big-shadow);margin-bottom:clamp(8px,1.5vw,16px)">
 <img src="{{ image }}" alt="{{ title }}" loading="lazy" style="display:block;width:100%;height:clamp(180px,32vw,340px);object-fit:cover">
 <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 58%,rgba(0,0,0,.3))"></div>
 </div>
+</sc-if>
 
 <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="4">
 <section class="cs-sec" id="{{ sec.id }}">
@@ -251,6 +266,18 @@ a:hover{color:var(--accent-2)}
 <div class="box"><div class="lab">{{ b.aLabel }}</div><p class="txt">{{ b.a }}</p></div>
 <div class="box hi"><div class="lab">{{ b.bLabel }}</div><p class="txt">{{ b.b }}</p></div>
 </div>
+</sc-if>
+
+<sc-if value="{{ b.isShot }}" hint-placeholder-val="{{ false }}">
+<figure class="cs-shot"><div class="frame"><img src="{{ b.src }}" alt="{{ b.alt }}" loading="lazy"></div><figcaption>{{ b.caption }}</figcaption></figure>
+</sc-if>
+
+<sc-if value="{{ b.isNum }}" hint-placeholder-val="{{ false }}">
+<ol class="cs-num">
+<sc-for list="{{ b.items }}" as="li" hint-placeholder-count="3">
+<li><span class="num" aria-hidden="true">{{ li.num }}</span><div><div class="ttl">{{ li.title }}</div><p class="bd"><sc-for list="{{ li.parts }}" as="r" hint-placeholder-count="1"><sc-if value="{{ r.plain }}" hint-placeholder-val="{{ true }}">{{ r.text }}</sc-if><sc-if value="{{ r.code }}" hint-placeholder-val="{{ false }}"><code class="cs-code">{{ r.text }}</code></sc-if></sc-for></p></div></li>
+</sc-for>
+</ol>
 </sc-if>
 
 <sc-if value="{{ b.isFlow }}" hint-placeholder-val="{{ false }}">
@@ -563,6 +590,100 @@ class Component extends DCLogic {
         processIntro: "Building a backend operations panel featuring role-based access, task logs, workflow management and leave tracking — to streamline day-to-day operations and performance monitoring.",
         statusNote: "IN PROGRESS"
       },
+      "outreach-deck": {
+        category: "PRODUCT", title: "Outreach Deck — Personal Outreach Automation", image: P + "outreach-contacts.png",
+        noCover: true,
+        tagline: "How I built my own lightweight outreach system to manage leads, automate cold emails, and track responses without paying for expensive outreach software.",
+        tools: ["Workflow automation", "Internal tools", "Cold outreach", "Lead management"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "Cold outreach was becoming a manual job of its own",
+            blocks: [
+              { t: "p", text: "While applying for off-campus opportunities and reaching out to companies and professionals, I found that the actual outreach process involved far more manual work than expected." },
+              { t: "p", text: "Finding relevant people was only the first step. I also had to:" },
+              { t: "list", items: [
+                "maintain lists of contacts,",
+                "categorize and prioritize leads,",
+                "manage multiple Gmail accounts,",
+                "send emails individually,",
+                "keep track of who had been contacted,",
+                "avoid sending too many emails from one account,",
+                "and repeatedly check inboxes for replies."
+              ] },
+              { t: "p", text: "Dedicated outreach platforms could solve many of these problems, but most of them required paid subscriptions that didn’t make sense for my budget." },
+              { t: "lead", text: "So instead of adapting my workflow around expensive software, I decided to build a system around the way I actually worked." }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "Building a personal outreach operating system",
+            blocks: [
+              { t: "p", text: "I built Outreach Deck, a lightweight internal tool for managing the complete cold outreach workflow from one place." },
+              { t: "p", text: "The system allowed me to organize contacts into different categories and dashboards, making it easier to separate and prioritize different types of outreach." },
+              { t: "shot", src: P + "outreach-contacts.png", alt: "Outreach Deck contacts view with category tabs, filters and a send log",
+                caption: "Contacts are split into tabs like owners, product_managers and hrs — each with its own filters, search and send log." },
+              { t: "p", text: "Each contact could be managed with details such as:" },
+              { t: "list", items: [
+                "Name",
+                "Email",
+                "Company",
+                "Role",
+                "Outreach status",
+                "Priority or starred status",
+                "Reply activity"
+              ] },
+              { t: "p", text: "The system also included filtering and sorting, allowing me to create a targeted list before starting an outreach campaign." },
+              { t: "p", text: "Instead of manually opening Gmail and sending one email at a time, I could select contacts, choose the sending account, and manage outreach directly through the application." },
+              { t: "sub", text: "Managing multiple sending accounts" },
+              { t: "p", text: "One of the key workflows was distributing outreach across multiple Gmail accounts. I could add multiple sending accounts to the system and choose which account should handle a particular batch of outreach." },
+              { t: "flow", items: ["Select contacts", "Choose Gmail account", "Set sending interval", "Start outreach"], key: 2 },
+              { t: "p", text: "The tool supported configurable delays between emails, such as `30 seconds`, `1 minute` or `4 minutes`. This gave me more control over how outreach was paced instead of sending an entire batch simultaneously." },
+              { t: "p", text: "Once a batch was completed, I could switch to another account and continue the workflow while keeping each account’s activity separately tracked." },
+              { t: "p", text: "The dashboard also displayed daily sending activity and account-level quotas, giving me a clear view of how much outreach had already been sent from each account." }
+            ]
+          },
+          {
+            eyebrow: "THE WORKFLOW", heading: "From lead to conversation in one system",
+            blocks: [
+              { t: "p", text: "The product eventually brought together multiple parts of the outreach process:" },
+              { t: "num", items: [
+                { title: "Lead management", text: "Add, organize, categorize, filter, search, and prioritize contacts." },
+                { title: "Email templates", text: "Create reusable templates with personalization variables such as `{{first_name}}`, `{{company}}` and `{{role}}` — reducing repetitive writing while still allowing each message to be customized for the recipient." },
+                { title: "Controlled outreach", text: "Select recipients, choose a sending account, and configure the delay between emails." },
+                { title: "Outreach tracking", text: "Track whether a contact had been contacted and maintain outreach activity against the individual record." },
+                { title: "Reply visibility", text: "When someone replied to an outreach email, the system updated the contact’s activity, allowing me to see responses without manually maintaining a separate spreadsheet." },
+                { title: "Email verification", text: "The tool also included an email verification workflow to help identify potentially invalid addresses before outreach." }
+              ] },
+              { t: "shot", src: P + "outreach-templates.png", alt: "Outreach Deck template editor with rich text toolbar and personalization variables",
+                caption: "The template editor supports rich text or raw HTML, with variables replaced by each recipient’s real details at send time." }
+            ]
+          },
+          {
+            eyebrow: "THE PRODUCT DECISION", heading: "I didn’t build a cheaper version of an outreach platform",
+            blocks: [
+              { t: "p", text: "The goal wasn’t to compete with enterprise tools like a full-scale sales engagement platform. The goal was much narrower:" },
+              { t: "quote", text: "What is the minimum system I need to make my own outreach workflow faster, more organized, and less dependent on paid software?" },
+              { t: "p", text: "That question shaped the product. Instead of trying to build every possible feature, I focused on the workflows that were creating friction for me personally:" },
+              { t: "flow", items: ["Contacts", "Templates", "Sending accounts", "Outreach", "Replies", "Tracking"] },
+              { t: "p", text: "The product was designed around an actual workflow I was using every day, which made it easy to identify what needed to be built next." }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "From applications to actual conversations",
+            blocks: [
+              { t: "p", text: "Before building the system, most of my off-campus efforts were focused on conventional job applications, including LinkedIn applications, which resulted in very limited engagement." },
+              { t: "p", text: "Using targeted cold outreach gave me a more direct way to reach relevant people." },
+              { t: "metrics", items: [
+                { n: "1,200+", l: "contacts organized in the system" },
+                { n: "7+ stakeholders", l: "conversations initiated in the first month" },
+                { n: "Multiple accounts", l: "managed from one workflow" }
+              ] },
+              { t: "lead", text: "More importantly, the product changed how I approached job searching." },
+              { t: "p", text: "Instead of waiting for an application to be noticed, I could identify relevant people and directly start conversations with them." }
+            ]
+          }
+        ],
+        reflection: "Sometimes the best way to understand a workflow problem is to become the user yourself. Outreach Deck taught me to build around real friction — not around a feature list."
+      },
       "qr-tool": {
         category: "PRODUCT", title: "M-QR — QR Code Generator", image: P + "mqr.jpeg",
         liveUrl: "https://m-qr-beta.vercel.app/",
@@ -702,13 +823,15 @@ class Component extends DCLogic {
           items = items.map((x) => ({ parts: this.runs(x) }));
         } else if (b.t === "steps") {
           items = items.map((x, j) => ({ num: j + 1, parts: this.runs(x) }));
+        } else if (b.t === "num") {
+          items = items.map((x, j) => ({ num: j + 1, title: x.title, parts: this.runs(x.text) }));
         }
         return {
           ...b,
           isP: b.t === "p", isLead: b.t === "lead", isSub: b.t === "sub",
           isList: b.t === "list", isSteps: b.t === "steps", isQuote: b.t === "quote",
           isNote: b.t === "note", isQa: b.t === "qa", isMetrics: b.t === "metrics",
-          isFlow: b.t === "flow",
+          isFlow: b.t === "flow", isShot: b.t === "shot", isNum: b.t === "num",
           parts: (b.t === "p" || b.t === "lead") ? this.runs(b.text) : [],
           items,
           steps: b.t === "flow" ? (b.items || []).map((label, k, a) => ({
@@ -726,7 +849,7 @@ class Component extends DCLogic {
     const S = this.state, isSpace = S.theme === "space";
     const P = "uploads/mridul-portfolio/public/opt/projects/";
     const D = this.data(P);
-    const ORDER = ["moodale", "smart-crm", "moti", "ops-panel", "qr-tool", "irish-green", "sales-training"];
+    const ORDER = ["moodale", "moti", "smart-crm", "outreach-deck", "qr-tool", "ops-panel", "irish-green", "sales-training"];
     let slug = "moodale";
     try { const q = new URLSearchParams(location.search).get("p"); if (q) slug = q; } catch (e) {}
     const base = {
@@ -750,6 +873,7 @@ class Component extends DCLogic {
       ...base, notFound: false, found: true,
       category: p.category, title: p.title, tagline: p.tagline, image: p.image,
       counter: String(idx + 1).padStart(2, "0") + " / " + String(ORDER.length).padStart(2, "0"),
+      hasCover: !p.noCover,
       tools: p.tools || [],
       hasLive: !!p.liveUrl, liveUrl: p.liveUrl || "",
       hasStatus: !!p.statusNote, statusNote: p.statusNote || "",
