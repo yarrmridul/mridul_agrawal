@@ -61,7 +61,8 @@ a:hover{color:var(--accent-2)}
 .cs-rail li{margin:0}
 .cs-rail a{display:flex;gap:9px;align-items:baseline;padding:8px 0 8px 14px;margin-left:-1px;border-left:2px solid transparent;font-size:13px;line-height:1.35;color:var(--muted);font-weight:500;transition:color .18s,border-color .18s}
 .cs-rail a:hover{color:var(--accent);border-left-color:var(--accent)}
-.cs-rail .n{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.06em}
+.cs-rail .n{flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.06em}
+.cs-rail .h{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
 /* sections */
 .cs-sec{scroll-margin-top:92px;padding:clamp(26px,3.4vw,40px) 0}
@@ -95,11 +96,21 @@ a:hover{color:var(--accent-2)}
 .cs-qa .txt{margin:0;font-size:15.5px;line-height:1.5;color:var(--muted);font-weight:500}
 .cs-qa .box.hi .txt{color:var(--text);font-weight:600}
 
+/* flow chain */
+.cs-flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:8px 0 18px}
+.cs-flow .step{display:flex;align-items:center;gap:8px;min-width:0}
+.cs-flow .box{padding:11px 15px;border-radius:12px;background:var(--panel);border:1px solid var(--border);box-shadow:var(--card-shadow);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;line-height:1.35;color:var(--text)}
+.cs-flow .step.key .box{border-color:var(--accent-line);background:var(--quote-bg);color:var(--accent)}
+.cs-flow .arw{color:var(--faint);font-size:14px;flex:0 0 auto}
+@media (max-width:520px){.cs-flow{flex-direction:column;align-items:flex-start}.cs-flow .arw{transform:rotate(90deg)}}
+
 /* metrics */
 .cs-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:12px;margin:8px 0 18px}
 .cs-metric{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px 16px;text-align:center;box-shadow:var(--card-shadow)}
 .cs-metric:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
-.cs-metric .n{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(22px,3.4vw,30px);line-height:1.05;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.cs-metric .n{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(22px,3.4vw,30px);line-height:1.1;overflow-wrap:break-word;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.cs-metric .n.md{font-size:clamp(18px,2.6vw,23px)}
+.cs-metric .n.lg{font-size:clamp(15.5px,2vw,18px);letter-spacing:-.01em}
 .cs-metric .l{font-size:12.5px;color:var(--muted);margin-top:9px;line-height:1.45}
 
 /* footer nav */
@@ -172,7 +183,7 @@ a:hover{color:var(--accent-2)}
 <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--faint)">ON THIS PAGE</div>
 <ol>
 <sc-for list="{{ toc }}" as="s" hint-placeholder-count="4">
-<li><a href="{{ s.href }}"><span class="n">{{ s.num }}</span><span>{{ s.heading }}</span></a></li>
+<li><a href="{{ s.href }}" title="{{ s.heading }}"><span class="n">{{ s.num }}</span><span class="h">{{ s.heading }}</span></a></li>
 </sc-for>
 </ol>
 </aside>
@@ -226,10 +237,18 @@ a:hover{color:var(--accent-2)}
 </div>
 </sc-if>
 
+<sc-if value="{{ b.isFlow }}" hint-placeholder-val="{{ false }}">
+<div class="cs-flow">
+<sc-for list="{{ b.steps }}" as="st" hint-placeholder-count="3">
+<div class="{{ st.cls }}"><div class="box">{{ st.label }}</div><sc-if value="{{ st.arrow }}" hint-placeholder-val="{{ false }}"><span class="arw" aria-hidden="true">→</span></sc-if></div>
+</sc-for>
+</div>
+</sc-if>
+
 <sc-if value="{{ b.isMetrics }}" hint-placeholder-val="{{ false }}">
 <div class="cs-metrics">
 <sc-for list="{{ b.items }}" as="m" hint-placeholder-count="3">
-<div class="cs-metric"><div class="n">{{ m.n }}</div><div class="l">{{ m.l }}</div></div>
+<div class="cs-metric"><div class="{{ m.cls }}">{{ m.n }}</div><div class="l">{{ m.l }}</div></div>
 </sc-for>
 </div>
 </sc-if>
@@ -382,16 +401,74 @@ class Component extends DCLogic {
         reflection: "Innovation isn’t about complexity — it’s about solving recurring pain points with clarity."
       },
       "moti": {
-        category: "PRODUCT", title: "Moti Motors — Profit-Sharing & Service Transparency", image: P + "motimotors.jpeg",
-        tagline: "A unique-ID service system that made vendor profit-sharing fully transparent.",
-        tools: ["Web app", "Unique-ID system", "Real-time tracking", "Field training"],
-        problem: "Moti Motors relied on third-party garages for after-sales service, but partners frequently reported inconsistent or unclear profit figures. With no transparent, real-time tracking, this led to disputes, slow reconciliation and eroding trust between the company and its vendors.",
-        processList: [
-          "Built a web application to digitize service entries in real time, assigning each vehicle a unique ID linked to its job details and financial data — giving instant visibility into every transaction.",
-          "Ran a two-day on-ground training session for garage staff to ensure smooth adoption, and let Moti Motors staff verify any partner garage's records instantly through the system."
+        category: "PRODUCT", title: "Moti Motors — Service Management Web App", image: P + "motimotors.jpeg",
+        tagline: "How I built an independent service-recording system that gave an EV dealership visibility into third-party servicing and helped improve profit-sharing transparency.",
+        tools: ["Product thinking", "Workflow design", "Internal tools", "Automation"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "Profit sharing without visibility",
+            blocks: [
+              { t: "p", text: "Moti Motors outsourced its after-sales servicing to a third-party garage." },
+              { t: "p", text: "The garage maintained a physical bill notebook for its existing billing and compliance process. But when it came to profit sharing, Moti Motors had no independent way to verify whether every service job — and the amount collected for it — was being reported accurately." },
+              { t: "lead", text: "The challenge wasn’t simply to digitize the garage. The real challenge was to create visibility without disrupting a workflow the garage already depended on." },
+              { t: "p", text: "Moti Motors needed a simple way to independently cross-check service records, identify missing or mismatched jobs, and make profit sharing more transparent." }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "Designing around the existing workflow",
+            blocks: [
+              { t: "p", text: "Instead of trying to replace the garage’s physical notebook, I designed the system to work alongside it." },
+              { t: "note", text: "The key was a shared Job Card Number." },
+              { t: "p", text: "When a vehicle arrived for servicing, the garage manager created a new service record in the web app using the same Job Card Number recorded in the physical notebook." },
+              { t: "sub", text: "The initial record captured" },
+              { t: "list", items: [
+                "Customer details",
+                "Phone number",
+                "Vehicle model and number",
+                "Job Card Number",
+                "Customer Voice — the reason for the visit"
+              ] },
+              { t: "p", text: "Once the service was completed, the manager could retrieve the job using its Job Card Number. The existing information was automatically populated, allowing them to add the final service details instead of entering everything again." },
+              { t: "sub", text: "The completed record included" },
+              { t: "list", items: [
+                "Work description",
+                "Parts used",
+                "Total amount",
+                "Discount",
+                "Final amount collected",
+                "Mechanic name",
+                "Payment mode",
+                "Charger number, where applicable"
+              ] },
+              { t: "p", text: "This created a lightweight digital mirror of the garage’s service activity without forcing the garage to abandon its existing process." }
+            ]
+          },
+          {
+            eyebrow: "THE PRODUCT INSIGHT", heading: "Don’t replace the process. Create an audit layer.",
+            blocks: [
+              { t: "p", text: "The most important product decision was not to build a completely new servicing workflow." },
+              { t: "p", text: "The physical notebook already existed and continued to serve the garage’s operational and billing requirements. Replacing it would have introduced unnecessary friction." },
+              { t: "p", text: "Instead, the web app acted as an independent audit layer. The same Job Card Number connected both systems:" },
+              { t: "flow", items: ["Physical notebook", "Job Card Number", "Digital service record"], key: 1 },
+              { t: "p", text: "This meant Moti Motors’ owners could periodically select random Job Card Numbers from the notebook and instantly compare the corresponding records in the web app." },
+              { t: "p", text: "Any missing entry, mismatch, or difference in amount could then be investigated." }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "From trust-based reporting to verifiable records",
+            blocks: [
+              { t: "p", text: "The system gave Moti Motors independent visibility into service operations without requiring the owners to be present for every transaction." },
+              { t: "p", text: "As the cross-checking process became consistent:" },
+              { t: "metrics", items: [
+                { n: "~40%", l: "increase in monthly servicing profit" },
+                { n: "1 shared ID", l: "connecting physical and digital records" },
+                { n: "Greater transparency", l: "in profit-sharing and service reporting" }
+              ] },
+              { t: "p", text: "The system also created a stronger deterrent against under-reporting, as service records could now be independently audited against the garage’s own notebook." }
+            ]
+          }
         ],
-        metrics: [{ n: "0%", l: "data mismatch after launch" }, { n: "Hours", l: "saved weekly on reconciliation" }],
-        reflection: "Designing for non-technical users sharpened my empathy in UX."
+        reflection: "The best solution doesn’t always replace an existing process. Sometimes, the smarter product decision is to work around it — and create visibility exactly where it is missing."
       },
       "ops-panel": {
         category: "PRODUCT", title: "Moodale Operations Panel", image: P + "crm.jpeg",
@@ -481,8 +558,18 @@ class Component extends DCLogic {
         ...b,
         isP: b.t === "p", isLead: b.t === "lead", isSub: b.t === "sub",
         isList: b.t === "list", isQuote: b.t === "quote", isNote: b.t === "note",
-        isQa: b.t === "qa", isMetrics: b.t === "metrics",
-        items: b.items || []
+        isQa: b.t === "qa", isMetrics: b.t === "metrics", isFlow: b.t === "flow",
+        items: b.t === "metrics"
+          ? (b.items || []).map((m) => {
+              const len = String(m.n || "").length;
+              return { ...m, cls: "n" + (len > 13 ? " lg" : len > 7 ? " md" : "") };
+            })
+          : (b.items || []),
+        steps: b.t === "flow" ? (b.items || []).map((label, i, a) => ({
+          label,
+          arrow: i < a.length - 1,
+          cls: "step" + (i === b.key ? " key" : "")
+        })) : []
       }));
       return { ...s, blocks, num, id: "sec-" + num };
     });
