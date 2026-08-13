@@ -564,15 +564,57 @@ class Component extends DCLogic {
         statusNote: "IN PROGRESS"
       },
       "qr-tool": {
-        category: "PRODUCT", title: "QR Code Generator Web Tool", image: P + "mqr.jpeg",
+        category: "PRODUCT", title: "M-QR — QR Code Generator", image: P + "mqr.jpeg",
         liveUrl: "https://m-qr-beta.vercel.app/",
-        tagline: "A fast, no-expiry QR generator built for real client campaigns.",
-        tools: ["HTML / JS", "QRCode.js", "Firebase"],
-        problem: "Clients needed reliable, custom QR codes that never expired.",
-        processIntro: "I developed a lightweight web application that lets users generate branded, trackable QR codes instantly.",
-        processList: ["Frontend built with HTML and JavaScript", "QR generation powered by QRCode.js", "Firebase for data storage and tracking"],
-        outcomeText: "Multiple branded QR codes created and used across multiple client campaigns.",
-        reflection: "Tiny tools can create massive convenience when built right."
+        tagline: "A lightweight internal tool built to help the Moodale team quickly create customizable QR codes for client campaigns and everyday use.",
+        tools: ["Internal tool", "Web development", "Campaign operations", "React"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "A small but recurring dependency",
+            blocks: [
+              { t: "p", text: "QR codes were frequently needed across client campaigns and day-to-day work at Moodale." },
+              { t: "p", text: "The team needed QR codes for different use cases — website links, phone numbers, WhatsApp, and other campaign destinations. Using different third-party tools every time meant dealing with inconsistent customization options and an unnecessary extra step in the workflow." },
+              { t: "lead", text: "The problem wasn’t complex. It was simply a repeated inconvenience worth removing." }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "Building a tool around the actual use cases",
+            blocks: [
+              { t: "p", text: "Instead of repeatedly searching for a suitable QR generator, I built a lightweight web tool that the team could use directly." },
+              { t: "p", text: "The goal was to keep the workflow simple:" },
+              { t: "flow", items: ["Choose destination", "Customize", "Generate", "Download", "Use"] },
+              { t: "sub", text: "The tool supported QR codes for multiple destinations" },
+              { t: "list", items: [
+                "Website links",
+                "Phone numbers",
+                "WhatsApp",
+                "Other custom links"
+              ] },
+              { t: "sub", text: "Users could also customize the QR code by" },
+              { t: "list", items: [
+                "Adding a logo",
+                "Changing colors",
+                "Adjusting the QR size",
+                "Generating larger versions suitable for printing and campaign materials"
+              ] },
+              { t: "p", text: "I built the tool using React, HTML, and JavaScript, focusing on a simple interface that didn’t require the team to learn another complicated platform." },
+              { t: "note", text: "Once generated, the QR code directly represented its destination. It wasn’t designed as a dynamic QR management system where the destination could later be changed." }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "From repeated searching to a reusable internal tool",
+            blocks: [
+              { t: "p", text: "The result was a simple utility that Moodale employees could use whenever a campaign or client requirement needed a customized QR code." },
+              { t: "metrics", items: [
+                { n: "Multiple formats", l: "links, phone numbers, WhatsApp and more" },
+                { n: "Customizable", l: "logos, colors and size" },
+                { n: "Reusable", l: "built for repeated internal use" }
+              ] },
+              { t: "p", text: "The project wasn’t intended to reinvent QR technology. It was built to remove a small, recurring point of friction from an existing workflow." }
+            ]
+          }
+        ],
+        reflection: "Not every useful product needs to solve a massive problem. Sometimes removing one small, repeated inconvenience is enough to create real value."
       },
       "irish-green": {
         category: "STRATEGY", title: "Irish Green — Youth Footfall Growth Campaign", image: P + "irishgreen.png",
