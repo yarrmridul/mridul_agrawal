@@ -12,7 +12,7 @@
 <helmet data-dc-atomics>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -24,6 +24,7 @@ body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-seri
  --hero-glow:radial-gradient(56% 60% at 4% 0%,#0891B23a,transparent 62%),radial-gradient(48% 52% at 98% 6%,#05966932,transparent 66%);
  --nav-bg:rgba(246,249,248,.78);--page-mesh:radial-gradient(42% 34% at 8% 6%,#0891B21f,transparent 60%),radial-gradient(38% 32% at 94% 4%,#0596691c,transparent 62%);
  --page-tex:radial-gradient(rgba(8,145,178,.9) .8px,transparent .8px);--tex-op:.05;--tex-size:22px 22px;
+ --quote-bg:linear-gradient(135deg,#0891B20f,#0596690b);
 }
 [data-theme="space"]{
  --bg:#0A0F0F;--bg-2:#0E1514;--panel:#141C1B;--panel-2:#101817;--text:#EAF2F0;--muted:#9BABA9;--faint:#5E706E;--border:#243230;
@@ -32,21 +33,95 @@ body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-seri
  --hero-glow:radial-gradient(56% 60% at 4% 0%,#0891B23a,transparent 64%),radial-gradient(48% 52% at 98% 6%,#05966930,transparent 68%);
  --nav-bg:rgba(10,15,15,.7);--page-mesh:radial-gradient(44% 36% at 8% 6%,#22D3EE17,transparent 62%),radial-gradient(40% 34% at 94% 4%,#34D39914,transparent 64%);
  --page-tex:radial-gradient(rgba(34,211,238,.6) .9px,transparent .9px);--tex-op:.05;--tex-size:24px 24px;
+ --quote-bg:linear-gradient(135deg,#22D3EE14,#34D3990d);
 }
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--accent-2)}
 ::selection{background:var(--accent-soft)}
 @keyframes omFadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @keyframes omPulse{0%{box-shadow:0 0 0 0 var(--accent-line)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes csProg{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* reading progress */
+.cs-prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--accent),var(--accent-2));animation:csProg linear both;animation-timeline:scroll(root block);pointer-events:none}
+
+/* layout */
+.cs-shell{max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,56px)}
+.cs-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+.cs-main{max-width:760px;min-width:0}
+.cs-rail{display:none}
+@media (min-width:1060px){
+ .cs-grid{grid-template-columns:206px minmax(0,1fr);gap:clamp(40px,5vw,72px);align-items:start}
+ .cs-rail{display:block;position:sticky;top:96px}
+ .cs-main{max-width:none}
+}
+
+/* rail */
+.cs-rail ol{list-style:none;margin:10px 0 0;padding:0;border-left:1px solid var(--border)}
+.cs-rail li{margin:0}
+.cs-rail a{display:flex;gap:9px;align-items:baseline;padding:8px 0 8px 14px;margin-left:-1px;border-left:2px solid transparent;font-size:13px;line-height:1.35;color:var(--muted);font-weight:500;transition:color .18s,border-color .18s}
+.cs-rail a:hover{color:var(--accent);border-left-color:var(--accent)}
+.cs-rail .n{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.06em}
+
+/* sections */
+.cs-sec{scroll-margin-top:92px;padding:clamp(26px,3.4vw,40px) 0}
+.cs-sec + .cs-sec{border-top:1px solid var(--border)}
+.cs-eyebrow{display:flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:10px}
+.cs-eyebrow i{font-style:normal;color:var(--faint);letter-spacing:.06em}
+.cs-h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(22px,3.2vw,31px);line-height:1.18;letter-spacing:-.015em;margin:0 0 16px}
+.cs-h3{font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:15px;letter-spacing:.01em;color:var(--text);margin:22px 0 10px}
+.cs-p{margin:0 0 15px;font-size:16px;line-height:1.78;color:var(--muted)}
+.cs-p:last-child{margin-bottom:0}
+.cs-lead{margin:0 0 16px;font-size:17.5px;line-height:1.7;color:var(--text);font-weight:500}
+
+/* lists */
+.cs-list{margin:2px 0 16px;padding:0;list-style:none;display:grid;gap:9px}
+.cs-list li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;line-height:1.65;color:var(--muted)}
+.cs-list li .dot{flex:0 0 auto;width:16px;height:2px;border-radius:2px;margin-top:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+/* quote / note */
+.cs-quote{margin:6px 0 18px;padding:18px 22px;border-radius:14px;background:var(--quote-bg);border:1px solid var(--accent-line);border-left:3px solid var(--accent)}
+.cs-quote p{margin:0;font-family:'Playfair Display',serif;font-size:clamp(17px,2.4vw,20px);line-height:1.5;color:var(--text);font-weight:600;letter-spacing:-.01em}
+.cs-note{margin:6px 0 18px;padding:16px 20px;border-radius:14px;background:var(--panel);border:1px dashed var(--accent-line)}
+.cs-note p{margin:0;font-size:16px;line-height:1.6;color:var(--text);font-weight:600}
+
+/* question pair */
+.cs-qa{display:grid;gap:12px;margin:6px 0 18px}
+@media (min-width:640px){.cs-qa{grid-template-columns:1fr 1fr}}
+.cs-qa .box{padding:16px 18px;border-radius:14px;border:1px solid var(--border);background:var(--panel);box-shadow:var(--card-shadow)}
+.cs-qa .box.hi{border-color:var(--accent-line);background:var(--quote-bg)}
+.cs-qa .lab{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:var(--faint);margin-bottom:8px}
+.cs-qa .box.hi .lab{color:var(--accent)}
+.cs-qa .txt{margin:0;font-size:15.5px;line-height:1.5;color:var(--muted);font-weight:500}
+.cs-qa .box.hi .txt{color:var(--text);font-weight:600}
+
+/* metrics */
+.cs-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:12px;margin:8px 0 18px}
+.cs-metric{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px 16px;text-align:center;box-shadow:var(--card-shadow)}
+.cs-metric:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.cs-metric .n{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(22px,3.4vw,30px);line-height:1.05;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.cs-metric .l{font-size:12.5px;color:var(--muted);margin-top:9px;line-height:1.45}
+
+/* footer nav */
+.cs-foot{display:grid;gap:12px;margin-top:8px}
+@media (min-width:700px){.cs-foot{grid-template-columns:1fr 1fr}}
+.cs-navcard{display:block;padding:16px 18px;border-radius:14px;border:1px solid var(--border);background:var(--panel);box-shadow:var(--card-shadow);transition:border-color .2s,transform .2s,box-shadow .2s}
+.cs-navcard:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--big-shadow)}
+.cs-navcard .k{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:var(--faint)}
+.cs-navcard .t{margin-top:6px;font-family:'Playfair Display',serif;font-weight:600;font-size:16px;line-height:1.3;color:var(--text)}
+.cs-navcard:hover .t{color:var(--accent)}
+.cs-navcard.r{text-align:right}
+
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
 </style>
 </helmet>
 <div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--page-mesh);transform:translateZ(0)"></div>
 <div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:var(--tex-op);background:var(--page-tex);background-size:var(--tex-size);transform:translateZ(0);backface-visibility:hidden"></div>
+<div class="cs-prog" aria-hidden="true"></div>
 
 <div style="position:relative;z-index:1">
-<nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(18px,5vw,64px);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);border-bottom:1px solid var(--border)">
+<nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(18px,5vw,56px);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);border-bottom:1px solid var(--border)">
 <a href="index.html#projects" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)">← All projects</a>
 <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:15px;letter-spacing:-.01em">Mridul Agrawal</span>
 <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font-size:16px;cursor:pointer;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
@@ -62,102 +137,135 @@ a:hover{color:var(--accent-2)}
 </sc-if>
 
 <sc-if value="{{ found }}" hint-placeholder-val="{{ true }}">
-<header style="position:relative;background:var(--hero-glow);overflow:hidden;padding:clamp(34px,6vw,64px) clamp(20px,5vw,64px) clamp(20px,3vw,30px)">
-<div style="max-width:820px;margin:0 auto;animation:omFadeUp .6s ease both">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--accent)">{{ eyebrow }}</div>
-<h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(30px,5.5vw,52px);line-height:1.1;letter-spacing:-.025em;margin:14px 0 0">{{ title }}</h1>
-<p style="font-size:clamp(15px,2.2vw,19px);line-height:1.6;color:var(--muted);margin:16px 0 0;max-width:640px">{{ tagline }}</p>
+
+<header style="position:relative;background:var(--hero-glow);overflow:hidden;padding:clamp(36px,6vw,68px) 0 clamp(28px,4vw,44px)">
+<div class="cs-shell">
+<div style="max-width:760px;animation:omFadeUp .6s ease both">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:6px 12px">{{ category }}</span>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--faint)">CASE STUDY</span>
+<sc-if value="{{ hasStatus }}" hint-placeholder-val="{{ false }}">
+<span style="display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:6px 12px"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:omPulse 2.2s infinite"></span>{{ statusNote }}</span>
+</sc-if>
+</div>
+<h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(30px,5.6vw,54px);line-height:1.08;letter-spacing:-.028em;margin:16px 0 0">{{ title }}</h1>
+<p style="font-size:clamp(16px,2.2vw,20px);line-height:1.62;color:var(--muted);margin:16px 0 0;max-width:620px">{{ tagline }}</p>
 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px">
 <sc-for list="{{ tools }}" as="t" hint-placeholder-count="4">
 <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:7px 13px">{{ t }}</span>
 </sc-for>
 </div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:24px">
 <sc-if value="{{ hasLive }}" hint-placeholder-val="{{ false }}">
-<a href="{{ liveUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:9px;margin-top:24px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:11px;box-shadow:0 12px 30px -12px var(--accent-line);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px -14px var(--accent-line)"><span style="width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:omPulse 2.2s infinite"></span>Visit live site ↗</a>
+<a href="{{ liveUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:11px;box-shadow:0 12px 30px -12px var(--accent-line);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px -14px var(--accent-line)"><span style="width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:omPulse 2.2s infinite"></span>Visit live site ↗</a>
 </sc-if>
+<a href="{{ firstHref }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:11px;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);color:var(--accent);transform:translateY(-2px)">Read the story ↓</a>
+</div>
+</div>
 </div>
 </header>
 
-<main style="max-width:820px;margin:0 auto;padding:clamp(24px,4vw,40px) clamp(20px,5vw,64px) clamp(56px,8vw,96px)">
-<div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--big-shadow);margin-bottom:clamp(32px,5vw,52px)">
-<img src="{{ image }}" alt="{{ title }}" loading="lazy" style="display:block;width:100%;height:clamp(190px,34vw,360px);object-fit:cover">
-<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.28))"></div>
+<div class="cs-shell" style="padding-bottom:clamp(56px,8vw,96px)">
+<div class="cs-grid">
+
+<aside class="cs-rail" aria-label="Sections">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--faint)">ON THIS PAGE</div>
+<ol>
+<sc-for list="{{ toc }}" as="s" hint-placeholder-count="4">
+<li><a href="{{ s.href }}"><span class="n">{{ s.num }}</span><span>{{ s.heading }}</span></a></li>
+</sc-for>
+</ol>
+</aside>
+
+<div class="cs-main">
+
+<div style="position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--big-shadow);margin-bottom:clamp(8px,1.5vw,16px)">
+<img src="{{ image }}" alt="{{ title }}" loading="lazy" style="display:block;width:100%;height:clamp(180px,32vw,340px);object-fit:cover">
+<div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 58%,rgba(0,0,0,.3))"></div>
 </div>
 
-<section style="margin-bottom:clamp(30px,4vw,44px)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE PROBLEM</div>
-<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Problem statement</h2>
-<p style="margin:0;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ problem }}</p>
-</section>
+<sc-for list="{{ sections }}" as="sec" hint-placeholder-count="4">
+<section class="cs-sec" id="{{ sec.id }}">
+<div class="cs-eyebrow"><i>{{ sec.num }}</i>◦ {{ sec.eyebrow }}</div>
+<h2 class="cs-h2">{{ sec.heading }}</h2>
 
-<section style="margin-bottom:clamp(30px,4vw,44px)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE APPROACH</div>
-<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Process &amp; tools</h2>
-<sc-if value="{{ hasProcessIntro }}" hint-placeholder-val="{{ true }}">
-<p style="margin:0 0 14px;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ processIntro }}</p>
+<sc-for list="{{ sec.blocks }}" as="b" hint-placeholder-count="2">
+
+<sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}">
+<p class="cs-p">{{ b.text }}</p>
 </sc-if>
-<sc-if value="{{ hasProcessList }}" hint-placeholder-val="{{ false }}">
-<div style="margin:4px 0 0">
-<sc-for list="{{ processList }}" as="step" hint-placeholder-count="3">
-<div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:12px"><span style="flex-shrink:0;width:16px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));margin-top:12px"></span><p style="margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)">{{ step }}</p></div>
+
+<sc-if value="{{ b.isLead }}" hint-placeholder-val="{{ false }}">
+<p class="cs-lead">{{ b.text }}</p>
+</sc-if>
+
+<sc-if value="{{ b.isSub }}" hint-placeholder-val="{{ false }}">
+<h3 class="cs-h3">{{ b.text }}</h3>
+</sc-if>
+
+<sc-if value="{{ b.isList }}" hint-placeholder-val="{{ false }}">
+<ul class="cs-list">
+<sc-for list="{{ b.items }}" as="li" hint-placeholder-count="3">
+<li><span class="dot" aria-hidden="true"></span><span>{{ li }}</span></li>
+</sc-for>
+</ul>
+</sc-if>
+
+<sc-if value="{{ b.isQuote }}" hint-placeholder-val="{{ false }}">
+<div class="cs-quote"><p>{{ b.text }}</p></div>
+</sc-if>
+
+<sc-if value="{{ b.isNote }}" hint-placeholder-val="{{ false }}">
+<div class="cs-note"><p>{{ b.text }}</p></div>
+</sc-if>
+
+<sc-if value="{{ b.isQa }}" hint-placeholder-val="{{ false }}">
+<div class="cs-qa">
+<div class="box"><div class="lab">{{ b.aLabel }}</div><p class="txt">{{ b.a }}</p></div>
+<div class="box hi"><div class="lab">{{ b.bLabel }}</div><p class="txt">{{ b.b }}</p></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ b.isMetrics }}" hint-placeholder-val="{{ false }}">
+<div class="cs-metrics">
+<sc-for list="{{ b.items }}" as="m" hint-placeholder-count="3">
+<div class="cs-metric"><div class="n">{{ m.n }}</div><div class="l">{{ m.l }}</div></div>
 </sc-for>
 </div>
 </sc-if>
-<sc-if value="{{ hasProcessOutro }}" hint-placeholder-val="{{ false }}">
-<p style="margin:14px 0 0;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ processOutro }}</p>
-</sc-if>
-</section>
 
-<sc-if value="{{ hasMetrics }}" hint-placeholder-val="{{ false }}">
-<section style="margin-bottom:clamp(30px,4vw,44px)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE RESULT</div>
-<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 16px">Outcome</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
-<sc-for list="{{ metrics }}" as="m" hint-placeholder-count="3">
-<div style="background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:14px;padding:20px;text-align:center;box-shadow:var(--card-shadow)">
-<div style="font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(26px,4vw,34px);line-height:1;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent">{{ m.n }}</div>
-<div style="font-size:12.5px;color:var(--muted);margin-top:9px;line-height:1.4">{{ m.l }}</div>
-</div>
-</sc-for>
-</div>
-</section>
-</sc-if>
-
-<sc-if value="{{ hasOutcomeText }}" hint-placeholder-val="{{ false }}">
-<section style="margin-bottom:clamp(30px,4vw,44px)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE RESULT</div>
-<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Outcome</h2>
-<p style="margin:0;font-size:15.5px;line-height:1.75;color:var(--muted)">{{ outcomeText }}</p>
-</section>
-</sc-if>
-
-<sc-if value="{{ hasBenefits }}" hint-placeholder-val="{{ false }}">
-<section style="margin-bottom:clamp(30px,4vw,44px)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ THE UPSIDE</div>
-<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,3vw,28px);letter-spacing:-.01em;margin:0 0 14px">Benefits</h2>
-<sc-for list="{{ benefits }}" as="b" hint-placeholder-count="3">
-<div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:12px"><span style="flex-shrink:0;width:16px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));margin-top:12px"></span><p style="margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)">{{ b }}</p></div>
 </sc-for>
 </section>
-</sc-if>
-
-<sc-if value="{{ hasStatus }}" hint-placeholder-val="{{ false }}">
-<div style="display:inline-flex;align-items:center;gap:9px;margin-bottom:clamp(30px,4vw,44px);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:9px 16px"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);animation:omPulse 2.2s infinite"></span>{{ statusNote }}</div>
-</sc-if>
+</sc-for>
 
 <sc-if value="{{ hasReflection }}" hint-placeholder-val="{{ false }}">
-<section style="position:relative;background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:16px;padding:clamp(22px,3vw,30px);box-shadow:var(--card-shadow);margin-bottom:clamp(30px,4vw,44px)">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--accent);margin-bottom:9px">◦ REFLECTION</div>
-<h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(19px,2.6vw,24px);letter-spacing:-.01em;margin:0 0 12px">What I learned</h2>
-<p style="margin:0;font-size:16px;line-height:1.7;color:var(--text);font-style:italic">“{{ reflection }}”</p>
+<section class="cs-sec" id="reflection" style="border-top:1px solid var(--border)">
+<div class="cs-eyebrow"><i>{{ reflectionNum }}</i>◦ REFLECTION</div>
+<h2 class="cs-h2">What I learned</h2>
+<div style="position:relative;background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:16px;padding:clamp(22px,3vw,30px);box-shadow:var(--card-shadow)">
+<div aria-hidden="true" style="position:absolute;top:6px;right:20px;font-family:'Playfair Display',serif;font-size:64px;line-height:1;color:var(--accent);opacity:.14">”</div>
+<p style="margin:0;font-size:17px;line-height:1.68;color:var(--text);font-style:italic;position:relative">“{{ reflection }}”</p>
+</div>
 </section>
 </sc-if>
 
-<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:26px;margin-top:8px">
+<div style="border-top:1px solid var(--border);padding-top:26px;margin-top:12px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:16px">
 <a href="index.html#projects" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;font-weight:600" style-hover="color:var(--accent)">← All projects</a>
-<a href="{{ nextHref }}" style="display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:11px;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);color:var(--accent);transform:translateY(-1px)">Next · {{ nextTitle }} →</a>
+<sc-if value="{{ hasLive }}" hint-placeholder-val="{{ false }}">
+<a href="{{ liveUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:14px;font-weight:600" style-hover="color:var(--accent-2)">Visit live site ↗</a>
+</sc-if>
 </div>
-</main>
+<div class="cs-foot">
+<a class="cs-navcard" href="{{ prevHref }}"><div class="k">← PREVIOUS</div><div class="t">{{ prevTitle }}</div></a>
+<a class="cs-navcard r" href="{{ nextHref }}"><div class="k">NEXT →</div><div class="t">{{ nextTitle }}</div></a>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
 </sc-if>
 </div>
 </div>
@@ -180,12 +288,89 @@ class Component extends DCLogic {
       "moodale": {
         category: "PRODUCT", title: "Moodale — Digital Marketing & Strategy Agency", image: P + "moodale.jpg",
         liveUrl: "https://www.moodale.in/",
-        tagline: "How a run of freelance gigs became a full-service agency — and my real-world MBA.",
-        tools: ["Agency leadership", "Brand strategy", "Team building", "Client delivery"],
-        problem: "I wanted to be financially independent while doing work I genuinely enjoyed.",
-        processIntro: "I never planned to build an agency — it began with small freelance projects and side gigs for local clients. Over time those pieces fit together into Moodale, a full-service digital marketing and strategy agency. I got to work with hundreds of clients and lead a talented team, turning everyday challenges into learning. It became my real-world MBA in leadership, problem-solving, and scaling ideas into systems.",
-        metrics: [{ n: "500+", l: "campaigns delivered" }, { n: "10+", l: "team led" }, { n: "5 yrs", l: "as founder" }],
-        reflection: "Moodale taught me end-to-end ownership — how to combine creativity, strategy and structure to build something meaningful from scratch."
+        tagline: "How a side hustle I started as a teenager became my first real laboratory for building teams, systems, and solutions.",
+        tools: ["Agency leadership", "Brand strategy", "Team building", "Ops automation"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "Problem statement",
+            blocks: [
+              { t: "p", text: "I always wanted to build something beyond the conventional path — not just work within an existing system, but understand how things worked and figure out how to make them work better." },
+              { t: "p", text: "That curiosity led me to freelance graphic design while I was still in school. I started by cold-calling local businesses and offering affordable design services, focusing on businesses that often couldn’t access traditional agencies." },
+              { t: "p", text: "What began as a way to earn independently gradually became a much larger question:" },
+              { t: "quote", text: "Could I turn a collection of freelance gigs into a system that could serve more clients without depending entirely on me?" }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "From freelancer to a system",
+            blocks: [
+              { t: "p", text: "Moodale started with graphic design and social media management, built around a simple idea: make creative and marketing services accessible to local businesses at a more affordable price." },
+              { t: "lead", text: "As client requirements grew, I had to grow with them." },
+              { t: "p", text: "I began bringing in interns across graphic design, social media, sales, and marketing. Suddenly, the challenge was no longer just delivering client work. I had to figure out how to:" },
+              { t: "list", items: [
+                "acquire and manage clients,",
+                "delegate work,",
+                "coordinate people who were often older than me,",
+                "track deadlines and deliverables,",
+                "handle sales and client conversations,",
+                "recruit and train new team members,",
+                "and still manage my academics and personal life."
+              ] },
+              { t: "p", text: "I was effectively learning every part of the business at once." }
+            ]
+          },
+          {
+            eyebrow: "THE INSIGHT", heading: "Scaling myself before scaling the business",
+            blocks: [
+              { t: "p", text: "One of the biggest problems was operational. As the team grew, manually assigning tasks, tracking deadlines, managing leaves, and following up on work started consuming more and more of my time." },
+              { t: "p", text: "I didn’t have the budget or bandwidth to build expensive software — so I changed the question I was asking." },
+              { t: "qa",
+                aLabel: "INSTEAD OF ASKING", a: "What fancy system can we build?",
+                bLabel: "I STARTED ASKING", b: "What is the simplest and cheapest solution that actually solves the problem?" },
+              { t: "p", text: "That led me to experiment with Google Sheets, scripts, automation, and lightweight no-code tools. Over time, I built internal systems for:" },
+              { t: "list", items: [
+                "task assignment and workflow tracking,",
+                "automated notifications,",
+                "leave management,",
+                "task submissions,",
+                "client reminders and follow-ups."
+              ] },
+              { t: "p", text: "These systems eventually became their own products and case studies within my portfolio." },
+              { t: "p", text: "The experience fundamentally changed how I approach problem-solving:" },
+              { t: "note", text: "Technology wasn’t the starting point. The problem was." },
+              { t: "p", text: "Sometimes the right answer was a full workflow or automation. Sometimes, a well-designed Google Sheet was enough." }
+            ]
+          },
+          {
+            eyebrow: "THE PIVOT", heading: "Expanding beyond creative services",
+            blocks: [
+              { t: "p", text: "By 2023, Moodale began expanding beyond its original graphic design and social media services. I started exploring and delivering:" },
+              { t: "list", items: [
+                "custom CRM systems,",
+                "Google Sheets automation,",
+                "lightweight internal tools,",
+                "and digital solutions for operational problems."
+              ] },
+              { t: "p", text: "This was a natural extension of a pattern I had already seen inside Moodale: businesses often didn’t just need more marketing — they had messy processes that could be simplified with the right system." },
+              { t: "p", text: "That shift gave me my first real exposure to thinking beyond “what service can we offer?” and toward:" },
+              { t: "note", text: "“What problem exists, and what is the most practical way to solve it?”" }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "What Moodale became",
+            blocks: [
+              { t: "lead", text: "Moodale became much more than a side hustle." },
+              { t: "p", text: "It gave me the opportunity to lead teams, work directly with clients, sell ideas, manage ambiguity, and take responsibility for problems where there was no one else to hand them to." },
+              { t: "metrics", items: [
+                { n: "5+ years", l: "building and operating" },
+                { n: "10+", l: "people led across different stages" },
+                { n: "Multiple systems", l: "built to automate internal operations" }
+              ] },
+              { t: "p", text: "Rather than relying on one fixed role, I moved between design, sales, marketing, HR, operations, client management, and automation — often within the same week." },
+              { t: "p", text: "It became my first real-world environment for learning how businesses, people, and systems interact." }
+            ]
+          }
+        ],
+        reflection: "Moodale taught me to start with the problem, work within the constraints, and build the simplest solution that creates real impact — whether that’s a team, a process, an automation, or just a Google Sheet."
       },
       "smart-crm": {
         category: "PRODUCT", title: "Moodale Smart CRM on Google Sheets", image: P + "googlesheetcrm.png",
@@ -215,7 +400,7 @@ class Component extends DCLogic {
         tools: ["Role-based access", "Workflow mgmt", "Task logs", "Leave tracking"],
         problem: "To make Moodale’s internal operations more formal, transparent and scalable, we needed to move from Google Sheets–based systems to a dedicated backend panel for structured process management.",
         processIntro: "Building a backend operations panel featuring role-based access, task logs, workflow management and leave tracking — to streamline day-to-day operations and performance monitoring.",
-        statusNote: "Status: currently in progress"
+        statusNote: "IN PROGRESS"
       },
       "qr-tool": {
         category: "PRODUCT", title: "QR Code Generator Web Tool", image: P + "mqr.jpeg",
@@ -266,6 +451,43 @@ class Component extends DCLogic {
     };
   }
 
+  /* Turn a project record into a uniform list of sections, whether it uses the
+     new `sections` schema or the older flat fields. */
+  buildSections(p) {
+    if (Array.isArray(p.sections) && p.sections.length) return p.sections;
+    const S = [];
+    if (p.problem) {
+      S.push({ eyebrow: "THE PROBLEM", heading: "Problem statement", blocks: [{ t: "p", text: p.problem }] });
+    }
+    const ap = [];
+    if (p.processIntro) ap.push({ t: "p", text: p.processIntro });
+    if ((p.processList || []).length) ap.push({ t: "list", items: p.processList });
+    if (p.processOutro) ap.push({ t: "p", text: p.processOutro });
+    if (ap.length) S.push({ eyebrow: "THE APPROACH", heading: "Process & tools", blocks: ap });
+    const rb = [];
+    if ((p.metrics || []).length) rb.push({ t: "metrics", items: p.metrics });
+    if (p.outcomeText) rb.push({ t: "p", text: p.outcomeText });
+    if (rb.length) S.push({ eyebrow: "THE RESULT", heading: "Outcome", blocks: rb });
+    if ((p.benefits || []).length) {
+      S.push({ eyebrow: "THE UPSIDE", heading: "Benefits", blocks: [{ t: "list", items: p.benefits }] });
+    }
+    return S;
+  }
+
+  decorate(sections) {
+    return sections.map((s, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      const blocks = (s.blocks || []).map((b) => ({
+        ...b,
+        isP: b.t === "p", isLead: b.t === "lead", isSub: b.t === "sub",
+        isList: b.t === "list", isQuote: b.t === "quote", isNote: b.t === "note",
+        isQa: b.t === "qa", isMetrics: b.t === "metrics",
+        items: b.items || []
+      }));
+      return { ...s, blocks, num, id: "sec-" + num };
+    });
+  }
+
   renderVals() {
     const S = this.state, isSpace = S.theme === "space";
     const P = "uploads/mridul-portfolio/public/opt/projects/";
@@ -281,23 +503,27 @@ class Component extends DCLogic {
     };
     const p = D[slug];
     if (!p) return { ...base, notFound: true, found: false };
+
     const idx = ORDER.indexOf(slug);
     const nextSlug = ORDER[(idx + 1) % ORDER.length];
+    const prevSlug = ORDER[(idx - 1 + ORDER.length) % ORDER.length];
+
+    const sections = this.decorate(this.buildSections(p));
+    const toc = sections.map((s) => ({ num: s.num, heading: s.heading, href: "#" + s.id }));
+    if (p.reflection) toc.push({ num: String(sections.length + 1).padStart(2, "0"), heading: "What I learned", href: "#reflection" });
+
     return {
       ...base, notFound: false, found: true,
-      category: p.category, eyebrow: p.category + " · CASE STUDY", title: p.title, tagline: p.tagline, image: p.image,
+      category: p.category, title: p.title, tagline: p.tagline, image: p.image,
       tools: p.tools || [],
       hasLive: !!p.liveUrl, liveUrl: p.liveUrl || "",
-      problem: p.problem,
-      hasProcessIntro: !!p.processIntro, processIntro: p.processIntro || "",
-      hasProcessList: (p.processList || []).length > 0, processList: p.processList || [],
-      hasProcessOutro: !!p.processOutro, processOutro: p.processOutro || "",
-      hasMetrics: (p.metrics || []).length > 0, metrics: p.metrics || [],
-      hasOutcomeText: !!p.outcomeText, outcomeText: p.outcomeText || "",
-      hasBenefits: (p.benefits || []).length > 0, benefits: p.benefits || [],
       hasStatus: !!p.statusNote, statusNote: p.statusNote || "",
+      sections, toc,
+      firstHref: sections.length ? "#" + sections[0].id : "#reflection",
       hasReflection: !!p.reflection, reflection: p.reflection || "",
-      nextTitle: (D[nextSlug] || {}).title || "", nextHref: "Project.dc.html?p=" + nextSlug
+      reflectionNum: String(sections.length + 1).padStart(2, "0"),
+      nextTitle: (D[nextSlug] || {}).title || "", nextHref: "Project.dc.html?p=" + nextSlug,
+      prevTitle: (D[prevSlug] || {}).title || "", prevHref: "Project.dc.html?p=" + prevSlug
     };
   }
 }
