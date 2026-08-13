@@ -131,9 +131,17 @@ a:hover{color:var(--accent-2)}
 .cs-cards .c:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 .cs-cards .t{margin:2px 0 7px;font-size:14.5px;font-weight:700;color:var(--text);line-height:1.3}
 .cs-cards .d{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
+.cs-cards .stat{margin-top:12px;padding-top:12px;border-top:1px dashed var(--accent-line)}
+.cs-cards .stat b{display:block;font-family:'Playfair Display',serif;font-weight:800;font-size:22px;line-height:1.1;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.cs-cards .stat span{display:block;margin-top:4px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+
+/* chip row */
+.cs-chips{display:flex;flex-wrap:wrap;gap:9px;margin:8px 0 18px}
+.cs-chips span{padding:9px 16px;border-radius:999px;background:var(--quote-bg);border:1px solid var(--accent-line);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.01em}
 
 /* metrics */
 .cs-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:12px;margin:8px 0 18px}
+.cs-metrics.one{grid-template-columns:minmax(170px,240px)}
 .cs-metric{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px 16px;text-align:center;box-shadow:var(--card-shadow)}
 .cs-metric:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
 .cs-metric .n{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(22px,3.4vw,30px);line-height:1.1;overflow-wrap:break-word;background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
@@ -298,13 +306,17 @@ a:hover{color:var(--accent-2)}
 <sc-if value="{{ b.isCards }}" hint-placeholder-val="{{ false }}">
 <div class="cs-cards">
 <sc-for list="{{ b.items }}" as="c" hint-placeholder-count="3">
-<div class="c"><div class="t">{{ c.title }}</div><p class="d">{{ c.text }}</p></div>
+<div class="c"><div class="t">{{ c.title }}</div><p class="d">{{ c.text }}</p><sc-if value="{{ c.hasStat }}" hint-placeholder-val="{{ false }}"><div class="stat"><b>{{ c.stat }}</b><span>{{ c.statLabel }}</span></div></sc-if></div>
 </sc-for>
 </div>
 </sc-if>
 
+<sc-if value="{{ b.isChips }}" hint-placeholder-val="{{ false }}">
+<div class="cs-chips"><sc-for list="{{ b.items }}" as="ch" hint-placeholder-count="3"><span>{{ ch }}</span></sc-for></div>
+</sc-if>
+
 <sc-if value="{{ b.isMetrics }}" hint-placeholder-val="{{ false }}">
-<div class="cs-metrics">
+<div class="{{ b.metricsCls }}">
 <sc-for list="{{ b.items }}" as="m" hint-placeholder-count="3">
 <div class="cs-metric"><div class="{{ m.cls }}">{{ m.n }}</div><div class="l">{{ m.l }}</div></div>
 </sc-for>
@@ -754,23 +766,61 @@ class Component extends DCLogic {
       },
       "irish-green": {
         category: "STRATEGY", title: "Irish Green — Youth Footfall Growth Campaign", image: P + "irishgreen.png",
-        tagline: "A gamified photo contest that doubled youth footfall — on a shoestring budget.",
-        tools: ["Campaign design", "Gamification", "Google Forms", "Social analytics"],
-        problem: "Irish Green Café wanted to grow youth footfall and create authentic, high-engagement social content — without spending heavily on professional shoots or influencer marketing.",
-        processList: [
-          "Conceptualized and launched “Click, Eat & Win”, a 14-day gamified photography contest.",
-          "Designed prize tiers — ₹5,000, ₹3,000 and ₹1,000, each bundled with a Netflix subscription.",
-          "Tuned prizes to attract nearby youth while discouraging non-local participation.",
-          "Designed all promotional creatives and managed contest entries.",
-          "Tracked participation and engagement via Google Forms and social media analytics."
+        tagline: "How a ₹9,000 gamified campaign doubled youth footfall while generating authentic content and customer data.",
+        tools: ["Campaign strategy", "Gamification", "Growth marketing", "Community engagement"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "Attracting a younger audience without a big marketing budget",
+            blocks: [
+              { t: "p", text: "Irish Green Café wanted to increase footfall among younger customers." },
+              { t: "p", text: "There was also a content problem. Professional shoots and influencer collaborations could generate polished content, but they required additional budget and often didn’t create a strong connection with the local community." },
+              { t: "p", text: "The challenge was:" },
+              { t: "quote", text: "How could we attract more young customers, create authentic social content, and increase engagement — without spending heavily on traditional marketing?" }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "Turning customers into participants",
+            blocks: [
+              { t: "p", text: "Instead of paying people to create content for the café, I designed a campaign that gave customers a reason to create and share it themselves." },
+              { t: "lead", text: "The concept was “Click, Eat & Win” — a 14-day gamified photography contest." },
+              { t: "p", text: "Customers could visit the café, capture photos or videos, and participate for a chance to win prizes. The prize structure was designed around the target audience:" },
+              { t: "chips", items: ["₹5,000", "₹3,000", "₹1,000"] },
+              { t: "p", text: "Each prize was bundled with a Netflix subscription, making the rewards more appealing to the younger demographic." },
+              { t: "p", text: "The campaign wasn’t just about offering prizes. The mechanics were designed to create a simple loop:" },
+              { t: "flow", items: ["Visit the café", "Create content", "Participate", "Share", "Generate visibility", "Attract more visitors"] },
+              { t: "sub", text: "Designing around the local audience" },
+              { t: "p", text: "A key consideration was ensuring that the campaign attracted the café’s actual target audience rather than people who were unlikely to become repeat customers. The prize structure and campaign positioning were therefore designed specifically around nearby youth and students." },
+              { t: "p", text: "I handled the campaign end-to-end, including:" },
+              { t: "list", items: [
+                "Campaign concept and mechanics",
+                "Prize structure",
+                "Promotional creatives",
+                "Contest management",
+                "Entry collection through Google Forms",
+                "Participation and engagement tracking"
+              ] }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "More than just a footfall campaign",
+            blocks: [
+              { t: "p", text: "The campaign achieved approximately:" },
+              { t: "metrics", items: [{ n: "2×", l: "increase in youth visitors" }] },
+              { t: "p", text: "Beyond footfall, the campaign created additional value that would have required separate spending through traditional marketing." }
+            ]
+          },
+          {
+            eyebrow: "THE UPSIDE", heading: "One campaign, multiple outcomes",
+            blocks: [
+              { t: "cards", items: [
+                { title: "Authentic content", text: "Participants generated photos and videos featuring the café, creating a library of real customer content — reducing the need for a separate professional shoot.", stat: "₹15–20K", statLabel: "potentially saved in production costs" },
+                { title: "Customer data", text: "Google Forms allowed the café to collect participant information, creating an audience that could potentially be used for future campaigns and remarketing." },
+                { title: "Community engagement", text: "Rather than simply advertising to customers, the campaign encouraged them to actively participate in the brand experience — strengthening local engagement and brand recall among the target audience." }
+              ] }
+            ]
+          }
         ],
-        benefits: [
-          "Collected participant data for future remarketing via Google Forms.",
-          "Generated authentic photo and video content, saving ₹15–20K in shoot costs.",
-          "Strengthened local community engagement and café brand recall."
-        ],
-        metrics: [{ n: "2×", l: "increase in youth visitors" }, { n: "High", l: "growth in organic engagement" }],
-        reflection: "Effective marketing = smart psychology, not big budgets."
+        reflection: "The best campaigns don’t always need bigger budgets — they need better incentives and a reason for people to participate."
       },
       "sales-training": {
         category: "STRATEGY", title: "Client Acquisition & Sales Engine", image: P + "acquisition-engine.jpg",
@@ -897,6 +947,8 @@ class Component extends DCLogic {
           items = items.map((x, j) => ({ num: j + 1, parts: this.runs(x) }));
         } else if (b.t === "num") {
           items = items.map((x, j) => ({ num: j + 1, title: x.title, parts: this.runs(x.text) }));
+        } else if (b.t === "cards") {
+          items = items.map((x) => ({ ...x, hasStat: !!x.stat }));
         }
         return {
           ...b,
@@ -904,7 +956,8 @@ class Component extends DCLogic {
           isList: b.t === "list", isSteps: b.t === "steps", isQuote: b.t === "quote",
           isNote: b.t === "note", isQa: b.t === "qa", isMetrics: b.t === "metrics",
           isFlow: b.t === "flow", isShot: b.t === "shot", isNum: b.t === "num",
-          isCards: b.t === "cards",
+          isCards: b.t === "cards", isChips: b.t === "chips",
+          metricsCls: "cs-metrics" + (b.t === "metrics" && items.length === 1 ? " one" : ""),
           parts: (b.t === "p" || b.t === "lead") ? this.runs(b.text) : [],
           items,
           steps: b.t === "flow" ? (b.items || []).map((label, k, a) => ({
