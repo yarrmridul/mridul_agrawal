@@ -125,6 +125,13 @@ a:hover{color:var(--accent-2)}
 .cs-flow .arw{color:var(--faint);font-size:14px;flex:0 0 auto}
 @media (max-width:520px){.cs-flow{flex-direction:column;align-items:flex-start}.cs-flow .arw{transform:rotate(90deg)}}
 
+/* outcome cards */
+.cs-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:12px;margin:8px 0 18px}
+.cs-cards .c{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:18px 17px;box-shadow:var(--card-shadow)}
+.cs-cards .c:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.cs-cards .t{margin:2px 0 7px;font-size:14.5px;font-weight:700;color:var(--text);line-height:1.3}
+.cs-cards .d{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
+
 /* metrics */
 .cs-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(152px,1fr));gap:12px;margin:8px 0 18px}
 .cs-metric{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px 16px;text-align:center;box-shadow:var(--card-shadow)}
@@ -284,6 +291,14 @@ a:hover{color:var(--accent-2)}
 <div class="cs-flow">
 <sc-for list="{{ b.steps }}" as="st" hint-placeholder-count="3">
 <div class="{{ st.cls }}"><div class="box">{{ st.label }}</div><sc-if value="{{ st.arrow }}" hint-placeholder-val="{{ false }}"><span class="arw" aria-hidden="true">→</span></sc-if></div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ b.isCards }}" hint-placeholder-val="{{ false }}">
+<div class="cs-cards">
+<sc-for list="{{ b.items }}" as="c" hint-placeholder-count="3">
+<div class="c"><div class="t">{{ c.title }}</div><p class="d">{{ c.text }}</p></div>
 </sc-for>
 </div>
 </sc-if>
@@ -758,19 +773,76 @@ class Component extends DCLogic {
         reflection: "Effective marketing = smart psychology, not big budgets."
       },
       "sales-training": {
-        category: "STRATEGY", title: "Sales & Outreach Training Program", image: P + "sales.png",
-        tagline: "A lead-scoring model + earn-while-you-learn program that scaled outreach 10×.",
-        tools: ["Lead scoring", "WhatsApp outreach", "Training program", "Team scaling"],
-        problem: "As the sole person handling sales at Moodale, I faced high lead volumes, rising drop-off rates, and too little time to personally follow up on every potential client.",
-        processIntro: "I introduced a lead-classification system to prioritize outreach:",
-        processList: [
-          "High potential — direct leads from referrals and website forms.",
-          "Medium potential — warm leads from past interactions.",
-          "Low potential — cold leads from raw data sources."
+        category: "STRATEGY", title: "Client Acquisition & Sales Engine", image: P + "acquisition-engine.jpg",
+        noCover: true,
+        tagline: "How I redesigned Moodale’s client acquisition strategy — from inefficient cold calling to targeted outreach and a scalable student-led sales model.",
+        tools: ["Growth strategy", "Lead generation", "Sales operations", "Experimentation"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "Growth was limited by a manual acquisition process",
+            blocks: [
+              { t: "p", text: "In the early stages of Moodale, most client acquisition relied on manually finding businesses through Google Maps and cold calling them." },
+              { t: "p", text: "The process had a few obvious problems:" },
+              { t: "list", items: [
+                "Low connection rates meant a large amount of time was wasted.",
+                "Many calls ended before there was meaningful interest.",
+                "Outreach was difficult to scale with a small team and limited bandwidth.",
+                "We were initially concentrated around a relatively narrow set of businesses, particularly cafes and restaurants."
+              ] },
+              { t: "p", text: "The challenge wasn’t simply “How do we get more clients?” It was:" },
+              { t: "quote", text: "How do we build a more efficient acquisition engine without significantly increasing our fixed costs?" }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "Replacing volume with better targeting",
+            blocks: [
+              { t: "p", text: "Instead of relying entirely on cold calls, I started experimenting with more targeted outreach through personalized WhatsApp and email campaigns." },
+              { t: "p", text: "Rather than treating every business as equally valuable, responses helped us identify which contacts showed potential interest. This created a simpler funnel:" },
+              { t: "flow", items: ["Find leads", "Run personalized outreach", "Identify responders", "Focus sales effort on potential leads"], key: 2 },
+              { t: "shot", src: P + "acquisition-engine.jpg", alt: "Diagram comparing the old cold-calling approach with the new acquisition engine",
+                caption: "The old funnel burned effort on unqualified cold calls; the new one qualifies first, then hands warm leads to a student sales team." },
+              { t: "p", text: "The goal was to reduce time spent chasing completely cold prospects and concentrate effort where there was already some indication of interest." },
+              { t: "p", text: "At the same time, we expanded beyond our initial focus on cafes and restaurants and explored new customer segments, including:" },
+              { t: "list", items: [
+                "Schools",
+                "Hospitals",
+                "Tuition centres",
+                "Other local businesses"
+              ] },
+              { t: "p", text: "This reduced our dependence on a single niche and opened up additional opportunities for client acquisition." }
+            ]
+          },
+          {
+            eyebrow: "THE STRATEGIC CHALLENGE", heading: "How do you scale sales when you can’t afford a traditional sales team?",
+            blocks: [
+              { t: "p", text: "As outreach increased, another problem appeared. I needed more people to handle prospecting and conversions, but hiring experienced sales professionals would add fixed salary costs that Moodale wasn’t in a position to comfortably take on." },
+              { t: "p", text: "So I looked at the problem differently." },
+              { t: "qa",
+                aLabel: "INSTEAD OF ASKING", a: "Who is the ideal salesperson?",
+                bLabel: "I ASKED", b: "Who has the tools, flexibility, and motivation to learn — and how can we design the opportunity around them?" },
+              { t: "lead", text: "That led me to college students." },
+              { t: "sub", text: "Designing a different sales model" },
+              { t: "p", text: "The model combined:" },
+              { t: "flow", items: ["Training", "Commission-based earning", "Practical experience"] },
+              { t: "note", text: "Learn sales and marketing for free — and earn while you learn." },
+              { t: "p", text: "College students were a practical fit for the model because they generally had access to laptops and digital tools, more flexibility than full-time professionals, and an interest in gaining experience alongside earning." },
+              { t: "p", text: "I recruited, trained, and managed students who could participate in outreach and client conversion. This allowed Moodale to expand its sales capacity without immediately adding significant fixed overhead." }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "A more scalable client acquisition engine",
+            blocks: [
+              { t: "p", text: "The strategy transformed client acquisition from a heavily manual process into a more structured system." },
+              { t: "cards", items: [
+                { title: "Better targeting", text: "Sales effort could be focused on prospects who had already shown potential interest." },
+                { title: "Lower fixed overhead", text: "The student-led model expanded sales capacity without requiring a conventional full-time sales team." },
+                { title: "Broader market reach", text: "Moving beyond a single customer segment diversified Moodale’s acquisition opportunities." }
+              ] },
+              { t: "p", text: "The biggest change was not one individual tactic. It was combining targeted lead generation, qualification, market expansion, and a resource-efficient sales model into a system that could evolve as the business grew." }
+            ]
+          }
         ],
-        processOutro: "I focused personally on high-potential leads while my team handled medium and low potential via WhatsApp outreach and structured follow-up campaigns. To scale further, I launched “Free Digital Marketing Training + Earn While You Learn” — run in tier-3 colleges to onboard students, train them in outreach fundamentals, and incentivize them for every successful conversion.",
-        metrics: [{ n: "10×", l: "outreach scalability" }, { n: "15+", l: "trained contributors" }, { n: "↑", l: "consistent rise in conversions" }],
-        reflection: "Scaling people is harder — and more rewarding — than scaling systems."
+        reflection: "Good strategy isn’t always about having more resources. Sometimes it’s about redesigning the problem around the resources you already have."
       }
     };
   }
@@ -832,6 +904,7 @@ class Component extends DCLogic {
           isList: b.t === "list", isSteps: b.t === "steps", isQuote: b.t === "quote",
           isNote: b.t === "note", isQa: b.t === "qa", isMetrics: b.t === "metrics",
           isFlow: b.t === "flow", isShot: b.t === "shot", isNum: b.t === "num",
+          isCards: b.t === "cards",
           parts: (b.t === "p" || b.t === "lead") ? this.runs(b.text) : [],
           items,
           steps: b.t === "flow" ? (b.items || []).map((label, k, a) => ({
