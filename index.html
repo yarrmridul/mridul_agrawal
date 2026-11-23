@@ -198,6 +198,63 @@ button{color:inherit}
 @media (max-width:640px){[data-theme="space"] .sky-hint{display:none}[data-theme="space"] .sky-ship{width:44px;height:44px;right:14px;bottom:14px}}
 @media (prefers-reduced-motion:reduce){.sky-stars,.sky-neb,.sky-comet{animation:none!important}}
 @media (max-width:640px){.hero-ring.outer{display:none}.hero-ring:not(.outer){opacity:.5!important}.hero-orbit{width:min(360px,92vw)!important;height:min(360px,92vw)!important}.sky-crescent{display:none}.sky-neb{display:none}}
+/* ===== Why me: spec sheets on a clothing rail ===== */
+.why-wrap{max-width:1120px;margin:0 auto}
+.why-head{display:grid;gap:12px 48px;align-items:end;margin-bottom:clamp(18px,3vw,30px)}
+@media (min-width:900px){.why-head{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.why-body{display:grid;gap:clamp(18px,3vw,34px);align-items:center}
+@media (min-width:900px){.why-body{grid-template-columns:minmax(0,1.55fr) minmax(280px,1fr)}}
+.why-rail{position:relative;min-width:0}
+.why-stage{position:relative;width:100%;touch-action:pan-y;user-select:none;-webkit-user-select:none;overflow-x:clip}
+.why-bar{position:absolute;left:0;right:0;pointer-events:none;z-index:0}
+.why-bar .tube{position:absolute;inset:0;border-radius:999px;background:linear-gradient(to bottom,color-mix(in oklab,var(--muted) 35%,white) 0%,#fff 18%,color-mix(in oklab,var(--muted) 70%,white) 38%,var(--muted) 62%,color-mix(in oklab,var(--muted) 55%,black) 100%);box-shadow:0 1px 0 color-mix(in oklab,var(--text) 18%,transparent)}
+.why-bar .glow{position:absolute;left:0;right:0;height:12px;border-radius:999px;background:color-mix(in oklab,var(--text) 14%,transparent);filter:blur(5px)}
+.why-bar .cap{position:absolute;top:50%;width:14px;height:26px;transform:translateY(-50%);border-radius:3px;background:linear-gradient(to right,color-mix(in oklab,var(--muted) 60%,white),var(--muted) 55%,color-mix(in oklab,var(--muted) 60%,black));box-shadow:0 3px 6px color-mix(in oklab,var(--text) 20%,transparent)}
+.why-piece{pointer-events:none;position:absolute;left:0;top:0;width:calc(var(--h,320px) * .645);height:var(--h,320px);padding:0;border:0;background:none;cursor:pointer;outline:none;border-radius:12px;-webkit-tap-highlight-color:transparent;will-change:transform}
+.why-piece:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.why-swing,.why-turn,.why-face{position:absolute;inset:0;display:block}
+.why-swing{transform-origin:50% 1.3%}
+.why-turn{transform-style:preserve-3d;transform-origin:50% 0}
+.why-face{pointer-events:none}
+.why-face svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.why-shadow{position:absolute;left:14%;right:14%;top:20%;bottom:2%;border-radius:10px;background:#000;opacity:.28;filter:blur(calc(var(--h,320px) * .03));transform-origin:50% 50%}
+.why-sheet{position:absolute;left:13%;right:13%;top:18.5%;bottom:2.4%;border-radius:7px;overflow:hidden;background:var(--panel);border:1px solid color-mix(in oklab,var(--border) 70%,var(--text) 10%);box-shadow:0 1px 0 rgba(255,255,255,.05) inset;display:flex;flex-direction:column;text-align:left}
+.why-band{position:relative;flex:0 0 auto;height:34%;padding:9% 10% 0;background:var(--col);color:#fff;overflow:hidden}
+.why-band:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.10) 0 2px,transparent 2px 9px);mix-blend-mode:overlay}
+.why-band b{display:block;font-family:'Playfair Display',serif;font-weight:800;font-size:calc(var(--h,320px) * .105);line-height:1;letter-spacing:-.02em;text-shadow:0 2px 10px rgba(0,0,0,.18)}
+.why-band small{display:block;margin-top:5%;font-family:'IBM Plex Mono',monospace;font-size:calc(var(--h,320px) * .026);letter-spacing:.18em;opacity:.9}
+.why-ink{flex:1;display:flex;flex-direction:column;gap:8%;padding:10% 10% 9%}
+.why-ink svg{position:static;width:calc(var(--h,320px) * .07);height:calc(var(--h,320px) * .07);color:var(--col)}
+.why-ink .why-h{display:block;margin:0;font-family:'Playfair Display',serif;font-weight:700;font-size:calc(var(--h,320px) * .048);line-height:1.15;letter-spacing:-.01em;color:var(--text)}
+.why-ink i{display:block;height:3px;width:46%;border-radius:2px;background:var(--col);opacity:.55;margin-top:auto}
+.why-ink em{display:block;height:3px;width:72%;border-radius:2px;background:var(--border)}
+.why-shade{position:absolute;left:13%;right:13%;top:18.5%;bottom:2.4%;border-radius:7px;background:#000;opacity:var(--shade,.25);pointer-events:none}
+.why-tag{position:absolute;left:51%;top:10.6%;transform-origin:3px 0;pointer-events:none}
+.why-tag:before{content:"";display:block;width:1px;height:calc(var(--h,320px) * .04);margin-left:6px;background:color-mix(in oklab,var(--text) 40%,transparent)}
+.why-tag span{display:block;padding:7px 6px 4px;border-radius:3px;background:var(--panel);border:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:calc(var(--h,320px) * .028);font-weight:600;line-height:1;color:var(--text);box-shadow:0 2px 6px rgba(0,0,0,.25);white-space:nowrap}
+.why-piece[aria-pressed="true"] .why-sheet{box-shadow:0 0 0 2px var(--col),0 0 34px -6px var(--col)}
+.why-cap{min-height:3.4em;margin-top:6px;text-align:center}
+.why-cap p{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(16px,1.7vw,19px);color:var(--text);transition:opacity .25s}
+.why-cap small{display:block;margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;color:var(--faint)}
+.why-dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.why-dots button{width:7px;height:7px;padding:0;border:0;border-radius:999px;background:var(--border);cursor:pointer;transition:width .3s,background .3s}
+.why-dots button[aria-current="true"]{width:22px;background:var(--accent)}
+.why-panel{position:relative;background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:clamp(22px,3vw,32px);box-shadow:var(--card-shadow);min-height:250px;overflow:hidden}
+.why-panel:before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--pcol,var(--accent))}
+.why-panel .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:var(--pcol,var(--accent))}
+.why-panel h3{margin:12px 0 0;font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(22px,2.6vw,29px);line-height:1.18;letter-spacing:-.015em;color:var(--text)}
+.why-panel p{margin:14px 0 0;font-size:16px;line-height:1.7;color:var(--muted)}
+.why-panel .nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:22px;padding-top:16px;border-top:1px dashed var(--border)}
+.why-panel .nav button{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:border-color .2s,color .2s}
+.why-panel .nav button:hover{border-color:var(--accent);color:var(--accent)}
+.why-panel .nav span{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint)}
+.why-panel .hint{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:13.5px;color:var(--faint)}
+.why-panel ol{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:6px}
+.why-panel ol button{display:flex;gap:10px;align-items:baseline;width:100%;padding:7px 10px;margin:0 -10px;border:0;border-radius:9px;background:none;color:var(--text);font:inherit;font-size:14.5px;font-weight:600;text-align:left;cursor:pointer}
+.why-panel ol button:hover{background:var(--accent-soft);color:var(--accent)}
+.why-panel ol button b{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--faint)}
+.why-in{animation:whyIn .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes whyIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 </style>
 </helmet>
 <div data-theme="{{ theme }}" style="position:relative;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif">
@@ -515,40 +572,64 @@ button{color:inherit}
 </section>
 
 <section id="why" style="padding:clamp(56px,8vw,90px) clamp(20px,5vw,64px);background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);scroll-margin-top:66px">
-<div style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:{{ aboutCols }};gap:clamp(28px,4vw,56px);align-items:start">
-<div>
-<div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+<div class="why-wrap">
+<div class="why-head">
+<div style="display:flex;align-items:center;gap:14px">
 <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--fill-fg);background:var(--fill);border:1px solid var(--fill-bd);padding:7px 12px;border-radius:9px;letter-spacing:.08em">04</span>
 <div><div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:var(--muted)">WHY ME</div><h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,4vw,38px);letter-spacing:-.02em;margin:2px 0 0">What I Bring</h2></div>
 </div>
-<p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:18px 0 0">I naturally gravitate toward messy processes, repetitive work, and inefficient systems. Whether it's a startup, an enterprise team, or my own business, I enjoy figuring out how things can work better—and then building them.</p>
+<p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0">I naturally gravitate toward messy processes, repetitive work, and inefficient systems. Whether it's a startup, an enterprise team, or my own business, I enjoy figuring out how things can work better—and then building them.</p>
 </div>
-<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px">
-<sc-for list="{{ whyCards }}" as="item" hint-placeholder-count="4">
-<div style="{{ item.cardStyle }}" style-hover="transform:translateY(-3px);box-shadow:var(--big-shadow)">
-<div style="display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:11px;background:{{ item.soft }};color:{{ item.col }};font-family:'Playfair Display',serif;font-weight:700;font-size:15px">{{ item.num }}</div>
-<h3 style="font-family:'Playfair Display',serif;font-weight:600;font-size:16.5px;line-height:1.25;margin:14px 0 8px">{{ item.title }}</h3>
-<p style="margin:0;font-size:13.5px;line-height:1.55;color:var(--muted)">{{ item.desc }}</p>
-</div>
-</sc-for>
-</div>
-</sc-if>
-<sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--faint);margin-bottom:9px">◦ the boxes I tick — tap to expand</div>
-<div style="display:flex;flex-direction:column;gap:9px">
-<sc-for list="{{ whyCards }}" as="item" hint-placeholder-count="4">
-<div style="{{ item.rowStyle }}">
-<button onClick="{{ item.onToggle }}" style="{{ item.headStyle }}">
-<svg width="21" height="21" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><circle cx="12" cy="12" r="10" fill="{{ item.soft }}" stroke="{{ item.col }}" stroke-width="1.5"></circle><path d="M8 12.4l2.6 2.6 5-6" stroke="{{ item.col }}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-<span style="flex:1;text-align:left;font-family:'Playfair Display',serif;font-weight:600;font-size:14.5px;line-height:1.22">{{ item.title }}</span>
-<span style="{{ item.chevStyle }}">▾</span>
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+<defs>
+<linearGradient id="whyWood" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d9a77c"></stop><stop offset=".45" stop-color="#9a5a2e"></stop><stop offset="1" stop-color="#5e3219"></stop></linearGradient>
+<linearGradient id="whyGrain" gradientUnits="userSpaceOnUse" spreadMethod="repeat" x1="0" x2="11" y1="0" y2=".6"><stop offset="0" stop-color="#000" stop-opacity="0"></stop><stop offset=".45" stop-color="#000" stop-opacity=".16"></stop><stop offset=".6" stop-color="#fff" stop-opacity=".08"></stop><stop offset="1" stop-color="#000" stop-opacity="0"></stop></linearGradient>
+<linearGradient id="whyChrome" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#b9b9bd"></stop><stop offset=".35" stop-color="#ffffff"></stop><stop offset=".78" stop-color="#6c6c72"></stop><stop offset="1" stop-color="#cfcfd3"></stop></linearGradient>
+</defs>
+</svg>
+<div class="why-body">
+<div class="why-rail">
+<div class="why-stage" role="group" aria-label="What I bring: five qualities on a rail">
+<div class="why-bar" aria-hidden="true"><div class="glow"></div><div class="tube"></div><div class="cap" style="left:6px"></div><div class="cap" style="right:6px"></div></div>
+<sc-for list="{{ whyItems }}" as="item" hint-placeholder-count="5">
+<button type="button" class="why-piece" data-i="{{ item.idx }}" data-title="{{ item.title }}" aria-label="{{ item.title }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.onSelect }}" style="{{ item.vars }}">
+<span class="why-swing">
+<span class="why-turn">
+<span class="why-shadow"></span>
+<span class="why-face"><svg viewBox="0 0 200 310" preserveAspectRatio="xMidYMin meet" aria-hidden="true"><path d="M100,40 L100,-0.4 C100,-3.4 102.2,-4.2 103.9,-2.8 C104.9,-2 105.4,-1.2 105.6,-0.2" fill="none" stroke="#000" stroke-opacity=".3" stroke-width="3.4" stroke-linecap="round" transform="translate(.9 1.1)"></path><path d="M100,40 L100,-0.4 C100,-3.4 102.2,-4.2 103.9,-2.8 C104.9,-2 105.4,-1.2 105.6,-0.2" fill="none" stroke="url(#whyChrome)" stroke-width="2.6" stroke-linecap="round"></path><path d="M28,58 Q64,40 100,38 Q136,40 172,58" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="9.5" stroke-linecap="round" transform="translate(.6 1.6)"></path><path d="M28,58 Q64,40 100,38 Q136,40 172,58" fill="none" stroke="url(#whyWood)" stroke-width="8.5" stroke-linecap="round"></path><path d="M28,58 Q64,40 100,38 Q136,40 172,58" fill="none" stroke="url(#whyGrain)" stroke-width="8.5" stroke-linecap="round"></path><path d="M30,55.5 Q65,37.5 100,35.5 Q135,37.5 170,55.5" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.1" stroke-linecap="round"></path><rect x="95.5" y="31" width="9" height="10" rx="2" fill="url(#whyChrome)"></rect><rect x="42" y="49" width="16" height="17" rx="2.5" fill="url(#whyChrome)"></rect><rect x="142" y="49" width="16" height="17" rx="2.5" fill="url(#whyChrome)"></rect><rect x="44" y="51" width="3" height="13" rx="1" fill="#fff" fill-opacity=".55"></rect><rect x="144" y="51" width="3" height="13" rx="1" fill="#fff" fill-opacity=".55"></rect></svg></span>
+<span class="why-sheet"><span class="why-band"><b>{{ item.num }}</b><small>WHY ME</small></span><span class="why-ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ item.icon }}"></path></svg><span class="why-h">{{ item.title }}</span><i></i><em></em></span></span>
+<span class="why-shade"></span>
+</span>
+<span class="why-tag"><span>{{ item.num }}</span></span>
+</span>
 </button>
-<div style="{{ item.bodyStyle }}"><div style="min-height:0;overflow:hidden"><p style="margin:0;padding:2px 15px 14px 46px;font-size:13px;line-height:1.55;color:var(--muted)">{{ item.desc }}</p></div></div>
-</div>
 </sc-for>
 </div>
+<div class="why-cap" aria-live="polite"><p data-why-cap></p><small data-why-sub></small></div>
+</div>
+<div class="why-panel" style="{{ whyPanelStyle }}">
+<sc-if value="{{ whyHasSel }}" hint-placeholder-val="{{ false }}">
+<div class="why-in" data-why-panel>
+<div class="k">{{ whySelNum }} / 05 · WHAT I BRING</div>
+<h3>{{ whySelTitle }}</h3>
+<p>{{ whySelDesc }}</p>
+<div class="nav"><button type="button" onClick="{{ whyPrev }}">← Prev</button><span>{{ whySelNum }} of 05</span><button type="button" onClick="{{ whyNext }}">Next →</button></div>
+</div>
 </sc-if>
+<sc-if value="{{ whyNoSel }}" hint-placeholder-val="{{ true }}">
+<div class="why-in">
+<div class="k">FIVE THINGS I BRING</div>
+<h3>Pick a sheet off the rail.</h3>
+<p>Hover or tap along the rail to see each heading, then pick one to read what it means here.</p>
+<ol>
+<sc-for list="{{ whyItems }}" as="item" hint-placeholder-count="5">
+<li><button type="button" onClick="{{ item.onSelect }}"><b>{{ item.num }}</b>{{ item.title }}</button></li>
+</sc-for>
+</ol>
+</div>
+</sc-if>
+</div>
+</div>
 </div>
 </section>
 
@@ -663,7 +744,7 @@ class Component extends DCLogic {
     theme: "light",
     narrow: mm("(max-width:900px)"),
     navNarrow: mm("(max-width:1000px)"),
-    exp: -1, tab: "prd", mExp: -1, whyOpen: -1,
+    exp: -1, tab: "prd", mExp: -1, whyOpen: -1, whySel: -1,
     menuOpen: false,
     tlEgg: { i: -1, s: 0 },
     skillCat: 0
@@ -684,7 +765,16 @@ class Component extends DCLogic {
     if (!t) t = this.props.defaultTheme || "light";
     if (t !== this.state.theme) this.setState({ theme: t });
     try { window.__omSkill = (i) => { if (i !== this.state.skillCat) this.setState({ skillCat: i }); }; } catch (e) {}
+    this.startWhy(0);
   }
+
+  startWhy(tries) {
+    const root = document.getElementById("why");
+    if (!root || !root.querySelector(".why-piece")) { if (tries < 80) setTimeout(() => this.startWhy(tries + 1), 60); return; }
+    this._why = mountWhyRail(root, { selected: () => this.state.whySel, onSelect: (i) => this.setState({ whySel: i }) });
+  }
+
+  componentDidUpdate() { if (this._why) this._why.setSelected(this.state.whySel); }
 
   componentWillUnmount() {
     try { this.mq && this.mq.removeEventListener("change", this.onMq); } catch (e) {}
@@ -978,6 +1068,20 @@ class Component extends DCLogic {
       { title: "I build systems, not shortcuts", desc: "Whenever I see repetitive work, I naturally start asking, \"Can this be automated?\" That's how I ended up building CRMs, editorial workflows, enterprise automations, and internal AI tools." },
       { title: "Comfortable in chaos", desc: "Between running Moodale, managing academics, coordinating teams, and somehow keeping a social life alive, I've learned to stay calm, prioritize effectively, and enjoy the chaos." }
     ];
+    const WHY_ICONS = [
+      "M12 2.5c3 2 5 5.6 5 9.5l-2 3.5H9L7 12c0-3.9 2-7.5 5-9.5zM9 15.5l-2.2 4 3.2-1M15 15.5l2.2 4-3.2-1M12 8.6v.1",
+      "M2 9.5l10-5 10 5-10 5-10-5zM6 11.6v4.6c3.4 2.4 8.6 2.4 12 0v-4.6M22 9.5v5.5",
+      "M12 2.5l2.4 7.1 7.1 2.4-7.1 2.4-2.4 7.1-2.4-7.1L2.5 12l7.1-2.4z",
+      "M3.5 4.5h7v5h-7zM13.5 14.5h7v5h-7zM10.5 7h3.5a2 2 0 0 1 2 2v5.5M3.5 14.5h4M5.5 12.5v4",
+      "M2.5 7c2-3.5 4-3.5 6 0s4 3.5 6 0 4-3.5 6 0M2.5 12c2-3.5 4-3.5 6 0s4 3.5 6 0 4-3.5 6 0M2.5 17c2-3.5 4-3.5 6 0s4 3.5 6 0 4-3.5 6 0"
+    ];
+    const whySel = S.whySel;
+    const pickWhy = (i) => this.setState({ whySel: i });
+    const whyItems = whyRaw.map((w, i) => { const c = (i % 4) + 1; return {
+      idx: i, num: pad(i), title: w.title, desc: w.desc, icon: WHY_ICONS[i % WHY_ICONS.length],
+      pressed: i === whySel ? "true" : "false", onSelect: () => pickWhy(i), vars: { "--col": cv(c) } }; });
+    const whyCur = whySel >= 0 ? whyItems[whySel] : null;
+    const whyCount = whyItems.length;
     const whyCards = whyRaw.map((w, i) => { const c = (i % 4) + 1; const wo = i === S.whyOpen; return { ...w, num: pad(i), col: cv(c), soft: cs(c),
       cardStyle: { background: "var(--panel)", border: "1px solid var(--border)", borderTop: "3px solid " + cv(c), borderRadius: "16px", padding: "22px", boxShadow: "var(--card-shadow)", transition: "transform .25s,box-shadow .25s" },
       isOpen: wo, onToggle: () => this.setState({ whyOpen: wo ? -1 : i }),
@@ -1039,9 +1143,215 @@ class Component extends DCLogic {
       barTop, barMid, barBot,
       heroFacts, ledger, sel: selOut, hasSel, noSel, dossierStyle, accordion, projTabs, projList, projEmpty,
       tlDesk, tlRail, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
+      whyItems, whyHasSel: !!whyCur, whyNoSel: !whyCur,
+      whySelNum: whyCur ? whyCur.num : "", whySelTitle: whyCur ? whyCur.title : "", whySelDesc: whyCur ? whyCur.desc : "",
+      whyPanelStyle: { "--pcol": whyCur ? cv((whySel % 4) + 1) : "var(--accent)" },
+      whyPrev: () => pickWhy(((whySel < 0 ? 0 : whySel) - 1 + whyCount) % whyCount),
+      whyNext: () => pickWhy(((whySel < 0 ? -1 : whySel) + 1) % whyCount),
       skillTiles, skillsGridStyle, hobbies, skillRadar
     };
   }
+}
+
+// ---- Why me rail: spec sheets on hangers (physics ported from the product-rail-gallery component) ----
+function mountWhyRail(root, opts) {
+  var stage = root.querySelector(".why-stage");
+  if (!stage || stage.__rail) return stage && stage.__rail;
+  var REST = -70, PERS = 1100, GAP = 0.035, ASPECT = 200 / 310, MAXH = 360, SIDEW = 0.4;
+  var bar = root.querySelector(".why-bar");
+  var pieces = Array.prototype.slice.call(stage.querySelectorAll(".why-piece"));
+  var n = pieces.length;
+  var parts = pieces.map(function (p) {
+    return { el: p, swing: p.querySelector(".why-swing"), turn: p.querySelector(".why-turn"), shade: p.querySelector(".why-shade"), shadow: p.querySelector(".why-shadow"), tag: p.querySelector(".why-tag"), title: p.getAttribute("data-title") || "" };
+  });
+  var cap = root.querySelector("[data-why-cap]"), sub = root.querySelector("[data-why-sub]");
+  var reduced = false;
+  try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  var S = { x: [], vx: [], tx: [], turn: [], vturn: [], tturn: [], swing: [], vswing: [], tag: [], vtag: [], last: 0, raf: 0 };
+  for (var k = 0; k < n; k++) { S.x[k] = 0; S.vx[k] = 0; S.tx[k] = 0; S.turn[k] = REST; S.vturn[k] = 0; S.tturn[k] = REST; S.swing[k] = 0; S.vswing[k] = 0; S.tag[k] = 0; S.vtag[k] = 0; }
+  var H = 300, W = 0, railY = 30, hover = null, sel = opts.selected(), fresh = true, front = null;
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function ease(angle) { var e = clamp(1 - angle / REST, 0, 1); return e * e * (3 - 2 * e); }
+  function foot(angle) { return H * ASPECT * (SIDEW + (0.94 - SIDEW) * ease(angle)); }
+  function lambert(angle) { var r = angle * Math.PI / 180; return 0.66 + 0.34 * Math.max(0, Math.sin(r) * 0.42 + Math.cos(r) * 0.91); }
+
+  function measure() {
+    W = stage.clientWidth;
+    var restK = ASPECT * SIDEW + GAP, actK = ASPECT * 0.94 + GAP;
+    var fit = (W - 24) / (n * restK + (actK - restK));
+    H = Math.round(clamp(fit, 150, MAXH));
+    railY = Math.round(H * 0.07) + 10;
+    var railR = Math.max(3, Math.round(H * 0.0148 * 10) / 10);
+    stage.style.setProperty("--h", H + "px");
+    stage.style.height = Math.round(railY + H * 0.97 + H * 0.05 + 12) + "px";
+    if (bar) {
+      bar.style.top = (railY - railR) + "px"; bar.style.height = (railR * 2) + "px";
+      var glow = bar.querySelector(".glow"); if (glow) glow.style.top = (railR * 2 + 1) + "px";
+    }
+    parts.forEach(function (p) { p.el.style.top = (railY - (4 / 310) * H) + "px"; });
+  }
+
+  function targets(f) {
+    var feet = parts.map(function (_, i) { return foot(i === f ? 0 : REST) + H * GAP; });
+    var total = feet.reduce(function (a, b) { return a + b; }, 0);
+    var cur = (W - total) / 2;
+    return feet.map(function (w) { var x = cur + w / 2; cur += w; return x; });
+  }
+
+  function caption() {
+    if (!cap) return;
+    var stacked = window.innerWidth < 900, touch = false;
+    try { touch = window.matchMedia("(hover: none)").matches; } catch (e) {}
+    if (front !== null) {
+      cap.textContent = parts[front].title;
+      if (sub) sub.textContent = (front === sel ? (stacked ? "READ IT BELOW ↓" : "OPEN ON THE RIGHT →") : String(front + 1).padStart(2, "0") + " · CLICK TO READ");
+    } else {
+      cap.textContent = touch ? "Tap a sheet on the rail" : "Hover along the rail";
+      if (sub) sub.textContent = n + " THINGS I BRING · " + (touch ? "TAP" : "CLICK") + " ONE TO READ IT";
+    }
+  }
+
+  function retarget() {
+    var f = hover !== null ? hover : (sel >= 0 ? sel : null);
+    if (f !== front) {
+      if (f !== null) { impulse(f - 1, -30); impulse(f + 1, 30); }
+      if (front !== null && front !== f) { impulse(front - 1, 14); impulse(front + 1, -14); }
+      front = f;
+      caption();
+    }
+    var xs = targets(front);
+    for (var i = 0; i < n; i++) {
+      S.tx[i] = xs[i]; S.tturn[i] = i === front ? 0 : REST;
+      if (fresh || reduced) { S.x[i] = S.tx[i]; S.vx[i] = 0; S.turn[i] = S.tturn[i]; S.vturn[i] = 0; }
+    }
+    fresh = false;
+    kick();
+  }
+
+  function paint(i) {
+    var p = parts[i], w = H * ASPECT, angle = S.turn[i], e = ease(angle);
+    p.el.style.transform = "translate3d(" + (S.x[i] - w / 2).toFixed(2) + "px,0,0)";
+    p.el.style.zIndex = i === front ? 30 : 10 + i;
+    if (p.swing) p.swing.style.transform = "rotate(" + S.swing[i].toFixed(3) + "deg)";
+    if (p.turn) p.turn.style.transform = "perspective(" + PERS + "px) rotateY(" + angle.toFixed(2) + "deg)";
+    if (p.shade) p.shade.style.opacity = ((1 - lambert(angle)) * 1.15).toFixed(3);
+    if (p.shadow) p.shadow.style.transform = "translate3d(" + (w * 0.05).toFixed(1) + "px," + (H * 0.035).toFixed(1) + "px,0) scaleX(" + Math.max(0.12, Math.abs(Math.cos(angle * Math.PI / 180))).toFixed(3) + ")";
+    if (p.tag) p.tag.style.transform = "rotate(" + (-12 + S.tag[i]).toFixed(2) + "deg)";
+  }
+
+  function step(now) {
+    var dt = S.last ? Math.min(0.034, (now - S.last) / 1000) : 1 / 60;
+    S.last = now;
+    var busy = false, sub2 = 2, sdt = dt / sub2;
+    for (var k2 = 0; k2 < sub2; k2++) {
+      for (var i = 0; i < n; i++) {
+        var before = S.vx[i];
+        var ax = -130 * (S.x[i] - S.tx[i]) - 2 * Math.sqrt(130) * 0.86 * before;
+        S.vx[i] = before + ax * sdt; S.x[i] += S.vx[i] * sdt;
+        var accel = (S.vx[i] - before) / sdt;
+        var ta = -150 * (S.turn[i] - S.tturn[i]) - 2 * Math.sqrt(150) * 0.78 * S.vturn[i];
+        S.vturn[i] += ta * sdt; S.turn[i] += S.vturn[i] * sdt;
+        var sa = -24 * S.swing[i] - 2.1 * S.vswing[i] - clamp(accel, -6000, 6000) * 0.0045;
+        S.vswing[i] += sa * sdt; S.swing[i] = clamp(S.swing[i] + S.vswing[i] * sdt, -12, 12);
+        var tg = -46 * (S.tag[i] - S.swing[i] * 0.6) - 3.4 * S.vtag[i] - S.vswing[i] * 0.9;
+        S.vtag[i] += tg * sdt; S.tag[i] = clamp(S.tag[i] + S.vtag[i] * sdt, -30, 30);
+      }
+      for (var pass = 0; pass < 2; pass++) {
+        for (var j = 0; j < n - 1; j++) {
+          var a = S.x[j], b = S.x[j + 1];
+          var minGap = (foot(S.turn[j]) + foot(S.turn[j + 1])) / 2 + H * 0.012;
+          var over = minGap - (b - a);
+          if (over <= 0) continue;
+          S.x[j] = a - over / 2; S.x[j + 1] = b + over / 2;
+          if (S.vx[j] > S.vx[j + 1]) { var sh = (S.vx[j] + S.vx[j + 1]) / 2; S.vx[j] = sh; S.vx[j + 1] = sh; }
+        }
+      }
+      if (n) {
+        var edge = H * 0.06;
+        var first = edge + foot(S.turn[0]) / 2, last = W - edge - foot(S.turn[n - 1]) / 2;
+        if (S.x[0] < first) { S.x[0] = first; S.vx[0] = Math.abs(S.vx[0]) * 0.3; }
+        if (S.x[n - 1] > last) { S.x[n - 1] = last; S.vx[n - 1] = -Math.abs(S.vx[n - 1]) * 0.3; }
+      }
+    }
+    for (var q = 0; q < n; q++) {
+      paint(q);
+      if (Math.abs(S.vx[q]) > 0.4 || Math.abs(S.x[q] - S.tx[q]) > 0.25 || Math.abs(S.turn[q] - S.tturn[q]) > 0.05 || Math.abs(S.vturn[q]) > 0.05 || Math.abs(S.swing[q]) > 0.02 || Math.abs(S.vswing[q]) > 0.05 || Math.abs(S.tag[q]) > 0.05 || Math.abs(S.vtag[q]) > 0.08) busy = true;
+    }
+    if (busy && stage.isConnected) S.raf = requestAnimationFrame(step);
+    else { S.raf = 0; S.last = 0; }
+  }
+  function kick() {
+    if (reduced) { for (var i = 0; i < n; i++) { S.x[i] = S.tx[i]; S.turn[i] = S.tturn[i]; paint(i); } return; }
+    if (!S.raf) { S.last = 0; S.raf = requestAnimationFrame(step); }
+  }
+  function impulse(i, amount) { if (reduced || i < 0 || i >= n) return; S.vswing[i] += amount; kick(); }
+
+  function nearest(clientX) {
+    var box = stage.getBoundingClientRect(), x = clientX - box.left, best = null, dist = Infinity;
+    for (var i = 0; i < n; i++) {
+      var half = foot(S.turn[i]) / 2 + 4, d = Math.abs(x - S.x[i]);
+      if (d < half && d < dist) { best = i; dist = d; }
+    }
+    return best;
+  }
+  stage.addEventListener("pointermove", function (e) {
+    if (e.pointerType !== "mouse") return;
+    var box = stage.getBoundingClientRect();
+    if (e.clientY - box.top > railY + H + 10) return;
+    var hit = nearest(e.clientX);
+    if (hover !== null && hit !== hover && Math.abs(e.clientX - box.left - S.x[hover]) < foot(0) / 2 + 14) return;
+    stage.style.cursor = hit !== null ? "pointer" : "";
+    if (hit !== null && hit !== hover) { hover = hit; retarget(); }
+  });
+  stage.addEventListener("pointerleave", function (e) { stage.style.cursor = ""; if (e.pointerType === "mouse" && hover !== null) { hover = null; retarget(); } });
+  // taps and clicks: find the sheet under the pointer from the rail's own layout (hanger boxes overlap)
+  var down = null;
+  stage.addEventListener("pointerdown", function (e) { if (e.button === 0) down = { x: e.clientX, y: e.clientY }; });
+  stage.addEventListener("pointerup", function (e) {
+    if (!down) return;
+    var moved = Math.abs(e.clientX - down.x) > 8 || Math.abs(e.clientY - down.y) > 8;
+    down = null;
+    if (moved) return;
+    var box = stage.getBoundingClientRect();
+    if (e.clientY - box.top > railY + H + 10) return;
+    var hit = nearest(e.clientX);
+    if (hit !== null && opts.onSelect) opts.onSelect(hit);
+  });
+  pieces.forEach(function (p, i) {
+    p.addEventListener("focus", function () { if (p.matches(":focus-visible")) { hover = i; retarget(); } });
+    p.addEventListener("blur", function () { if (hover === i) { hover = null; retarget(); } });
+  });
+  stage.addEventListener("keydown", function (e) {
+    if (["ArrowRight", "ArrowLeft", "Home", "End"].indexOf(e.key) < 0) return;
+    e.preventDefault();
+    var from = hover !== null ? hover : (sel >= 0 ? sel : 0);
+    var next = e.key === "Home" ? 0 : e.key === "End" ? n - 1 : clamp(from + (e.key === "ArrowRight" ? 1 : -1), 0, n - 1);
+    pieces[next].focus({ preventScroll: true });
+    hover = next; retarget();
+  });
+
+  measure(); retarget(); for (var z = 0; z < n; z++) paint(z); caption();
+  if (window.ResizeObserver) new ResizeObserver(function () { var w = stage.clientWidth; if (Math.abs(w - W) > 0.5) { measure(); retarget(); } }).observe(stage);
+  // brush along the rail the first time it comes into view
+  var brushed = false;
+  function brush() { if (brushed) return; brushed = true; parts.forEach(function (_, i) { setTimeout(function () { impulse(i, 46 - i * 2.5); }, 120 + i * 70); }); }
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (x) { return x.isIntersecting; })) { brush(); io.disconnect(); } }, { threshold: 0.35 });
+    io.observe(stage);
+  } else brush();
+
+  var api = {
+    setSelected: function (i) {
+      if (i === sel) return;
+      sel = i;
+      if (i >= 0) impulse(i, (i % 2 ? 1 : -1) * 26);
+      retarget(); caption();
+      var panel = root.querySelector("[data-why-panel]");
+      if (panel) { panel.classList.remove("why-in"); void panel.offsetWidth; panel.classList.add("why-in"); }
+    }
+  };
+  stage.__rail = api;
+  return api;
 }
 
 function mm(q) { try { return typeof window !== "undefined" && window.matchMedia && window.matchMedia(q).matches; } catch (e) { return false; } }
