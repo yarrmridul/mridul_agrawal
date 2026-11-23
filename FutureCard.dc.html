@@ -40,6 +40,141 @@ a{text-decoration:none}
 .fc-cta:hover .fc-arrow{transform:translateX(4px)}
 .chk{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#CBD9F2;opacity:0;animation:popIn .4s ease forwards}
 .citem{opacity:0;animation:popIn .4s ease forwards}
+/* ---- Solve a Problem: the composer (adapted from mosaic-prompt-template) ---- */
+.fc-describe{--g:#57C6FF;display:flex;align-items:center;gap:13px;width:100%;max-width:320px;margin-top:22px;padding:14px 16px;border-radius:16px;border:1px solid rgba(87,198,255,.55);background:linear-gradient(135deg,rgba(87,198,255,.18),rgba(62,139,255,.10));color:#EAF1FF;cursor:pointer;font:inherit;text-align:left;box-shadow:0 0 0 0 rgba(87,198,255,.5);animation:fcPulse 2.4s infinite;transition:transform .22s,box-shadow .22s,border-color .22s}
+.fc-describe:hover{transform:translateY(-2px);border-color:#57C6FF;box-shadow:0 16px 36px -14px rgba(87,198,255,.8)}
+.fc-describe .fc-ico{background:linear-gradient(135deg,#57C6FF,#3E8BFF);color:#05060F}
+.fc-describe:hover .fc-arrow{transform:translateX(4px)}
+.sv-wrap{width:100%;max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;animation:fcFade .6s ease both}
+.sv-badge{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#34D399;background:rgba(52,211,153,.10);border:1px solid rgba(52,211,153,.35);padding:7px 14px;border-radius:999px;box-shadow:0 0 34px -10px rgba(52,211,153,.55)}
+.sv-badge i{width:7px;height:7px;border-radius:50%;background:#34D399;box-shadow:0 0 10px #34D399;animation:blink 1.6s infinite}
+.sv-h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(34px,4.6vw,56px);line-height:1.04;letter-spacing:-.03em;margin:18px 0 0;background:linear-gradient(180deg,#FFFFFF,#9FD0FF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.sv-h1 span{color:#57C6FF;-webkit-text-fill-color:#57C6FF}
+.sv-sub{font-size:15.5px;line-height:1.65;color:#B9C6E0;margin:16px auto 0;max-width:560px}
+.sv-host{width:100%;margin-top:30px;text-align:left}
+.sv-alt{margin-top:18px;font-size:12.5px;color:#7E8CB0}
+.sv-alt a{color:#9FD0FF;margin:0 4px}
+.sv-alt a:hover{color:#57C6FF}
+.sv-back{margin-top:12px;border:none;background:transparent;color:#8FA0C4;font-family:'IBM Plex Mono',monospace;font-size:10.5px;cursor:pointer}
+.sv-back:hover{color:#57C6FF}
+
+.mpt-composer{--a1:#e8f6ff;--a2:#a9dcff;--a3:#5fb2f2;--glow:rgba(95,178,242,.42);--ink:#06233a;--mx:50%;--my:0%;position:relative;width:100%;border-radius:26px;padding:22px 18px 16px 24px;color:#f5f7ff;background:rgba(16,24,52,.62);backdrop-filter:blur(26px) saturate(150%);-webkit-backdrop-filter:blur(26px) saturate(150%);box-shadow:inset 0 0 0 1px rgba(140,180,255,.16),inset 0 1px 0 rgba(255,255,255,.08),0 24px 70px rgba(0,0,0,.5);transition:box-shadow .35s ease;font-family:'Source Sans 3',system-ui,sans-serif;line-height:1.5}
+.mpt-composer:focus-within{box-shadow:inset 0 0 0 1px rgba(160,200,255,.28),inset 0 1px 0 rgba(255,255,255,.1),0 0 0 6px rgba(87,198,255,.06),0 24px 70px rgba(0,0,0,.55)}
+.mpt-composer[data-nudge="true"]{animation:mpt-nudge .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes mpt-nudge{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+:where(.mpt-composer button){font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mpt-composer :where(p,ul,ol,li){margin:0;padding:0;list-style:none}
+.mpt-composer :where(button,textarea,input,a):focus-visible{outline:2px solid var(--a2);outline-offset:3px;border-radius:8px}
+.mpt-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.mpt-sheen{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;pointer-events:none;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(255,255,255,.075),transparent 55%);opacity:.9}
+.mpt-enter{animation:mpt-in .55s cubic-bezier(.16,1,.3,1) both}
+@keyframes mpt-in{from{opacity:0;transform:translateY(12px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.mpt-field{position:relative}
+.mpt-input{display:block;width:100%;min-height:52px;max-height:200px;resize:none;border:0;outline:0;background:transparent;color:#f5f7ff;font:inherit;font-size:16px;line-height:1.55;letter-spacing:.005em;padding:0;field-sizing:content}
+.mpt-composer .mpt-input:focus-visible{outline:none}
+.mpt-ph{position:absolute;left:0;top:0;right:0;font-size:16px;line-height:1.55;color:#8590ad;pointer-events:none;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.mpt-caret{display:inline-block;width:2px;height:1.05em;margin-left:2px;vertical-align:-2px;background:var(--a2);animation:mpt-blink 1s steps(1) infinite}
+@keyframes mpt-blink{50%{opacity:0}}
+.mpt-files{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.mpt-files:empty{display:none}
+.mpt-file{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 6px 0 9px;border-radius:9px;font-size:12px;color:#c9d2e8;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);max-width:240px}
+.mpt-file span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mpt-file small{color:#7E8CB0;font-size:11px;flex:none}
+.mpt-file .mpt-picon{width:11px;height:11px;fill:var(--a2);flex:none}
+.mpt-file button{width:18px;height:18px;border-radius:6px;font-size:11px;color:#9aa3bb;display:grid;place-items:center;flex:none}
+.mpt-file button:hover{background:rgba(255,255,255,.1);color:#fff}
+.sv-contact{display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07)}
+.sv-contact input{flex:1;min-width:0;height:36px;padding:0 12px;border-radius:10px;border:0;outline:0;color:#f5f7ff;font:inherit;font-size:13.5px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transition:box-shadow .2s,background .2s}
+.sv-contact input::placeholder{color:#7d87a3}
+.mpt-composer .sv-contact input:focus-visible{outline:none}
+.sv-contact input:focus{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(169,220,255,.45)}
+.sv-contact input[data-bad="true"]{box-shadow:inset 0 0 0 1px rgba(255,140,120,.75)}
+.sv-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.mpt-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.mpt-chips{display:flex;flex-wrap:wrap;gap:6px}
+.mpt-chip{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 11px 0 9px;border-radius:10px;font-size:12.5px;font-weight:500;color:#9da5bd!important;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.04))!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);transition:color .2s,background .2s,box-shadow .2s,transform .2s}
+.mpt-chip .mpt-picon{width:12px;height:12px;fill:currentColor}
+.mpt-chip:hover{color:#d4dbec!important;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.07))!important}
+.mpt-chip[aria-checked="true"]{color:#fff!important;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.08))!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.mpt-chip[aria-checked="true"] .mpt-picon{fill:var(--a2)}
+.mpt-chip:active{transform:scale(.96)}
+.mpt-right{display:flex;align-items:center;gap:6px;flex:none}
+.mpt-model-wrap{position:relative}
+.mpt-model{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 10px!important;border-radius:10px;font-size:12.5px;color:#a3abc2!important;transition:background .2s,color .2s}
+.mpt-model:hover,.mpt-model[aria-expanded="true"]{background:rgba(255,255,255,.07)!important;color:#fff!important}
+.mpt-model .mpt-picon{width:11px;height:11px;fill:var(--a2)}
+.mpt-chev{width:9px;height:6px;transition:transform .3s}
+.mpt-model[aria-expanded="true"] .mpt-chev{transform:rotate(180deg)}
+.mpt-menu{position:absolute;right:0;bottom:calc(100% + 10px);z-index:5;min-width:236px;padding:6px;border-radius:14px;background:rgba(16,22,42,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 18px 50px rgba(0,0,0,.55);transform-origin:90% 100%;animation:mpt-pop .28s cubic-bezier(.16,1,.3,1)}
+.mpt-menu-head{padding:6px 10px 4px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#6f7a98}
+@keyframes mpt-pop{from{opacity:0;transform:translateY(6px) scale(.96)}}
+.mpt-menu-item{display:flex!important;width:100%;align-items:baseline;justify-content:space-between;gap:16px;padding:9px 10px!important;border-radius:9px;font-size:13.5px;text-align:left}
+.mpt-menu-item small{font-size:11.5px;color:#7d86a0}
+.mpt-menu-item:hover,.mpt-menu-item:focus-visible{background:rgba(255,255,255,.08)!important}
+.mpt-menu-item[aria-checked="true"] span{color:var(--a2)}
+.mpt-attach{width:34px;height:34px;border-radius:10px;display:grid!important;place-items:center;color:#a6aec4!important;transition:background .2s,color .2s}
+.mpt-attach svg{width:19px;height:19px}
+.mpt-attach:hover{color:#fff!important;background:rgba(255,255,255,.07)!important}
+.mpt-send{position:relative;width:38px;height:38px;margin-left:4px!important;border-radius:50%;display:grid!important;place-items:center;background:linear-gradient(160deg,var(--a1),var(--a2) 48%,var(--a3))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 4px 16px var(--glow);transition:transform .3s cubic-bezier(.16,1,.3,1),filter .2s,opacity .3s}
+.mpt-send .mpt-picon{width:14px;height:14px;fill:var(--ink)}
+.mpt-send[data-ready="false"]{filter:saturate(.35) brightness(.8)}
+.mpt-send[data-ready="true"]{animation:mpt-ready 2.4s ease-in-out infinite}
+@keyframes mpt-ready{50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 4px 26px var(--glow),0 0 0 6px rgba(255,255,255,.04)}}
+.mpt-send:hover{transform:scale(1.07)}
+.mpt-send:active{transform:scale(.94)}
+.sv-hint{min-height:0;font-size:12px;color:#7E8CB0;margin-top:10px}
+.sv-hint:empty{display:none}
+.sv-hint[data-bad="true"]{color:#ffb4a3}
+.mpt-build{display:flex;flex-direction:column;gap:14px;padding:2px 6px 0 0}
+.mpt-build-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.mpt-build-title{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.mpt-build-pct{font-size:13px;color:var(--a2);font-variant-numeric:tabular-nums}
+.mpt-progress{height:4px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.mpt-progress span{display:block;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--a3),var(--a1));transform-origin:0 50%;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.mpt-steps{display:grid;gap:8px}
+.mpt-step{display:flex;align-items:center;gap:10px;font-size:14px;color:#6f7790;transition:color .4s}
+.mpt-step[data-state="active"]{color:#fff}
+.mpt-step[data-state="done"]{color:#b4bccf}
+.mpt-step-mark{width:16px;height:16px;display:grid;place-items:center;flex:none}
+.mpt-step-mark .mpt-picon{width:13px;height:13px;fill:var(--a2)}
+.mpt-step-mark i{width:6px;height:6px;border-radius:1.5px;background:currentColor;opacity:.5}
+.mpt-step[data-state="active"] .mpt-step-mark i{opacity:1;background:var(--a2);box-shadow:8px 0 0 -1px var(--a2),-8px 0 0 -1px var(--a2);animation:mpt-spin 1s steps(4) infinite}
+@keyframes mpt-spin{to{transform:rotate(360deg)}}
+.mpt-ghost,.mpt-solid{display:inline-grid!important;place-items:center;height:38px;padding:0 16px!important;border-radius:11px;font-size:14px;font-weight:600;letter-spacing:-.005em;transition:background .2s,filter .2s,transform .2s}
+.mpt-ghost{background:rgba(255,255,255,.07)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.mpt-ghost:hover{background:rgba(255,255,255,.13)!important}
+.mpt-composer a.mpt-ghost{color:#f5f7ff}
+.mpt-solid{color:var(--ink)!important;background:linear-gradient(160deg,var(--a1),var(--a2) 55%,var(--a3))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 20px var(--glow)}
+.mpt-solid:hover{filter:brightness(1.06)}
+.mpt-done{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center}
+.mpt-done-copy{display:flex;flex-direction:column;gap:8px;min-width:0}
+.mpt-done-kicker{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--a2)}
+.mpt-done-kicker .mpt-picon{width:12px;height:12px;fill:currentColor}
+.mpt-done-kicker[data-bad="true"]{color:#ffcc66}
+.mpt-done-title{font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.mpt-done-prompt{font-size:13.5px;color:#a3abc2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mpt-done-note{font-size:13.5px;color:#c9d2e8}
+.mpt-done-note b{color:#fff;font-weight:600}
+.mpt-done-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.sv-mail{width:184px;border-radius:16px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 18px 40px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:8px;animation:mpt-bob 3.2s ease-in-out infinite}
+@keyframes mpt-bob{50%{transform:translateY(5px)}}
+.sv-mail-top{display:flex;align-items:center;gap:8px;font-size:11.5px;color:#c9d2e8}
+.sv-mail-top i{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(160deg,var(--a1),var(--a3));color:var(--ink);font-style:normal;font-size:12px;font-weight:700}
+.sv-mail-line{height:6px;border-radius:3px;background:rgba(255,255,255,.12)}
+.sv-mail-tag{align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:#34D399;background:rgba(52,211,153,.12);padding:3px 7px;border-radius:6px}
+@media (max-width:760px){
+ .mpt-composer{padding:18px 14px 14px 18px;border-radius:22px}
+ .mpt-tools{flex-direction:column;align-items:stretch;gap:14px}
+ .mpt-right{justify-content:flex-end}
+ .mpt-model-wrap{margin-right:auto}
+ .mpt-menu{left:0;right:auto;transform-origin:10% 100%}
+ .sv-contact{flex-direction:column}
+ .sv-contact input{flex:none;width:100%;height:38px}
+ .mpt-done{grid-template-columns:1fr}
+ .sv-mail{justify-self:center}
+}
+@media (max-width:420px){.mpt-chip{height:30px;padding:0 9px 0 8px;font-size:12px}.mpt-input,.mpt-ph{font-size:15px}}
+
 @media (max-width:900px){
  .fc-grid{display:flex;flex-direction:column;gap:28px;align-items:center;text-align:center}
  .fc-left{text-align:center}
@@ -58,10 +193,11 @@ a{text-decoration:none}
 </nav>
 
 <main style="flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(10px,2vw,26px) clamp(18px,5vw,52px) clamp(28px,5vw,52px);max-width:1320px;margin:0 auto;width:100%">
+<sc-if value="{{ notSolve }}" hint-placeholder-val="{{ true }}">
 <div class="fc-grid">
 
 <div class="fc-left">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;color:#57C6FF;animation:fcFade .6s ease both">◦ THE FUTURE CARD</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;color:#57C6FF;animation:fcFade .6s ease both">◦ SOLVE A PROBLEM</div>
 <h1 style="font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,5vw,60px);line-height:1.02;letter-spacing:-.03em;margin:14px 0 0;background:linear-gradient(180deg,#FFFFFF,#9FD0FF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:fcFade .7s ease both .05s">Your next<br>move<span style="color:#57C6FF;-webkit-text-fill-color:#57C6FF">.</span></h1>
 <p style="font-size:15.5px;line-height:1.65;color:#B9C6E0;margin:22px 0 0;animation:fcFade .7s ease both .12s">Not every great product starts with a roadmap.</p>
 <p style="font-size:15.5px;line-height:1.65;color:#B9C6E0;margin:10px 0 0;animation:fcFade .7s ease both .16s">Some start with the <span style="color:#7FE0EA;font-style:italic">right conversation.</span></p>
@@ -80,7 +216,7 @@ a{text-decoration:none}
 
 <sc-if value="{{ before }}" hint-placeholder-val="{{ true }}">
 <div style="position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px 22px">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#57C6FF">◦ FUTURE CARD</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#57C6FF">◦ SOLVE A PROBLEM</div>
 <div style="position:relative;width:118px;height:118px;margin:26px 0 22px">
 <div style="position:absolute;left:50%;top:50%;width:118px;height:118px;border-radius:50%;border:1px solid rgba(120,170,255,.35);transform:translate(-50%,-50%);animation:ring 2.6s ease-out infinite"></div>
 <div style="position:absolute;left:50%;top:50%;width:118px;height:118px;border-radius:50%;border:1px solid rgba(120,170,255,.35);transform:translate(-50%,-50%);animation:ring 2.6s ease-out infinite 1.3s"></div>
@@ -161,20 +297,10 @@ a{text-decoration:none}
 <p style="font-size:14.5px;line-height:1.62;color:#C4D0E8;margin:16px 0 0">The scan found a recurring pattern. Every role — from running Moodale to building enterprise automations at ION — started the same way: noticing something inefficient, asking <span style="color:#7FE0EA;font-style:italic">"why?"</span>, and building a better system.</p>
 <p style="font-size:14.5px;line-height:1.62;color:#B9C6E0;margin:12px 0 0">I enjoy solving problems that make work simpler, products better, and people happier.</p>
 <p style="font-size:14px;line-height:1.55;color:#7FE0EA;font-weight:600;margin:14px 0 0">Now I'd love to learn about the problems you're solving.</p>
-<div class="fc-btnrow" style="display:flex;flex-direction:column;gap:11px;margin-top:20px;max-width:300px">
-<a class="fc-cta" style="--g:#57C6FF" href="index.html#projects">
-<span class="fc-ico" style="background:rgba(87,198,255,.13);color:#57C6FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
-<span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:13.5px">See what I've built</span><span style="display:block;font-size:11px;color:#8FA0C4">Projects &amp; case studies</span></span>
-<span class="fc-arrow" style="color:#57C6FF">→</span></a>
-<a class="fc-cta" style="--g:#9B8CFF" href="resume.html" target="_blank" rel="noopener noreferrer">
-<span class="fc-ico" style="background:rgba(155,140,255,.14);color:#B7A9FF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></span>
-<span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:13.5px">Download Resume</span><span style="display:block;font-size:11px;color:#8FA0C4">One-page · PDF</span></span>
-<span class="fc-arrow" style="color:#B7A9FF">→</span></a>
-<a class="fc-cta" style="--g:#34D399" href="https://wa.me/917983738443" target="_blank" rel="noopener noreferrer">
-<span class="fc-ico" style="background:rgba(52,211,153,.14);color:#34D399"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg></span>
-<span style="flex:1;min-width:0"><span style="display:block;font-weight:600;font-size:13.5px;color:#B6F5D6">Let's start a conversation</span><span style="display:block;font-size:11px;color:#8FA0C4">Ping me on WhatsApp</span></span>
-<span class="fc-arrow" style="color:#34D399">→</span></a>
-</div>
+<button class="fc-describe" onClick="{{ openSolve }}">
+<span class="fc-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg></span>
+<span style="flex:1;min-width:0"><span style="display:block;font-weight:700;font-size:14.5px">Describe a problem</span><span style="display:block;font-size:11.5px;color:#9FB0D0">Tell me what to solve · I'll reply by email</span></span>
+<span class="fc-arrow" style="color:#57C6FF">→</span></button>
 </sc-if>
 <sc-if value="{{ waiting }}" hint-placeholder-val="{{ true }}">
 <div style="border:1px dashed rgba(120,170,255,.22);border-radius:16px;padding:24px;text-align:center;color:#6C7B9E">
@@ -185,6 +311,18 @@ a{text-decoration:none}
 </div>
 
 </div>
+</sc-if>
+
+<sc-if value="{{ solve }}" hint-placeholder-val="{{ false }}">
+<div class="sv-wrap">
+<div class="sv-badge"><i></i>{{ badge }}</div>
+<h1 class="sv-h1">Describe a problem.<br>Let's solve it<span>.</span></h1>
+<p class="sv-sub">Something slow, messy or manual? A process, a product, a website, or a role you're hiring for. Describe it below and it lands straight in my inbox.</p>
+<div id="solve-composer" class="sv-host"></div>
+<div class="sv-alt">Prefer something else?<a href="https://wa.me/917983738443" target="_blank" rel="noopener noreferrer">WhatsApp</a>·<a href="resume.html" target="_blank" rel="noopener noreferrer">Resume</a>·<a href="index.html#projects">Projects</a></div>
+<button onClick="{{ backToCard }}" class="sv-back">← back to the card</button>
+</div>
+</sc-if>
 
 <sc-if value="{{ warn }}" hint-placeholder-val="{{ false }}">
 <div style="position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;pointer-events:none;padding:20px;background:rgba(4,5,12,.35)">
@@ -250,10 +388,22 @@ class Component extends DCLogic {
     }, 78);
   }
   rescan() { this.clearAll(); this.stop(); this.setState({ step: "before", cam: "idle", pct: 0, warn: false }); }
+  openSolve() {
+    this.setState({ step: "solve", warn: false });
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch (e) {}
+    this.mountComposer(0);
+  }
+  backToCard() { this.setState({ step: "complete", warn: false }); }
+  componentDidUpdate() { if (this.state.step === "solve") this.mountComposer(0); }
+  mountComposer(tries) {
+    const el = document.getElementById("solve-composer");
+    if (el) { mountSolveComposer(el, { focus: !this.state.narrow }); return; }
+    if (tries < 40) requestAnimationFrame(() => this.mountComposer(tries + 1));
+  }
 
   renderVals() {
     const S = this.state;
-    const before = S.step === "before", face = S.step === "face", analyze = S.step === "analyze", complete = S.step === "complete";
+    const before = S.step === "before", face = S.step === "face", analyze = S.step === "analyze", complete = S.step === "complete", solve = S.step === "solve";
     const live = S.cam === "live";
     const dashOff = (314 * (1 - S.pct / 100)).toFixed(1);
     const frameColor = complete ? "#34D399" : "#57C6FF";
@@ -263,9 +413,9 @@ class Component extends DCLogic {
       style: "display:flex;gap:8px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;line-height:1.3;color:" + (on ? "#B9E8D4" : "#5a668a") + ";opacity:" + (on ? "1" : ".55") + ";transition:color .3s,opacity .3s",
       chkStyle: "flex-shrink:0;font-size:11px;color:" + (on ? "#34D399" : "#3a4560") + ";transition:color .3s" }; });
     return {
-      before, face, analyze, complete, waiting: !complete, warn: S.warn, scanMsg, scanItems,
+      before, face, analyze, complete, solve, notSolve: !solve, badge: "COMPATIBILITY CONFIRMED · " + S.score + "% MATCH", waiting: !complete, warn: S.warn, scanMsg, scanItems,
       pct: S.pct, score: S.score, dashOff, frameColor,
-      begin: () => this.begin(), rescan: () => this.rescan(), closeWarn: () => this.setState({ warn: false }),
+      begin: () => this.begin(), rescan: () => this.rescan(), openSolve: () => this.openSolve(), backToCard: () => this.backToCard(), closeWarn: () => this.setState({ warn: false }),
       cardStyle: { position: "relative", width: "min(316px,84vw)", aspectRatio: "300/440", borderRadius: "26px", overflow: "hidden", border: "1px solid " + (complete ? "rgba(52,211,153,.5)" : "rgba(120,170,255,.32)"), boxShadow: complete ? "0 44px 96px -42px rgba(0,0,0,.92),0 0 70px -20px rgba(52,211,153,.5)" : "0 44px 96px -42px rgba(0,0,0,.92),0 0 60px -22px rgba(80,160,255,.5)", background: complete ? "radial-gradient(90% 70% at 50% 30%,rgba(16,60,44,.9),#060B0A)" : "radial-gradient(84% 66% at 50% 30%,rgba(20,32,66,.85),#070A18)", transition: "border-color .6s,box-shadow .6s,background .6s" },
       camStyle: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scaleX(-1)", opacity: (face && live) ? 1 : 0, transition: "opacity .6s", zIndex: 1 },
       camTint: { position: "absolute", inset: 0, zIndex: 2, background: (face && live) ? "linear-gradient(180deg,rgba(5,8,20,.10),rgba(5,8,20,.40))" : "transparent", transition: "background .6s", pointerEvents: "none" },
@@ -274,6 +424,286 @@ class Component extends DCLogic {
     };
   }
 }
+// ---- Solve a Problem composer (plain JS, mounted into #solve-composer) ----
+function mountSolveComposer(host, opts) {
+  if (!host || host.__mounted) return;
+  host.__mounted = true;
+  opts = opts || {};
+  var KINDS = [{ label: "Product", icon: "spark" }, { label: "Automation", icon: "bolt" }, { label: "Website / CRM", icon: "window" }, { label: "Hiring", icon: "chat" }];
+  var REPLIES = [
+    { label: "Quick", small: "Reply within 24h", line: "within 24 hours" },
+    { label: "Considered", small: "Reply this week", line: "this week" },
+    { label: "Deep dive", small: "Written plan or a call", line: "with a written plan or a call" }
+  ];
+  var PROMPTS = [
+    "Our sales team tracks leads in five different spreadsheets and nobody trusts the numbers...",
+    "Onboarding a new intern takes a week of back-and-forth emails and forms...",
+    "We need a simple website and a CRM for our clinic's appointments...",
+    "I'm hiring an APM who can turn messy operations into clean products...",
+    "Our weekly report is copied by hand from three tools every Monday..."
+  ];
+  var STEPS = ["Reading your problem", "Packing attachments", "Sending to Mridul", "Delivered"];
+  var MAX_FILES = 4, MAX_BYTES = 3 * 1024 * 1024;
+  var ICONS = {
+    spark: "...#.../...#.../..###../#######/..###../...#.../...#...",
+    chat: "#######/#.....#/#.#.#.#/#.....#/#######/.##..../.#.....",
+    window: "#######/#.#.#.#/#######/#.....#/#.....#/#.....#/#######",
+    bolt: "....##./...##../..##.../.######/...##../..##.../.##....",
+    check: "......./......#/.....#./#...#../.#.#.../..#..../.......",
+    arrow: "...#.../..###../.#.#.#./#..#..#/...#.../...#.../...#...",
+    clip: "..###../.#...#./.#.#.#./.#.#.#./.#.#.#./.#...#./..###.."
+  };
+  function picon(n) {
+    var out = "";
+    (ICONS[n] || ICONS.spark).split("/").forEach(function (r, y) {
+      for (var x = 0; x < r.length; x++) if (r[x] === "#") out += '<rect x="' + (x + .08) + '" y="' + (y + .08) + '" width=".84" height=".84" rx=".12"/>';
+    });
+    return '<svg class="mpt-picon" viewBox="0 0 7 7" aria-hidden="true" focusable="false">' + out + "</svg>";
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function size(b) { return b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + " KB" : (b / 1048576).toFixed(1) + " MB"; }
+  var EMAIL_RE = /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/;
+
+  var st = { kind: 0, reply: 0, files: [], problem: "", name: "", email: "", menu: false, focused: false, typed: "", sending: false };
+  var form = document.createElement("form");
+  form.className = "mpt-composer";
+  form.noValidate = true;
+  form.setAttribute("aria-label", "Describe your problem");
+  host.appendChild(form);
+  form.addEventListener("pointermove", function (e) {
+    var r = form.getBoundingClientRect();
+    form.style.setProperty("--mx", ((e.clientX - r.left) / r.width) * 100 + "%");
+    form.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
+  });
+  function $(sel) { return form.querySelector(sel); }
+  function nudge() { form.dataset.nudge = "true"; setTimeout(function () { form.dataset.nudge = "false"; }, 500); }
+  function hint(msg, bad) { var h = $(".sv-hint"); if (!h) return; h.textContent = msg || ""; h.dataset.bad = bad ? "true" : "false"; }
+
+  // ---------- the composer ----------
+  function showIdle() {
+    form.dataset.phase = "idle";
+    form.innerHTML =
+      '<span class="mpt-sheen" aria-hidden="true"></span>' +
+      '<div class="mpt-field mpt-enter"><label for="sv-input" class="mpt-sr">Describe the problem</label>' +
+      '<textarea id="sv-input" class="mpt-input" rows="2" maxlength="5000"></textarea>' +
+      '<span class="mpt-ph" aria-hidden="true"></span></div>' +
+      '<ul class="mpt-files mpt-enter" aria-label="Attached files"></ul>' +
+      '<div class="sv-contact mpt-enter" style="animation-delay:.05s">' +
+      '<label class="mpt-sr" for="sv-name">Your name</label><input id="sv-name" type="text" maxlength="100" autocomplete="name" placeholder="Your name">' +
+      '<label class="mpt-sr" for="sv-email">Your email</label><input id="sv-email" type="email" maxlength="200" autocomplete="email" placeholder="Your email, so I can reply" required></div>' +
+      '<input class="sv-hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '<div class="mpt-tools mpt-enter" style="animation-delay:.1s">' +
+      '<div class="mpt-chips" role="radiogroup" aria-label="What kind of problem?">' +
+      KINDS.map(function (k, i) { return '<button type="button" role="radio" class="mpt-chip" data-i="' + i + '" aria-checked="' + (st.kind === i) + '">' + picon(k.icon) + "<span>" + esc(k.label) + "</span></button>"; }).join("") +
+      "</div>" +
+      '<div class="mpt-right">' +
+      '<div class="mpt-model-wrap"><button type="button" class="mpt-model" aria-haspopup="menu" aria-expanded="false" title="How soon do you need a reply?">' + picon("bolt") + '<span class="sv-reply-label"></span>' +
+      '<svg class="mpt-chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>' +
+      '<button type="button" class="mpt-attach" aria-label="Attach files (up to 3 MB)" title="Attach files (up to 3 MB)"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M13.5 6.5l-5.8 5.8a1.6 1.6 0 002.3 2.3l6-6a3.2 3.2 0 00-4.5-4.5l-6.2 6.2a4.8 4.8 0 006.8 6.8l5.3-5.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+      '<input type="file" multiple class="mpt-sr" tabindex="-1" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.txt">' +
+      '<button type="submit" class="mpt-send" aria-label="Send to Mridul" data-ready="false">' + picon("arrow") + "</button>" +
+      "</div></div>" +
+      '<div class="sv-hint" aria-live="polite"></div>';
+
+    var ta = $("#sv-input"), nm = $("#sv-name"), em = $("#sv-email");
+    ta.value = st.problem; nm.value = st.name; em.value = st.email;
+    ta.addEventListener("input", function () { st.problem = ta.value; paint(); });
+    ta.addEventListener("focus", function () { st.focused = true; paint(); });
+    ta.addEventListener("blur", function () { st.focused = false; paint(); });
+    ta.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
+    nm.addEventListener("input", function () { st.name = nm.value; });
+    em.addEventListener("input", function () { st.email = em.value; em.dataset.bad = "false"; hint(""); });
+    form.querySelectorAll(".mpt-chip").forEach(function (b) {
+      b.addEventListener("click", function () {
+        st.kind = +b.dataset.i;
+        form.querySelectorAll(".mpt-chip").forEach(function (x) { x.setAttribute("aria-checked", String(+x.dataset.i === st.kind)); });
+      });
+    });
+    $(".mpt-model").addEventListener("click", function () { st.menu ? closeMenu() : openMenu(); });
+    var fileInput = $('input[type="file"]');
+    $(".mpt-attach").addEventListener("click", function () { fileInput.click(); });
+    fileInput.addEventListener("change", function () { addFiles(Array.prototype.slice.call(fileInput.files || [])); fileInput.value = ""; });
+    form.onsubmit = function (e) { e.preventDefault(); send(); };
+    paintFiles(); paint();
+  }
+
+  function paint() {
+    var ph = $(".mpt-ph"), ta = $("#sv-input");
+    if (!ph || !ta) return;
+    var empty = !st.problem.trim();
+    ph.style.display = empty ? "" : "none";
+    if (empty) ph.innerHTML = st.focused ? "Describe the problem in a sentence or two..." : esc(st.typed) + '<i class="mpt-caret"></i>';
+    $(".mpt-send").dataset.ready = empty ? "false" : "true";
+    $(".sv-reply-label").textContent = REPLIES[st.reply].label;
+  }
+
+  function paintFiles() {
+    var ul = $(".mpt-files");
+    if (!ul) return;
+    ul.innerHTML = st.files.map(function (f, i) {
+      return '<li class="mpt-file">' + picon("clip") + "<span>" + esc(f.name) + "</span><small>" + size(f.size) + '</small><button type="button" data-i="' + i + '" aria-label="Remove ' + esc(f.name) + '">x</button></li>';
+    }).join("");
+    ul.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () { st.files.splice(+b.dataset.i, 1); paintFiles(); hint(""); });
+    });
+  }
+
+  function addFiles(list) {
+    var total = st.files.reduce(function (a, f) { return a + f.size; }, 0), skipped = false;
+    list.forEach(function (f) {
+      if (st.files.length >= MAX_FILES || total + f.size > MAX_BYTES) { skipped = true; return; }
+      st.files.push(f); total += f.size;
+    });
+    paintFiles();
+    hint(skipped ? "Up to " + MAX_FILES + " files and 3 MB in total. For bigger files, add a link in your message." : "", skipped);
+  }
+
+  // reply-time menu (like the effort picker in a chatbot)
+  function openMenu() {
+    var wrap = $(".mpt-model-wrap"), btn = $(".mpt-model");
+    if (!wrap) return;
+    st.menu = true; btn.setAttribute("aria-expanded", "true");
+    var m = document.createElement("div");
+    m.className = "mpt-menu"; m.setAttribute("role", "menu"); m.setAttribute("aria-label", "Reply time");
+    m.innerHTML = '<div class="mpt-menu-head">REPLY TIME</div>' + REPLIES.map(function (r, i) {
+      return '<button type="button" role="menuitemradio" class="mpt-menu-item" data-i="' + i + '" aria-checked="' + (st.reply === i) + '"><span>' + esc(r.label) + "</span><small>" + esc(r.small) + "</small></button>";
+    }).join("");
+    wrap.appendChild(m);
+    m.querySelectorAll(".mpt-menu-item").forEach(function (b) {
+      b.addEventListener("click", function () { st.reply = +b.dataset.i; closeMenu(); paint(); btn.focus(); });
+    });
+    m.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+      e.preventDefault();
+      var items = Array.prototype.slice.call(m.querySelectorAll(".mpt-menu-item"));
+      var at = items.indexOf(document.activeElement);
+      items[(at + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length].focus();
+    });
+    var first = m.querySelector('[aria-checked="true"]') || m.querySelector(".mpt-menu-item");
+    if (first) first.focus();
+  }
+  function closeMenu() {
+    st.menu = false;
+    var m = $(".mpt-menu"), btn = $(".mpt-model");
+    if (m) m.remove();
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  function onDown(e) { if (st.menu && !(e.target.closest && e.target.closest(".mpt-model-wrap"))) closeMenu(); }
+  function onKey(e) { if (st.menu && e.key === "Escape") { closeMenu(); var b = $(".mpt-model"); if (b) b.focus(); } }
+  document.addEventListener("pointerdown", onDown);
+  document.addEventListener("keydown", onKey);
+
+  // the placeholder types example problems out
+  var ti = 0, tn = 0, back = false, timer = 0;
+  var reduced = false;
+  try { reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  function tick() {
+    if (!host.isConnected) { document.removeEventListener("pointerdown", onDown); document.removeEventListener("keydown", onKey); return; }
+    var full = PROMPTS[ti % PROMPTS.length];
+    if (reduced) { st.typed = full; paint(); return; }
+    if (!back) {
+      tn++; st.typed = full.slice(0, tn); paint();
+      if (tn >= full.length) { back = true; timer = setTimeout(tick, 2200); return; }
+      timer = setTimeout(tick, 26 + Math.random() * 40);
+    } else {
+      tn = Math.max(0, tn - 3); st.typed = full.slice(0, tn); paint();
+      if (tn === 0) { back = false; ti++; timer = setTimeout(tick, 380); return; }
+      timer = setTimeout(tick, 14);
+    }
+  }
+  timer = setTimeout(tick, 700);
+
+  // ---------- sending ----------
+  function readFile(f) {
+    return new Promise(function (res, rej) {
+      var r = new FileReader();
+      r.onload = function () { res({ name: f.name, type: f.type || "application/octet-stream", data: String(r.result).split(",")[1] || "" }); };
+      r.onerror = function () { rej(new Error("Couldn't read " + f.name)); };
+      r.readAsDataURL(f);
+    });
+  }
+
+  function send() {
+    if (st.sending) return;
+    closeMenu();
+    var em = $("#sv-email");
+    if (!st.problem.trim()) { nudge(); hint("Describe the problem first.", true); $("#sv-input").focus(); return; }
+    if (!EMAIL_RE.test(st.email.trim())) {
+      nudge(); if (em) { em.dataset.bad = "true"; em.focus(); }
+      hint("Add your email so I can reply.", true); return;
+    }
+    var hp = $(".sv-hp");
+    var payload = {
+      name: st.name.trim(), email: st.email.trim(), problem: st.problem.trim(),
+      kind: KINDS[st.kind].label, reply: REPLIES[st.reply].label, website: hp ? hp.value : ""
+    };
+    st.sending = true;
+    showBuild(0);
+    var started = Date.now();
+    var stepT = setTimeout(function () { showBuild(1); stepT = setTimeout(function () { showBuild(2); }, 700); }, 700);
+    Promise.all(st.files.map(readFile)).then(function (files) {
+      payload.files = files;
+      return fetch(opts.endpoint || "/api/solve", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    }).then(function (r) {
+      return r.json().catch(function () { return { ok: false }; }).then(function (j) { if (!r.ok || !j.ok) throw new Error(j.error || "Something went wrong."); });
+    }).then(function () {
+      var wait = Math.max(0, 1700 - (Date.now() - started));
+      setTimeout(function () { clearTimeout(stepT); showBuild(4); setTimeout(showDone, 650); }, wait);
+    }).catch(function (err) {
+      var wait = Math.max(0, 1200 - (Date.now() - started));
+      setTimeout(function () { clearTimeout(stepT); showError(err && err.message); }, wait);
+    });
+  }
+
+  function showBuild(step) {
+    form.dataset.phase = "sending";
+    var fresh = !$(".mpt-build");
+    if (fresh) {
+      form.innerHTML = '<span class="mpt-sheen" aria-hidden="true"></span><div class="mpt-build" role="status" aria-live="polite">' +
+        '<div class="mpt-build-head mpt-enter"><span class="mpt-build-title">Sending your problem</span><span class="mpt-build-pct"></span></div>' +
+        '<div class="mpt-progress mpt-enter" aria-hidden="true"><span></span></div><ol class="mpt-steps"></ol></div>';
+    }
+    $(".mpt-build-pct").textContent = Math.round((step / STEPS.length) * 100) + "%";
+    $(".mpt-progress span").style.transform = "scaleX(" + step / STEPS.length + ")";
+    $(".mpt-steps").innerHTML = STEPS.map(function (s, i) {
+      var state = i < step ? "done" : i === step ? "active" : "todo";
+      return '<li class="mpt-step' + (fresh ? " mpt-enter" : "") + '" style="animation-delay:' + (i * .05) + 's" data-state="' + state + '"><span class="mpt-step-mark" aria-hidden="true">' + (i < step ? picon("check") : "<i></i>") + "</span><span>" + s + "</span></li>";
+    }).join("");
+  }
+
+  function showDone() {
+    st.sending = false;
+    form.dataset.phase = "done";
+    var who = st.name.trim() ? esc(st.name.trim().split(/\s+/)[0]) : "";
+    form.innerHTML = '<span class="mpt-sheen" aria-hidden="true"></span><div class="mpt-done"><div class="mpt-done-copy">' +
+      '<span class="mpt-done-kicker mpt-enter">' + picon("check") + " Sent to Mridul</span>" +
+      '<p class="mpt-done-title mpt-enter" style="animation-delay:.05s">Problem received' + (who ? ", " + who : "") + ".</p>" +
+      '<p class="mpt-done-prompt mpt-enter" style="animation-delay:.1s">&ldquo;' + esc(st.problem.trim()) + "&rdquo;</p>" +
+      '<p class="mpt-done-note mpt-enter" style="animation-delay:.15s">I&rsquo;ll reply to <b>' + esc(st.email.trim()) + "</b> " + REPLIES[st.reply].line + ".</p>" +
+      '<div class="mpt-done-actions mpt-enter" style="animation-delay:.2s"><button type="button" class="mpt-ghost sv-again">Describe another</button>' +
+      '<a class="mpt-solid" href="index.html#projects">See what I&rsquo;ve built</a></div></div>' +
+      '<div class="sv-mail mpt-enter" aria-hidden="true" style="animation-delay:.15s"><div class="sv-mail-top"><i>M</i><span>New problem &middot; ' + esc(KINDS[st.kind].label) + '</span></div>' +
+      '<div class="sv-mail-line" style="width:92%"></div><div class="sv-mail-line" style="width:78%"></div><div class="sv-mail-line" style="width:60%"></div>' +
+      '<span class="sv-mail-tag">&#10003; IN INBOX</span></div></div>';
+    $(".sv-again").addEventListener("click", function () { st.problem = ""; st.files = []; showIdle(); var t = $("#sv-input"); if (t) t.focus(); });
+  }
+
+  function showError(msg) {
+    st.sending = false;
+    form.dataset.phase = "error";
+    form.innerHTML = '<span class="mpt-sheen" aria-hidden="true"></span><div class="mpt-done"><div class="mpt-done-copy">' +
+      '<span class="mpt-done-kicker mpt-enter" data-bad="true">&#9888; Couldn&rsquo;t send</span>' +
+      '<p class="mpt-done-title mpt-enter">That didn&rsquo;t go through.</p>' +
+      '<p class="mpt-done-note mpt-enter">' + esc(msg || "Something went wrong.") + " Your message is still here, so you can try again, or reach me another way.</p>" +
+      '<div class="mpt-done-actions mpt-enter"><button type="button" class="mpt-solid sv-retry">Try again</button>' +
+      '<a class="mpt-ghost" href="index.html#contact">Other ways to reach me</a></div></div></div>';
+    $(".sv-retry").addEventListener("click", function () { showIdle(); });
+  }
+
+  showIdle();
+  if (opts.focus) setTimeout(function () { var t = $("#sv-input"); if (t) t.focus({ preventScroll: true }); }, 450);
+}
+
 function mm(q) { try { return typeof window !== "undefined" && window.matchMedia && window.matchMedia(q).matches; } catch (e) { return false; } }
 </script>
 </body>
