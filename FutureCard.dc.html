@@ -40,6 +40,22 @@ a{text-decoration:none}
 .fc-cta:hover .fc-arrow{transform:translateX(4px)}
 .chk{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#E6DACD;opacity:0;animation:popIn .4s ease forwards}
 .citem{opacity:0;animation:popIn .4s ease forwards}
+
+/* scan page backdrop, in the home page's space theme */
+.fc-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,#1B1215 0%,#140E11 55%,#1A1012 100%)}
+.fc-glow{position:absolute;inset:0;background:radial-gradient(34% 40% at 50% 46%,rgba(255,122,34,.22),transparent 70%),radial-gradient(52% 50% at 6% 0%,rgba(255,122,34,.32),transparent 70%),radial-gradient(44% 44% at 96% 8%,rgba(255,194,77,.20),transparent 70%),radial-gradient(80% 54% at 50% 118%,rgba(255,94,58,.28),transparent 72%),radial-gradient(30% 30% at 86% 80%,rgba(255,158,44,.12),transparent 70%)}
+.fc-dots{position:absolute;inset:0;opacity:.07;background:radial-gradient(rgba(255,170,110,.9) .9px,transparent .9px);background-size:26px 26px;-webkit-mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent 85%);mask-image:radial-gradient(70% 70% at 50% 45%,#000,transparent 85%)}
+.fc-stars{position:absolute;inset:0;opacity:.7;background:radial-gradient(1.3px 1.3px at 40px 60px,#fff8,transparent 60%),radial-gradient(1px 1px at 210px 140px,#ffd9b077,transparent 60%),radial-gradient(1.5px 1.5px at 330px 90px,#fff7,transparent 60%),radial-gradient(1px 1px at 120px 250px,#fff6,transparent 60%),radial-gradient(1.2px 1.2px at 280px 300px,#ffe6cc66,transparent 60%);background-size:380px 340px;animation:fcTwinkle 6s ease-in-out infinite alternate}
+@keyframes fcTwinkle{from{opacity:.45}to{opacity:.8}}
+.fc-orbits{position:absolute;left:50%;top:46%;width:0;height:0}
+.fc-orbits i{position:absolute;left:0;top:0;border-radius:50%;border:1px solid rgba(255,150,92,.10);transform:translate(-50%,-50%)}
+.fc-orbits i:nth-child(1){width:560px;height:560px;animation:fcOrbit 48s linear infinite}
+.fc-orbits i:nth-child(2){width:860px;height:860px;border-style:dashed;border-color:rgba(255,150,92,.07)}
+.fc-orbits i:nth-child(3){width:1180px;height:1180px;border-color:rgba(255,150,92,.05)}
+.fc-orbits b{position:absolute;left:50%;top:-5px;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:#FF7A22;box-shadow:0 0 14px 3px rgba(255,122,34,.55)}
+@keyframes fcOrbit{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.fc-vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(8,5,7,.55))}
+@media (max-width:900px){.fc-orbits b{display:none}.fc-orbits{top:52%}.fc-orbits i:nth-child(1){width:420px;height:420px}.fc-orbits i:nth-child(2){width:640px;height:640px}}
 /* ---- Solve a Problem view: port of mosaic-prompt-template's hero, in the main site's orange theme ---- */
 .fc-describe{--g:#FF7A22;display:flex;align-items:center;gap:13px;width:100%;max-width:320px;margin-top:22px;padding:14px 16px;border-radius:16px;border:1px solid rgba(255,122,34,.55);background:linear-gradient(135deg,rgba(255,122,34,.18),rgba(62,139,255,.10));color:#F6EFE7;cursor:pointer;font:inherit;text-align:left;box-shadow:0 0 0 0 rgba(255,122,34,.5);animation:fcPulse 2.4s infinite;transition:transform .22s,box-shadow .22s,border-color .22s}
 .fc-describe:hover{transform:translateY(-2px);border-color:#FF7A22;box-shadow:0 16px 36px -14px rgba(255,122,34,.8)}
@@ -59,11 +75,13 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 .sv-wrap{container-type:inline-size;width:100%;max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
 .sv-badge{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#FFC24D;background:rgba(255,122,34,.12);border:1px solid rgba(255,138,58,.42);padding:7px 14px;border-radius:999px;box-shadow:0 0 34px -10px rgba(255,122,34,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:fcFade .6s ease both}
 .sv-badge i{width:7px;height:7px;border-radius:50%;background:#34D399;box-shadow:0 0 10px #34D399;animation:blink 1.6s infinite}
-.sv-h1{display:flex;flex-direction:column;align-items:center;gap:calc(var(--pxs) * 2.1);margin:26px 0 0;color:#fff;filter:drop-shadow(0 4px 22px rgba(0,0,0,.55));cursor:default;min-height:calc(var(--pxs) * 19)}
+.sv-h1{position:relative;display:flex;flex-direction:column;align-items:center;gap:calc(var(--pxs) * 2.4);margin:26px 0 0;padding:calc(var(--pxs) * 3) calc(var(--pxs) * 5);color:#FFF8F0;cursor:default;min-height:calc(var(--pxs) * 19);isolation:isolate}
+.sv-h1:before{content:"";position:absolute;inset:-34% -14%;z-index:-1;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(16,11,13,.9) 0%,rgba(16,11,13,.72) 52%,rgba(16,11,13,0) 100%);pointer-events:none}
+.sv-h1 .sv-ptext{filter:drop-shadow(0 0 1.5px rgba(0,0,0,.9)) drop-shadow(0 3px 14px rgba(0,0,0,.65))}
 .sv-h1 .sv-ptext{display:block;height:auto;overflow:visible;fill:currentColor;width:min(calc(var(--pxs) * var(--w)),calc(min(100cqi - 32px,1100px) * var(--w) / var(--wmax)))}
-.sv-h1 .sv-ptext + .sv-ptext{fill:var(--a2)}
+.sv-h1 .sv-ptext + .sv-ptext{fill:#FFD39A}
 .sv-px{transition:fill .7s ease}
-.sv-px.is-lit{fill:var(--a3);transition:fill .25s ease}
+.sv-px.is-lit{fill:#FF8A3D;transition:fill .25s ease}
 .sv-h1[data-wait="true"] .sv-px{opacity:0}
 .sv-sub{font-size:15.5px;line-height:1.65;color:var(--mute);margin:22px auto 0;max-width:560px;text-shadow:0 1px 10px rgba(0,0,0,.7);animation:fcFade .7s ease both .3s}
 .sv-host{width:100%;margin-top:28px;text-align:left;perspective:1000px}
@@ -180,7 +198,7 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 .sv-mail-line{height:6px;border-radius:3px;background:rgba(255,255,255,.12)}
 .sv-mail-tag{align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;color:#34D399;background:rgba(52,211,153,.12);padding:3px 7px;border-radius:6px}
 @media (max-width:760px){
- .sv{--pxs:5px}
+ .sv{--pxs:5.4px}
  .mpt-composer{padding:18px 14px 14px 18px;border-radius:22px}
  .mpt-tools{flex-direction:column;align-items:stretch;gap:14px}
  .mpt-right{justify-content:flex-end}
@@ -203,8 +221,7 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 </style>
 </helmet>
 <div style="position:relative;min-height:100vh;background:#130E11;color:#F6EFE7;font-family:'Source Sans 3',sans-serif;overflow-x:hidden">
-<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(56% 44% at 50% -8%,rgba(255,122,34,.30),transparent 64%),radial-gradient(42% 34% at 90% 8%,rgba(255,194,77,.18),transparent 62%),radial-gradient(60% 44% at 10% 100%,rgba(255,94,58,.18),transparent 68%),radial-gradient(40% 36% at 84% 82%,rgba(255,158,44,.10),transparent 70%)"></div>
-<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background:radial-gradient(1.2px 1.2px at 40px 60px,#ffffff55,transparent 60%),radial-gradient(1px 1px at 200px 150px,#ffd8bc44,transparent 60%),radial-gradient(1.4px 1.4px at 320px 90px,#ffffff40,transparent 60%),radial-gradient(1px 1px at 130px 240px,#ffffff33,transparent 60%);background-size:360px 300px"></div>
+<div class="fc-bg" aria-hidden="true"><div class="fc-glow"></div><div class="fc-dots"></div><div class="fc-stars"></div><div class="fc-orbits"><i><b></b></i><i></i><i></i></div><div class="fc-vig"></div></div>
 
 <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column">
 <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px clamp(18px,5vw,52px);flex:0 0 auto">
@@ -452,13 +469,13 @@ function svLoadGsap(cb) {
 function svReduced() { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } }
 
 var SV_GLYPHS = {
-  D: "####./#...#/#...#/#...#/#...#/#...#/####.", L: "#..../#..../#..../#..../#..../#..../#####",
-  a: "...../...../.###./....#/.####/#...#/.####", b: "#..../#..../####./#...#/#...#/#...#/####.",
-  c: "..../..../.###/#.../#.../#.../.###", e: "...../...../.###./#...#/#####/#..../.###.",
-  i: "#/./#/#/#/#/#", l: "#./#./#./#./#./#./.#", m: "...../...../##.#./#.#.#/#.#.#/#...#/#...#",
-  o: "...../...../.###./#...#/#...#/#...#/.###.", p: "...../...../####./#...#/#...#/####./#..../#....",
-  r: "..../..../#.##/##../#.../#.../#...", s: "...../...../.####/#..../.###./....#/####.",
-  t: ".#../.#../####/.#../.#../.#../..##", v: "...../...../#...#/#...#/#...#/.#.#./..#..",
+  A: ".###./#...#/#...#/#####/#...#/#...#/#...#", B: "####./#...#/#...#/####./#...#/#...#/####.",
+  C: ".###./#...#/#..../#..../#..../#...#/.###.", D: "####./#...#/#...#/#...#/#...#/#...#/####.",
+  E: "#####/#..../#..../####./#..../#..../#####", I: "###/.#./.#./.#./.#./.#./###",
+  L: "#..../#..../#..../#..../#..../#..../#####", M: "#...#/##.##/#.#.#/#.#.#/#...#/#...#/#...#",
+  O: ".###./#...#/#...#/#...#/#...#/#...#/.###.", P: "####./#...#/#...#/####./#..../#..../#....",
+  R: "####./#...#/#...#/####./#.#../#..#./#...#", S: ".####/#..../#..../.###./....#/....#/####.",
+  T: "#####/..#../..#../..#../..#../..#../..#..", V: "#...#/#...#/#...#/#...#/#...#/.#.#./..#..",
   ".": "././././././#", "'": "#/#/././././."
 };
 function svLayout(text) {
@@ -470,13 +487,13 @@ function svLayout(text) {
     rows.forEach(function (r, y) { for (var i = 0; i < r.length; i++) if (r[i] === "#") cells.push([x + i, y]); });
     glyphs.push(cells); x += w + 1;
   }
-  return { width: Math.max(1, x - 1), height: 8, glyphs: glyphs };
+  return { width: Math.max(1, x - 1), height: 7, glyphs: glyphs };
 }
 function svPixelSvg(text, maxW) {
   var lay = svLayout(text), vw = lay.width + 1, vh = lay.height + 1, out = "";
   lay.glyphs.forEach(function (cells) {
     out += '<g class="sv-glyph">';
-    cells.forEach(function (c) { var x = c[0] + .06, y = c[1] + .06; out += '<rect class="sv-px" x="' + x + '" y="' + y + '" width=".88" height=".88" rx=".16" data-x="' + x + '" data-y="' + y + '"/>'; });
+    cells.forEach(function (c) { var x = c[0] + .03, y = c[1] + .03; out += '<rect class="sv-px" x="' + x + '" y="' + y + '" width=".94" height=".94" rx=".1" data-x="' + x + '" data-y="' + y + '"/>'; });
     out += "</g>";
   });
   return '<svg class="sv-ptext" viewBox="-0.5 -0.5 ' + vw + " " + vh + '" aria-hidden="true" focusable="false" style="--w:' + vw + ";--wmax:" + (maxW || vw) + ";aspect-ratio:" + vw + "/" + vh + '">' + out + "</svg>";
@@ -554,7 +571,7 @@ function svStartSky(sky, root) {
 }
 
 function svStartHeadline(h1, gsap) {
-  var lines = ["Describe a problem.", "Let's solve it."];
+  var lines = ["DESCRIBE A PROBLEM.", "LET'S SOLVE IT."];
   var maxW = Math.max.apply(null, lines.map(function (l) { return svLayout(l).width + 1; }));
   h1.innerHTML = '<span class="mpt-sr">Describe a problem. Let\'s solve it.</span>' + lines.map(function (l) { return svPixelSvg(l, maxW); }).join("");
   var px = Array.prototype.slice.call(h1.querySelectorAll(".sv-px"));
@@ -585,7 +602,7 @@ function svStartHeadline(h1, gsap) {
       var r = svg.getBoundingClientRect(), unit = r.width / (svg.viewBox.baseVal.width || 1);
       var ux = (last.x - r.left) / unit - 0.5, uy = (last.y - r.top) / unit - 0.5;
       pts[si].forEach(function (p) {
-        var dx = p.x + 0.44 - ux, dy = p.y + 0.44 - uy, d = Math.hypot(dx, dy);
+        var dx = p.x + 0.47 - ux, dy = p.y + 0.47 - uy, d = Math.hypot(dx, dy);
         if (d < RADIUS) {
           var push = (1 - d / RADIUS) * 1.5, nx = d ? dx / d : 0, ny = d ? dy / d : -1;
           p.off = true;
