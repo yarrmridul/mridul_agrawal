@@ -610,12 +610,93 @@ class Component extends DCLogic {
         reflection: "The best solution doesn’t always replace an existing process. Sometimes, the smarter product decision is to work around it — and create visibility exactly where it is missing."
       },
       "ops-panel": {
-        category: "PRODUCT", title: "Moodale Operations Panel", image: P + "crm.jpeg",
-        tagline: "Moving Moodale off spreadsheets onto a structured, role-based operations backend.",
-        tools: ["Role-based access", "Workflow mgmt", "Task logs", "Leave tracking"],
-        problem: "To make Moodale’s internal operations more formal, transparent and scalable, we needed to move from Google Sheets–based systems to a dedicated backend panel for structured process management.",
-        processIntro: "Building a backend operations panel featuring role-based access, task logs, workflow management and leave tracking — to streamline day-to-day operations and performance monitoring.",
-        statusNote: "IN PROGRESS"
+        category: "PRODUCT", title: "Moodale Operations Panel", image: P + "ops-panel-dashboard.jpg",
+        liveUrl: "https://portal.moodale.in/",
+        noCover: true,
+        tagline: "Moving Moodale off spreadsheets and half-built pages onto one live team portal for tasks, leave, meetings, people, documents and email.",
+        tools: ["Internal tools", "Role-based access", "Workflow automation", "Node.js", "Turso"],
+        sections: [
+          {
+            eyebrow: "THE PROBLEM", heading: "Operations were spread across sheets, chats and a portal that only looked finished",
+            blocks: [
+              { t: "p", text: "Moodale’s day-to-day operations ran on Google Sheets, WhatsApp and Google Forms. Tasks, leave requests, meetings and team records all lived in different places, which made it hard to see who was working on what." },
+              { t: "p", text: "An earlier version of the employee portal existed, but most of it was only a front end:" },
+              { t: "list", items: [
+                "Task, leave and meeting pages showed hard-coded data and saved nothing,",
+                "the admin dashboard numbers were static,",
+                "admin pages had no login check,",
+                "and passwords were stored in plain text."
+              ] },
+              { t: "lead", text: "So instead of patching it, I rebuilt the portal from scratch, using the old project only as a reference for what the team needed." }
+            ]
+          },
+          {
+            eyebrow: "THE APPROACH", heading: "One login, two dashboards",
+            blocks: [
+              { t: "p", text: "Everyone signs in on the same page and lands on the right dashboard for their role: an admin panel for running the company, and an employee portal for doing the work." },
+              { t: "shot", src: P + "ops-panel-dashboard.jpg", alt: "Moodale admin dashboard with open tasks, pending leave, upcoming meetings and announcements",
+                caption: "The admin dashboard puts everything that needs a decision in one list: leave to approve and work submitted for review, each with a one-click action." },
+              { t: "sub", text: "The admin panel covers" },
+              { t: "list", items: [
+                "People: add, edit, deactivate or remove employees, with departments and joining/leaving dates",
+                "Tasks: assign work with a client, priority and deadline, then review and mark it done",
+                "Leave: approve or reject requests, with a reason that reaches the employee",
+                "Meetings: schedule them with automatic Google Meet links and a free/busy check",
+                "Announcements, stipends, certificates and letters, email and email signatures"
+              ] },
+              { t: "flow", items: ["Admin assigns task", "To do", "In progress", "In review", "Done"], key: 3 },
+              { t: "shot", src: P + "ops-panel-tasks.jpg", alt: "Tasks list with status tabs, filters, priorities and deadlines",
+                caption: "Every task moves through the same four stages. Both sides can comment and attach files along the way." }
+            ]
+          },
+          {
+            eyebrow: "THE PRODUCT DECISION", heading: "Permissions per person, not fixed roles",
+            blocks: [
+              { t: "p", text: "A small team doesn’t fit neatly into “admin” and “employee”. A marketing lead may need to assign tasks and approve leave for two people, but nothing else." },
+              { t: "p", text: "So there are only two account types, Super Admin and Employee, and a super admin ticks extra abilities for each person:" },
+              { t: "list", items: [
+                "View their team",
+                "Assign and manage tasks",
+                "Approve leave",
+                "Post announcements",
+                "Issue certificates and LORs",
+                "Manage reporting lines"
+              ] },
+              { t: "note", text: "Team permissions only apply to people who report directly to that person. Reporting lines are set by a super admin and shown as an org chart." },
+              { t: "shot", src: P + "ops-panel-reporting.jpg", alt: "Organisation chart and reporting lines table",
+                caption: "Reporting lines decide who a manager can act on. The org chart updates as soon as a line changes." },
+              { t: "p", text: "An employee given team permissions gets extra Team tabs on their own dashboard, instead of a separate admin login." },
+              { t: "shot", src: P + "ops-panel-employee.jpg", alt: "Employee dashboard for a manager with team leave to approve, tasks, meetings and company updates",
+                caption: "A manager’s view: their own tasks and leave, plus their team’s leave and submitted work to act on." }
+            ]
+          },
+          {
+            eyebrow: "BRINGING TOOLS TOGETHER", heading: "Separate internal tools, now one place",
+            blocks: [
+              { t: "p", text: "Several tools I had built separately for Moodale were moved into the portal so the team has one place to go:" },
+              { t: "num", items: [
+                { title: "Certificates & letters", text: "The Moodale Certificate Bot now runs inside the portal: internship certificates and LORs with live PDF preview, QR verification links and one-click publishing to moodale.in." },
+                { title: "Automatic emails", text: "Welcome emails with login details, password resets, task assigned, leave decisions and meeting invites, sent from configurable Moodale addresses, with a full sent log." },
+                { title: "M Connect", text: "A talent network form that replaced an old Google Form, so former interns and new candidates stay in touch with Moodale." },
+                { title: "Stipends", text: "A monthly tracker of who is due and who has been paid, with UPI pay links, paid-confirmation emails and CSV export." },
+                { title: "Email signatures", text: "The Moodale Signature Studio, so every team member gets a matching signature." }
+              ] }
+            ]
+          },
+          {
+            eyebrow: "THE RESULT", heading: "From spreadsheets to a live, secure team portal",
+            blocks: [
+              { t: "p", text: "The portal is live at portal.moodale.in, running on an Oracle Cloud free VM with all data kept in Turso (cloud SQLite), so hosting costs nothing and nothing is lost if the server is replaced." },
+              { t: "metrics", items: [
+                { n: "2 dashboards", l: "admin and employee, behind one login" },
+                { n: "6 permissions", l: "granted per person, scoped to their team" },
+                { n: "7 emails", l: "sent automatically on everyday admin actions" }
+              ] },
+              { t: "p", text: "Security was rebuilt as well: hashed passwords, CSRF protection on every form, login rate-limiting and role checks on every admin request." }
+            ]
+          }
+        ],
+        reflection: "The first version taught me that a screen isn’t a feature until it saves something. Rebuilding the panel was less about adding pages and more about deciding who can do what, and making every action actually change the data."
       },
       "outreach-deck": {
         category: "PRODUCT", title: "Outreach Deck — Personal Outreach Automation", image: P + "outreach-contacts.png",
