@@ -16,11 +16,11 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#05060F;font-family:'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#130E11;font-family:'Source Sans 3',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{text-decoration:none}
-::selection{background:#57C6FF33}
+::selection{background:#FF7A2233}
 @keyframes fcFade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes fcPulse{0%{box-shadow:0 0 0 0 rgba(87,198,255,.55)}70%{box-shadow:0 0 0 12px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes fcPulse{0%{box-shadow:0 0 0 0 rgba(255,122,34,.55)}70%{box-shadow:0 0 0 12px transparent}100%{box-shadow:0 0 0 0 transparent}}
 @keyframes fcScan{0%{top:2%;opacity:0}12%{opacity:1}88%{opacity:1}100%{top:96%;opacity:0}}
 @keyframes ring{0%{transform:translate(-50%,-50%) scale(.55);opacity:.75}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}
 @keyframes barFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -32,30 +32,30 @@ a{text-decoration:none}
 @keyframes warnStripe{to{background-position:52px 0}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
 .fc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(286px,332px) minmax(0,1fr);gap:clamp(28px,4vw,54px);align-items:center;width:100%}
-.fc-cta{--g:#57C6FF;display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;border-radius:15px;border:1px solid rgba(120,170,255,.18);background:rgba(16,24,50,.5);color:#EAF1FF;transition:border-color .22s,transform .22s,box-shadow .22s;position:relative;overflow:hidden}
+.fc-cta{--g:#FF7A22;display:flex;align-items:center;gap:12px;width:100%;padding:11px 13px;border-radius:15px;border:1px solid rgba(255,150,92,.18);background:rgba(40,26,24,.5);color:#F6EFE7;transition:border-color .22s,transform .22s,box-shadow .22s;position:relative;overflow:hidden}
 .fc-cta:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 14px 32px -16px var(--g)}
 .fc-ico{flex:0 0 auto;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;transition:transform .22s}
 .fc-cta:hover .fc-ico{transform:scale(1.08)}
 .fc-arrow{flex:0 0 auto;font-size:16px;transition:transform .22s}
 .fc-cta:hover .fc-arrow{transform:translateX(4px)}
-.chk{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#CBD9F2;opacity:0;animation:popIn .4s ease forwards}
+.chk{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#E6DACD;opacity:0;animation:popIn .4s ease forwards}
 .citem{opacity:0;animation:popIn .4s ease forwards}
 /* ---- Solve a Problem view: port of mosaic-prompt-template's hero, in the main site's orange theme ---- */
-.fc-describe{--g:#57C6FF;display:flex;align-items:center;gap:13px;width:100%;max-width:320px;margin-top:22px;padding:14px 16px;border-radius:16px;border:1px solid rgba(87,198,255,.55);background:linear-gradient(135deg,rgba(87,198,255,.18),rgba(62,139,255,.10));color:#EAF1FF;cursor:pointer;font:inherit;text-align:left;box-shadow:0 0 0 0 rgba(87,198,255,.5);animation:fcPulse 2.4s infinite;transition:transform .22s,box-shadow .22s,border-color .22s}
-.fc-describe:hover{transform:translateY(-2px);border-color:#57C6FF;box-shadow:0 16px 36px -14px rgba(87,198,255,.8)}
-.fc-describe .fc-ico{background:linear-gradient(135deg,#57C6FF,#3E8BFF);color:#05060F}
+.fc-describe{--g:#FF7A22;display:flex;align-items:center;gap:13px;width:100%;max-width:320px;margin-top:22px;padding:14px 16px;border-radius:16px;border:1px solid rgba(255,122,34,.55);background:linear-gradient(135deg,rgba(255,122,34,.18),rgba(62,139,255,.10));color:#F6EFE7;cursor:pointer;font:inherit;text-align:left;box-shadow:0 0 0 0 rgba(255,122,34,.5);animation:fcPulse 2.4s infinite;transition:transform .22s,box-shadow .22s,border-color .22s}
+.fc-describe:hover{transform:translateY(-2px);border-color:#FF7A22;box-shadow:0 16px 36px -14px rgba(255,122,34,.8)}
+.fc-describe .fc-ico{background:linear-gradient(135deg,#FF7A22,#FFC24D);color:#130E11}
 .fc-describe:hover .fc-arrow{transform:translateX(4px)}
 
-html[data-solve="1"] body{background:#08070A}
+html[data-solve="1"] body{background:#130E11}
 html[data-solve="1"] .fc-back{color:#BDAE9F!important}
 html[data-solve="1"] .fc-back:hover{color:#FF7A22!important}
 html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 
-.sv{--a1:#FFE3C4;--a2:#FFAA5C;--a3:#FF7A22;--glow:rgba(255,122,34,.45);--ink:#2A1204;--fg:#F6EFE7;--mute:#BDAE9F;--line:rgba(255,214,180,.14);--glass:rgba(30,22,24,.58);--pxs:clamp(3.4px,min(.62vw + 1.6px,1.05svh + .9px),8.2px);position:relative;width:100%;color:var(--fg)}
-.sv-sky{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(60% 50% at 50% 55%,#2b1d17,transparent 70%),radial-gradient(80% 60% at 80% 120%,#2b1a14,transparent 70%),#08070A}
+.sv{--a1:#FFE3C4;--a2:#FFAA5C;--a3:#FF7A22;--glow:rgba(255,122,34,.45);--ink:#2A1204;--fg:#F6EFE7;--mute:#D2C4B6;--line:rgba(255,214,180,.18);--glass:rgba(54,40,40,.5);--pxs:clamp(3.4px,min(.62vw + 1.6px,1.05svh + .9px),8.2px);position:relative;width:100%;color:var(--fg)}
+.sv-sky{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(60% 50% at 50% 55%,#3a271e,transparent 70%),radial-gradient(80% 60% at 80% 120%,#3a2219,transparent 70%),#130E11}
 .sv-sky canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease;display:block}
 .sv-sky[data-sky="webgl"] canvas{opacity:1}
-.sv-grain{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,7,10,.55),transparent 18%,transparent 70%,rgba(8,7,10,.65))}
+.sv-grain{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,10,12,.35),transparent 18%,transparent 72%,rgba(14,10,12,.45))}
 .sv-wrap{container-type:inline-size;width:100%;max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
 .sv-badge{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#FFC24D;background:rgba(255,122,34,.12);border:1px solid rgba(255,138,58,.42);padding:7px 14px;border-radius:999px;box-shadow:0 0 34px -10px rgba(255,122,34,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:fcFade .6s ease both}
 .sv-badge i{width:7px;height:7px;border-radius:50%;background:#34D399;box-shadow:0 0 10px #34D399;animation:blink 1.6s infinite}
@@ -202,14 +202,14 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 }
 </style>
 </helmet>
-<div style="position:relative;min-height:100vh;background:#05060F;color:#EAF1FF;font-family:'Source Sans 3',sans-serif;overflow-x:hidden">
-<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(52% 40% at 50% -8%,rgba(96,170,255,.28),transparent 62%),radial-gradient(40% 32% at 88% 8%,rgba(150,120,255,.16),transparent 60%),radial-gradient(60% 40% at 12% 96%,rgba(52,211,153,.12),transparent 68%)"></div>
-<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background:radial-gradient(1.2px 1.2px at 40px 60px,#ffffff55,transparent 60%),radial-gradient(1px 1px at 200px 150px,#bcd8ff44,transparent 60%),radial-gradient(1.4px 1.4px at 320px 90px,#ffffff40,transparent 60%),radial-gradient(1px 1px at 130px 240px,#ffffff33,transparent 60%);background-size:360px 300px"></div>
+<div style="position:relative;min-height:100vh;background:#130E11;color:#F6EFE7;font-family:'Source Sans 3',sans-serif;overflow-x:hidden">
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(56% 44% at 50% -8%,rgba(255,122,34,.30),transparent 64%),radial-gradient(42% 34% at 90% 8%,rgba(255,194,77,.18),transparent 62%),radial-gradient(60% 44% at 10% 100%,rgba(255,94,58,.18),transparent 68%),radial-gradient(40% 36% at 84% 82%,rgba(255,158,44,.10),transparent 70%)"></div>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background:radial-gradient(1.2px 1.2px at 40px 60px,#ffffff55,transparent 60%),radial-gradient(1px 1px at 200px 150px,#ffd8bc44,transparent 60%),radial-gradient(1.4px 1.4px at 320px 90px,#ffffff40,transparent 60%),radial-gradient(1px 1px at 130px 240px,#ffffff33,transparent 60%);background-size:360px 300px"></div>
 
 <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column">
 <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px clamp(18px,5vw,52px);flex:0 0 auto">
-<a href="index.html" class="fc-back" style="display:inline-flex;align-items:center;gap:8px;color:#9FB0D0;font-size:13.5px;font-weight:600" style-hover="color:#57C6FF"><span style="font-size:16px">←</span> Back to Home</a>
-<span class="hand fc-tag" style="font-family:'Caveat',cursive;font-weight:700;font-size:20px;color:#57C6FF">let's see if we click ✦</span>
+<a href="index.html" class="fc-back" style="display:inline-flex;align-items:center;gap:8px;color:#C4B5A6;font-size:13.5px;font-weight:600" style-hover="color:#FF7A22"><span style="font-size:16px">←</span> Back to Home</a>
+<span class="hand fc-tag" style="font-family:'Caveat',cursive;font-weight:700;font-size:20px;color:#FF7A22">let's see if we click ✦</span>
 </nav>
 
 <main style="flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(10px,2vw,26px) clamp(18px,5vw,52px) clamp(28px,5vw,52px);max-width:1320px;margin:0 auto;width:100%">
@@ -217,11 +217,11 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 <div class="fc-grid">
 
 <div class="fc-left">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;color:#57C6FF;animation:fcFade .6s ease both">◦ SOLVE A PROBLEM</div>
-<h1 style="font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,5vw,60px);line-height:1.02;letter-spacing:-.03em;margin:14px 0 0;background:linear-gradient(180deg,#FFFFFF,#9FD0FF);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:fcFade .7s ease both .05s">Your next<br>move<span style="color:#57C6FF;-webkit-text-fill-color:#57C6FF">.</span></h1>
-<p style="font-size:15.5px;line-height:1.65;color:#B9C6E0;margin:22px 0 0;animation:fcFade .7s ease both .12s">Not every great product starts with a roadmap.</p>
-<p style="font-size:15.5px;line-height:1.65;color:#B9C6E0;margin:10px 0 0;animation:fcFade .7s ease both .16s">Some start with the <span style="color:#7FE0EA;font-style:italic">right conversation.</span></p>
-<p class="hand" style="font-family:'Caveat',cursive;font-weight:600;font-size:22px;color:#9FD0FF;margin:20px 0 0;animation:fcFade .7s ease both .22s">Ready to see if we're a match? 🚀</p>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.26em;color:#FF7A22;animation:fcFade .6s ease both">◦ SOLVE A PROBLEM</div>
+<h1 style="font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,5vw,60px);line-height:1.02;letter-spacing:-.03em;margin:14px 0 0;background:linear-gradient(180deg,#FFFFFF,#FFD9A6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:fcFade .7s ease both .05s">Your next<br>move<span style="color:#FF7A22;-webkit-text-fill-color:#FF7A22">.</span></h1>
+<p style="font-size:15.5px;line-height:1.65;color:#D2C4B6;margin:22px 0 0;animation:fcFade .7s ease both .12s">Not every great product starts with a roadmap.</p>
+<p style="font-size:15.5px;line-height:1.65;color:#D2C4B6;margin:10px 0 0;animation:fcFade .7s ease both .16s">Some start with the <span style="color:#FFC24D;font-style:italic">right conversation.</span></p>
+<p class="hand" style="font-family:'Caveat',cursive;font-weight:600;font-size:22px;color:#FFD9A6;margin:20px 0 0;animation:fcFade .7s ease both .22s">Ready to see if we're a match? 🚀</p>
 </div>
 
 <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
@@ -236,43 +236,43 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 
 <sc-if value="{{ before }}" hint-placeholder-val="{{ true }}">
 <div style="position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:26px 22px">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#57C6FF">◦ SOLVE A PROBLEM</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#FF7A22">◦ SOLVE A PROBLEM</div>
 <div style="position:relative;width:118px;height:118px;margin:26px 0 22px">
-<div style="position:absolute;left:50%;top:50%;width:118px;height:118px;border-radius:50%;border:1px solid rgba(120,170,255,.35);transform:translate(-50%,-50%);animation:ring 2.6s ease-out infinite"></div>
-<div style="position:absolute;left:50%;top:50%;width:118px;height:118px;border-radius:50%;border:1px solid rgba(120,170,255,.35);transform:translate(-50%,-50%);animation:ring 2.6s ease-out infinite 1.3s"></div>
-<div style="position:absolute;left:50%;top:50%;width:78px;height:78px;border-radius:50%;border:1px solid rgba(120,170,255,.25);transform:translate(-50%,-50%)"></div>
-<div style="position:absolute;left:50%;top:50%;width:12px;height:12px;border-radius:50%;background:#57C6FF;transform:translate(-50%,-50%);box-shadow:0 0 16px #57C6FF;animation:fcPulse 2s infinite"></div>
+<div style="position:absolute;left:50%;top:50%;width:118px;height:118px;border-radius:50%;border:1px solid rgba(255,150,92,.35);transform:translate(-50%,-50%);animation:ring 2.6s ease-out infinite"></div>
+<div style="position:absolute;left:50%;top:50%;width:118px;height:118px;border-radius:50%;border:1px solid rgba(255,150,92,.35);transform:translate(-50%,-50%);animation:ring 2.6s ease-out infinite 1.3s"></div>
+<div style="position:absolute;left:50%;top:50%;width:78px;height:78px;border-radius:50%;border:1px solid rgba(255,150,92,.25);transform:translate(-50%,-50%)"></div>
+<div style="position:absolute;left:50%;top:50%;width:12px;height:12px;border-radius:50%;background:#FF7A22;transform:translate(-50%,-50%);box-shadow:0 0 16px #FF7A22;animation:fcPulse 2s infinite"></div>
 </div>
-<div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.12em;font-weight:600;color:#EAF1FF">WAITING FOR SCAN</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.12em;font-weight:600;color:#F6EFE7">WAITING FOR SCAN</div>
 <div style="display:flex;gap:6px;margin-top:14px">
-<span style="width:14px;height:14px;border:1px solid rgba(120,170,255,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(120,170,255,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(120,170,255,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(120,170,255,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(120,170,255,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(120,170,255,.4);border-radius:3px"></span>
+<span style="width:14px;height:14px;border:1px solid rgba(255,150,92,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(255,150,92,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(255,150,92,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(255,150,92,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(255,150,92,.4);border-radius:3px"></span><span style="width:14px;height:14px;border:1px solid rgba(255,150,92,.4);border-radius:3px"></span>
 </div>
-<button onClick="{{ begin }}" style="margin-top:22px;background:linear-gradient(135deg,#57C6FF,#3E8BFF);color:#05060F;font-size:13px;font-weight:700;padding:11px 22px;border:none;border-radius:999px;cursor:pointer;white-space:nowrap" style-hover="box-shadow:0 12px 30px -8px rgba(87,198,255,.7);transform:translateY(-1px)">Run Compatibility Scan</button>
+<button onClick="{{ begin }}" style="margin-top:22px;background:linear-gradient(135deg,#FF7A22,#FFC24D);color:#130E11;font-size:13px;font-weight:700;padding:11px 22px;border:none;border-radius:999px;cursor:pointer;white-space:nowrap" style-hover="box-shadow:0 12px 30px -8px rgba(255,122,34,.7);transform:translateY(-1px)">Run Compatibility Scan</button>
 </div>
 </sc-if>
 
 <sc-if value="{{ face }}" hint-placeholder-val="{{ false }}">
 <div style="position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:22px 18px">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#57C6FF;animation:blink 1.4s infinite">◉ SCANNING FACE…</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;color:#FF7A22;animation:blink 1.4s infinite">◉ SCANNING FACE…</div>
 <div style="position:relative;width:150px;height:150px">
-<div style="position:absolute;inset:0;border:1.5px dashed rgba(120,190,255,.6);border-radius:50%;animation:spinS 9s linear infinite"></div>
-<div style="position:absolute;inset:22px;border:1px solid rgba(120,190,255,.4);border-radius:50%"></div>
-<div style="position:absolute;left:50%;top:8px;width:2px;height:14px;background:#57C6FF;transform:translateX(-50%)"></div>
-<div style="position:absolute;left:50%;bottom:8px;width:2px;height:14px;background:#57C6FF;transform:translateX(-50%)"></div>
-<div style="position:absolute;top:50%;left:8px;height:2px;width:14px;background:#57C6FF;transform:translateY(-50%)"></div>
-<div style="position:absolute;top:50%;right:8px;height:2px;width:14px;background:#57C6FF;transform:translateY(-50%)"></div>
+<div style="position:absolute;inset:0;border:1.5px dashed rgba(255,160,100,.6);border-radius:50%;animation:spinS 9s linear infinite"></div>
+<div style="position:absolute;inset:22px;border:1px solid rgba(255,160,100,.4);border-radius:50%"></div>
+<div style="position:absolute;left:50%;top:8px;width:2px;height:14px;background:#FF7A22;transform:translateX(-50%)"></div>
+<div style="position:absolute;left:50%;bottom:8px;width:2px;height:14px;background:#FF7A22;transform:translateX(-50%)"></div>
+<div style="position:absolute;top:50%;left:8px;height:2px;width:14px;background:#FF7A22;transform:translateY(-50%)"></div>
+<div style="position:absolute;top:50%;right:8px;height:2px;width:14px;background:#FF7A22;transform:translateY(-50%)"></div>
 </div>
-<div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(200,220,255,.7);line-height:1.4">locking onto candidate…</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,230,210,.7);line-height:1.4">locking onto candidate…</div>
 </div>
-<div aria-hidden="true" style="position:absolute;left:0;right:0;height:2px;z-index:3;background:linear-gradient(90deg,transparent,#57C6FF,transparent);box-shadow:0 0 12px #57C6FF;animation:fcScan 2s ease-in-out infinite"></div>
+<div aria-hidden="true" style="position:absolute;left:0;right:0;height:2px;z-index:3;background:linear-gradient(90deg,transparent,#FF7A22,transparent);box-shadow:0 0 12px #FF7A22;animation:fcScan 2s ease-in-out infinite"></div>
 </sc-if>
 
 <sc-if value="{{ analyze }}" hint-placeholder-val="{{ false }}">
 <div style="position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px 20px">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#57C6FF">SCANNING CANDIDATE…</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:#FF7A22">SCANNING CANDIDATE…</div>
 <div style="position:relative;width:112px;height:112px;margin:14px 0 16px">
-<svg width="112" height="112" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(120,170,255,.16)" stroke-width="8"/><circle cx="60" cy="60" r="50" fill="none" stroke="#57C6FF" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="{{ dashOff }}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .12s linear;filter:drop-shadow(0 0 6px rgba(87,198,255,.7))"/></svg>
-<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 14px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;line-height:1.4;color:#9FD0FF">{{ scanMsg }}</div>
+<svg width="112" height="112" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,150,92,.16)" stroke-width="8"/><circle cx="60" cy="60" r="50" fill="none" stroke="#FF7A22" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="{{ dashOff }}" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .12s linear;filter:drop-shadow(0 0 6px rgba(255,122,34,.7))"/></svg>
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 14px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;line-height:1.4;color:#FFD9A6">{{ scanMsg }}</div>
 </div>
 <div style="width:100%;max-width:240px;display:flex;flex-direction:column;gap:6px;text-align:left">
 <sc-for list="{{ scanItems }}" as="it" hint-placeholder-count="6">
@@ -302,30 +302,30 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 </sc-if>
 </div>
 
-<div style="min-height:20px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#8FA0C4;text-align:center">{{ caption }}</div>
+<div style="min-height:20px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#A89786;text-align:center">{{ caption }}</div>
 <sc-if value="{{ face }}" hint-placeholder-val="{{ false }}">
-<div style="max-width:310px;text-align:center;font-size:10.5px;line-height:1.5;color:#7E8CB0;display:flex;align-items:center;gap:7px;justify-content:center"><span>🔒</span> No photos are stored. This scan is just for fun — the only thing being analyzed is my portfolio. 🙂</div>
+<div style="max-width:310px;text-align:center;font-size:10.5px;line-height:1.5;color:#9A8878;display:flex;align-items:center;gap:7px;justify-content:center"><span>🔒</span> No photos are stored. This scan is just for fun — the only thing being analyzed is my portfolio. 🙂</div>
 </sc-if>
 <sc-if value="{{ complete }}" hint-placeholder-val="{{ false }}">
-<button onClick="{{ rescan }}" style="border:none;background:transparent;color:#8FA0C4;font-family:'IBM Plex Mono',monospace;font-size:10.5px;cursor:pointer" style-hover="color:#57C6FF">↻ scan again</button>
+<button onClick="{{ rescan }}" style="border:none;background:transparent;color:#A89786;font-family:'IBM Plex Mono',monospace;font-size:10.5px;cursor:pointer" style-hover="color:#FF7A22">↻ scan again</button>
 </sc-if>
 </div>
 
 <div class="fc-left" style="{{ rightStyle }}">
 <sc-if value="{{ complete }}" hint-placeholder-val="{{ false }}">
 <div style="display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#34D399">◉ ANALYSIS SUMMARY</div>
-<p style="font-size:14.5px;line-height:1.62;color:#C4D0E8;margin:16px 0 0">The scan found a recurring pattern. Every role — from running Moodale to building enterprise automations at ION — started the same way: noticing something inefficient, asking <span style="color:#7FE0EA;font-style:italic">"why?"</span>, and building a better system.</p>
-<p style="font-size:14.5px;line-height:1.62;color:#B9C6E0;margin:12px 0 0">I enjoy solving problems that make work simpler, products better, and people happier.</p>
-<p style="font-size:14px;line-height:1.55;color:#7FE0EA;font-weight:600;margin:14px 0 0">Now I'd love to learn about the problems you're solving.</p>
+<p style="font-size:14.5px;line-height:1.62;color:#DCCFC2;margin:16px 0 0">The scan found a recurring pattern. Every role — from running Moodale to building enterprise automations at ION — started the same way: noticing something inefficient, asking <span style="color:#FFC24D;font-style:italic">"why?"</span>, and building a better system.</p>
+<p style="font-size:14.5px;line-height:1.62;color:#D2C4B6;margin:12px 0 0">I enjoy solving problems that make work simpler, products better, and people happier.</p>
+<p style="font-size:14px;line-height:1.55;color:#FFC24D;font-weight:600;margin:14px 0 0">Now I'd love to learn about the problems you're solving.</p>
 <button class="fc-describe" onClick="{{ openSolve }}">
 <span class="fc-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg></span>
-<span style="flex:1;min-width:0"><span style="display:block;font-weight:700;font-size:14.5px">Describe a problem</span><span style="display:block;font-size:11.5px;color:#9FB0D0">Tell me what to solve · I'll reply by email</span></span>
-<span class="fc-arrow" style="color:#57C6FF">→</span></button>
+<span style="flex:1;min-width:0"><span style="display:block;font-weight:700;font-size:14.5px">Describe a problem</span><span style="display:block;font-size:11.5px;color:#C4B5A6">Tell me what to solve · I'll reply by email</span></span>
+<span class="fc-arrow" style="color:#FF7A22">→</span></button>
 </sc-if>
 <sc-if value="{{ waiting }}" hint-placeholder-val="{{ true }}">
-<div style="border:1px dashed rgba(120,170,255,.22);border-radius:16px;padding:24px;text-align:center;color:#6C7B9E">
-<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#57C6FF80">◦ ANALYSIS PENDING</div>
-<div class="hand" style="font-family:'Caveat',cursive;font-weight:600;font-size:22px;color:#7E8CB0;margin-top:10px">run the scan to reveal…</div>
+<div style="border:1px dashed rgba(255,150,92,.22);border-radius:16px;padding:24px;text-align:center;color:#8A7868">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;color:#FF7A2280">◦ ANALYSIS PENDING</div>
+<div class="hand" style="font-family:'Caveat',cursive;font-weight:600;font-size:22px;color:#9A8878;margin-top:10px">run the scan to reveal…</div>
 </div>
 </sc-if>
 </div>
@@ -348,20 +348,7 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 </div>
 </sc-if>
 
-<sc-if value="{{ warn }}" hint-placeholder-val="{{ false }}">
-<div style="position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;pointer-events:none;padding:20px;background:rgba(4,5,12,.35)">
-<div style="position:relative;pointer-events:auto;max-width:400px;width:100%;background:#15130A;border:2px solid #FFCC00;border-radius:16px;box-shadow:0 34px 90px -24px rgba(0,0,0,.85),0 0 48px -12px rgba(255,204,0,.45);overflow:hidden;animation:warnPop .45s cubic-bezier(.2,.9,.3,1.25) both">
-<button onClick="{{ closeWarn }}" aria-label="Close warning" style="position:absolute;top:16px;right:14px;z-index:2;width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,204,0,.4);background:rgba(255,204,0,.1);color:#FFCC00;font-size:14px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#FFCC00;color:#15130A">✕</button>
-<div aria-hidden="true" style="height:10px;background:repeating-linear-gradient(45deg,#FFCC00 0 13px,#0c0b06 13px 26px);background-size:52px 10px;animation:warnStripe 1.1s linear infinite"></div>
-<div style="padding:20px 22px;text-align:center">
-<div style="font-size:36px;line-height:1;animation:blink 1s infinite">⚠️</div>
-<div style="font-family:'IBM Plex Mono',monospace;font-weight:600;letter-spacing:.24em;font-size:13px;color:#FFCC00;margin-top:8px">WARNING</div>
-<div style="font-size:13.5px;line-height:1.56;color:#F1E7C4;margin-top:9px">This candidate automates workflows on sight. Manual processes may quietly disappear, and someone will probably start asking <span style="color:#FFCC00">"Why?"</span> about everything. Proceed at your own risk. 🚀</div>
-</div>
-<div aria-hidden="true" style="height:10px;background:repeating-linear-gradient(45deg,#FFCC00 0 13px,#0c0b06 13px 26px);background-size:52px 10px;animation:warnStripe 1.1s linear infinite"></div>
-</div>
-</div>
-</sc-if>
+
 </main>
 </div>
 </div>
@@ -407,7 +394,7 @@ class Component extends DCLogic {
     this.setState({ step: "analyze", pct: 0, score, cam: "idle" });
     this._iv = setInterval(() => {
       let p = this.state.pct + 2 + Math.floor(Math.random() * 3);
-      if (p >= this.state.score) { p = this.state.score; clearInterval(this._iv); this._t2 = setTimeout(() => this.setState({ step: "complete", warn: true }), 550); }
+      if (p >= this.state.score) { p = this.state.score; clearInterval(this._iv); this._t2 = setTimeout(() => this.setState({ step: "complete", warn: false }), 550); }
       this.setState({ pct: p });
     }, 78);
   }
@@ -433,17 +420,17 @@ class Component extends DCLogic {
     const before = S.step === "before", face = S.step === "face", analyze = S.step === "analyze", complete = S.step === "complete", solve = S.step === "solve";
     const live = S.cam === "live";
     const dashOff = (314 * (1 - S.pct / 100)).toFixed(1);
-    const frameColor = complete ? "#34D399" : "#57C6FF";
+    const frameColor = complete ? "#34D399" : "#FF7A22";
     const scanMsg = S.pct < 25 ? "Collecting evidence..." : S.pct < 50 ? "Reviewing projects..." : S.pct < 75 ? "Connecting experiences..." : "Almost there...";
     const scanSteps = ["Detecting builder DNA...", "Looking for curiosity...", "Measuring systems thinking...", "Checking automation obsession...", "Verifying \"why?\" frequency...", "Loading founder mode..."];
     const scanItems = scanSteps.map((t, i) => { const on = S.pct >= i * 15 + 3; return { t,
-      style: "display:flex;gap:8px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;line-height:1.3;color:" + (on ? "#B9E8D4" : "#5a668a") + ";opacity:" + (on ? "1" : ".55") + ";transition:color .3s,opacity .3s",
-      chkStyle: "flex-shrink:0;font-size:11px;color:" + (on ? "#34D399" : "#3a4560") + ";transition:color .3s" }; });
+      style: "display:flex;gap:8px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;line-height:1.3;color:" + (on ? "#B9E8D4" : "#7a6a5e") + ";opacity:" + (on ? "1" : ".55") + ";transition:color .3s,opacity .3s",
+      chkStyle: "flex-shrink:0;font-size:11px;color:" + (on ? "#34D399" : "#4a3a30") + ";transition:color .3s" }; });
     return {
       before, face, analyze, complete, solve, notSolve: !solve, badge: "COMPATIBILITY CONFIRMED · " + S.score + "% MATCH", waiting: !complete, warn: S.warn, scanMsg, scanItems,
       pct: S.pct, score: S.score, dashOff, frameColor,
       begin: () => this.begin(), rescan: () => this.rescan(), openSolve: () => this.openSolve(), backToCard: () => this.backToCard(), closeWarn: () => this.setState({ warn: false }),
-      cardStyle: { position: "relative", width: "min(316px,84vw)", aspectRatio: "300/440", borderRadius: "26px", overflow: "hidden", border: "1px solid " + (complete ? "rgba(52,211,153,.5)" : "rgba(120,170,255,.32)"), boxShadow: complete ? "0 44px 96px -42px rgba(0,0,0,.92),0 0 70px -20px rgba(52,211,153,.5)" : "0 44px 96px -42px rgba(0,0,0,.92),0 0 60px -22px rgba(80,160,255,.5)", background: complete ? "radial-gradient(90% 70% at 50% 30%,rgba(16,60,44,.9),#060B0A)" : "radial-gradient(84% 66% at 50% 30%,rgba(20,32,66,.85),#070A18)", transition: "border-color .6s,box-shadow .6s,background .6s" },
+      cardStyle: { position: "relative", width: "min(316px,84vw)", aspectRatio: "300/440", borderRadius: "26px", overflow: "hidden", border: "1px solid " + (complete ? "rgba(52,211,153,.5)" : "rgba(255,150,92,.32)"), boxShadow: complete ? "0 44px 96px -42px rgba(0,0,0,.92),0 0 70px -20px rgba(52,211,153,.5)" : "0 44px 96px -42px rgba(0,0,0,.92),0 0 60px -22px rgba(255,122,34,.5)", background: complete ? "radial-gradient(90% 70% at 50% 30%,rgba(16,60,44,.9),#060B0A)" : "radial-gradient(84% 66% at 50% 30%,rgba(56,32,24,.85),#140D10)", transition: "border-color .6s,box-shadow .6s,background .6s" },
       camStyle: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transform: "scaleX(-1)", opacity: (face && live) ? 1 : 0, transition: "opacity .6s", zIndex: 1 },
       camTint: { position: "absolute", inset: 0, zIndex: 2, background: (face && live) ? "linear-gradient(180deg,rgba(5,8,20,.10),rgba(5,8,20,.40))" : "transparent", transition: "background .6s", pointerEvents: "none" },
       caption: before ? "◷ estimated scan time · 3 seconds" : face ? "◉ hold still — reading the room…" : analyze ? "almost there… ⟿" : "✓ analysis complete",
@@ -509,9 +496,9 @@ var SV_FRAG = [
   " float n=fbm(p*3.0+vec2(t*1.6,-t*1.1));L*=0.45+n;float h=hash(id);L*=0.8+0.28*sin(uTime*(0.5+h*1.4)+h*40.0);",
   " L=clamp(L,0.0,1.0);L=floor(L*8.0+h*0.6)/8.0;vec2 q=abs(f-0.5);float tile=smoothstep(0.47,0.41,max(q.x,q.y));",
   " vec3 deep=vec3(0.62,0.34,0.22);vec3 warm=vec3(1.0,0.80,0.58);",
-  " vec3 col=mix(deep,warm,smoothstep(0.25,0.75,n))*L*0.6;col=mix(col,uAccent*L*0.85,0.28*L);col*=tile*(0.82+0.36*f.y);",
-  " return col+vec3(0.012,0.009,0.010);}",
-  "void main(){vec2 frag=gl_FragCoord.xy;vec3 col=mosaic(frag);vec2 uv=frag/uRes;float vig=smoothstep(1.25,0.25,length((uv-0.5)*vec2(1.0,1.15)));col*=0.55+0.45*vig;col+=(hash(frag+fract(uTime))-0.5)/255.0;gl_FragColor=vec4(col,1.0);}"
+  " vec3 col=mix(deep,warm,smoothstep(0.25,0.75,n))*L*0.74;col=mix(col,uAccent*L*0.85,0.28*L);col*=tile*(0.82+0.36*f.y);",
+  " return col+vec3(0.030,0.021,0.022);}",
+  "void main(){vec2 frag=gl_FragCoord.xy;vec3 col=mosaic(frag);vec2 uv=frag/uRes;float vig=smoothstep(1.25,0.25,length((uv-0.5)*vec2(1.0,1.15)));col*=0.68+0.32*vig;col+=(hash(frag+fract(uTime))-0.5)/255.0;gl_FragColor=vec4(col,1.0);}"
 ].join("\n");
 
 function svStartSky(sky, root) {

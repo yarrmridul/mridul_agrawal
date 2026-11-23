@@ -26,15 +26,17 @@ body{margin:0;background:#F6F9F8;font-family:'Source Sans 3',system-ui,sans-seri
  --nav-bg:rgba(246,249,248,.78);--page-mesh:radial-gradient(42% 34% at 8% 6%,#0891B21f,transparent 60%),radial-gradient(38% 32% at 94% 4%,#0596691c,transparent 62%);
  --page-tex:radial-gradient(rgba(8,145,178,.9) .8px,transparent .8px);--tex-op:.05;--tex-size:22px 22px;
  --quote-bg:linear-gradient(135deg,#0891B20f,#0596690b);
+ --fill:linear-gradient(135deg,#0891B2,#059669);--fill-bd:transparent;--fill-fg:#fff;
 }
 [data-theme="space"]{
- --bg:#0A0F0F;--bg-2:#0E1514;--panel:#141C1B;--panel-2:#101817;--text:#EAF2F0;--muted:#9BABA9;--faint:#5E706E;--border:#243230;
- --accent:#22D3EE;--accent-2:#34D399;--accent-soft:#22D3EE1F;--accent-line:#22D3EE4D;
- --card-shadow:0 14px 40px -26px rgba(0,0,0,.85);--big-shadow:0 40px 90px -46px rgba(0,0,0,.9);
- --hero-glow:radial-gradient(56% 60% at 4% 0%,#0891B23a,transparent 64%),radial-gradient(48% 52% at 98% 6%,#05966930,transparent 68%);
- --nav-bg:rgba(10,15,15,.7);--page-mesh:radial-gradient(44% 36% at 8% 6%,#22D3EE17,transparent 62%),radial-gradient(40% 34% at 94% 4%,#34D39914,transparent 64%);
- --page-tex:radial-gradient(rgba(34,211,238,.6) .9px,transparent .9px);--tex-op:.05;--tex-size:24px 24px;
- --quote-bg:linear-gradient(135deg,#22D3EE14,#34D3990d);
+ --bg:#120D10;--bg-2:#181014;--panel:#21171C;--panel-2:#1A1217;--text:#F6EFE7;--muted:#C4B5A6;--faint:#857669;--border:#3A2A22;
+ --accent:#FF7A22;--accent-2:#FFC24D;--accent-soft:#FF7A2229;--accent-line:#FF8A3A66;
+ --fill:linear-gradient(135deg,rgba(255,122,34,.18),rgba(255,138,58,.07));--fill-bd:rgba(255,150,92,.6);--fill-fg:#FFD9A6;
+ --card-shadow:0 14px 40px -26px rgba(0,0,0,.92);--big-shadow:0 40px 90px -46px rgba(0,0,0,.94);
+ --hero-glow:radial-gradient(56% 70% at 6% 0%,#FF7A2247,transparent 70%),radial-gradient(52% 60% at 94% 8%,#FFC24D30,transparent 70%),radial-gradient(70% 60% at 50% 130%,#FF5E3A26,transparent 72%);
+ --nav-bg:rgba(18,13,16,.76);--page-mesh:radial-gradient(50% 42% at 8% 10%,#FF7A2226,transparent 62%),radial-gradient(46% 38% at 92% 8%,#FFC24D1a,transparent 64%),radial-gradient(66% 54% at 50% 108%,#FF5E3A20,transparent 70%),radial-gradient(40% 36% at 86% 60%,#FF9E2C12,transparent 70%);
+ --page-tex:radial-gradient(rgba(255,155,85,.6) .9px,transparent .9px);--tex-op:.05;--tex-size:26px 26px;
+ --quote-bg:linear-gradient(135deg,#FF7A2216,#FFC24D0d);
 }
 a{color:var(--accent);text-decoration:none}
 a:hover{color:var(--accent-2)}
@@ -180,7 +182,7 @@ a:hover{color:var(--accent-2)}
 <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--accent)">404 · NO CASE STUDY</div>
 <h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(28px,5vw,44px);margin:14px 0 12px">This project isn’t here.</h1>
 <p style="font-size:15px;color:var(--muted);margin:0 0 26px">The link may be out of date. Head back and pick a project from the grid.</p>
-<a href="index.html#projects" style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:14px;font-weight:600;padding:13px 24px;border-radius:11px">← Back to projects</a>
+<a href="index.html#projects" style="display:inline-block;background:var(--fill);border:1px solid var(--fill-bd);color:var(--fill-fg);font-size:14px;font-weight:600;padding:13px 24px;border-radius:11px">← Back to projects</a>
 </div>
 </sc-if>
 
@@ -205,7 +207,7 @@ a:hover{color:var(--accent-2)}
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:24px">
 <sc-if value="{{ hasLive }}" hint-placeholder-val="{{ false }}">
-<a href="{{ liveUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:11px;box-shadow:0 12px 30px -12px var(--accent-line);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px -14px var(--accent-line)"><span style="width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff;animation:omPulse 2.2s infinite"></span>Visit live site ↗</a>
+<a href="{{ liveUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:9px;background:var(--fill);border:1px solid var(--fill-bd);color:var(--fill-fg);font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:11px;box-shadow:0 12px 30px -12px var(--accent-line);transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 18px 40px -14px var(--accent-line)"><span style="width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:omPulse 2.2s infinite"></span>Visit live site ↗</a>
 </sc-if>
 <a href="{{ firstHref }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);color:var(--text);font-size:13.5px;font-weight:600;padding:12px 20px;border-radius:11px;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);color:var(--accent);transform:translateY(-2px)">Read the story ↓</a>
 </div>
