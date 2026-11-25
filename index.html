@@ -15,6 +15,7 @@
 <script src="/lamp.js" defer></script>
 <script src="/sky.js"></script>
 <script src="/night.js"></script>
+<script src="/dragon.js" defer></script>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
@@ -1005,7 +1006,7 @@ class Component extends DCLogic {
     };
     const cardBase = () => ({ background: "var(--panel)", borderRadius: "16px", padding: "15px 17px", boxShadow: "var(--card-shadow)", transition: "transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative" });
     const eggs = S.tlEggs || {};
-    const onEggTap = i => () => {
+    const onEggTap = i => ev => {
       const cur = (this.state.tlEggs || {})[i] || 0;
       if (cur >= 2) {
         // A hatched egg reseals on tap (a quick extra tap right after hatching is ignored).
@@ -1015,7 +1016,11 @@ class Component extends DCLogic {
         return;
       }
       this.playCrack(cur + 1);
-      if (cur === 1) this._eggAt = Date.now();
+      if (cur === 1) {
+        this._eggAt = Date.now();
+        // Fully hatched: a little dragon climbs out and flies away (dragon.js).
+        try { const r = ev && ev.currentTarget && ev.currentTarget.getBoundingClientRect(); if (r && window.hatchDragon) setTimeout(() => window.hatchDragon(r), 220); } catch (e) {}
+      }
       this.setState({ tlEggs: { ...(this.state.tlEggs || {}), [i]: cur + 1 }, tlLast: cur === 1 ? i : this.state.tlLast });
     };
     const eggClose = i => () => { const next = { ...(this.state.tlEggs || {}) }; delete next[i]; this.setState({ tlEggs: next, tlLast: this.state.tlLast === i ? -1 : this.state.tlLast }); };
