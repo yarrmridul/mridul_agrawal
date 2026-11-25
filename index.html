@@ -62,7 +62,13 @@ button{color:inherit}
 @keyframes eggUnfold{0%{opacity:0;transform:scale(.55) translateY(6px)}60%{opacity:1;transform:scale(1.03)}100%{opacity:1;transform:none}}
 @keyframes sheetUp{0%{transform:translateY(100%)}100%{transform:translateY(0)}}
 @keyframes eggWobble{0%,100%{transform:rotate(0)}30%{transform:rotate(-8deg)}70%{transform:rotate(8deg)}}
+#timeline button[aria-label^="Crack"]{animation:eggIdle 7s ease-in-out infinite}
 #timeline button[aria-label^="Crack"]:hover{animation:eggWobble .5s ease}
+@keyframes eggIdle{0%,86%,100%{transform:rotate(0)}89%{transform:rotate(-6deg)}92%{transform:rotate(5deg)}95%{transform:rotate(-2deg)}}
+.egg-glowpulse{animation:eggGlow 2.4s ease-in-out infinite}
+@keyframes eggGlow{0%,100%{opacity:.22}50%{opacity:.85}}
+@media (max-width:640px){.egg-count{font-size:12.5px!important;white-space:normal!important;text-align:center}}
+@media (prefers-reduced-motion:reduce){#timeline button[aria-label^="Crack"],.egg-glowpulse{animation:none!important}}
 @keyframes hammerHit{0%{transform:rotate(-64deg);opacity:0}18%{opacity:1}44%{transform:rotate(6deg)}58%{transform:rotate(-10deg)}72%{transform:rotate(3deg)}100%{transform:rotate(-64deg);opacity:0}}
 @keyframes eggJolt{0%,34%{transform:none}44%{transform:translateY(2px) scale(1.06,.94)}58%{transform:translateY(0) scale(.97,1.03)}74%{transform:scale(1.01,.99)}100%{transform:none}}
 .egg-hammer{animation:hammerHit .72s cubic-bezier(.3,.7,.4,1) both}
@@ -492,9 +498,10 @@ button{color:inherit}
 <div aria-hidden="true" style="position:absolute;right:25%;top:28%;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.4;filter:blur(1px);animation:tlFloat 12s ease-in-out infinite 1.6s"></div>
 </div>
 <div style="position:relative;z-index:1;max-width:1120px;margin:0 auto">
-<div style="display:flex;align-items:center;gap:14px;justify-content:center;margin-bottom:14px">
+<div style="display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:14px">
 <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--fill-fg);background:var(--fill);border:1px solid var(--fill-bd);padding:7px 12px;border-radius:9px;letter-spacing:.08em">03</span>
 <h2 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(26px,4.2vw,42px);letter-spacing:-.02em;margin:0">The journey — 2018 to now</h2>
+<span class="egg-count" style="display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:999px;background:var(--panel);border:1px solid var(--border);box-shadow:var(--card-shadow);font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap"><i aria-hidden="true" style="display:inline-block;width:11px;height:14px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#23344B;box-shadow:inset 0 0 0 1.4px #FFB15C"></i>{{ tlEggTotal }} moments sealed in eggs · <b style="color:var(--accent);font-weight:700">{{ tlHatchedText }}</b></span>
 </div>
 
 <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
@@ -505,14 +512,8 @@ button{color:inherit}
 <sc-for list="{{ tlDesk }}" as="item" hint-placeholder-count="10">
 <div class="tl-reveal" style="{{ item.cardWrap }}">
 <div style="{{ item.cardStyle }}" style-hover="{{ item.cardHover }}">
-<button onClick="{{ item.onEgg }}" aria-label="Crack the egg to reveal details" title="Crack me!" style="{{ item.eggWrapStyle }}">
-<svg viewBox="0 0 40 52" width="36" height="47" style="overflow:visible">
-<g style="{{ item.eggBotStyle }}"><path d="M7,30 L33,30 C34.5,42 28,50.5 20,50.5 C12,50.5 5.5,42 7,30 Z" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1"></path><path d="M7,34.6 Q20,32 33,34.6" fill="none" stroke="#3AA5FF" stroke-width="2.4" stroke-linecap="round"></path><circle cx="13" cy="39" r="1.25" fill="#FFC93C"></circle><circle cx="20" cy="39.7" r="1.25" fill="#A06BFF"></circle><circle cx="27" cy="39" r="1.25" fill="#FF5FA2"></circle><path d="M8.5,44 Q20,41.4 31.5,44" fill="none" stroke="#FF5FA2" stroke-width="2.4" stroke-linecap="round"></path><path d="M11,48 Q20,46 29,48" fill="none" stroke="#FFC93C" stroke-width="2.2" stroke-linecap="round"></path></g>
-<g style="{{ item.eggTopStyle }}"><path d="M20,2.5 C31,2.5 34.5,20 33,30 L7,30 C5.5,20 9,2.5 20,2.5 Z" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1"></path><path d="M10,9.5 Q20,7 30,9.5" fill="none" stroke="#A06BFF" stroke-width="2.3" stroke-linecap="round"></path><circle cx="12" cy="14.3" r="1.2" fill="#FF9130"></circle><circle cx="17" cy="13.7" r="1.2" fill="#3AA5FF"></circle><circle cx="23" cy="13.7" r="1.2" fill="#FF5FA2"></circle><circle cx="28" cy="14.3" r="1.2" fill="#35C46A"></circle><path d="M7.5,19 Q20,16.5 32.5,19" fill="none" stroke="#35C46A" stroke-width="2.4" stroke-linecap="round"></path><path d="M7,24.6 Q20,22 33,24.6" fill="none" stroke="#FF9130" stroke-width="2.4" stroke-linecap="round"></path></g>
-<path d="M7,30 L13,25 L18,31 L23,25 L28,31 L33,28" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ item.crackStyle }}"></path>
-<g style="{{ item.sparkStyle }}"><circle cx="20" cy="22" r="2.6" fill="#FF9130"></circle><path d="M20,12 L20,6 M28,16 L32,13 M12,16 L8,13" stroke="#FF9130" stroke-width="1.8" stroke-linecap="round"></path></g>
-<sc-if value="{{ item.justCracked }}" hint-placeholder-val="{{ false }}"><g class="egg-hammer" style="transform-box:view-box;transform-origin:34px 12px"><line x1="19" y1="1.5" x2="33.5" y2="11.5" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"></line><rect x="6.5" y="-5.5" width="14" height="8" rx="2" fill="#7b8492" stroke="#3b4250" stroke-width="0.7"></rect><rect x="10.5" y="-7.5" width="4.5" height="12" rx="1.2" fill="#aab2bd"></rect></g></sc-if>
-</svg>
+<button onClick="{{ item.onEgg }}" aria-label="Crack the egg to read the full story" title="Hatch me" style="{{ item.eggWrapStyle }}">
+<svg viewBox="0 0 60 78" width="50" height="65" style="overflow:visible"><g style="{{ item.eggBotStyle }}"><path d="M48.0,35.0 L42.0,40.0 L36.0,34.0 L30.0,41.0 L23.0,35.0 L17.0,42.0 L11.0,36.0 L4.4,39.7 L4.3,40.7 L4.2,42.0 L4.1,43.4 L4.0,44.7 L4.0,46.0 L4.0,47.3 L4.1,48.5 L4.2,49.7 L4.3,50.9 L4.5,52.1 L4.7,53.2 L5.0,54.3 L5.3,55.4 L5.6,56.5 L6.0,57.5 L6.4,58.6 L6.9,59.5 L7.4,60.5 L7.9,61.4 L8.4,62.3 L9.0,63.2 L9.6,64.0 L10.2,64.8 L10.9,65.6 L11.6,66.4 L12.3,67.1 L13.0,67.8 L13.8,68.4 L14.6,69.0 L15.4,69.6 L16.2,70.2 L17.1,70.7 L18.0,71.2 L18.9,71.6 L19.8,72.0 L20.8,72.4 L21.7,72.7 L22.7,73.0 L23.7,73.3 L24.7,73.5 L25.7,73.7 L26.8,73.8 L27.8,73.9 L28.9,74.0 L30.0,74.0 L31.1,74.0 L32.2,73.9 L33.2,73.8 L34.3,73.7 L35.3,73.5 L36.3,73.3 L37.3,73.0 L38.3,72.7 L39.2,72.4 L40.2,72.0 L41.1,71.6 L42.0,71.2 L42.9,70.7 L43.8,70.2 L44.6,69.6 L45.4,69.0 L46.2,68.4 L47.0,67.8 L47.7,67.1 L48.4,66.4 L49.1,65.6 L49.8,64.8 L50.4,64.0 L51.0,63.2 L51.6,62.3 L52.1,61.4 L52.6,60.5 L53.1,59.5 L53.6,58.6 L54.0,57.5 L54.4,56.5 L54.7,55.4 L55.0,54.3 L55.3,53.2 L55.5,52.1 L55.7,50.9 L55.8,49.7 L55.9,48.5 L56.0,47.3 L56.0,46.0 L56.0,44.7 L55.9,43.4 L55.8,42.0 L55.7,40.7 L55.5,39.3 L55.4,38.7 L48.0,35.0Z" fill="{{ item.eggA }}" stroke="{{ item.eggB }}" stroke-width="1.2"></path></g><g style="{{ item.eggTopStyle }}"><path d="M11.0,36.0 L17.0,42.0 L23.0,35.0 L30.0,41.0 L36.0,34.0 L42.0,40.0 L48.0,35.0 L55.4,38.7 L55.3,37.9 L55.0,36.4 L54.7,35.0 L54.4,33.6 L54.0,32.1 L53.6,30.7 L53.2,29.2 L52.8,27.8 L52.3,26.3 L51.7,24.9 L51.2,23.5 L50.6,22.1 L50.0,20.8 L49.3,19.4 L48.6,18.1 L47.9,16.8 L47.2,15.6 L46.4,14.4 L45.6,13.2 L44.8,12.1 L44.0,11.1 L43.1,10.0 L42.2,9.1 L41.3,8.2 L40.4,7.3 L39.4,6.6 L38.5,5.8 L37.5,5.2 L36.5,4.6 L35.4,4.2 L34.4,3.7 L33.3,3.4 L32.2,3.2 L31.1,3.0 L30.0,3.0 L28.9,3.0 L27.8,3.2 L26.7,3.4 L25.6,3.7 L24.6,4.2 L23.5,4.6 L22.5,5.2 L21.5,5.8 L20.6,6.6 L19.6,7.3 L18.7,8.2 L17.8,9.1 L16.9,10.0 L16.0,11.1 L15.2,12.1 L14.4,13.2 L13.6,14.4 L12.8,15.6 L12.1,16.8 L11.4,18.1 L10.7,19.4 L10.0,20.8 L9.4,22.1 L8.8,23.5 L8.3,24.9 L7.7,26.3 L7.2,27.8 L6.8,29.2 L6.4,30.7 L6.0,32.1 L5.6,33.6 L5.3,35.0 L5.0,36.4 L4.7,37.9 L4.5,39.3 L4.4,39.7 L11.0,36.0Z" fill="{{ item.eggA }}" stroke="{{ item.eggB }}" stroke-width="1.2"></path><ellipse cx="21" cy="20" rx="6" ry="10" fill="#ffffff" opacity=".24" transform="rotate(-20 21 20)"></ellipse></g><g style="{{ item.crackStyle }}"><path class="egg-glowpulse" d="M4,40 L11,36 L17,42 L23,35 L30,41 L36,34 L42,40 L48,35 L56,39" fill="none" stroke="#FF9A3C" stroke-width="9" stroke-linejoin="round" opacity=".22"></path><path class="egg-glowpulse" d="M4,40 L11,36 L17,42 L23,35 L30,41 L36,34 L42,40 L48,35 L56,39" fill="none" stroke="#FFB15C" stroke-width="4.5" stroke-linejoin="round" opacity=".55"></path><path d="M4,40 L11,36 L17,42 L23,35 L30,41 L36,34 L42,40 L48,35 L56,39" fill="none" stroke="#FFE7C2" stroke-width="1.6" stroke-linejoin="round"></path></g><g style="{{ item.sparkStyle }}"><circle cx="30" cy="36" r="15" fill="#FFD9A6" opacity=".55"></circle><circle cx="30" cy="36" r="7" fill="#FFF3E0"></circle><path d="M30 14 V6 M44 22 L50 16 M16 22 L10 16 M48 36 H56 M12 36 H4" stroke="#FFB15C" stroke-width="2.2" stroke-linecap="round"></path></g><sc-if value="{{ item.justCracked }}" hint-placeholder-val="{{ false }}"><g transform="scale(1.5)"><g class="egg-hammer" style="transform-box:view-box;transform-origin:34px 12px"><line x1="19" y1="1.5" x2="33.5" y2="11.5" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"></line><rect x="6.5" y="-5.5" width="14" height="8" rx="2" fill="#7b8492" stroke="#3b4250" stroke-width="0.7"></rect><rect x="10.5" y="-7.5" width="4.5" height="12" rx="1.2" fill="#aab2bd"></rect></g></g></sc-if></svg>
 </button>
 <div style="{{ item.innerStyle }}">
 <sc-if value="{{ item.hasLogo }}" hint-placeholder-val="{{ true }}"><img src="{{ item.logo }}" alt="" loading="lazy" style="{{ item.logoStyle }}"></sc-if>
@@ -545,14 +546,8 @@ button{color:inherit}
 <div style="{{ item.wrapStyle }}">
 <div style="{{ item.flipInner }}">
 <div style="{{ item.faceFront }}">
-<button onClick="{{ item.onEgg }}" aria-label="Crack the egg to reveal details" title="Crack me!" style="{{ item.eggWrapStyle }}">
-<svg viewBox="0 0 40 52" width="32" height="42" style="overflow:visible">
-<g style="{{ item.eggBotStyle }}"><path d="M7,30 L33,30 C34.5,42 28,50.5 20,50.5 C12,50.5 5.5,42 7,30 Z" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1"></path><path d="M7,34.6 Q20,32 33,34.6" fill="none" stroke="#3AA5FF" stroke-width="2.4" stroke-linecap="round"></path><circle cx="13" cy="39" r="1.25" fill="#FFC93C"></circle><circle cx="20" cy="39.7" r="1.25" fill="#A06BFF"></circle><circle cx="27" cy="39" r="1.25" fill="#FF5FA2"></circle><path d="M8.5,44 Q20,41.4 31.5,44" fill="none" stroke="#FF5FA2" stroke-width="2.4" stroke-linecap="round"></path><path d="M11,48 Q20,46 29,48" fill="none" stroke="#FFC93C" stroke-width="2.2" stroke-linecap="round"></path></g>
-<g style="{{ item.eggTopStyle }}"><path d="M20,2.5 C31,2.5 34.5,20 33,30 L7,30 C5.5,20 9,2.5 20,2.5 Z" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1"></path><path d="M10,9.5 Q20,7 30,9.5" fill="none" stroke="#A06BFF" stroke-width="2.3" stroke-linecap="round"></path><circle cx="12" cy="14.3" r="1.2" fill="#FF9130"></circle><circle cx="17" cy="13.7" r="1.2" fill="#3AA5FF"></circle><circle cx="23" cy="13.7" r="1.2" fill="#FF5FA2"></circle><circle cx="28" cy="14.3" r="1.2" fill="#35C46A"></circle><path d="M7.5,19 Q20,16.5 32.5,19" fill="none" stroke="#35C46A" stroke-width="2.4" stroke-linecap="round"></path><path d="M7,24.6 Q20,22 33,24.6" fill="none" stroke="#FF9130" stroke-width="2.4" stroke-linecap="round"></path></g>
-<path d="M7,30 L13,25 L18,31 L23,25 L28,31 L33,28" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="{{ item.crackStyle }}"></path>
-<g style="{{ item.sparkStyle }}"><circle cx="20" cy="22" r="2.6" fill="#FF9130"></circle><path d="M20,12 L20,6 M28,16 L32,13 M12,16 L8,13" stroke="#FF9130" stroke-width="1.8" stroke-linecap="round"></path></g>
-<sc-if value="{{ item.justCracked }}" hint-placeholder-val="{{ false }}"><g class="egg-hammer" style="transform-box:view-box;transform-origin:34px 12px"><line x1="19" y1="1.5" x2="33.5" y2="11.5" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"></line><rect x="6.5" y="-5.5" width="14" height="8" rx="2" fill="#7b8492" stroke="#3b4250" stroke-width="0.7"></rect><rect x="10.5" y="-7.5" width="4.5" height="12" rx="1.2" fill="#aab2bd"></rect></g></sc-if>
-</svg>
+<button onClick="{{ item.onEgg }}" aria-label="Crack the egg to read the full story" title="Hatch me" style="{{ item.eggWrapStyle }}">
+<svg viewBox="0 0 60 78" width="40" height="52" style="overflow:visible"><g style="{{ item.eggBotStyle }}"><path d="M48.0,35.0 L42.0,40.0 L36.0,34.0 L30.0,41.0 L23.0,35.0 L17.0,42.0 L11.0,36.0 L4.4,39.7 L4.3,40.7 L4.2,42.0 L4.1,43.4 L4.0,44.7 L4.0,46.0 L4.0,47.3 L4.1,48.5 L4.2,49.7 L4.3,50.9 L4.5,52.1 L4.7,53.2 L5.0,54.3 L5.3,55.4 L5.6,56.5 L6.0,57.5 L6.4,58.6 L6.9,59.5 L7.4,60.5 L7.9,61.4 L8.4,62.3 L9.0,63.2 L9.6,64.0 L10.2,64.8 L10.9,65.6 L11.6,66.4 L12.3,67.1 L13.0,67.8 L13.8,68.4 L14.6,69.0 L15.4,69.6 L16.2,70.2 L17.1,70.7 L18.0,71.2 L18.9,71.6 L19.8,72.0 L20.8,72.4 L21.7,72.7 L22.7,73.0 L23.7,73.3 L24.7,73.5 L25.7,73.7 L26.8,73.8 L27.8,73.9 L28.9,74.0 L30.0,74.0 L31.1,74.0 L32.2,73.9 L33.2,73.8 L34.3,73.7 L35.3,73.5 L36.3,73.3 L37.3,73.0 L38.3,72.7 L39.2,72.4 L40.2,72.0 L41.1,71.6 L42.0,71.2 L42.9,70.7 L43.8,70.2 L44.6,69.6 L45.4,69.0 L46.2,68.4 L47.0,67.8 L47.7,67.1 L48.4,66.4 L49.1,65.6 L49.8,64.8 L50.4,64.0 L51.0,63.2 L51.6,62.3 L52.1,61.4 L52.6,60.5 L53.1,59.5 L53.6,58.6 L54.0,57.5 L54.4,56.5 L54.7,55.4 L55.0,54.3 L55.3,53.2 L55.5,52.1 L55.7,50.9 L55.8,49.7 L55.9,48.5 L56.0,47.3 L56.0,46.0 L56.0,44.7 L55.9,43.4 L55.8,42.0 L55.7,40.7 L55.5,39.3 L55.4,38.7 L48.0,35.0Z" fill="{{ item.eggA }}" stroke="{{ item.eggB }}" stroke-width="1.2"></path></g><g style="{{ item.eggTopStyle }}"><path d="M11.0,36.0 L17.0,42.0 L23.0,35.0 L30.0,41.0 L36.0,34.0 L42.0,40.0 L48.0,35.0 L55.4,38.7 L55.3,37.9 L55.0,36.4 L54.7,35.0 L54.4,33.6 L54.0,32.1 L53.6,30.7 L53.2,29.2 L52.8,27.8 L52.3,26.3 L51.7,24.9 L51.2,23.5 L50.6,22.1 L50.0,20.8 L49.3,19.4 L48.6,18.1 L47.9,16.8 L47.2,15.6 L46.4,14.4 L45.6,13.2 L44.8,12.1 L44.0,11.1 L43.1,10.0 L42.2,9.1 L41.3,8.2 L40.4,7.3 L39.4,6.6 L38.5,5.8 L37.5,5.2 L36.5,4.6 L35.4,4.2 L34.4,3.7 L33.3,3.4 L32.2,3.2 L31.1,3.0 L30.0,3.0 L28.9,3.0 L27.8,3.2 L26.7,3.4 L25.6,3.7 L24.6,4.2 L23.5,4.6 L22.5,5.2 L21.5,5.8 L20.6,6.6 L19.6,7.3 L18.7,8.2 L17.8,9.1 L16.9,10.0 L16.0,11.1 L15.2,12.1 L14.4,13.2 L13.6,14.4 L12.8,15.6 L12.1,16.8 L11.4,18.1 L10.7,19.4 L10.0,20.8 L9.4,22.1 L8.8,23.5 L8.3,24.9 L7.7,26.3 L7.2,27.8 L6.8,29.2 L6.4,30.7 L6.0,32.1 L5.6,33.6 L5.3,35.0 L5.0,36.4 L4.7,37.9 L4.5,39.3 L4.4,39.7 L11.0,36.0Z" fill="{{ item.eggA }}" stroke="{{ item.eggB }}" stroke-width="1.2"></path><ellipse cx="21" cy="20" rx="6" ry="10" fill="#ffffff" opacity=".24" transform="rotate(-20 21 20)"></ellipse></g><g style="{{ item.crackStyle }}"><path class="egg-glowpulse" d="M4,40 L11,36 L17,42 L23,35 L30,41 L36,34 L42,40 L48,35 L56,39" fill="none" stroke="#FF9A3C" stroke-width="9" stroke-linejoin="round" opacity=".22"></path><path class="egg-glowpulse" d="M4,40 L11,36 L17,42 L23,35 L30,41 L36,34 L42,40 L48,35 L56,39" fill="none" stroke="#FFB15C" stroke-width="4.5" stroke-linejoin="round" opacity=".55"></path><path d="M4,40 L11,36 L17,42 L23,35 L30,41 L36,34 L42,40 L48,35 L56,39" fill="none" stroke="#FFE7C2" stroke-width="1.6" stroke-linejoin="round"></path></g><g style="{{ item.sparkStyle }}"><circle cx="30" cy="36" r="15" fill="#FFD9A6" opacity=".55"></circle><circle cx="30" cy="36" r="7" fill="#FFF3E0"></circle><path d="M30 14 V6 M44 22 L50 16 M16 22 L10 16 M48 36 H56 M12 36 H4" stroke="#FFB15C" stroke-width="2.2" stroke-linecap="round"></path></g><sc-if value="{{ item.justCracked }}" hint-placeholder-val="{{ false }}"><g transform="scale(1.5)"><g class="egg-hammer" style="transform-box:view-box;transform-origin:34px 12px"><line x1="19" y1="1.5" x2="33.5" y2="11.5" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"></line><rect x="6.5" y="-5.5" width="14" height="8" rx="2" fill="#7b8492" stroke="#3b4250" stroke-width="0.7"></rect><rect x="10.5" y="-7.5" width="4.5" height="12" rx="1.2" fill="#aab2bd"></rect></g></g></sc-if></svg>
 </button>
 <div style="{{ item.railHeadStyle }}">
 <sc-if value="{{ item.hasLogo }}" hint-placeholder-val="{{ true }}"><img src="{{ item.logo }}" alt="" loading="lazy" style="{{ item.logoStyle }}"></sc-if>
@@ -756,6 +751,7 @@ class Component extends DCLogic {
     exp: -1, tab: "prd", mExp: -1, whyOpen: -1, whySel: -1,
     menuOpen: false,
     tlEgg: { i: -1, s: 0 },
+    tlHatched: (() => { try { return JSON.parse(sessionStorage.getItem("om-hatched") || "[]"); } catch (e) { return []; } })(),
     skillCat: 0
   };
 
@@ -1009,15 +1005,28 @@ class Component extends DCLogic {
     };
     const cardBase = () => ({ background: "var(--panel)", borderRadius: "16px", padding: "15px 17px", boxShadow: "var(--card-shadow)", transition: "transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative" });
     const egg = S.tlEgg || { i: -1, s: 0 };
-    const onEggTap = i => () => { const cur = (egg.i === i ? egg.s : 0); const ns = cur >= 2 ? 0 : cur + 1; if (ns >= 1) this.playCrack(ns); this.setState({ tlEgg: { i: ns === 0 ? -1 : i, s: ns } }); };
+    const onEggTap = i => () => {
+      const cur = (egg.i === i ? egg.s : 0);
+      clearTimeout(this._eggT);
+      if (cur >= 1) { this.setState({ tlEgg: { i: -1, s: 0 } }); return; }
+      this.playCrack(1); this.setState({ tlEgg: { i, s: 1 } });
+      this._eggT = setTimeout(() => {
+        this.playCrack(2);
+        const arr = Array.from(new Set([...(this.state.tlHatched || []), i]));
+        try { sessionStorage.setItem("om-hatched", JSON.stringify(arr)); } catch (e) {}
+        this.setState({ tlEgg: { i, s: 2 }, tlHatched: arr });
+      }, 620);
+    };
     const eggClose = () => this.setState({ tlEgg: { i: -1, s: 0 } });
-    const eggBase = { position: "absolute", zIndex: 4, width: "42px", height: "52px", padding: 0, border: "none", background: "transparent", cursor: "pointer", filter: "drop-shadow(0 3px 5px rgba(0,0,0,.28))" };
+    const eggBase = { position: "absolute", zIndex: 4, width: "50px", height: "65px", padding: 0, border: "none", background: "transparent", cursor: "pointer", filter: "drop-shadow(0 6px 8px rgba(20,30,45,.3))" };
+    const EGG_COL = [["#23344B", "#121C29"], ["#EAE2D4", "#C9BCA6"], ["#C9480F", "#8E2F08"], ["#3B6EA5", "#264B74"]];
     const eggBind = i => {
       const st = (egg.i === i ? egg.s : 0);
-      return { eggStage: st, isOpen: st === 2, justCracked: st === 1, onEgg: onEggTap(i),
-        eggTopStyle: { transform: st === 2 ? "translate(-2px,-11px) rotate(-24deg)" : "none", transformOrigin: "20px 24px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
-        eggBotStyle: { transform: st === 2 ? "translate(1px,2px)" : "none", transformOrigin: "20px 40px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
-        crackStyle: { opacity: st === 1 ? 1 : 0, transition: "opacity .3s" },
+      const ec = EGG_COL[i % EGG_COL.length];
+      return { eggStage: st, isOpen: st === 2, justCracked: st === 1, onEgg: onEggTap(i), eggA: ec[0], eggB: ec[1],
+        eggTopStyle: { transform: st === 2 ? "translate(-3px,-15px) rotate(-22deg)" : "none", transformOrigin: "30px 36px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
+        eggBotStyle: { transform: st === 2 ? "translate(1px,3px)" : "none", transformOrigin: "30px 60px", transition: "transform .5s cubic-bezier(.2,.8,.2,1)" },
+        crackStyle: { opacity: st === 2 ? 0 : 1, transform: st === 1 ? "scale(1.08)" : "none", transformOrigin: "30px 38px", transition: "opacity .3s, transform .2s" },
         sparkStyle: { opacity: st === 2 ? 1 : 0, transition: "opacity .35s" } };
     };
     const tlDesk = tl.map((e, i) => {
@@ -1043,7 +1052,7 @@ class Component extends DCLogic {
         eggFill: b.col, eggStroke: "rgba(0,0,0,.18)",
         revealStyle: { marginTop: "11px", paddingTop: "11px", borderTop: "1px dashed " + b.col, textAlign: b.side === "right" ? "left" : "right", animation: "eggUnfold .45s cubic-bezier(.2,.8,.2,1) both" },
         cardHover: "transform:translateY(-5px);box-shadow:0 26px 56px -26px " + b.col,
-        eggWrapStyle: { ...eggBase, top: "-22px", [eggSide]: "-16px", filter: "drop-shadow(0 3px 5px rgba(0,0,0,.28)) saturate(1.3) hue-rotate(" + eggHue + "deg)", ...(eb.eggStage === 1 ? { animation: "eggJolt .55s ease both" } : {}) },
+        eggWrapStyle: { ...eggBase, top: "-34px", [eggSide]: "-20px", animationDelay: (i * 0.8) + "s", ...(eb.eggStage === 1 ? { animation: "eggJolt .55s ease both" } : {}) },
         onClose: eggClose };
     });
     const tlRail = tl.map((e, i) => {
@@ -1059,8 +1068,8 @@ class Component extends DCLogic {
         flipInner: { position: "relative", width: "100%", height: "100%", transformStyle: "preserve-3d", transition: "transform .65s cubic-bezier(.2,.8,.2,1)", transform: eb.isOpen ? "rotateY(180deg)" : "none" },
         faceFront: face,
         faceBack: { ...face, transform: "rotateY(180deg)", overflowY: "auto", display: "flex", flexDirection: "column" },
-        eggWrapStyle: { ...eggBase, top: "5px", [eggSideM]: "5px", width: "34px", height: "42px", filter: "drop-shadow(0 3px 5px rgba(0,0,0,.28)) saturate(1.3) hue-rotate(" + eggHue + "deg)", ...(eb.eggStage === 1 ? { animation: "eggJolt .55s ease both" } : {}) },
-        railHeadStyle: { display: "flex", alignItems: "center", gap: "9px", [eggSideM === "left" ? "paddingLeft" : "paddingRight"]: "40px" },
+        eggWrapStyle: { ...eggBase, top: "4px", [eggSideM]: "6px", width: "40px", height: "52px", animationDelay: (i * 0.8) + "s", ...(eb.eggStage === 1 ? { animation: "eggJolt .55s ease both" } : {}) },
+        railHeadStyle: { display: "flex", alignItems: "center", gap: "9px", [eggSideM === "left" ? "paddingLeft" : "paddingRight"]: "50px" },
         onClose: eggClose };
     });
     const oIdx = egg.s === 2 ? egg.i : -1;
@@ -1151,6 +1160,7 @@ class Component extends DCLogic {
       setLight: () => this.setTheme("light"), setSpace: () => this.setTheme("space"), toggleTheme: () => this.setTheme(isSpace ? "light" : "space"), themeIcon: isSpace ? "☀️" : "🌙", themeLabel: isSpace ? "Switch to light theme" : "Switch to dark theme", segLightStyle, segSpaceStyle,
       barTop, barMid, barBot,
       heroFacts, ledger, sel: selOut, hasSel, noSel, dossierStyle, accordion, projTabs, projList, projEmpty,
+      tlEggTotal: tl.length, tlHatchedText: ((S.tlHatched || []).length >= tl.length ? "all hatched" : (S.tlHatched || []).length + " hatched"),
       tlDesk, tlRail, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
       whyItems, whyHasSel: !!whyCur, whyNoSel: !whyCur,
       whySelNum: whyCur ? whyCur.num : "", whySelTitle: whyCur ? whyCur.title : "", whySelDesc: whyCur ? whyCur.desc : "",
