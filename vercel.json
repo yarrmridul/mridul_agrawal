@@ -2,6 +2,70 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "echo 'no install needed'",
-  "buildCommand": "echo 'static site — no build step'",
-  "outputDirectory": "."
+  "buildCommand": "echo 'static site \u2014 no build step'",
+  "outputDirectory": ".",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/About.dc.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/FutureCard.dc.html",
+      "destination": "/solve",
+      "permanent": true
+    },
+    {
+      "source": "/resume.html",
+      "destination": "/resume",
+      "permanent": true
+    },
+    {
+      "source": "/resume/resume.pdf",
+      "destination": "/files/Mridul-Agrawal-Resume.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/Project.dc.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "p",
+          "value": "(?<slug>[a-z0-9-]+)"
+        }
+      ],
+      "destination": "/work/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/Project.dc.html",
+      "destination": "/#projects",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/about",
+      "destination": "/About.dc.html"
+    },
+    {
+      "source": "/solve",
+      "destination": "/FutureCard.dc.html"
+    },
+    {
+      "source": "/resume",
+      "destination": "/resume.html"
+    },
+    {
+      "source": "/work/:slug",
+      "destination": "/Project.dc.html"
+    }
+  ]
 }

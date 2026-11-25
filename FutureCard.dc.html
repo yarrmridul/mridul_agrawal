@@ -3,9 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/jpeg" href="favicon.jpeg">
-<link rel="apple-touch-icon" href="favicon.jpeg">
-<script src="./support.js"></script>
+<title>Solve a Problem | Mridul Agrawal</title>
+<meta name="description" content="Describe a problem you want solved and Mridul Agrawal will get back to you.">
+<meta property="og:title" content="Solve a Problem | Mridul Agrawal">
+<meta property="og:description" content="Describe a problem you want solved and Mridul Agrawal will get back to you.">
+<meta property="og:image" content="https://mridulagrawal.in/favicon.jpeg">
+<link rel="canonical" href="https://mridulagrawal.in/solve">
+<link rel="icon" type="image/jpeg" href="/favicon.jpeg">
+<link rel="apple-touch-icon" href="/favicon.jpeg">
+<script src="/support.js"></script>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
@@ -225,7 +231,7 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 
 <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column">
 <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px clamp(18px,5vw,52px);flex:0 0 auto">
-<a href="index.html" class="fc-back" style="display:inline-flex;align-items:center;gap:8px;color:#C4B5A6;font-size:13.5px;font-weight:600" style-hover="color:#FF7A22"><span style="font-size:16px">←</span> Back to Home</a>
+<a href="/" class="fc-back" style="display:inline-flex;align-items:center;gap:8px;color:#C4B5A6;font-size:13.5px;font-weight:600" style-hover="color:#FF7A22"><span style="font-size:16px">←</span> Back to Home</a>
 <span class="hand fc-tag" style="font-family:'Caveat',cursive;font-weight:700;font-size:20px;color:#FF7A22">let's see if we click ✦</span>
 </nav>
 
@@ -359,7 +365,7 @@ html[data-solve="1"] .fc-tag{color:#FFAA5C!important}
 <p class="sv-sub">Something slow, messy or manual? A process, a product, a website, or a role you're hiring for. Describe it below and it lands straight in my inbox.</p>
 <div id="solve-composer" class="sv-host"></div>
 <div class="sv-kbd"><kbd>Enter</kbd> to send · <kbd>Shift</kbd> + <kbd>Enter</kbd> for a new line</div>
-<div class="sv-alt">Prefer something else?<a href="https://wa.me/917983738443" target="_blank" rel="noopener noreferrer">WhatsApp</a>·<a href="resume.html" target="_blank" rel="noopener noreferrer">Resume</a>·<a href="index.html#projects">Projects</a></div>
+<div class="sv-alt">Prefer something else?<a href="https://wa.me/917983738443" target="_blank" rel="noopener noreferrer">WhatsApp</a>·<a href="/resume" target="_blank" rel="noopener noreferrer">Resume</a>·<a href="/#projects">Projects</a></div>
 <button onClick="{{ backToCard }}" class="sv-back">← back to the card</button>
 </div>
 </div>
@@ -914,7 +920,7 @@ function mountSolveComposer(host, opts) {
       '<p class="mpt-done-prompt mpt-enter" style="animation-delay:.1s">&ldquo;' + esc(st.problem.trim()) + "&rdquo;</p>" +
       '<p class="mpt-done-note mpt-enter" style="animation-delay:.15s">I&rsquo;ll reply to <b>' + esc(st.email.trim()) + "</b> " + REPLIES[st.reply].line + ".</p>" +
       '<div class="mpt-done-actions mpt-enter" style="animation-delay:.2s"><button type="button" class="mpt-ghost sv-again">Describe another</button>' +
-      '<a class="mpt-solid" href="index.html#projects">See what I&rsquo;ve built</a></div></div>' +
+      '<a class="mpt-solid" href="/#projects">See what I&rsquo;ve built</a></div></div>' +
       '<div class="sv-mail mpt-enter" aria-hidden="true" style="animation-delay:.15s"><div class="sv-mail-top"><i>M</i><span>New problem &middot; ' + esc(KINDS[st.kind].label) + '</span></div>' +
       '<div class="sv-mail-line" style="width:92%"></div><div class="sv-mail-line" style="width:78%"></div><div class="sv-mail-line" style="width:60%"></div>' +
       '<span class="sv-mail-tag">&#10003; IN INBOX</span></div></div>';
@@ -930,7 +936,7 @@ function mountSolveComposer(host, opts) {
       '<p class="mpt-done-title mpt-enter">That didn&rsquo;t go through.</p>' +
       '<p class="mpt-done-note mpt-enter">' + esc(msg || "Something went wrong.") + " Your message is still here, so you can try again, or reach me another way.</p>" +
       '<div class="mpt-done-actions mpt-enter"><button type="button" class="mpt-solid sv-retry">Try again</button>' +
-      '<a class="mpt-ghost" href="index.html#contact">Other ways to reach me</a></div></div></div>';
+      '<a class="mpt-ghost" href="/#contact">Other ways to reach me</a></div></div></div>';
     $(".sv-retry").addEventListener("click", function () { showIdle(); });
   }
 

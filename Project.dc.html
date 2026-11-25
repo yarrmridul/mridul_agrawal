@@ -3,11 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" type="image/jpeg" href="favicon.jpeg">
-<link rel="apple-touch-icon" href="favicon.jpeg">
-<script src="./support.js"></script>
-<script src="./lamp.js" defer></script>
-<script src="./sky.js"></script>
+<title>Case Study | Mridul Agrawal</title>
+<meta name="description" content="Case studies of products and automations built by Mridul Agrawal.">
+<meta property="og:title" content="Case Study | Mridul Agrawal">
+<meta property="og:description" content="Case studies of products and automations built by Mridul Agrawal.">
+<meta property="og:image" content="https://mridulagrawal.in/favicon.jpeg">
+<link rel="icon" type="image/jpeg" href="/favicon.jpeg">
+<link rel="apple-touch-icon" href="/favicon.jpeg">
+<script src="/support.js"></script>
+<script src="/lamp.js" defer></script>
+<script src="/sky.js"></script>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
@@ -266,7 +271,7 @@ a:hover{color:var(--accent-2)}
 
 <div style="position:relative;z-index:1">
 <nav style="position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px clamp(18px,5vw,56px);background:var(--nav-bg);backdrop-filter:blur(14px) saturate(1.35);-webkit-backdrop-filter:blur(14px) saturate(1.35);border-bottom:1px solid var(--border)">
-<a href="index.html#projects" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)">← All projects</a>
+<a href="/#projects" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)">← All projects</a>
 <span style="font-family:'Playfair Display',serif;font-weight:600;font-size:15px;letter-spacing:-.01em">Mridul Agrawal</span>
 <button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--panel-2);color:var(--text);font-size:16px;cursor:pointer;transition:border-color .2s,transform .2s" style-hover="border-color:var(--accent);transform:translateY(-1px)">{{ themeIcon }}</button>
 </nav>
@@ -276,7 +281,7 @@ a:hover{color:var(--accent-2)}
 <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--accent)">404 · NO CASE STUDY</div>
 <h1 style="font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(28px,5vw,44px);margin:14px 0 12px">This project isn’t here.</h1>
 <p style="font-size:15px;color:var(--muted);margin:0 0 26px">The link may be out of date. Head back and pick a project from the grid.</p>
-<a href="index.html#projects" style="display:inline-block;background:var(--fill);border:1px solid var(--fill-bd);color:var(--fill-fg);font-size:14px;font-weight:600;padding:13px 24px;border-radius:11px">← Back to projects</a>
+<a href="/#projects" style="display:inline-block;background:var(--fill);border:1px solid var(--fill-bd);color:var(--fill-fg);font-size:14px;font-weight:600;padding:13px 24px;border-radius:11px">← Back to projects</a>
 </div>
 </sc-if>
 
@@ -470,7 +475,7 @@ a:hover{color:var(--accent-2)}
 </a>
 <div class="cs-endrow">
 <a href="{{ prevHref }}">← {{ prevTitle }}</a>
-<a href="index.html#projects">All projects</a>
+<a href="/#projects">All projects</a>
 <sc-if value="{{ hasLive }}" hint-placeholder-val="{{ false }}">
 <a href="{{ liveUrl }}" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Visit live site ↗</a>
 </sc-if>
@@ -494,7 +499,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     let t = null;
-    try { t = localStorage.getItem("om-portfolio-theme"); } catch (e) {}
+    try { t = sessionStorage.getItem("om-portfolio-theme"); } catch (e) {}
     if (!t) t = this.props.defaultTheme || "light";
     if (t !== this.state.theme) this.setState({ theme: t });
     this.startReader(0);
@@ -586,7 +591,7 @@ class Component extends DCLogic {
     update();
   }
 
-  setTheme(t) { this.setState({ theme: t }); try { localStorage.setItem("om-portfolio-theme", t); } catch (e) {} }
+  setTheme(t) { this.setState({ theme: t }); try { sessionStorage.setItem("om-portfolio-theme", t); } catch (e) {} }
 
   data(P) {
     return {
@@ -1273,11 +1278,12 @@ class Component extends DCLogic {
 
   renderVals() {
     const S = this.state, isSpace = S.theme === "space";
-    const P = "uploads/mridul-portfolio/public/opt/projects/";
+    const P = "/uploads/mridul-portfolio/public/opt/projects/";
     const D = this.data(P);
     const ORDER = ["moodale", "moti", "smart-crm", "outreach-deck", "qr-tool", "ops-panel", "irish-green", "sales-training"];
     let slug = "moodale";
-    try { const q = new URLSearchParams(location.search).get("p"); if (q) slug = q; } catch (e) {}
+    try { const m = location.pathname.match(/\/work\/([a-z0-9-]+)/i); if (m) slug = m[1].toLowerCase(); } catch (e) {}
+    try { const q = new URLSearchParams(location.search).get("p"); if (q) { slug = q; if (history.replaceState) history.replaceState(null, "", "/work/" + q + location.hash); } } catch (e) {}
     const base = {
       theme: S.theme, isSpace,
       toggleTheme: () => this.setTheme(isSpace ? "light" : "space"),
@@ -1285,6 +1291,7 @@ class Component extends DCLogic {
       themeLabel: isSpace ? "Switch to light theme" : "Switch to dark theme"
     };
     const p = D[slug];
+    try { if (p && document.title !== p.title + " | Mridul Agrawal") document.title = p.title + " | Mridul Agrawal"; } catch (e) {}
     if (!p) return { ...base, notFound: true, found: false };
 
     const idx = ORDER.indexOf(slug);
@@ -1337,8 +1344,8 @@ class Component extends DCLogic {
       firstHref: sections.length ? "#" + sections[0].id : "#reflection",
       hasReflection: !!p.reflection, reflection: p.reflection || "",
       reflectionNum: String(sections.length + 1).padStart(2, "0"),
-      nextTitle: (D[nextSlug] || {}).title || "", nextHref: "Project.dc.html?p=" + nextSlug,
-      prevTitle: (D[prevSlug] || {}).title || "", prevHref: "Project.dc.html?p=" + prevSlug
+      nextTitle: (D[nextSlug] || {}).title || "", nextHref: "/work/" + nextSlug,
+      prevTitle: (D[prevSlug] || {}).title || "", prevHref: "/work/" + prevSlug
     };
   }
 }

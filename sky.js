@@ -8,7 +8,7 @@
   if (window.__skyMounted) return;
   window.__skyMounted = true;
 
-  var IMG = "uploads/mridul-portfolio/public/opt/sky/";
+  var IMG = "/uploads/mridul-portfolio/public/opt/sky/";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var L = 'html [data-theme="light"]';
 
