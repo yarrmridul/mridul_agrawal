@@ -93,13 +93,21 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const r = await fetch(apiUrl("/items"), {
+    // Some stores reject "upsert" when the key doesn't exist yet, so fall back to
+    // "create" (first save) and then "update" (key already there).
+    const send = (operation) => fetch(apiUrl("/items"), {
       method: "PATCH",
       headers: { Authorization: "Bearer " + process.env.VERCEL_API_TOKEN, "Content-Type": "application/json" },
-      body: JSON.stringify({ items: [{ operation: "upsert", key: KEY, value: body.darkStyle }] }),
+      body: JSON.stringify({ items: [{ operation, key: KEY, value: body.darkStyle }] }),
     });
+    let r = null, detail = "";
+    for (const op of ["upsert", "create", "update"]) {
+      r = await send(op);
+      if (r.ok) break;
+      detail = await r.text().catch(() => "");
+      if (![400, 404, 409].includes(r.status)) break;
+    }
     if (!r.ok) {
-      const detail = await r.text().catch(() => "");
       return res.status(502).end(JSON.stringify({ ok: false, error: "Vercel refused the change (" + r.status + "). " + detail.slice(0, 200) }));
     }
     return res.status(200).end(JSON.stringify({ ok: true, darkStyle: body.darkStyle }));
