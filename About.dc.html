@@ -6,6 +6,7 @@
 <link rel="icon" type="image/jpeg" href="favicon.jpeg">
 <link rel="apple-touch-icon" href="favicon.jpeg">
 <script src="./support.js"></script>
+<script src="./lamp.js" defer></script>
 <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
@@ -44,32 +45,6 @@ a{color:var(--accent);text-decoration:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(14px,-12px)}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important}}
-/* hanging bulb theme switch */
-:root,[data-theme="light"]{--lb-glass:#FFE6A0;--lb-edge:#E2A93B;--lb-fil:#E07400;--lb-glow:.95;--lb-metal:#8B9694;--lb-rope:#7F8C8A}
-[data-theme="space"]{--lb-glass:rgba(255,255,255,.07);--lb-edge:rgba(234,242,240,.42);--lb-fil:rgba(234,242,240,.38);--lb-glow:0;--lb-metal:#6B7876;--lb-rope:#5E706E}
-.lamp{position:relative;width:40px;height:38px;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.lamp:focus{outline:none}
-.lamp-swing{position:absolute;left:50%;top:-11px;width:28px;margin-left:-14px;transform-origin:50% 0;animation:lampSway 7s ease-in-out infinite;display:flex;flex-direction:column;align-items:center;z-index:30}
-.lamp-cap{width:12px;height:4px;border-radius:0 0 4px 4px;background:var(--lb-metal)}
-.lamp-rope{width:2px;height:34px;background:var(--lb-rope);border-radius:2px}
-.lamp-bulb{position:relative;width:28px;height:40px;display:block;transition:transform .2s}
-.lamp-bulb svg{position:relative;z-index:1;display:block;overflow:visible}
-.lamp-bulb .g{fill:var(--lb-glass);stroke:var(--lb-edge);stroke-width:1.4;transition:fill .25s,stroke .25s}
-.lamp-bulb .f{fill:none;stroke:var(--lb-fil);stroke-width:1.3;stroke-linecap:round;transition:stroke .25s}
-.lamp-bulb .m{fill:var(--lb-metal)}
-.lamp-glow{position:absolute;left:50%;top:62%;width:78px;height:78px;margin:-39px 0 0 -39px;border-radius:50%;background:radial-gradient(circle,rgba(255,196,84,.55),rgba(255,196,84,0) 66%);opacity:var(--lb-glow);transition:opacity .3s;pointer-events:none;z-index:0}
-.lamp:hover .lamp-bulb{transform:scale(1.06)}
-.lamp:focus-visible .lamp-bulb{outline:2px solid var(--accent);outline-offset:3px;border-radius:50%}
-.lamp-hand{position:absolute;left:50%;top:14px;margin-left:-10px;font-size:19px;line-height:1;opacity:0;pointer-events:none;z-index:31;transform:translate(24px,-6px)}
-.lamp.is-pulling .lamp-swing{animation:none}
-.lamp.is-pulling .lamp-rope{animation:lampRope 1s cubic-bezier(.3,.7,.3,1) both}
-.lamp.is-pulling .lamp-hand{animation:lampHand 1s ease both}
-.lamp.is-pulling .lamp-glow{animation:lampFlick .5s .5s steps(2,end) both}
-@keyframes lampSway{0%,100%{transform:rotate(0)}14%{transform:rotate(3.2deg)}30%{transform:rotate(-1.6deg)}46%{transform:rotate(4.4deg)}60%{transform:rotate(-2.6deg)}78%{transform:rotate(1.8deg)}90%{transform:rotate(-.8deg)}}
-@keyframes lampRope{0%,24%{height:34px}50%{height:52px}62%{height:29px}74%{height:38px}86%{height:33px}100%{height:34px}}
-@keyframes lampHand{0%{opacity:0;transform:translate(26px,-8px) rotate(12deg)}22%{opacity:1;transform:translate(0,0)}50%{opacity:1;transform:translate(0,18px)}60%{opacity:1;transform:translate(5px,15px)}80%,100%{opacity:0;transform:translate(26px,4px) rotate(10deg)}}
-@keyframes lampFlick{0%{opacity:.2}50%{opacity:var(--lb-glow)}100%{opacity:var(--lb-glow)}}
-@media (prefers-reduced-motion:reduce){.lamp-swing{animation:none}}
 .hand{font-family:'Caveat',cursive;font-weight:600;line-height:1}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--card-shadow)}
 .shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
@@ -121,7 +96,7 @@ a{color:var(--accent);text-decoration:none}
 <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,4vw,44px);flex:0 0 auto">
 <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13.5px;font-weight:600" style-hover="color:var(--accent)"><span style="font-size:16px">←</span> Back to Home</a>
 <span class="hand" style="font-size:20px;color:var(--accent)">automating the mundane ✦</span>
-<button class="lamp" id="lamp" onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}"><span class="lamp-swing" aria-hidden="true"><span class="lamp-cap"></span><span class="lamp-rope"></span><span class="lamp-bulb"><span class="lamp-glow"></span><svg width="28" height="40" viewBox="0 0 28 40"><rect class="m" x="9" y="0" width="10" height="9" rx="2"/><path class="m" d="M8.5 3h11M8.5 6h11" stroke="rgba(0,0,0,.22)" stroke-width="1"/><path class="g" d="M9.5 9h9v2.5c0 2.2 7 5 7 13a11.5 11.5 0 1 1-23 0c0-8 7-10.8 7-13z"/><path class="f" d="M12 14v6M16 14v6M10.5 22.5q1.75-3.5 3.5 0t3.5 0"/></svg></span></span><span class="lamp-hand" aria-hidden="true">✊</span></button>
+<button onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" title="{{ themeLabel }}" style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--panel);color:var(--text);font-size:15px;cursor:pointer">{{ themeIcon }}</button>
 </nav>
 
 <div class="dash">
@@ -230,16 +205,6 @@ class Component extends DCLogic {
     if (t && t !== this.state.theme) this.setState({ theme: t });
   }
   componentWillUnmount() { try { this.mq && this.mq.removeEventListener("change", this.onMq); } catch (e) {} }
-  pullLamp(t) {
-    const el = document.getElementById("lamp");
-    const still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!el || still) { this.setTheme(t); return; }
-    if (this._pulling) return;
-    this._pulling = true;
-    el.classList.remove("is-pulling"); void el.offsetWidth; el.classList.add("is-pulling");
-    setTimeout(() => this.setTheme(t), 500);
-    setTimeout(() => { el.classList.remove("is-pulling"); this._pulling = false; }, 1050);
-  }
   setTheme(t) { this.setState({ theme: t }); try { localStorage.setItem("om-portfolio-theme", t); } catch (e) {} }
 
   renderVals() {
@@ -271,7 +236,7 @@ class Component extends DCLogic {
     const journey = jRaw.map((j, i) => ({ ...j, col: jc[i], soft: js[i], pos: i % 2 === 0 ? "up" : "down" }));
     return {
       theme: S.theme, isSpace: S.theme === "space", narrow: S.narrow,
-      toggleTheme: () => this.pullLamp(isLight ? "space" : "light"), themeIcon: isLight ? "🌙" : "☀️", themeLabel: isLight ? "Switch to dark theme" : "Switch to light theme",
+      toggleTheme: () => this.setTheme(isLight ? "space" : "light"), themeIcon: isLight ? "🌙" : "☀️", themeLabel: isLight ? "Switch to dark theme" : "Switch to light theme",
       brain, journey, version
     };
   }
