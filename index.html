@@ -752,7 +752,6 @@ class Component extends DCLogic {
     menuOpen: false,
     tlEgg: { i: -1, s: 0 },
     tlEggs: {}, tlLast: -1,
-    tlHatched: (() => { try { return JSON.parse(sessionStorage.getItem("om-hatched") || "[]"); } catch (e) { return []; } })(),
     skillCat: 0
   };
 
@@ -1008,13 +1007,16 @@ class Component extends DCLogic {
     const eggs = S.tlEggs || {};
     const onEggTap = i => () => {
       const cur = (this.state.tlEggs || {})[i] || 0;
-      if (cur >= 2) return;
-      const next = { ...(this.state.tlEggs || {}), [i]: cur + 1 };
+      if (cur >= 2) {
+        // A hatched egg reseals on tap (a quick extra tap right after hatching is ignored).
+        if (Date.now() - (this._eggAt || 0) < 450) return;
+        const next = { ...(this.state.tlEggs || {}) }; delete next[i];
+        this.setState({ tlEggs: next, tlLast: this.state.tlLast === i ? -1 : this.state.tlLast });
+        return;
+      }
       this.playCrack(cur + 1);
-      if (cur === 0) { this.setState({ tlEggs: next }); return; }
-      const arr = Array.from(new Set([...(this.state.tlHatched || []), i]));
-      try { sessionStorage.setItem("om-hatched", JSON.stringify(arr)); } catch (e) {}
-      this.setState({ tlEggs: next, tlLast: i, tlHatched: arr });
+      if (cur === 1) this._eggAt = Date.now();
+      this.setState({ tlEggs: { ...(this.state.tlEggs || {}), [i]: cur + 1 }, tlLast: cur === 1 ? i : this.state.tlLast });
     };
     const eggClose = i => () => { const next = { ...(this.state.tlEggs || {}) }; delete next[i]; this.setState({ tlEggs: next, tlLast: this.state.tlLast === i ? -1 : this.state.tlLast }); };
     const eggBase = { position: "absolute", zIndex: 4, width: "50px", height: "65px", padding: 0, border: "none", background: "transparent", cursor: "pointer", filter: "drop-shadow(0 6px 8px rgba(20,30,45,.3))" };
@@ -1160,7 +1162,7 @@ class Component extends DCLogic {
       setLight: () => this.setTheme("light"), setSpace: () => this.setTheme("space"), toggleTheme: () => this.setTheme(isSpace ? "light" : "space"), themeIcon: isSpace ? "☀️" : "🌙", themeLabel: isSpace ? "Switch to light theme" : "Switch to dark theme", segLightStyle, segSpaceStyle,
       barTop, barMid, barBot,
       heroFacts, ledger, sel: selOut, hasSel, noSel, dossierStyle, accordion, projTabs, projList, projEmpty,
-      tlEggTotal: tl.length, tlHatchedText: ((S.tlHatched || []).length >= tl.length ? "all hatched" : (S.tlHatched || []).length + " hatched"),
+      tlEggTotal: tl.length, tlHatchedText: (n => n >= tl.length ? "all hatched" : n + " hatched")(Object.keys(eggs).filter(k => eggs[k] === 2).length),
       tlDesk, tlRail, whyCards, aboutCols: wide ? "320px 1fr" : "1fr",
       whyItems, whyHasSel: !!whyCur, whyNoSel: !whyCur,
       whySelNum: whyCur ? whyCur.num : "", whySelTitle: whyCur ? whyCur.title : "", whySelDesc: whyCur ? whyCur.desc : "",
