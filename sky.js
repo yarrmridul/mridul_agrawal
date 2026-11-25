@@ -68,22 +68,16 @@
     ".sk-f{opacity:.85}.sk-f .sk-in{background:linear-gradient(180deg,#D3DCE6,#E3E9F0);-webkit-mask:url(" + IMG + "c3.webp) center/contain no-repeat;mask:url(" + IMG + "c3.webp) center/contain no-repeat}",
     ".sk-f1{left:58vw;top:30vh;width:min(460px,36vw);aspect-ratio:900/270}",
     ".sk-f2{left:10vw;top:70vh;width:min(420px,34vw);aspect-ratio:900/270;opacity:.75}",
-    /* soft sun rays from the warm top-right corner */
-    ".sk-rays{right:-30vmax;top:-30vmax;width:80vmax;height:80vmax;border-radius:50%;opacity:.55;",
-    " background:repeating-conic-gradient(from 0deg,rgba(255,226,170,0) 0deg 6deg,rgba(255,226,170,.9) 9deg,rgba(255,226,170,0) 13deg 20deg);",
-    " -webkit-mask:radial-gradient(circle,transparent 8%,#000 18%,transparent 66%);mask:radial-gradient(circle,transparent 8%,#000 18%,transparent 66%);",
-    " animation:skRays 90s linear infinite,skRayB 6s ease-in-out infinite alternate}",
-    "@keyframes skRays{to{transform:rotate(360deg)}}@keyframes skRayB{from{opacity:.45}to{opacity:.85}}",
     /* specks of light floating up */
-    ".sk-mote{position:absolute;bottom:-10px;width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle,#fff 0,rgba(255,246,228,.9) 40%,rgba(255,240,215,0) 72%);box-shadow:0 0 6px rgba(255,230,190,.8);opacity:0;animation:skMote var(--d) linear infinite;animation-delay:var(--dl)}",
+    ".sk-mote{position:absolute;bottom:-10px;width:var(--s);height:var(--s);border-radius:50%;background:radial-gradient(circle,#fff 0,rgba(255,246,228,.9) 40%,rgba(255,240,215,0) 72%);box-shadow:0 0 4px rgba(255,236,205,.5);opacity:0;animation:skMote var(--d) linear infinite;animation-delay:var(--dl)}",
     "@keyframes skMote{0%{transform:translate(0,0);opacity:0}10%{opacity:.85}50%{transform:translate(var(--sw),-55vh)}90%{opacity:.6}100%{transform:translate(0,-110vh);opacity:0}}",
     /* small flock of birds */
     ".sk-flock{position:absolute;left:0;top:0;will-change:transform}",
     ".sk-bird{position:absolute;width:30px;height:13px;overflow:visible}",
     ".sk-bird path{fill:none;stroke:#33445C;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transform-origin:9px 6px;animation:skFlap var(--fl) ease-in-out infinite alternate}",
     "@keyframes skFlap{from{transform:scaleY(1)}to{transform:scaleY(-.45)}}",
-    "@media (max-width:720px){.sk-f,.sk-rays{display:none}.sk-mote:nth-child(n+8){display:none}}",
-    "@media (prefers-reduced-motion:reduce){.sk-rays,.sk-mote,.sk-bird path{animation:none!important}.sk-mote,.sk-flock{display:none}}",
+    "@media (max-width:720px){.sk-f{display:none}.sk-mote:nth-child(n+8){display:none}}",
+    "@media (prefers-reduced-motion:reduce){.sk-mote,.sk-bird path{animation:none!important}.sk-mote,.sk-flock{display:none}}",
     "@media (max-width:720px){.sk-b,.sk-sh{display:none}.sk-a{top:20vh;width:130vw;left:-15vw}.sk-tr{width:78vw}.sk-bl{width:74vw}}"
   ].join("\n");
 
@@ -110,32 +104,43 @@
     ];
     parts[2].querySelector(".sk-flash").style.setProperty("--m", "url(" + IMG + "c1.webp)");
     var f1 = el("sk-f sk-f1", '<div class="sk-in"></div>'), f2 = el("sk-f sk-f2", '<div class="sk-in"></div>');
-    var rays = el("sk-rays", "");
-    root.appendChild(rays); root.appendChild(f1); root.appendChild(f2);
+    root.appendChild(f1); root.appendChild(f2);
     parts.forEach(function (p) { root.appendChild(p); });
     var motes = "";
-    for (var m = 0; m < 22; m++) {
-      motes += '<span class="sk-mote" style="left:' + (Math.random() * 100).toFixed(1) + 'vw;--s:' + (3 + Math.random() * 4).toFixed(1) + 'px;--d:' + (11 + Math.random() * 9).toFixed(1) + 's;--dl:-' + (Math.random() * 30).toFixed(1) + 's;--sw:' + (Math.random() * 60 - 30).toFixed(0) + 'px"></span>';
+    for (var m = 0; m < 14; m++) {
+      motes += '<span class="sk-mote" style="left:' + (Math.random() * 100).toFixed(1) + 'vw;--s:' + (2 + Math.random() * 3).toFixed(1) + 'px;--d:' + (16 + Math.random() * 14).toFixed(1) + 's;--dl:-' + (Math.random() * 30).toFixed(1) + 's;--sw:' + (Math.random() * 60 - 30).toFixed(0) + 'px"></span>';
     }
     var mo = document.createElement("div"); mo.className = "sk"; mo.style.inset = "0"; mo.innerHTML = motes; root.appendChild(mo);
     document.body.insertBefore(root, document.body.firstChild);
     return { root: root, sh: parts[0], b: parts[1], a: parts[2], tr: parts[3], bl: parts[4], f1: f1, f2: f2 };
   }
 
-  // Each cloud wanders on its own path: a sum of slow sines with random
-  // periods and phases per axis, so the motion never repeats or lines up.
+  // Each cloud drifts freely: it keeps a velocity that slowly turns toward a new,
+  // randomly chosen heading and speed every so often, with a soft pull back toward
+  // its home spot so it never leaves the sky. Nothing repeats, nothing loops.
   function wanderer(node, ampX, ampY, breathe) {
     function r(a, b) { return a + Math.random() * (b - a); }
-    var w = {
-      node: node, ax: ampX, ay: ampY, br: breathe,
-      fx: [r(16, 26), r(34, 52)], fy: [r(18, 30), r(40, 60)], fs: r(18, 30),
-      px: [r(0, 6.3), r(0, 6.3)], py: [r(0, 6.3), r(0, 6.3)], ps: r(0, 6.3)
-    };
-    w.at = function (t) {
-      var x = Math.sin(t * 6.283 / w.fx[0] + w.px[0]) * 0.65 + Math.sin(t * 6.283 / w.fx[1] + w.px[1]) * 0.35;
-      var y = Math.sin(t * 6.283 / w.fy[0] + w.py[0]) * 0.6 + Math.sin(t * 6.283 / w.fy[1] + w.py[1]) * 0.4;
-      var s = 1 + Math.sin(t * 6.283 / w.fs + w.ps) * w.br;
-      w.node.style.transform = "translate3d(" + (x * w.ax).toFixed(2) + "vw," + (y * w.ay).toFixed(2) + "vh,0) scale(" + s.toFixed(4) + ")";
+    var w = { node: node, x: r(-ampX, ampX) * 0.5, y: r(-ampY, ampY) * 0.5, vx: 0, vy: 0, tx: 0, ty: 0, next: 0,
+              s: 1, ts: 1, ax: ampX, ay: ampY, br: breathe, sp: r(0.05, 0.11) * Math.max(ampX, 4) };
+    function pick() {
+      var ang = r(0, 6.2832), spd = w.sp * r(0.35, 1.3);
+      w.tx = Math.cos(ang) * spd; w.ty = Math.sin(ang) * spd * 0.55;   // mostly sideways, a little up/down
+      w.ts = 1 + r(-w.br, w.br);
+      w.next = r(6, 16);
+    }
+    pick();
+    w.at = function (dt) {
+      w.next -= dt;
+      if (w.next <= 0) pick();
+      // soft tether: the further from home, the more the heading bends back
+      var px = w.x / w.ax, py = w.y / w.ay;
+      var pull = 0.5 * w.sp;
+      var gx = w.tx - (px * Math.abs(px)) * pull, gy = w.ty - (py * Math.abs(py)) * pull * 0.6;
+      var k = 1 - Math.exp(-dt / 3.5);                 // velocity eases toward the goal over a few seconds
+      w.vx += (gx - w.vx) * k; w.vy += (gy - w.vy) * k;
+      w.x += w.vx * dt; w.y += w.vy * dt;
+      w.s += (w.ts - w.s) * (1 - Math.exp(-dt / 8));
+      w.node.style.transform = "translate3d(" + w.x.toFixed(3) + "vw," + w.y.toFixed(3) + "vh,0) scale(" + w.s.toFixed(4) + ")";
     };
     return w;
   }
@@ -185,15 +190,15 @@
       wanderer(sky.f1, 26, 8, 0.06),
       wanderer(sky.f2, 28, 8, 0.06)
     ];
-    var t0 = performance.now(), last = 0;
+    var lastT = performance.now();
     (function frame(now) {
-      if (day && !document.hidden && now - last > 33) {
-        last = now;
-        var t = (now - t0) / 1000 * (window.__skySpeed || 1) + 400;
-        for (var i = 0; i < ws.length; i++) ws[i].at(t);
+      var dt = Math.min(0.1, (now - lastT) / 1000); lastT = now;
+      if (day && !document.hidden) {
+        dt *= (window.__skySpeed || 1);
+        for (var i = 0; i < ws.length; i++) ws[i].at(dt);
       }
       requestAnimationFrame(frame);
-    })(t0);
+    })(lastT);
 
     // Now and then a small flock of birds crosses the sky, in a random direction and height.
     var BIRD = '<svg class="sk-bird" viewBox="0 0 18 8"><path d="M1 2 Q5 7 9 5 Q13 7 17 2"/></svg>';
@@ -225,41 +230,40 @@
     }
     setTimeout(flock, 1200 + Math.random() * 1500);
 
-    // Now and then a paper plane glides through on a lazy curve.
-    var PLANE = '<svg viewBox="0 0 40 22" width="40" height="22"><path d="M1 11 L39 1 L16 13 Z" fill="#FFFFFF" stroke="#7D8DA3" stroke-width=".8" stroke-linejoin="round"/><path d="M16 13 L39 1 L22 21 Z" fill="#E3EAF2" stroke="#7D8DA3" stroke-width=".8" stroke-linejoin="round"/><path d="M16 13 L19 18 L22 21" fill="#C9D4E0"/></svg>';
-    function plane() {
-      if (day && !document.hidden) {
-        var VW = window.innerWidth, VH = window.innerHeight, dirP = Math.random() < 0.5 ? -1 : 1;
-        var g = document.createElement("div"); g.className = "sk-flock"; g.innerHTML = PLANE;
-        g.style.filter = "drop-shadow(0 6px 5px rgba(30,50,80,.18))";
-        sky.root.appendChild(g);
-        var y0 = VH * (0.15 + Math.random() * 0.5), amp = 40 + Math.random() * 60, dur = 11000 + Math.random() * 4000, t0p = performance.now(), loopAt = 0.35 + Math.random() * 0.3;
-        (function fly(now) {
-          var t = (now - t0p) / dur;
-          if (t >= 1) { g.remove(); return; }
-          var x = dirP > 0 ? -60 + (VW + 120) * t : VW + 60 - (VW + 120) * t;
-          var y = y0 + Math.sin(t * Math.PI * 2) * amp * 0.5;
-          var lp = (t - loopAt) / 0.12, ang = Math.cos(t * Math.PI * 2) * 0.25;
-          if (lp > 0 && lp < 1) { var a = lp * Math.PI * 2; x += dirP * Math.sin(a) * 50; y -= (1 - Math.cos(a)) * 45; ang -= a; }
-          g.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0) scaleX(" + dirP + ") rotate(" + (-ang * 57.3 * 0.6).toFixed(1) + "deg)";
-          g.style.opacity = Math.min(1, t * 10, (1 - t) * 10).toFixed(2);
-          requestAnimationFrame(fly);
-        })(t0p);
-      }
-      setTimeout(plane, 22000 + Math.random() * 16000);
+    // A quiet storm: now and then the big cloud lights up from inside. Every strike
+    // is different: 1-4 flashes, uneven gaps, varying brightness and position,
+    // and only some strikes show a bolt.
+    var flash = sky.a.querySelector(".sk-flash"), glowEl = sky.a.querySelector(".sk-glow"), boltEl = sky.a.querySelector(".sk-bolt");
+    flash.style.animation = glowEl.style.animation = boltEl.style.animation = "none";
+    function setLight(v, bolt) {
+      flash.style.opacity = v.toFixed(3);
+      glowEl.style.opacity = (v * 0.75).toFixed(3);
+      boltEl.style.opacity = bolt ? (v * 0.8).toFixed(3) : "0";
     }
-    setTimeout(plane, 4000 + Math.random() * 3000);
-
-    // A quiet storm: now and then the big cloud lights up from inside.
     function strike() {
       if (day && !document.hidden) {
-        sky.a.style.setProperty("--fx", (30 + Math.random() * 40).toFixed(0) + "%");
-        sky.a.classList.remove("strike"); void sky.a.offsetWidth; sky.a.classList.add("strike");
-        setTimeout(function () { sky.a.classList.remove("strike"); }, 1400);
+        sky.a.style.setProperty("--fx", (25 + Math.random() * 50).toFixed(0) + "%");
+        var n = 1 + Math.floor(Math.random() * Math.random() * 4.5), at = 0, showBolt = Math.random() < 0.35;
+        var strongest = Math.floor(Math.random() * n);
+        for (var k = 0; k < n; k++) {
+          (function (k, start) {
+            var peak = k === strongest ? 0.75 + Math.random() * 0.25 : 0.25 + Math.random() * 0.45;
+            var rise = 25 + Math.random() * 40, fall = 90 + Math.random() * 260, t0s = 0;
+            setTimeout(function () {
+              (function fl(now) {
+                if (!t0s) t0s = now;
+                var t = now - t0s, v = t < rise ? peak * (t / rise) : peak * Math.exp(-(t - rise) / (fall / 2.5));
+                setLight(v, showBolt && k === strongest && t < rise + 120);
+                if (t < rise + fall * 1.6) requestAnimationFrame(fl); else setLight(0, false);
+              })(performance.now());
+            }, start);
+          })(k, at);
+          at += 70 + Math.random() * 320;
+        }
       }
-      setTimeout(strike, 9000 + Math.random() * 14000);
+      setTimeout(strike, 7000 + Math.random() * Math.random() * 22000);
     }
-    setTimeout(strike, 3500 + Math.random() * 3000);
+    setTimeout(strike, 3000 + Math.random() * 5000);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
