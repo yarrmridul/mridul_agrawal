@@ -48,6 +48,11 @@
       "source": "/Project.dc.html",
       "destination": "/#projects",
       "permanent": false
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/admin",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -66,6 +71,25 @@
     {
       "source": "/work/:slug",
       "destination": "/Project.dc.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/admin",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ]
 }

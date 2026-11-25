@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Site settings</title>
+<link rel="icon" type="image/jpeg" href="/favicon.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;font-family:'Source Sans 3',system-ui,sans-serif;color:#F6EFE7;
+ background:linear-gradient(180deg,#060506 0%,#0A0708 55%,#2A0C07 78%,#A33A0E 90%,#FF8A2A 95%,#2A0E07 100%)}
+.box{width:min(520px,100%);background:rgba(23,15,18,.92);border:1px solid #33261F;border-radius:18px;padding:28px;box-shadow:0 40px 90px -40px #000}
+h1{font-family:'Playfair Display',serif;font-size:28px;margin:0 0 6px}
+p{margin:0;color:#BDAE9F;line-height:1.5}
+label{display:block;font-size:13px;font-weight:600;color:#BDAE9F;margin:22px 0 8px}
+input[type=password]{width:100%;padding:12px 14px;border-radius:11px;border:1px solid #3A2B22;background:#120C10;color:#F6EFE7;font:inherit;font-size:15px}
+input[type=password]:focus-visible,button:focus-visible,.opt:focus-within{outline:2px solid #FF8A3D;outline-offset:2px}
+.opts{display:grid;gap:12px;margin-top:8px}
+.opt{display:flex;gap:14px;align-items:flex-start;padding:14px;border:1px solid #33261F;border-radius:14px;background:#120C10;cursor:pointer}
+.opt input{margin-top:4px;accent-color:#FF7A22}
+.opt b{display:block;font-size:16px}
+.opt span{font-size:14px;color:#BDAE9F}
+.opt:has(input:checked){border-color:#FF8A3A;background:#1C120F}
+.sw{width:64px;height:44px;border-radius:9px;flex:none;border:1px solid #33261F}
+.sw.ember{background:linear-gradient(180deg,#060506 0%,#1A0A08 50%,#A33A0E 78%,#FF8A2A 86%,#1A0806 100%)}
+.sw.classic{background:radial-gradient(circle at 70% 30%,#FF7A2255,transparent 55%),radial-gradient(1px 1px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 60% 70%,#fff,transparent),#08070A}
+button{margin-top:22px;width:100%;padding:13px;border-radius:12px;border:0;background:linear-gradient(135deg,#FF7A22,#E8590C);color:#fff;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+button[disabled]{opacity:.6;cursor:wait}
+.msg{margin-top:14px;font-size:14px;min-height:20px}
+.msg.ok{color:#9BE3A6}.msg.err{color:#FFB4A0}
+.hidden{display:none}
+.links{margin-top:18px;font-size:13px}.links a{color:#FFB27A}
+</style>
+</head>
+<body>
+<main class="box">
+  <h1>Site settings</h1>
+  <p>Choose which dark theme every visitor sees. Changes reach everyone within about two minutes.</p>
+
+  <form id="login">
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <button type="submit">Unlock</button>
+    <div class="msg" id="m1" role="status"></div>
+  </form>
+
+  <form id="set" class="hidden">
+    <label>Dark theme</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="s" value="ember"><i class="sw ember"></i><div><b>Ember night</b><span>Stars, crescent moon, glowing horizon and rolling fog.</span></div></label>
+      <label class="opt"><input type="radio" name="s" value="classic"><i class="sw classic"></i><div><b>Original space</b><span>The first dark theme: starfield, orange nebula and the rocket.</span></div></label>
+    </div>
+    <button type="submit">Apply to site</button>
+    <div class="msg" id="m2" role="status"></div>
+    <div class="links">Check it: <a href="/" target="_blank" rel="noopener">open the site</a> and switch to dark with the bulb.</div>
+  </form>
+</main>
+<script>
+(function () {
+  var pw = "", login = document.getElementById("login"), set = document.getElementById("set");
+  function msg(id, text, ok) { var m = document.getElementById(id); m.textContent = text; m.className = "msg " + (ok ? "ok" : "err"); }
+  function post(body) {
+    return fetch("/api/site-config", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return { ok: false, error: "Unexpected reply (" + r.status + ")." }; }); })
+      .catch(function () { return { ok: false, error: "Couldn't reach the site. Check your connection." }; });
+  }
+  try { var saved = sessionStorage.getItem("om-admin"); if (saved) document.getElementById("pw").value = saved; } catch (e) {}
+  login.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var b = login.querySelector("button"); b.disabled = true; msg("m1", "Checking…", true);
+    pw = document.getElementById("pw").value;
+    post({ password: pw, check: true }).then(function (d) {
+      b.disabled = false;
+      if (!d.ok) return msg("m1", d.error || "Something went wrong.", false);
+      try { sessionStorage.setItem("om-admin", pw); } catch (e) {}
+      var r = set.querySelector('input[value="' + (d.darkStyle || "ember") + '"]'); if (r) r.checked = true;
+      login.classList.add("hidden"); set.classList.remove("hidden");
+      msg("m2", "Current: " + (d.darkStyle === "classic" ? "Original space" : "Ember night") + ".", true);
+    });
+  });
+  set.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var c = set.querySelector('input[name="s"]:checked'); if (!c) return msg("m2", "Pick a theme first.", false);
+    var b = set.querySelector("button"); b.disabled = true; msg("m2", "Applying…", true);
+    post({ password: pw, darkStyle: c.value }).then(function (d) {
+      b.disabled = false;
+      if (!d.ok) return msg("m2", d.error || "Something went wrong.", false);
+      msg("m2", "Applied: " + (d.darkStyle === "classic" ? "Original space" : "Ember night") + ". Visitors see it within about two minutes.", true);
+    });
+  });
+})();
+</script>
+</body>
+</html>

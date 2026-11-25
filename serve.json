@@ -20,6 +20,10 @@
     {
       "source": "/work/:slug",
       "destination": "/Project.dc.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
     }
   ]
 }

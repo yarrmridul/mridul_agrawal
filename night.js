@@ -98,8 +98,34 @@
   var st = document.createElement("style");
   st.id = "night-css";
   st.textContent = css.join("\n");
-  (document.head || document.documentElement).appendChild(st);
-  document.addEventListener("DOMContentLoaded", function () { document.head.appendChild(st); });
+
+  // Which dark theme? Mridul picks it for everyone at /admin ("ember" or "classic").
+  // The last known choice is remembered so the page never flashes the wrong one;
+  // ?dark=classic or ?dark=ember previews a theme on this browser only.
+  var KEY = "om-dark-style", enabled = false, root = null, preview = null;
+  try { preview = new URLSearchParams(location.search).get("dark"); } catch (e) {}
+  if (preview !== "classic" && preview !== "ember") preview = null;
+  function cached() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  var style = preview || cached() || "ember";
+  function setEnabled(on) {
+    enabled = on;
+    if (on) { if (!st.parentNode) (document.head || document.documentElement).appendChild(st); }
+    else if (st.parentNode) st.parentNode.removeChild(st);
+    if (root) root.style.display = on ? "" : "none";
+    if (!on) document.documentElement.classList.remove("sky-night", "night-read");
+  }
+  setEnabled(style === "ember");
+  document.addEventListener("DOMContentLoaded", function () { if (enabled) document.head.appendChild(st); });
+  if (!preview && window.fetch) {
+    fetch("/api/site-config", { headers: { Accept: "application/json" } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || (d.darkStyle !== "ember" && d.darkStyle !== "classic")) return;
+        try { localStorage.setItem(KEY, d.darkStyle); } catch (e) {}
+        if ((d.darkStyle === "ember") !== enabled) setEnabled(d.darkStyle === "ember");
+      })
+      .catch(function () {});
+  }
 
   function build() {
     var root = document.createElement("div");
@@ -135,10 +161,12 @@
   function start() {
     var host = liveHost();
     if (!host) return setTimeout(start, 120);
-    var root = build(), night = false, mo = null;
+    root = build();
+    if (!enabled) root.style.display = "none";
+    var night = false, mo = null;
     function sync() {
       if (!host || !host.isConnected) { var hh = liveHost(); if (hh && hh !== host) watch(hh); }
-      night = !!host && host.getAttribute("data-theme") === "space";
+      night = enabled && !!host && host.getAttribute("data-theme") === "space";
       document.documentElement.classList.toggle("sky-night", night);
     }
     function watch(x) {
@@ -152,7 +180,7 @@
     setInterval(sync, 600);
 
     // Past the first screen the horizon dims so long text stays easy to read.
-    function onScroll() { document.documentElement.classList.toggle("night-read", window.scrollY > window.innerHeight * 0.6); }
+    function onScroll() { document.documentElement.classList.toggle("night-read", enabled && window.scrollY > window.innerHeight * 0.6); }
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
