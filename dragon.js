@@ -1,27 +1,25 @@
-/* Timeline easter egg: when an egg fully hatches, a warm glow and a small flame
-   flicker in the shell, then a little dragon climbs out, flaps off to the left or
-   right of the screen breathing short bursts of fire, and disappears.
+/* Timeline easter egg: when an egg fully hatches, a small dragon climbs out of
+   the shell, breathes a stream of fire, then flies off along a random curved path
+   (any side, any height), breathing short bursts of fire as it goes.
+   Fire is drawn on one canvas so the whole thing stays smooth.
    Call window.hatchDragon(rect) with the egg's bounding rect. */
 (function () {
   if (window.hatchDragon) return;
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var css = [
     ".dg-layer{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}",
-    ".dg-glow{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;",
-    " background:radial-gradient(circle,rgba(255,236,190,.95) 0,rgba(255,170,70,.65) 22%,rgba(255,110,30,.25) 45%,rgba(255,90,20,0) 70%);",
-    " animation:dgGlow .9s ease-out both;mix-blend-mode:screen}",
-    "@keyframes dgGlow{0%{transform:scale(.2);opacity:0}25%{transform:scale(1);opacity:1}45%{opacity:.7}60%{opacity:1}100%{transform:scale(1.25);opacity:0}}",
-    ".dg-flame{position:absolute;width:22px;height:34px;margin:-30px 0 0 -11px;transform-origin:50% 100%;animation:dgFlame .8s ease-out both}",
-    "@keyframes dgFlame{0%{transform:scaleY(.1);opacity:0}20%{opacity:1;transform:scaleY(1) skewX(4deg)}40%{transform:scaleY(.85) skewX(-5deg)}60%{transform:scaleY(1.05) skewX(3deg)}100%{transform:scaleY(.2);opacity:0}}",
-    ".dg{position:absolute;left:0;top:0;will-change:transform}",
+    ".dg-layer canvas{position:absolute;inset:0;width:100%;height:100%}",
+    ".dg-glow{position:absolute;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;mix-blend-mode:screen;",
+    " background:radial-gradient(circle,rgba(255,226,170,.85) 0,rgba(255,150,60,.4) 35%,rgba(255,110,30,0) 70%);animation:dgGlow 1.1s ease-out both}",
+    "@keyframes dgGlow{0%{transform:scale(.3);opacity:0}30%{transform:scale(1);opacity:1}100%{transform:scale(1.3);opacity:0}}",
+    ".dg{position:absolute;left:0;top:0;will-change:transform,opacity;transform-origin:50% 50%}",
     ".dg svg{display:block;overflow:visible;filter:drop-shadow(0 6px 8px rgba(30,10,5,.35))}",
-    ".dg .wing-near{transform-origin:92px 40px;animation:dgFlap .32s ease-in-out infinite alternate}",
-    ".dg .wing-far{transform-origin:96px 38px;animation:dgFlap .32s ease-in-out infinite alternate;animation-delay:-.05s}",
+    ".dg .wing-near{transform-origin:92px 40px;animation:dgFlap .3s ease-in-out infinite alternate}",
+    ".dg .wing-far{transform-origin:96px 38px;animation:dgFlap .3s ease-in-out infinite alternate;animation-delay:-.06s}",
+    ".dg.hover .wing-near,.dg.hover .wing-far{animation-duration:.42s}",
     "@keyframes dgFlap{from{transform:rotate(-8deg) scaleY(1)}to{transform:rotate(14deg) scaleY(-.35)}}",
-    ".dg .jaw{transform-origin:127px 31px;transition:transform .12s}",
-    ".dg.breathing .jaw{transform:rotate(16deg)}",
-    ".dg-fire{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;mix-blend-mode:screen;",
-    " background:radial-gradient(circle,#FFF6D8 0,#FFD166 25%,#FF8A2A 55%,rgba(230,60,20,.6) 75%,rgba(200,40,10,0) 100%)}"
+    ".dg .jaw{transform-origin:127px 31px;transition:transform .12s ease-out}",
+    ".dg.breathing .jaw{transform:rotate(18deg)}"
   ].join("\n");
 
   var DRAGON =
@@ -85,93 +83,147 @@
     document.head.appendChild(st);
     styled = true;
   }
-
-  function flameSvg() {
-    return '<svg class="dg-flame" viewBox="0 0 22 34"><path d="M11 0 C15 8 21 12 20 21 C19 29 15 34 11 34 C7 34 2 29 2 21 C2 15 7 12 8 6 C10 10 11 10 11 0 Z" fill="#FF8A2A"/><path d="M11 12 C13 17 16 20 15 25 C14 30 12 32 11 32 C9 32 6 29 6 25 C6 21 9 19 11 12 Z" fill="#FFD166"/><path d="M11 22 C12 25 13 27 12.5 29 C12 31 11.5 31 11 31 C10 31 9.5 30 9.5 28 C9.5 26 10.5 25 11 22 Z" fill="#FFF6D8"/></svg>';
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function bez(p0, p1, p2, p3, t) {
+    var u = 1 - t;
+    return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
   }
+  function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
 
   window.hatchDragon = function (rect) {
     if (reduce || !rect) return;
     ensureStyle();
+    var VW = window.innerWidth, VH = window.innerHeight, dpr = Math.min(2, window.devicePixelRatio || 1);
     var layer = document.createElement("div");
     layer.className = "dg-layer";
+    var cv = document.createElement("canvas");
+    cv.width = VW * dpr; cv.height = VH * dpr;
+    layer.appendChild(cv);
     document.body.appendChild(layer);
-    var cx = rect.left + rect.width / 2, cy = rect.top + rect.height * 0.45;
+    var ctx = cv.getContext("2d");
+    ctx.scale(dpr, dpr);
 
-    // 1) glow and a small flame inside the shell
+    var cx = rect.left + rect.width / 2, cy = rect.top + rect.height * 0.42;
     var glow = document.createElement("div");
     glow.className = "dg-glow";
     glow.style.left = cx + "px"; glow.style.top = cy + "px";
     layer.appendChild(glow);
-    var fl = document.createElement("div");
-    fl.innerHTML = flameSvg();
-    var flame = fl.firstChild;
-    flame.style.position = "absolute"; flame.style.left = cx + "px"; flame.style.top = cy + "px";
-    layer.appendChild(flame);
 
-    // 2) the dragon climbs out and flies off one side
-    var small = window.innerWidth < 640;
+    var small = VW < 640;
     var W = small ? 70 : 96, H = Math.round(W * 98 / 166);
-    var dir = Math.random() < 0.5 ? -1 : 1;
     var d = document.createElement("div");
-    d.className = "dg";
+    d.className = "dg hover";
     d.innerHTML = DRAGON.replace('width="W"', 'width="' + W + '"').replace('height="H"', 'height="' + H + '"');
     d.style.opacity = "0";
     layer.appendChild(d);
+    // mouth position relative to the sprite centre (viewBox -8 -12 166 98, mouth at 152,31)
+    var MX = (152 + 8) / 166 * W - W / 2, MY = (31 + 12) / 98 * H - H / 2;
 
-    var travel = (dir > 0 ? window.innerWidth - cx : cx) + W * 2;
-    var rise = Math.min(160, cy - 40) * (0.6 + Math.random() * 0.4);
-    var dur = 3000 + Math.random() * 600, t0 = 0, lastPuff = 0, start = performance.now() + 650;
-    var mouthX = (152 + 8) / 166 * W, mouthY = (31 + 12) / 98 * H;
+    // A fresh random route every time: any side, any height, a random curve.
+    var dir = Math.random() < 0.5 ? -1 : 1;
+    if (cx < VW * 0.22) dir = Math.random() < 0.75 ? 1 : -1;
+    if (cx > VW * 0.78) dir = Math.random() < 0.75 ? -1 : 1;
+    var endX = dir > 0 ? VW + W * 1.6 : -W * 1.6;
+    var endY = Math.random() < 0.25 ? -H * 1.6 : rand(VH * -0.05, VH * 0.85);
+    if (endY < 0) endX = cx + dir * rand(VW * 0.25, VW * 0.6);
+    var P = {
+      x: [cx, cx + dir * rand(40, 160), rand(VW * 0.15, VW * 0.85), endX],
+      y: [cy - 10, cy - rand(70, 190), rand(VH * 0.05, VH * 0.75), endY]
+    };
+    var flyDur = rand(2600, 3600);
+    var breathAngle = (dir > 0 ? 0 : Math.PI) + dir * -rand(0.25, 0.6);   // first breath: forward and upward
 
-    function puff(x, y, vx, vy) {
-      var n = 9;
+    var parts = [], born = performance.now(), last = born;
+    var phase = "emerge", breathingUntil = 0, nextPuff = 0, flyStart = 0;
+    var pose = { x: cx, y: cy, rot: 0, s: 0.4, face: dir, op: 0 };
+
+    function mouth() {
+      var ox = MX * pose.face * pose.s, oy = MY * pose.s, c = Math.cos(pose.rot), sn = Math.sin(pose.rot);
+      return [pose.x + ox * c - oy * sn, pose.y + ox * sn + oy * c];
+    }
+    function noseAngle() { return pose.face > 0 ? pose.rot : Math.PI + pose.rot; }
+    function emit(n, ang, power) {
+      var m = mouth();
       for (var k = 0; k < n; k++) {
-        var p = document.createElement("div");
-        p.className = "dg-fire";
-        var s = 6 + Math.random() * 8;
-        p.style.width = p.style.height = s + "px";
-        layer.appendChild(p);
-        var ang = (Math.random() - 0.5) * 0.5, sp = 2.6 + Math.random() * 2.4, life = 420 + Math.random() * 260;
-        (function (p, s, ang, sp, life) {
-          var born = performance.now();
-          (function step(now) {
-            var a = (now - born) / life;
-            if (a >= 1) { p.remove(); return; }
-            var dist = sp * (now - born) / 16;
-            var px = x + Math.cos(ang) * dist * vx - s / 2, py = y + Math.sin(ang) * dist + vy * dist * 0.3 - s / 2 - a * 10;
-            var grow = 1 + a * 2.4;
-            p.style.transform = "translate(" + px.toFixed(1) + "px," + py.toFixed(1) + "px) scale(" + grow.toFixed(2) + ")";
-            p.style.opacity = (1 - a).toFixed(2);
-            requestAnimationFrame(step);
-          })(born);
-        })(p, s, ang, sp, life);
+        var a = ang + rand(-0.12, 0.12), sp = rand(5.5, 7) * power, j = Math.random() * 0.8;
+        // spread new puffs along the first stretch so the flame is one continuous tongue
+        parts.push({ x: m[0] + Math.cos(a) * sp * j, y: m[1] + Math.sin(a) * sp * j, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+          life: 0, max: rand(340, 520), r: rand(4.2, 6.2) * (small ? 0.85 : 1) });
       }
     }
-
-    (function frame(now) {
-      if (now < start) { requestAnimationFrame(frame); return; }
-      if (!t0) t0 = now;
-      var t = Math.min(1, (now - t0) / dur);
-      var e = t < 0.18 ? 0 : (t - 0.18) / 0.82;          // first: climb out, then fly
-      var ease = e * e * (3 - 2 * e);
-      var x = cx + dir * travel * ease;
-      var y = cy - (t < 0.18 ? (t / 0.18) * 26 : 26 + rise * Math.sin(Math.min(1, e * 1.3) * Math.PI / 2)) + Math.sin(t * 22) * 5;
-      var scale = t < 0.18 ? 0.25 + (t / 0.18) * 0.75 : 1;
-      var tilt = t < 0.18 ? -10 : -8 + Math.cos(t * 22) * 4;
-      d.style.opacity = Math.min(1, t / 0.08).toFixed(2);
-      d.style.transform = "translate(" + (x - W / 2).toFixed(1) + "px," + (y - H / 2).toFixed(1) + "px) scaleX(" + dir + ") scale(" + scale.toFixed(3) + ") rotate(" + tilt.toFixed(1) + "deg)";
-      // fire bursts: one as it leaves the shell, then every ~0.9s in flight
-      if (t > 0.2 && now - lastPuff > 900) {
-        lastPuff = now;
-        d.classList.add("breathing");
-        setTimeout(function () { d.classList.remove("breathing"); }, 380);
-        var mx = x - W / 2 + (dir > 0 ? mouthX : W - mouthX), my = y - H / 2 + mouthY;
-        puff(mx, my, dir, -0.2);
-        setTimeout(function () { puff(mx + dir * 6, my, dir, -0.2); }, 140);
+    function breathe(ms) {
+      breathingUntil = performance.now() + ms;
+      d.classList.add("breathing");
+    }
+    function draw(dt) {
+      ctx.clearRect(0, 0, VW, VH);
+      // older (outer, redder) puffs first, newest (hottest) on top
+      for (var i = parts.length - 1; i >= 0; i--) {
+        var p = parts[i];
+        p.life += dt;
+        if (p.life >= p.max) { parts.splice(i, 1); continue; }
+        var f = dt / 16;
+        p.x += p.vx * f; p.y += p.vy * f;
+        p.vx *= Math.pow(0.955, f); p.vy = p.vy * Math.pow(0.955, f) - 0.06 * f;   // slows and rises like hot air
       }
-      if (t < 1) requestAnimationFrame(frame);
-      else setTimeout(function () { layer.remove(); }, 900);
-    })(performance.now());
+      for (var q = 0; q < parts.length; q++) {
+        var o = parts[q], k = o.life / o.max, r = o.r * (1 + k * 2.6), a = Math.pow(1 - k, 1.3);
+        var g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, r);
+        if (k < 0.28) {
+          g.addColorStop(0, "rgba(255,240,180," + a + ")");
+          g.addColorStop(0.35, "rgba(255,190,60," + a + ")");
+          g.addColorStop(0.75, "rgba(245,120,30," + (a * 0.8) + ")");
+          g.addColorStop(1, "rgba(230,90,20,0)");
+        } else if (k < 0.6) {
+          g.addColorStop(0, "rgba(255,170,58," + a + ")");
+          g.addColorStop(0.55, "rgba(236,92,24," + (a * 0.85) + ")");
+          g.addColorStop(1, "rgba(200,52,14,0)");
+        } else {
+          g.addColorStop(0, "rgba(214,70,20," + (a * 0.8) + ")");
+          g.addColorStop(0.6, "rgba(120,40,20," + (a * 0.35) + ")");
+          g.addColorStop(1, "rgba(80,30,20,0)");
+        }
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(o.x, o.y, r, 0, 6.2832); ctx.fill();
+      }
+    }
+    (function frame(now) {
+      var dt = Math.min(40, now - last); last = now;
+      var el = now - born;
+      if (phase === "emerge") {
+        // climbs out of the shell and rears its head
+        var e = Math.min(1, el / 420);
+        pose.s = 0.4 + 0.3 * e; pose.op = Math.min(1, el / 160);
+        pose.x = cx; pose.y = cy - 18 * ease(e); pose.face = dir;
+        pose.rot = (dir > 0 ? breathAngle : breathAngle - Math.PI) * ease(e);
+        if (el > 420) { phase = "breath"; breathe(650); }
+      } else if (phase === "breath") {
+        // the first big breath of fire, straight from the mouth
+        if (now < breathingUntil) emit(6, noseAngle(), 1.15);
+        pose.y = cy - 18 + Math.sin(el / 90) * 1.5;
+        if (now >= breathingUntil + 120) { phase = "fly"; flyStart = now; nextPuff = now + rand(650, 1000); d.classList.remove("hover"); }
+      } else {
+        var t = Math.min(1, (now - flyStart) / flyDur), te = ease(t);
+        var x = bez(P.x[0], P.x[1], P.x[2], P.x[3], te), y = bez(P.y[0], P.y[1], P.y[2], P.y[3], te);
+        var t2 = Math.min(1, te + 0.01);
+        var dx = bez(P.x[0], P.x[1], P.x[2], P.x[3], t2) - x, dy = bez(P.y[0], P.y[1], P.y[2], P.y[3], t2) - y;
+        var face = dx >= 0 ? 1 : -1;
+        var head = Math.atan2(dy, dx);
+        var rot = face > 0 ? head : head - Math.PI * (head > 0 ? 1 : -1);
+        rot = Math.max(-0.6, Math.min(0.6, rot));
+        pose.face = face;
+        pose.rot += (rot - pose.rot) * 0.18;                       // turn smoothly
+        pose.x = x; pose.y = y + Math.sin((now - flyStart) / 110) * 3; // gentle wing-beat bob
+        pose.s = 0.7 + 0.3 * Math.min(1, t * 4);
+        if (now > nextPuff && t < 0.85) { breathe(rand(220, 340)); nextPuff = now + rand(800, 1300); }
+        if (now < breathingUntil) emit(4, noseAngle(), 1);
+        if (t >= 1 && !parts.length) { layer.remove(); return; }
+      }
+      if (now >= breathingUntil) d.classList.remove("breathing");
+      d.style.opacity = pose.op.toFixed(3);
+      d.style.transform = "translate3d(" + (pose.x - W / 2).toFixed(2) + "px," + (pose.y - H / 2).toFixed(2) + "px,0) rotate(" + pose.rot.toFixed(4) + "rad) scaleX(" + pose.face + ") scale(" + pose.s.toFixed(3) + ")";
+      draw(dt);
+      requestAnimationFrame(frame);
+    })(born);
   };
 })();
